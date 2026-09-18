@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trout.example.com/sitemap.xml

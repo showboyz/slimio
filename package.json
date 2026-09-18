@@ -1,0 +1,15 @@
+{
+  "name": "trout",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "PDF용량 줄이기 웹서비스 (Cloudflare Pages + Worker)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy:worker": "wrangler deploy",
+    "deploy:pages": "npx wrangler pages deploy public --project-name trout"
+  },
+  "devDependencies": {
+    "wrangler": "^4.133.0"
+  }
+}
