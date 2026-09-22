@@ -1,0 +1,17 @@
+app = "glowing-meadowbrook-286"
+primary_region = "sin"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3001"
+  HOST = "0.0.0.0"
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  processes = ["app"]
+
+[processes]
+  app = "node server/server.cjs"

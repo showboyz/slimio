@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Free PDF Compressor — Compress & Shrink PDF Online | Trout</title>
+<title>Free PDF Compressor — Compress & Shrink PDF Online | SlimIO</title>
 <meta name="description" content="Free online PDF compressor. Shrink and reduce your PDF file size in seconds while keeping text sharp. No install, no signup — runs right in your browser." />
 <meta name="keywords" content="pdf compressor, compress pdf, reduce pdf size, shrink pdf, smaller pdf, free pdf compressor, pdf compression" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0b0d12" />
-<link rel="canonical" href="https://trout.example.com/" />
+<link rel="canonical" href="https://pdfslimio.com/" />
 
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="Trout" />
-<meta property="og:title" content="Free PDF Compressor — Compress & Shrink PDF Online | Trout" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Free PDF Compressor — Compress & Shrink PDF Online | SlimIO" />
 <meta property="og:description" content="Shrink and reduce your PDF file size in seconds while keeping text sharp. Free, no install, runs in your browser." />
-<meta property="og:url" content="https://trout.example.com/" />
-<meta property="og:image" content="https://trout.example.com/og-cover.png" />
+<meta property="og:url" content="https://pdfslimio.com/" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Free PDF Compressor | Trout" />
+<meta name="twitter:title" content="Free PDF Compressor | SlimIO" />
 <meta name="twitter:description" content="Shrink and reduce your PDF file size in seconds while keeping text sharp. Free, no install, runs in your browser." />
-<meta name="twitter:image" content="https://trout.example.com/og-cover.png" />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
 
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
 
@@ -29,8 +29,8 @@
 {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Trout",
-    "url": "https://trout.example.com/",
+    "name": "SlimIO",
+     "url": "https://pdfslimio.com/",
     "description": "Free, privacy-first online PDF compressor. Shrink and reduce PDF file size in seconds while keeping text sharp. Runs in your browser with no signup.",
     "applicationCategory": "UtilityApplication",
     "operatingSystem": "Any",
@@ -199,7 +199,7 @@
 <body>
     <div class="wrap">
         <nav>
-            <div class="brand"><span class="logo">🐟</span> Trout</div>
+            <div class="brand"><span class="logo">📄</span> SlimIO</div>
             <div class="nav-links">
                 <a href="#how">How it works</a>
                 <a href="#pricing">Pricing</a>
@@ -213,7 +213,7 @@
     <div class="wrap" id="tool">
         <div class="hero">
             <h1>Shrink your PDF,<br /><b>keep it sharp.</b></h1>
-            <p>Trout makes your PDF smaller in seconds — without the blurry text. Free, fast, no install.</p>
+            <p>SlimIO makes your PDF smaller in seconds — without the blurry text. Free, fast, no install.</p>
             <div class="trust-row">
                 <span>⚡ Instant</span>
                 <span>🔒 Private</span>
@@ -282,7 +282,7 @@
         </div>
 
         <div class="ad" id="ad">
-            Trout is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+            SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
         </div>
     </div>
 
@@ -300,7 +300,7 @@
                 <div class="step">
                     <div class="n">STEP 2</div>
                     <h3>We shrink it</h3>
-                    <p>Trout re-encodes the document to remove dead weight — in your browser or on a fast server.</p>
+                    <p>SlimIO re-encodes the document to remove dead weight — in your browser or on a fast server.</p>
                 </div>
                 <div class="step">
                     <div class="n">STEP 3</div>
@@ -358,7 +358,7 @@
     <div class="wrap">
         <footer>
             <div class="foot">
-                <div>© 2026 Trout · Shrink PDF fast</div>
+                <div>© 2026 SlimIO · Shrink PDF fast</div>
                 <div>Ghostscript-powered · Runs in your browser</div>
             </div>
         </footer>
@@ -367,9 +367,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script>
-// In production, point these at your deployed hosts.
-const API_BASE = "http://localhost:8787";   // rate-limit worker
-const SERVER_BASE = "http://localhost:3001"; // ghostscript server
+// Same-origin: the backend serves both the page and the /api/* routes.
+// For local dev, run from the node server (http://127.0.0.1:3001), not a static host.
+const API_BASE = "";
+const SERVER_BASE = "";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";

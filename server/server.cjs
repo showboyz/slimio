@@ -5,7 +5,21 @@ const path = require("path");
 const { spawn } = require("child_process");
 
 const PORT = process.env.PORT || 3001;
+const HOST = process.env.HOST || "0.0.0.0";
 const DAILY_LIMIT = parseInt(process.env.DAILY_LIMIT || "20", 10);
+const PUBLIC_DIR = process.env.PUBLIC_DIR || path.join(__dirname, "..", "public");
+
+const MIME = {
+    ".html": "text/html; charset=utf-8",
+    ".css": "text/css",
+    ".js": "application/javascript",
+    ".json": "application/json",
+    ".xml": "application/xml",
+    ".png": "image/png",
+    ".jpg": "image/jpeg",
+    ".svg": "image/svg+xml",
+    ".ico": "image/x-icon",
+};
 
 // naive per-IP daily counter
 const usage = new Map();
@@ -56,10 +70,16 @@ const server = http.createServer(async (req, res) => {
 
    const ip = clientIp(req);
 
-   if (req.url === "/api/check" && req.method === "GET") {
-       const left = remaining(ip);
-       return sendJson(res, 200, { ok: left > 0, remaining: left, limit: DAILY_LIMIT });
-   }
+     if (req.url === "/api/check" && req.method === "GET") {
+        const left = remaining(ip);
+        return sendJson(res, 200, { ok: left > 0, remaining: left, limit: DAILY_LIMIT });
+     }
+
+     if (req.url === "/api/consume" && req.method === "POST") {
+        consume(ip);
+        const left = remaining(ip);
+        return sendJson(res, 200, { ok: left > 0, remaining: left, limit: DAILY_LIMIT });
+     }
 
    if (req.url === "/api/compress" && req.method === "POST") {
        if (remaining(ip) <= 0) {
@@ -102,8 +122,26 @@ const server = http.createServer(async (req, res) => {
        return;
      }
 
-    sendJson(res, 404, { error: "not found" });
-});
+      // static file serving fallback: / -> index.html
+     let urlPath = decodeURIComponent(req.url.split("?")[0]);
+     if (urlPath === "/") urlPath = "/index.html";
+     const filePath = path.join(PUBLIC_DIR, path.normalize(urlPath).replace(/^(\.\.[/\\])+/, ""));
+
+     if (!filePath.startsWith(PUBLIC_DIR)) {
+         sendJson(res, 403, { error: "forbidden" });
+         return;
+     }
+
+     fs.readFile(filePath, (err, data) => {
+         if (err) {
+             sendJson(res, 404, { error: "not found" });
+             return;
+         }
+         const ext = path.extname(filePath);
+         res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
+         res.end(data);
+     });
+     });
 
 function sendJson(res, code, body) {
    const data = Buffer.from(JSON.stringify(body));
@@ -111,7 +149,7 @@ function sendJson(res, code, body) {
    res.end(data);
 }
 
-server.listen(PORT, "127.0.0.1", () => {
-   console.log(`Ghostscript compression server on http://127.0.0.1:${PORT}`);
-   console.log(`daily limit: ${DAILY_LIMIT}`);
+server.listen(PORT, HOST, () => {
+    console.log(`Ghostscript compression server on http://${HOST}:${PORT}`);
+    console.log(`daily limit: ${DAILY_LIMIT}`);
 });
