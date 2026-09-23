@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free PDF Merger — Combine PDF Files Online | SlimIO</title>
+<meta name="description" content="Free online PDF merger. Combine multiple PDF files into one in seconds. No signup, no install, runs in your browser — your files never leave your device." />
+<meta name="keywords" content="merge pdf, combine pdf, pdf merger, join pdf, pdf merge online, free pdf merger, combine pdf files" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/merge.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Free PDF Merger — Combine PDF Files | SlimIO" />
+<meta property="og:description" content="Combine multiple PDF files into one in seconds. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/merge.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free PDF Merger | SlimIO" />
+<meta name="twitter:description" content="Combine multiple PDF files into one in seconds. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SlimIO PDF Merger",
+    "url": "https://pdfslimio.com/merge.html",
+    "description": "Free, privacy-first online PDF merger. Combine multiple PDF files into one in seconds. Runs in your browser with no signup.",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires a modern web browser",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "featureList": ["Merge PDF", "Combine PDF files", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "How do I merge PDF files for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's PDF merger, drop in two or more PDF files, reorder them if you like, and click Merge. The result downloads as a single combined PDF. It runs in your browser, so there is nothing to install and no account needed."}},
+      {"@type": "Question", "name": "Is it safe to merge PDFs online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO merges files locally in your browser, so your PDFs never leave your device and are not uploaded to a server."}},
+      {"@type": "Question", "name": "How many PDF files can I merge at once?", "acceptedAnswer": {"@type": "Answer", "text": "You can merge as many PDF files as your browser memory allows. For very large batches, split the work into a few passes."}},
+      {"@type": "Question", "name": "Can I change the order of the pages?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After selecting your files, use the move up/down buttons to reorder them before merging."}},
+      {"@type": "Question", "name": "Does the free PDF merger have a limit?", "acceptedAnswer": {"@type": "Answer", "text": "The free tier includes a per-day operation limit. No signup is required, and you can use it right away."}}
+    ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="wrap">
+    <nav>
+        <div class="brand"><span class="logo">📄</span> SlimIO</div>
+        <div class="nav-links">
+            <a href="/">Compress</a>
+            <a href="/merge.html">Merge</a>
+            <a href="/how">How it works</a>
+            <a href="/pricing">Pricing</a>
+        </div>
+    </nav>
+</div>
+
+<div class="wrap" id="tool">
+    <div class="hero">
+        <h1>Merge PDFs,<br /><b>into one file.</b></h1>
+        <p>Combine multiple PDF files into a single document in seconds. Free, fast, no install — right in your browser.</p>
+        <div class="trust-row">
+            <span>⚡ Instant</span>
+            <span>🔒 Private</span>
+            <span>🆓 Free</span>
+            <span>📦 No install</span>
+        </div>
+    </div>
+
+    <div class="tool">
+        <div class="drop" id="drop">
+            <input type="file" id="pdfs" accept="application/pdf" multiple hidden />
+            <div class="drop-title">Drop PDF files here</div>
+            <div class="drop-or">or click to browse (select more than one)</div>
+            <div class="drop-sub" id="sub">Files never leave your device — merging happens locally in your browser.</div>
+        </div>
+
+        <div class="controls hidden" id="controls">
+            <ul class="filelist" id="filelist"></ul>
+            <div class="run-row">
+                <button id="go" class="btn" disabled>Merge PDFs</button>
+            </div>
+            <div class="bar"><i id="prog"></i></div>
+        </div>
+
+        <div class="result" id="result">
+            <div class="row"><span>Files merged</span><span id="merged" class="v">—</span></div>
+            <div class="row"><span>Pages total</span><span id="pages" class="v">—</span></div>
+            <div class="row"><span>Combined size</span><span id="after" class="v">—</span></div>
+            <a id="dl" class="dl">↓ Download merged PDF</a>
+        </div>
+
+        <div class="error" id="error"></div>
+        <div class="limit" id="limit"></div>
+        <div class="log" id="log"></div>
+    </div>
+
+    <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+       <!--
+         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
+         1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
+         2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
+         <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
+         <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
+       -->
+    </div>
+</div>
+
+<div class="content">
+    <h2>How to merge PDF files online — in 3 steps</h2>
+    <p>SlimIO's PDF merger joins two or more PDF documents into a single file. Everything runs in your browser, so your documents stay private and there is nothing to install.</p>
+    <ul>
+        <li><b>1. Add your PDFs.</b> Drop in two or more PDF files, or click to browse and select several at once.</li>
+        <li><b>2. Arrange the order.</b> Use the up and down arrows to control which pages come first.</li>
+        <li><b>3. Download.</b> Click Merge and save the combined PDF straight to your device.</li>
+    </ul>
+    <h3>Why merge PDFs?</h3>
+    <p>Whether you are combining scanned pages, joining a report with its appendices, or assembling a bundle for a submission, a single PDF is easier to share, email, and print. No account, no watermark, no waiting in a queue.</p>
+    <h3>Is it a free PDF merger?</h3>
+    <p>Yes. The core merge is free. SlimIO is funded by an optional small banner ad, so the tool itself stays open to everyone. You can also <a href="/">compress a PDF</a> before or after merging to keep the final file small.</p>
+</div>
+
+<section class="faq">
+    <h2>PDF merger — FAQ</h2>
+    <details open>
+        <summary>How do I merge PDF files for free?</summary>
+        <p>Open SlimIO's PDF merger, drop in two or more PDF files, reorder them if you like, and click Merge. The result downloads as a single combined PDF. It runs in your browser, so there is nothing to install and no account needed.</p>
+    </details>
+    <details>
+        <summary>Is it safe to merge PDFs online?</summary>
+        <p>Yes. SlimIO merges files locally in your browser, so your PDFs never leave your device and are not uploaded to any server.</p>
+    </details>
+    <details>
+        <summary>How many PDF files can I merge at once?</summary>
+        <p>You can merge as many PDF files as your browser memory allows. For very large batches, split the work into a few passes.</p>
+    </details>
+    <details>
+        <summary>Can I change the order of the pages?</summary>
+        <p>Yes. After selecting your files, use the move up/down buttons to reorder them before merging.</p>
+    </details>
+    <details>
+        <summary>Does the free PDF merger have a limit?</summary>
+        <p>The free tier includes a per-day operation limit. No signup is required, and you can start merging right away.</p>
+    </details>
+</section>
+
+<div class="related">
+    <h3>Related tools</h3>
+    <div class="tools-row">
+        <a class="mini" href="/">Compress PDF</a>
+        <a class="mini" href="/split.html">Split PDF</a>
+        <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+        <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+    </div>
+</div>
+
+<div class="wrap">
+    <footer>
+        <div class="foot">
+            <div>© 2026 SlimIO · Free PDF tools</div>
+            <div>Runs in your browser · No signup</div>
+        </div>
+    </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+const drop = $("drop");
+const controls = $("controls");
+const filelist = $("filelist");
+const goBtn = $("go");
+const result = $("result");
+const errEl = $("error");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let items = []; // { file, name, size, doc }
+
+function renderList() {
+    filelist.innerHTML = "";
+    items.forEach((it, i) => {
+        const li = document.createElement("li");
+        li.innerHTML =
+             `<span class="fname">${i + 1}. ${escapeHtml(it.name)} <span class="fsize">${SlimIO.formatSize(it.size)}</span></span>`;
+        const actions = document.createElement("span");
+        actions.style.display = "flex";
+        actions.style.gap = "6px";
+        ["up", "down", "rm"].forEach((a) => {
+            const b = document.createElement("button");
+            b.className = "fbtn";
+            b.title = { up: "Move up", down: "Move down", rm: "Remove" }[a];
+            b.textContent = { up: "▲", down: "▼", rm: "✕" }[a];
+            b.addEventListener("click", () => onItemAction(a, i));
+            actions.appendChild(b);
+        });
+        li.appendChild(actions);
+        filelist.appendChild(li);
+    });
+}
+
+function onItemAction(action, idx) {
+    if (action === "up" && idx > 0) { [items[idx - 1], items[idx]] = [items[idx], items[idx - 1]]; render(); }
+    else if (action === "down" && idx < items.length - 1) { [items[idx + 1], items[idx]] = [items[idx], items[idx + 1]]; render(); }
+    else if (action === "rm") { items.splice(idx, 1); render(); }
+    else return;
+}
+
+async function addFiles(list) {
+    clearError();
+    for (const f of list) {
+        if (f.type !== "application/pdf") { SlimIO.showError("Please choose PDF files."); return; }
+        try {
+            const bytes = await f.arrayBuffer();
+            const doc = await PDFLib.PDFDocument.load(bytes);
+            items.push({ file: f, name: f.name, size: f.size, doc });
+        } catch (e) {
+            SlimIO.showError(`Could not read "${f.name}": ${e.message}`);
+            return;
+        }
+    }
+    render();
+}
+
+function render() {
+    renderList();
+        goBtn.disabled = items.length < 2;
+    controls.classList.toggle("hidden", items.length === 0);
+    SlimIO.refreshStatus();
+}
+
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"]/g, (c) =>
+        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+}
+
+drop.addEventListener("click", () => $("pdfs").click());
+$("pdfs").addEventListener("change", (e) => addFiles(e.target.files));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+    e.preventDefault();
+    drop.classList.remove("drag");
+    if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+});
+
+goBtn.addEventListener("click", merge);
+
+async function merge() {
+        if (items.length < 2) return;
+    SlimIO.clearError();
+    goBtn.disabled = true;
+    goBtn.textContent = "Merging…";
+    prog.show();
+    result.style.display = "none";
+    try {
+            const out = await PDFLib.PDFDocument.create();
+        for (const it of items) {
+            const copied = await out.copyPages(it.doc, it.doc.getPageIndices());
+            copied.forEach((p) => out.addPage(p));
+            prog.set(Math.round(((items.indexOf(it) + 1) / items.length) * 100));
+        }
+            const bytes = await out.save();
+        const con = await SlimIO.consume();
+        if (con && !con.ok) {
+            SlimIO.showError(`Daily limit reached. Come back tomorrow.`);
+        }
+            showResult(items.length, out.getPageCount(), bytes);
+    } catch (e) {
+        SlimIO.showError(`Merge failed: ${e.message}`);
+    } finally {
+        goBtn.disabled = false;
+        goBtn.textContent = "Merge PDFs";
+        prog.hide();
+    }
+}
+
+function showResult(fileCount, pageCount, bytes) {
+    result.style.display = "block";
+    $("merged").textContent = fileCount;
+    $("pages").textContent = pageCount;
+    $("after").textContent = SlimIO.formatSize(bytes.length);
+    const url = URL.createObjectURL(SlimIO.toBlob(bytes, "application/pdf"));
+    dl.href = url;
+    dl.onclick = () => SlimIO.download(bytes, "slimio_merged.pdf", "application/pdf");
+}
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>
