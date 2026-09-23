@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free PDF to JPG — Convert PDF Pages to Images | SlimIO</title>
+<meta name="description" content="Free online PDF to JPG converter. Turn every page of a PDF into a high-quality JPG image in seconds. No signup, no install, runs in your browser." />
+<meta name="keywords" content="pdf to jpg, pdf to image, convert pdf to jpeg, pdf to png, free pdf to jpg, pdf to image converter" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/pdf-to-jpg.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Free PDF to JPG — Convert Pages to Images | SlimIO" />
+<meta property="og:description" content="Turn every page of a PDF into a high-quality JPG image in seconds. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/pdf-to-jpg.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free PDF to JPG | SlimIO" />
+<meta name="twitter:description" content="Turn every page of a PDF into a high-quality JPG image in seconds. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+     "@context": "https://schema.org",
+     "@type": "WebApplication",
+     "name": "SlimIO PDF to JPG",
+      "url": "https://pdfslimio.com/pdf-to-jpg.html",
+      "description": "Free, privacy-first online PDF to JPG converter. Turn every PDF page into a JPG image. Runs in your browser with no signup.",
+     "applicationCategory": "UtilityApplication",
+     "operatingSystem": "Any",
+     "browserRequirements": "Requires a modern web browser",
+     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+     "featureList": ["PDF to JPG", "High quality images", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="wrap">
+     <nav>
+         <div class="brand"><span class="logo">📄</span> SlimIO</div>
+         <div class="nav-links">
+             <a href="/">Compress</a>
+             <a href="/merge.html">Merge</a>
+             <a href="/pdf-to-jpg.html">PDF to JPG</a>
+             <a href="/pricing">Pricing</a>
+         </div>
+     </nav>
+</div>
+
+<div class="wrap" id="tool">
+     <div class="hero">
+         <h1>PDF to JPG,<br /><b>pixel-perfect.</b></h1>
+         <p>Every page of your PDF becomes a high-quality JPG in seconds. Free, fast, no install — right in your browser.</p>
+         <div class="trust-row">
+             <span>⚡ Instant</span>
+             <span>🔒 Private</span>
+             <span>🆓 Free</span>
+             <span>📦 No install</span>
+         </div>
+     </div>
+
+     <div class="tool">
+         <div class="drop" id="drop">
+             <input type="file" id="pdf" accept="application/pdf" hidden />
+             <div class="drop-title">Drop your PDF here</div>
+             <div class="drop-or">or click to browse</div>
+             <div class="drop-sub" id="sub">File never leaves your device — conversion happens locally in your browser.</div>
+         </div>
+
+         <div class="controls hidden" id="controls">
+             <div class="field">
+                 <label>Quality <span id="qval">85%</span></label>
+                 <input type="range" id="quality" min="30" max="100" value="85" step="5" />
+             </div>
+             <div class="field">
+                 <label>Resolution <span id="sval">1.5x</span></label>
+                 <input type="range" id="scale" min="50" max="300" value="150" step="50" />
+                 <div class="hint">Higher = sharper images but larger files.</div>
+             </div>
+             <div class="field">
+                 <label>Output</label>
+                 <select id="outtype">
+                     <option value="image/jpeg">JPG (smaller)</option>
+                     <option value="image/png">PNG (lossless)</option>
+                 </select>
+             </div>
+
+             <div class="run-row">
+                 <button id="go" class="btn" disabled>Convert to JPG</button>
+             </div>
+             <div class="bar"><i id="prog"></i></div>
+         </div>
+
+         <div class="result" id="result">
+             <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+             <div class="row"><span>Output</span><span id="outtype-label" class="v">—</span></div>
+             <a id="dl" class="dl">↓ Download ZIP</a>
+         </div>
+
+         <div class="error" id="error"></div>
+         <div class="limit" id="limit"></div>
+         <div class="log" id="log"></div>
+     </div>
+
+     <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+        <!--
+         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
+          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
+          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
+          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
+          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
+        -->
+     </div>
+</div>
+
+<div class="content">
+     <h2>How to convert a PDF to JPG — in 3 steps</h2>
+     <p>SlimIO's PDF to JPG tool renders every page of a PDF to a high-quality image. Everything runs in your browser, so your file stays private and there is nothing to upload.</p>
+     <ul>
+         <li><b>1. Add your PDF.</b> Drop in one file, or click to browse.</li>
+         <li><b>2. Tune quality and resolution.</b> Higher resolution keeps text and detail crisper.</li>
+         <li><b>3. Download.</b> All pages arrive as a single ZIP of JPG or PNG images.</li>
+     </ul>
+     <h3>JPG vs PNG</h3>
+     <p>Choose <b>JPG</b> for a smaller file (default) or <b>PNG</b> for lossless quality. To make the images even smaller, first <a href="/">compress the PDF</a> then convert.</p>
+</div>
+
+<div class="related">
+     <h3>Related tools</h3>
+     <div class="tools-row">
+         <a class="mini" href="/">Compress PDF</a>
+         <a class="mini" href="/merge.html">Merge PDF</a>
+         <a class="mini" href="/split.html">Split PDF</a>
+         <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+     </div>
+</div>
+
+<div class="wrap">
+     <footer>
+         <div class="foot">
+             <div>© 2026 SlimIO · Free PDF tools</div>
+             <div>Runs in your browser · No signup</div>
+         </div>
+     </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+const drop = $("drop");
+const controls = $("controls");
+const quality = $("quality");
+const scale = $("scale");
+const qval = $("qval");
+const sval = $("sval");
+const outtype = $("outtype");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+
+quality.oninput = () => (qval.textContent = quality.value + "%");
+scale.oninput = () => (sval.textContent = (scale.value / 100).toFixed(1) + "x");
+
+async function setFile(f) {
+    if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+    SlimIO.clearError();
+    file = f;
+    drop.querySelector(".drop-title").textContent = f.name;
+    drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+    controls.classList.remove("hidden");
+    goBtn.disabled = false;
+    SlimIO.refreshStatus();
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+    e.preventDefault();
+    drop.classList.remove("drag");
+    if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+
+goBtn.addEventListener("click", convert);
+
+async function convert() {
+    if (!file) return;
+    SlimIO.clearError();
+    goBtn.disabled = true;
+    goBtn.textContent = "Converting…";
+    prog.show();
+    result.style.display = "none";
+    try {
+        const check = await SlimIO.consume();
+        if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+
+        const mime = outtype.value;
+        const q = parseInt(quality.value, 10) / 100;
+        const s = parseInt(scale.value, 10) / 100;
+        const ext = mime === "image/png" ? "png" : "jpg";
+        const data = await file.arrayBuffer();
+
+        const src = await pdfjsLib.getDocument(data).promise;
+        const zip = new JSZip();
+        const base = (file.name || "document").replace(/\.pdf$/i, "");
+
+        for (let i = 1; i <= src.numPages; i++) {
+            const page = await src.getPage(i);
+            const viewport = page.getViewport({ scale: s });
+            const canvas = document.createElement("canvas");
+            canvas.width = Math.ceil(viewport.width);
+            canvas.height = Math.ceil(viewport.height);
+            const ctx = canvas.getContext("2d");
+            ctx.fillStyle = "#fff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            await page.render({ canvasContext: ctx, viewport }).promise;
+
+            const blob = await new Promise((resolve, reject) =>
+                canvas.toBlob((b) => b ? resolve(b) : reject(new Error("toBlob failed")), mime, q));
+            const bytes = await blob.arrayBuffer();
+            zip.file(`${base}_${String(i).padStart(3, "0")}.${ext}`, new Uint8Array(bytes));
+            prog.set(Math.round((i / src.numPages) * 100));
+        }
+
+        const out = await zip.generateAsync({ type: "uint8array" });
+        showResult(src.numPages, mime, out);
+     } catch (e) {
+        SlimIO.showError(`Conversion failed: ${e.message}`);
+     } finally {
+        goBtn.disabled = false;
+        goBtn.textContent = "Convert to JPG";
+        prog.hide();
+     }
+}
+
+function showResult(count, mime, bytes) {
+    result.style.display = "block";
+     $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
+     $("outtype-label").textContent = mime === "image/png" ? "PNG (PNG)" : "JPG (JPG)";
+    dl.textContent = "↓ Download ZIP";
+    dl.onclick = () => SlimIO.download(bytes, "slimio_images.zip", "application/zip");
+}
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>

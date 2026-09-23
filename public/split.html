@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free PDF Splitter — Split & Extract PDF Pages | SlimIO</title>
+<meta name="description" content="Free online PDF splitter. Split a PDF into separate pages or extract a page range into a new PDF in seconds. No signup, no install, runs in your browser — your files stay private." />
+<meta name="keywords" content="split pdf, pdf splitter, extract pdf pages, separate pdf pages, remove page from pdf, free pdf splitter" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/split.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Free PDF Splitter — Split & Extract Pages | SlimIO" />
+<meta property="og:description" content="Split a PDF into separate pages or extract a page range in seconds. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/split.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free PDF Splitter | SlimIO" />
+<meta name="twitter:description" content="Split a PDF into separate pages or extract a page range in seconds. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SlimIO PDF Splitter",
+     "url": "https://pdfslimio.com/split.html",
+     "description": "Free, privacy-first online PDF splitter. Split a PDF into pages or extract a range. Runs in your browser with no signup.",
+     "applicationCategory": "UtilityApplication",
+     "operatingSystem": "Any",
+     "browserRequirements": "Requires a modern web browser",
+     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+     "featureList": ["Split PDF", "Extract page range", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<script type="application/ld+json">
+{
+     "@context": "https://schema.org",
+     "@type": "FAQPage",
+     "mainEntity": [
+       {"@type": "Question", "name": "How do I split a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's PDF splitter, choose a PDF, pick 'Each page as a separate PDF' or a page range like 1-3, 5, then click Split. The result downloads as a ZIP of pages or a single PDF."}},
+       {"@type": "Question", "name": "Can I extract only some pages from a PDF?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. In range mode you can type pages like 1-3, 8, 10-12 and only those pages are kept in the new PDF."}},
+       {"@type": "Question", "name": "Is it safe to split a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO splits files locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}},
+       {"@type": "Question", "name": "What is the difference between split and extract?", "acceptedAnswer": {"@type": "Answer", "text": "Split makes every page its own one-page PDF. Extract keeps a chosen range as a single multi-page PDF."}},
+       {"@type": "Question", "name": "Does the free PDF splitter have a limit?", "acceptedAnswer": {"@type": "Answer", "text": "The free tier includes a per-day operation limit. No signup is required, and you can split right away."}}
+     ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+<div class="wrap">
+     <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/split.html">Split</a>
+               <a href="/how">How it works</a>
+               <a href="/pricing">Pricing</a>
+           </div>
+     </nav>
+</div>
+
+<div class="wrap" id="tool">
+     <div class="hero">
+           <h1>Split your PDF,<br /><b>pick the pages.</b></h1>
+           <p>Split a PDF into separate pages or extract a page range in seconds. Free, fast, no install — right in your browser.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+     </div>
+
+     <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub" id="sub">File never leaves your device — splitting happens locally in your browser.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>Split mode</label>
+                   <select id="mode">
+                       <option value="each">Each page as its own PDF (ZIP)</option>
+                       <option value="range">Extract a page range (single PDF)</option>
+                   </select>
+               </div>
+
+               <div id="opt-range" class="field" style="display:none;">
+                   <label>Pages <span class="hint" style="display:inline;">e.g. 1-3, 5, 8-10</span></label>
+                   <select id="range" style="width:100%;"></select>
+                   <div class="hint">Comma-separated. Ranges use a dash (e.g. <code>1-3</code>).</div>
+               </div>
+
+               <div class="field" id="opt-pagesinfo" style="display:none;">
+                   <label>Total pages</label>
+                   <div id="pagesinfo" style="font-size:13px;color:var(--text);"></div>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Split PDF</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+               <a id="dl" class="dl">↓ Download</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+     </div>
+
+     <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+        <!--
+         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
+          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
+          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
+          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
+          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
+        -->
+     </div>
+</div>
+
+<div class="content">
+     <h2>How to split a PDF — in 3 steps</h2>
+     <p>SlimIO's PDF splitter breaks one document into smaller pieces. Everything runs in your browser, so your file stays private and there is nothing to install.</p>
+     <ul>
+         <li><b>1. Add your PDF.</b> Drop in one file, or click to browse.</li>
+         <li><b>2. Choose a mode.</b> "Each page" makes every page its own PDF; "Extract a range" keeps the pages you name in a single PDF.</li>
+         <li><b>3. Download.</b> Click Split and save the result straight to your device.</li>
+     </ul>
+     <h3>Split vs extract</h3>
+     <p><b>Split</b> turns a 10-page PDF into ten one-page PDFs — handy when each page is a separate document. <b>Extract</b> (range mode) keeps only the pages you list, such as <code>1-3, 8, 10-12</code>, inside one PDF. To shrink the result afterward, try the <a href="/">PDF compressor</a>.</p>
+</div>
+
+<section class="faq">
+     <h2>PDF splitter — FAQ</h2>
+     <details open>
+           <summary>How do I split a PDF for free?</summary>
+           <p>Open SlimIO's PDF splitter, choose a PDF, pick "Each page as a separate PDF" or a page range like 1-3, 5, then click Split. The result downloads as a ZIP of pages or a single PDF.</p>
+     </details>
+     <details>
+           <summary>Can I extract only some pages from a PDF?</summary>
+           <p>Yes. In range mode you can type pages like 1-3, 8, 10-12 and only those pages are kept in the new PDF.</p>
+     </details>
+     <details>
+           <summary>Is it safe to split a PDF online?</summary>
+           <p>Yes. SlimIO splits files locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
+     </details>
+     <details>
+           <summary>What is the difference between split and extract?</summary>
+           <p>Split makes every page its own one-page PDF. Extract keeps a chosen range as a single multi-page PDF.</p>
+     </details>
+     <details>
+           <summary>Does the free PDF splitter have a limit?</summary>
+           <p>The free tier includes a per-day operation limit. No signup is required, and you can split right away.</p>
+     </details>
+</section>
+
+<div class="related">
+     <h3>Related tools</h3>
+     <div class="tools-row">
+           <a class="mini" href="/">Compress PDF</a>
+           <a class="mini" href="/merge.html">Merge PDF</a>
+           <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+           <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+     </div>
+</div>
+
+<div class="wrap">
+     <footer>
+           <div class="foot">
+               <div>© 2026 SlimIO · Free PDF tools</div>
+               <div>Runs in your browser · No signup</div>
+           </div>
+     </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+const { PDFDocument } = PDFLib;
+const drop = $("drop");
+const controls = $("controls");
+const mode = $("mode");
+const optRange = $("opt-range");
+const optPages = $("opt-pagesinfo");
+const rangeSel = $("range");
+const pagesInfo = $("pagesinfo");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+let doc = null;
+let pageCount = 0;
+
+mode.onchange = () => {
+    const range = mode.value === "range";
+    optRange.style.display = range ? "block" : "none";
+    fillRangeOptions();
+};
+
+function fillRangeOptions() {
+    rangeSel.innerHTML = "";
+    for (let i = 1; i <= Math.max(pageCount, 1); i++) {
+        const o = document.createElement("option");
+        o.value = String(i - 1);
+        o.textContent = i;
+        rangeSel.appendChild(o);
+    }
+    rangeSel.value = String(Math.max(pageCount - 1, 0));
+}
+
+async function setFile(f) {
+    if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+    SlimIO.clearError();
+    file = f;
+    drop.querySelector(".drop-title").textContent = f.name;
+    drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+    try {
+        doc = await PDFDocument.load(await f.arrayBuffer());
+        pageCount = doc.getPageCount();
+    } catch (e) { SlimIO.showError(`Could not read file: ${e.message}`); return; }
+    controls.classList.remove("hidden");
+    optPages.style.display = "block";
+    pagesInfo.textContent = `${pageCount} page${pageCount === 1 ? "" : "s"} in this PDF.`;
+    optRange.style.display = mode.value === "range" ? "block" : "none";
+    fillRangeOptions();
+    goBtn.disabled = false;
+    SlimIO.refreshStatus();
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+    e.preventDefault();
+    drop.classList.remove("drag");
+    if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+
+goBtn.addEventListener("click", split);
+
+function parseRanges(str, max) {
+    const out = [];
+    str.split(",").forEach((part) => {
+        const token = part.trim();
+        if (!token) return;
+        const m = token.match(/^(\d+)\s*-\s*(\d+)$/);
+        if (m) {
+            let a = parseInt(m[1], 10), b = parseInt(m[2], 10);
+            if (a > b) [a, b] = [b, a];
+            for (let p = a; p <= b; p++) out.push(p - 1);
+        } else {
+            const p = parseInt(token, 10);
+            if (!Number.isNaN(p)) out.push(p - 1);
+        }
+    });
+    return out.filter((p) => p >= 0 && p < max);
+}
+
+async function split() {
+    if (!doc) return;
+    SlimIO.clearError();
+    goBtn.disabled = true;
+    goBtn.textContent = "Splitting…";
+    prog.show();
+    result.style.display = "none";
+    try {
+        if (mode.value === "each") {
+            await splitEach();
+        } else {
+            await extractRange();
+        }
+        SlimIO.consume();
+    } catch (e) {
+        SlimIO.showError(`Split failed: ${e.message}`);
+    } finally {
+        goBtn.disabled = false;
+        goBtn.textContent = "Split PDF";
+        prog.hide();
+    }
+}
+
+let pendingDownload = null;
+let pendingName = "slimio_split.zip";
+
+async function splitEach() {
+    const zip = new JSZip();
+    const base = (file.name || "document").replace(/\.pdf$/i, "");
+    for (let i = 0; i < pageCount; i++) {
+        const out = await PDFDocument.create();
+        const copied = await out.copyPages(doc, [i]);
+        out.addPage(copied[0]);
+        const bytes = await out.save();
+        zip.file(`${base}_page_${i + 1}.pdf`, bytes);
+        prog.set(Math.round(((i + 1) / pageCount) * 100));
+    }
+    const blob = await zip.generateAsync({ type: "uint8array" });
+    const count = pageCount;
+    pendingName = `${base}.zip`;
+    showResult(`${count} pages`, blob, "application/zip");
+}
+
+async function extractRange() {
+    const raw = String(rangeSel.value).trim();
+    const pages = parseRanges(raw, pageCount);
+    if (pages.length === 0) { SlimIO.showError("No valid pages in that range."); return; }
+    const out = await PDFDocument.create();
+    const copied = await out.copyPages(doc, pages);
+    copied.forEach((p) => out.addPage(p));
+    const bytes = await out.save();
+    const name = (file.name || "document").replace(/\.pdf$/i, "") + "_extracted.pdf";
+    showResult(`${pages.length} pages`, bytes, "application/pdf", name);
+}
+
+function showResult(pagesTxt, data, type, name) {
+    result.style.display = "block";
+    $("after").textContent = pagesTxt;
+    pendingDownload = data;
+    pendingType = type;
+    pendingName = name || pendingName;
+    dl.textContent = "↓ Download " + (type === "application/zip" ? "ZIP" : "PDF");
+    dl.onclick = () => SlimIO.download(data, pendingName, type);
+}
+let pendingType = "application/pdf";
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>
