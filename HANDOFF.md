@@ -1,34 +1,36 @@
 # SlimIO — PDF Compressor · 핸드오프 문서
 
-**최종 업데이트: 2026-09-22** · **상태: 🛑 서비스 일시 중단 (Fly 크레딧 소진)**
+**최종 업데이트: 2026-09-23** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com 200)**
 
 ---
 
-## 🚨 당장 할 것 (순서대로)
-1. **Fly 카드 등록** → `https://fly.io/trial`
-   - 또는 **Oracle Cloud Always-Free**로 GS 서버 이관 (진짜 $0/월)
-2. 카드 등록 후 **머신 재기동/배포**:
-   ```
-   cd /Users/home/orca/workspaces/mymy/trout
-   flyctl deploy --app glowing-meadowbrook-286 --yes
-   ```
-3. **GitHub repo 생성 + 푸시** (아래 "다음 작업" ①)
+## 👉 다음 세션에서 바로 할 것 (순서대로)
+1. **GSC 제출** (검색 트래픽 1순위) — 아래 "⑤ Google Search Console":
+   - https://search.google.com/search-console
+   - `pdfslimio.com` Domain 추가 → **TXT 인증**(Cloudflare DNS에 GSC가 준 값 추가)
+   - 인증 후 **Sitemaps tab → `pdfslimio.com/sitemap.xml` Add & Test**
+   - Bing Webmaster 도 동일 (https://www.bing.com/webmasters)
+2. **광고 네트워크 가입** — Medvance(0트래픽 승인) 또는 Ezoic → `index.html` `#ad` div의 HTML 주석에 코드 붙임 → 재배포
+3. **og-cover.png는 생성됨** (`public/og-cover.png`, 1200×630) — 배포 시 live
 4. **Fly token 재발급** — `~/.fly/config.yml`의 `access_token`이 대화에 노출됨
-   (Dashboard → API Tokens → 새 토큰 생성 + 기존 삭제)
+   (Dashboard → API Tokens → 새로 만들되 기존 삭제)
+5. **X 홍보 1차** — 개인(1500 팔로워) → `@slimio` 브랜드계 병행 계획. 포스트 초안 아래 있음.
 
 ---
 
-## 지금 서비스 상태
+## 지금 서비스 상태 (확인됨, 2026-09-23)
 | 항목 | 상태 |
 |---|---|
-| `https://pdfslimio.com` | ❌ 525 (머신 정지/크레딧 소진) |
-| `https://glowing-meadowbrook-286.fly.dev` | ❌ 000 (머신 없음) |
-| 도메인 DNS | ✅ Cloudflare로 resolve됨 (A: 104.21.20.250 / 172.67.195.46) |
-| GS 압축 백엔드 | ✅ 코드 정상 (머신 부팅 시 동작 확인: /screen 12% 감소 등) |
-| GitHub | ✅ `showboyz`로 인증됨, **remote 미설정 / repo 미생성** |
-| 광고 슬롯 | ⚠️ `#ad` placeholder div만, 실제 광고 코드 없음 |
-| `og-cover.png` | ❌ 미생성 |
+| `https://pdfslimio.com` | ✅ **200 LIVE** |
+| `https://glowing-meadowbrook-286.fly.dev` | ✅ 200 |
+| 머신 수 | ✅ **1개** (7845741b401758, 256MB, ~$2.75/월) |
+| 도메인 DNS | ✅ Cloudflare resolve |
+| GS 압축 백엔드 | ✅ 동작 확인 (/screen 12% 등) |
+| GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
+| `og-cover.png` | ✅ 생성됨 (public/og-cover.png, 1200×630) |
+| 광고 슬롯 | ⚠️ `#ad` div에 Ezoic/AdSense/Medvance 코드 **자리(HTML 주석)预埋됨**, 실제 네트워크 코드 미삽입 |
 | Google Search Console | ❌ 미제출 |
+| Fly token | ⚠️ 재발급 필요 (대화에 노출됨) |
 
 ---
 
@@ -113,3 +115,18 @@ cd /Users/home/orca/workspaces/mymy/trout
 node server/server.cjs        # http://127.0.0.1:3001 (정적+GS)
 # 정적만: python3 -m http.server 8000 --directory public
 ```
+
+## X 홍보 + 피드백 (1500 팔로워 활용)
+- **전략**: 개인계(1500) 1차 홍보 → `@slimio` 신규 브랜드계 병행(장기 자산/광고 전용, 이탈 방지)
+- **피드백 채널**: X 리플/DM(1순위) + Google Form 1개(수집용)
+- **X 첫 포스트 초안**(질문 포함 → 리플↑):
+    > I built a free PDF compressor that runs **in your browser** so your files never leave your device. No signup, no install.
+    > https://pdfslimio.com
+    > (server mode keeps text sharp via Ghostscript)
+    > — what PDF tools do you actually rely on? /feedback welcome 🐟
+- **Product Hunt**(해당 1~2개월 후, 1회성 500–2000 트래픽, "프라이버시: 파일 안 나옴" 앵글)
+
+## SEO/수익화 (결정)
+- 검색 트래픽 = GSC 제출 **+ 롱테일 페이지** (merge/split/pdf-to-jpg 추가, "free ilovepdf alternative" 등)
+- 광고: 트래픽 1천+ → Medvance/Ezoic → 1천뷰+ → AdSense. Pro $5/월(aux).
+- 지금 무료 20회/일 유지.
