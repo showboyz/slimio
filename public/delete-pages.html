@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free Remove PDF Pages — Delete Pages from a PDF | SlimIO</title>
+<meta name="description" content="Free online tool to remove or delete pages from a PDF. Choose which pages to drop and download a smaller PDF in seconds. No signup, no install, runs in your browser." />
+<meta name="keywords" content="remove pdf pages, delete pdf pages, delete page from pdf, remove pages from pdf, pdf page remover, delete pdf page online" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/delete-pages.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Free Remove PDF Pages — Delete Pages | SlimIO" />
+<meta property="og:description" content="Delete specific pages from a PDF in seconds. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/delete-pages.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free Remove PDF Pages | SlimIO" />
+<meta name="twitter:description" content="Delete specific pages from a PDF in seconds. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+     "@context": "https://schema.org",
+     "@type": "WebApplication",
+     "name": "SlimIO Remove PDF Pages",
+      "url": "https://pdfslimio.com/delete-pages.html",
+      "description": "Free, privacy-first online PDF page remover. Delete specific pages from a PDF. Runs in your browser with no signup.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": ["Remove PDF pages", "Delete pages", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<script type="application/ld+json">
+{
+       "@context": "https://schema.org",
+       "@type": "FAQPage",
+       "mainEntity": [
+         {"@type": "Question", "name": "How do I delete pages from a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's PDF page remover, choose a PDF, list the pages you want to delete (e.g. 1, 3, 5-7), then click Remove. The remaining pages download as a new PDF. It runs in your browser, so there is nothing to install and no account needed."}},
+         {"@type": "Question", "name": "Is it safe to delete pages from a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO edits the file locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}},
+         {"@type": "Question", "name": "Can I use page ranges when removing pages?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. List pages like 1, 3, 5-7 and only those numbers are deleted, so every other page is kept."}},
+         {"@type": "Question", "name": "Will removing pages smaller the file?", "acceptedAnswer": {"@type": "Answer", "text": "Removing pages almost always makes the file smaller. For the smallest size, you can also use the PDF compressor afterward."}},
+         {"@type": "Question", "name": "Does the free PDF page remover have a limit?", "acceptedAnswer": {"@type": "Answer", "text": "The free tier includes a per-day operation limit. No signup is required, and you can remove pages right away."}}
+       ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
+<script>
+   window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) };
+   plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+     <nav>
+          <div class="brand"><span class="logo">📄</span> SlimIO</div>
+          <div class="nav-links">
+              <a href="/">Compress</a>
+              <a href="/delete-pages.html">Remove Pages</a>
+              <a href="/how">How it works</a>
+              <a href="/pricing">Pricing</a>
+          </div>
+     </nav>
+</div>
+
+<div class="wrap" id="tool">
+     <div class="hero">
+          <h1>Remove PDF pages,<br /><b>keep what matters.</b></h1>
+          <p>Delete the pages you don't need and download a clean, smaller PDF in seconds. Free, fast, no install — right in your browser.</p>
+          <div class="trust-row">
+              <span>⚡ Instant</span>
+              <span>🔒 Private</span>
+              <span>🆓 Free</span>
+              <span>📦 No install</span>
+          </div>
+     </div>
+
+     <div class="tool">
+          <div class="drop" id="drop">
+              <input type="file" id="pdf" accept="application/pdf" hidden />
+              <div class="drop-title">Drop your PDF here</div>
+              <div class="drop-or">or click to browse</div>
+              <div class="drop-sub" id="sub">File never leaves your device — editing happens locally in your browser.</div>
+          </div>
+
+          <div class="controls hidden" id="controls">
+              <div class="field">
+                  <label>Pages to remove <span class="hint" style="display:inline;">e.g. 1, 3, 5-7</span></label>
+                  <input type="text" id="pages" placeholder="1, 3, 5-7" style="width:100%;padding:9px;background:#0e1117;color:var(--text);border:1px solid var(--line);border-radius:8px;" />
+                  <div class="hint" id="pagesinfo">Comma-separated. Ranges use a dash (e.g. <code>5-7</code>).</div>
+              </div>
+
+              <div class="run-row">
+                  <button id="go" class="btn" disabled>Remove pages</button>
+              </div>
+              <div class="bar"><i id="prog"></i></div>
+          </div>
+
+          <div class="result" id="result">
+              <div class="row"><span>Pages removed</span><span id="merged" class="v">—</span></div>
+              <div class="row"><span>Pages left</span><span id="pages" class="v">—</span></div>
+              <div class="row"><span>New size</span><span id="after" class="v">—</span></div>
+              <a id="dl" class="dl">↓ Download PDF</a>
+          </div>
+
+          <div class="error" id="error"></div>
+          <div class="limit" id="limit"></div>
+          <div class="log" id="log"></div>
+     </div>
+
+     <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+        <!--
+         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
+          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
+          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
+          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
+          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
+        -->
+     </div>
+</div>
+
+<div class="content">
+     <h2>How to remove pages from a PDF — in 3 steps</h2>
+     <p>SlimIO's PDF page remover deletes the pages you name and keeps the rest. Everything runs in your browser, so your file stays private and there is nothing to install.</p>
+     <ul>
+         <li><b>1. Add your PDF.</b> Drop in one file, or click to browse.</li>
+         <li><b>2. List the pages to drop.</b> Type page numbers like <code>1, 3, 5-7</code> — only the pages you list are removed.</li>
+         <li><b>3. Download.</b> Click Remove and save the cleaned PDF to your device.</li>
+     </ul>
+     <h3>Remove vs split vs extract</h3>
+     <p><b>Remove</b> deletes the pages you don't want. <a href="/split.html"><b>Extract</b></a> (Split → range mode) instead keeps the pages you name. And if you want the smallest possible file, run the <a href="/">PDF compressor</a> afterward.</p>
+</div>
+
+<section class="faq">
+     <h2>Remove PDF pages — FAQ</h2>
+     <details open>
+         <summary>How do I delete pages from a PDF for free?</summary>
+         <p>Open SlimIO's PDF page remover, choose a PDF, list the pages you want to delete (e.g. 1, 3, 5-7), then click Remove. The remaining pages download as a new PDF. It runs in your browser, so there is nothing to install and no account needed.</p>
+     </details>
+     <details>
+         <summary>Is it safe to delete pages from a PDF online?</summary>
+         <p>Yes. SlimIO edits the file locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
+     </details>
+     <details>
+         <summary>Can I use page ranges when removing pages?</summary>
+         <p>Yes. List pages like 1, 3, 5-7 and only those numbers are deleted, so every other page is kept.</p>
+     </details>
+     <details>
+         <summary>Will removing pages make the file smaller?</summary>
+         <p>Removing pages almost always makes the file smaller. For the smallest size, you can also use the PDF compressor afterward.</p>
+     </details>
+     <details>
+         <summary>Does the free PDF page remover have a limit?</summary>
+         <p>The free tier includes a per-day operation limit. No signup is required, and you can remove pages right away.</p>
+     </details>
+</section>
+
+<div class="related">
+     <h3>Related tools</h3>
+     <div class="tools-row">
+         <a class="mini" href="/">Compress PDF</a>
+         <a class="mini" href="/merge.html">Merge PDF</a>
+         <a class="mini" href="/split.html">Split PDF</a>
+         <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+         <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+     </div>
+</div>
+
+<div class="wrap">
+     <footer>
+         <div class="foot">
+             <div>© 2026 SlimIO · Free PDF tools</div>
+             <div>Runs in your browser · No signup</div>
+         </div>
+     </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+const { PDFDocument } = PDFLib;
+const drop = $("drop");
+const controls = $("controls");
+const pagesInput = $("pages");
+const pagesInfo = $("pagesinfo");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+let pageCount = 0;
+
+function parseNumbers(str, max) {
+    const out = new Set();
+    str.split(",").forEach((part) => {
+        const token = part.trim();
+        if (!token) return;
+        const m = token.match(/^(\d+)\s*-\s*(\d+)$/);
+        if (m) {
+            let a = parseInt(m[1], 10), b = parseInt(m[2], 10);
+            if (a > b) [a, b] = [b, a];
+            for (let p = a; p <= b; p++) out.add(p);
+        } else {
+            const p = parseInt(token, 10);
+            if (!Number.isNaN(p)) out.add(p);
+        }
+    });
+    return out.filter((p) => p >= 1 && p <= max).sort((a, b) => a - b);
+}
+
+function setFile(f) {
+     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+     SlimIO.clearError();
+     file = f;
+     drop.querySelector(".drop-title").textContent = f.name;
+     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     controls.classList.remove("hidden");
+     goBtn.disabled = !pagesInput.value.trim();
+     SlimIO.refreshStatus();
+}
+
+pagesInput.addEventListener("input", () => {
+    if (pageCount > 0) {
+        const removed = parseNumbers(pagesInput.value, pageCount).length;
+        pagesInfo.textContent = `This PDF has ${pageCount} page${pageCount === 1 ? "" : "s"}. You are removing ${removed}.`;
+    }
+    goBtn.disabled = !pagesInput.value.trim();
+});
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+    e.preventDefault();
+    drop.classList.remove("drag");
+    if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+})
+
+goBtn.addEventListener("click", remove);
+
+async function remove() {
+     if (!file || !pagesInput.value.trim()) return;
+     SlimIO.clearError();
+     goBtn.disabled = true;
+     goBtn.textContent = "Removing…";
+     prog.show();
+     result.style.display = "none";
+     try {
+            const check = await SlimIO.consume();
+            if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+
+            const data = await file.arrayBuffer();
+            const src = await PDFDocument.load(data);
+            pageCount = src.getPageCount();
+            const removed = parseNumbers(pagesInput.value, pageCount);
+            if (removed.length === 0) { SlimIO.showError("None of those page numbers exist in this PDF."); return; }
+            if (removed.length >= pageCount) { SlimIO.showError("You can't remove every page — the result would be empty."); return; }
+
+            removed.forEach((p) => src.removePage(p - 1));
+            const out = await src.save();
+            prog.set(100);
+            showResult(removed.length, src.getPageCount(), out);
+     } catch (e) {
+            SlimIO.showError(`Remove failed: ${e.message}`);
+     } finally {
+            goBtn.disabled = !!pagesInput.value.trim();
+            goBtn.textContent = "Remove pages";
+            prog.hide();
+     }
+}
+
+function showResult(removedCount, left, bytes) {
+     result.style.display = "block";
+     $("merged").textContent = removedCount;
+     $("pages").textContent = left;
+     $("after").textContent = SlimIO.formatSize(bytes.length);
+     dl.textContent = "↓ Download PDF";
+     dl.onclick = () => SlimIO.download(bytes, "slimio_removed.pdf", "application/pdf");
+}
+
+SlimIO.refreshStatus();
+   </script>
+   </body>
+</html>
