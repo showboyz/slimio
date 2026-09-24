@@ -35,6 +35,11 @@
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ/Plausible) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
 회전 페이지에 텍스트 그릴 땐 `SlimIO.page2user(page)` 사용
+⚠️ **Cloudflare가 .js/.css/.txt를 4시간 캐시함** → `lib.js`/`style.css` 수정 시 HTML의 `?v=` 해시를 갱신:
+```
+cd public && JS=$(shasum lib.js|cut -c1-8) CSS=$(shasum style.css|cut -c1-8) && for f in *.html; do sed -i '' -E "s#/lib\.js(\?v=[a-z0-9]+)?\"#/lib.js?v=$JS\"#g; s#/style\.css(\?v=[a-z0-9]+)?\"#/style.css?v=$CSS\"#g" "$f"; done
+```
+robots.txt·sitemap.xml 변경은 Cloudflare 대시보드 → Caching → Purge 로 즉시 반영
 
 ---
 
