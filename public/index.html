@@ -191,11 +191,27 @@
     footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 30px 0 40px; }
     .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; font-size: 13px; color: var(--muted); }
 
-    @media (max-width: 720px) {
-        .grid, .plans { grid-template-columns: 1fr; }
-        .nav-links { display: none; }
-    }
-</style>
+      @media (max-width: 720px) {
+          .grid, .plans { grid-template-columns: 1fr; }
+          .nav-links { display: none; }
+      }
+
+     /* more tools */
+     .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+     .toolcard {
+         background: var(--card); border: 1px solid var(--line);
+         border-radius: 14px; padding: 22px 18px; text-align: center;
+         color: var(--text); transition: 0.15s;
+     }
+     .toolcard:hover { border-color: var(--accent); transform: translateY(-2px); }
+     .toolcard .ico { font-size: 26px; }
+     .toolcard h3 { font-size: 15px; margin: 10px 0 4px; }
+     .toolcard p { font-size: 12px; color: var(--muted); }
+
+@media (max-width: 720px) {
+     .tools-grid { grid-template-columns: repeat(2, 1fr); }
+ }
+ </style>
 <!-- Privacy-friendly analytics by Plausible -->
     <script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
     <script>
@@ -207,12 +223,13 @@
     <div class="wrap">
         <nav>
             <div class="brand"><span class="logo">📄</span> SlimIO</div>
-            <div class="nav-links">
-                <a href="#how">How it works</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#security">Security</a>
-                <a href="#tool">Try free</a>
-            </div>
+          <div class="nav-links">
+              <a href="#tools">Tools</a>
+              <a href="#how">How it works</a>
+              <a href="#pricing">Pricing</a>
+              <a href="#security">Security</a>
+              <a href="#tool">Try free</a>
+          </div>
         </nav>
     </div>
 
@@ -339,7 +356,21 @@
           </div>
       </section>
 
-   <!-- pricing -->
+     <!-- more tools -->
+     <section class="steps" id="tools">
+          <div class="wrap">
+              <h2 class="sec">All PDF tools</h2>
+              <p class="sec-sub">Everything runs in your browser. Free, no signup.</p>
+              <div class="tools-grid">
+                  <a class="toolcard" href="/merge.html"><div class="ico">➕</div><h3>Merge PDF</h3><p>Combine multiple PDFs into one</p></a>
+                  <a class="toolcard" href="/split.html"><div class="ico">✂️</div><h3>Split PDF</h3><p>Extract pages or split by range</p></a>
+                  <a class="toolcard" href="/pdf-to-jpg.html"><div class="ico">🖼️</div><h3>PDF to JPG</h3><p>Convert pages to images</p></a>
+                  <a class="toolcard" href="/jpg-to-pdf.html"><div class="ico">📷</div><h3>JPG to PDF</h3><p>Turn images into a PDF</p></a>
+              </div>
+          </div>
+      </section>
+
+     <!-- pricing -->
       <section class="steps" id="pricing">
           <div class="wrap">
               <h2 class="sec">Simple, free pricing</h2>
