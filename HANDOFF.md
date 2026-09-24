@@ -19,6 +19,7 @@
 |---|---|
 | `https://pdfslimio.com` | ✅ LIVE |
 | 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · **Organize** · **Page Numbers** · **Watermark** · PDF→JPG · JPG→PDF |
+| 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
 | Plausible | ✅ 전 페이지 설치 + `Tool Used` 이벤트(props.tool) — 대시보드 Goal 설정 필요 |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
@@ -31,6 +32,16 @@
 - 다운로드 버튼이 탭을 blob PDF로 이동시키던 문제 수정 (index, merge)
 - 서버: 잘못된 URL(`%E0`)로 **프로세스 크래시** → 400 처리, 업로드 50MB 제한(413), 요청 예외 시 500(크래시 방지), X-Level 화이트리스트, 거부된 요청은 횟수 차감 안 함, 날짜 바뀌면 카운터 정리
 - `robots.txt` → `text/plain`, 404.html 추가, 도구 페이지 nav `/how`·`/pricing` 404 → `/#how`·`/#pricing` + "All tools"
+
+### 목표 용량 압축 페이지 (롱테일 SEO)
+- `public/target.js`: ① 서버 GS(`screen`, 1MB 이상 목표는 `ebook`) → 목표 이하면 끝(텍스트 유지) ② 아니면 브라우저에서 해상도 단계별 래스터화, 각 단계에서 목표에 맞는 최고 JPEG 품질 선택 ③ 못 맞추면 가장 작은 결과 + 안내
+- 페이지는 **생성기로 만듦**: `tools/gen_size_pages.py` + `tools/size_template.html` (페이지별 문구·FAQ는 py 안의 `PAGES`)
+  ```
+  cd public && python3 ../tools/gen_size_pages.py . $(shasum lib.js|cut -c1-8) $(shasum style.css|cut -c1-8) $(shasum target.js|cut -c1-8)
+  ```
+  새 용량 추가 시 `PAGES`·`SIBLINGS`에 항목 추가 → 재생성 → `index.html` "Need an exact size?" 줄 + `sitemap.xml`
+- 페이지마다 쓰임새/팁/FAQ를 실제로 다르게 유지할 것 (복제 페이지는 Google이 스팸 처리)
+- `/api/consume`: 차감 **전에** 한도 판단 (이전엔 20번째 사용이 막혔음)
 
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ/Plausible) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)

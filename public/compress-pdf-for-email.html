@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compress PDF for Email — Shrink PDF to Send | SlimIO</title>
+<meta name="description" content="PDF too large to email? Shrink it under Gmail, Outlook and company attachment limits. Free, no signup, keeps the best quality that fits." />
+<meta name="keywords" content="compress pdf for email, pdf too large to email, reduce pdf size for email, shrink pdf to send, pdf attachment too big" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/compress-pdf-for-email.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Compress PDF for Email — Shrink PDF to Send | SlimIO" />
+<meta property="og:description" content="PDF too large to email? Shrink it under Gmail, Outlook and company attachment limits. Free, no signup, keeps the best quality that fits." />
+<meta property="og:url" content="https://pdfslimio.com/compress-pdf-for-email.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Compress PDF for Email | SlimIO" />
+<meta name="twitter:description" content="PDF too large to email? Shrink it under Gmail, Outlook and company attachment limits. Free, no signup, keeps the best quality that fits." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO Compress PDF for Email",
+      "url": "https://pdfslimio.com/compress-pdf-for-email.html",
+      "description": "PDF too large to email? Shrink it under Gmail, Outlook and company attachment limits. Free, no signup, keeps the best quality that fits.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+      }
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "How do I make a PDF small enough to email?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Drop it on this page and click Compress. The default 10MB target fits nearly every email service. The compressed PDF downloads right away."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What size should a PDF be for Gmail?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Gmail allows 25MB per message, but encoding adds about a third in transit. Keep the PDF under about 18MB \u2014 or pick 10MB to be safe."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Why was my email rejected even though the file is under the limit?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "The recipient's mail server may have a smaller limit, and attachments grow when encoded for sending. Compress to 10MB or less."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Will the recipient see a lower-quality PDF?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "SlimIO keeps text sharp whenever it can and only reduces image detail as much as needed. For typical documents the difference is hard to notice."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Is there a size limit for the file I upload?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Files up to 50MB get text-preserving compression on our server. Larger files are compressed entirely in your browser."
+                  }
+            }
+      ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css?v=e2b33108" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
+<script>
+   window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function(i) { plausible.o = i || {} };
+   plausible.init();
+</script>
+<style>
+.note { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+.note.warn { color: #ffcf6e; }
+.status { font-size: 13px; color: var(--muted); text-align: center; margin-top: 10px; min-height: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>PDF too big<br /><b>to email?</b></h1>
+           <p>Shrink your PDF under Gmail, Outlook or your company's attachment limit — keeping it as sharp as possible.</p>
+           <div class="trust-row">
+               <span>🎯 Hits your size</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub">Nothing is kept — files are deleted right after compressing.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>Target size</label>
+                   <select id="target">
+                       <option value="50KB">Under 50KB</option>
+                       <option value="100KB">Under 100KB</option>
+                       <option value="150KB">Under 150KB</option>
+                       <option value="200KB">Under 200KB</option>
+                       <option value="300KB">Under 300KB</option>
+                       <option value="500KB">Under 500KB</option>
+                       <option value="1MB">Under 1MB</option>
+                       <option value="2MB">Under 2MB</option>
+                       <option value="5MB">Under 5MB</option>
+                       <option value="10MB" selected>Under 10MB</option>
+                       <option value="20MB">Under 20MB</option>
+                       <option value="25MB">Under 25MB</option>
+                   </select>
+                   <div class="hint">SlimIO keeps the best quality that still fits under this size.</div>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Compress PDF</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+               <div class="status" id="status"></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Original</span><span id="orig" class="v">—</span></div>
+               <div class="row"><span>Compressed</span><span id="after" class="v">—</span></div>
+               <div class="row"><span>Target</span><span id="fit" class="v">—</span></div>
+               <div class="note" id="note"></div>
+               <a id="dl" class="dl">↓ Download PDF</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+      </div>
+</div>
+
+<div class="content">
+
+      <h2>How to compress a PDF for email</h2>
+      <ul>
+          <li><b>1. Add your PDF.</b> The target is preset to 10MB, which gets through almost any mail server.</li>
+          <li><b>2. Pick a limit</b> if you know it — see the table below — and click Compress.</li>
+          <li><b>3. Download and attach.</b></li>
+      </ul>
+      <h3>Email attachment limits</h3>
+      <ul>
+          <li><b>Gmail:</b> 25MB total per message.</li>
+          <li><b>Outlook.com:</b> 20MB per message for regular attachments.</li>
+          <li><b>Yahoo Mail:</b> 25MB per message.</li>
+          <li><b>Work email:</b> company mail servers are often set to 10MB, and the recipient's server limit applies too.</li>
+      </ul>
+      <h3>Why a 20MB file can bounce from a 25MB inbox</h3>
+      <p>Attachments are encoded for sending, which makes them roughly a third larger in transit. A 20MB PDF can travel as about 27MB and be rejected. Aim for a file comfortably below the limit — 10MB is a safe choice when you don't know the recipient's setup.</p>
+      <h3>Sending several documents?</h3>
+      <p>Combine them with <a href="/merge.html">Merge PDF</a> first, then compress once. If one message still can't fit everything, use <a href="/split.html">Split PDF</a> and send the parts in separate emails.</p>
+</div>
+
+<section class="faq">
+      <h2>Compress PDF for Email — FAQ</h2>
+      <details open>
+          <summary>How do I make a PDF small enough to email?</summary>
+          <p>Drop it on this page and click Compress. The default 10MB target fits nearly every email service. The compressed PDF downloads right away.</p>
+      </details>
+      <details>
+          <summary>What size should a PDF be for Gmail?</summary>
+          <p>Gmail allows 25MB per message, but encoding adds about a third in transit. Keep the PDF under about 18MB — or pick 10MB to be safe.</p>
+      </details>
+      <details>
+          <summary>Why was my email rejected even though the file is under the limit?</summary>
+          <p>The recipient&#x27;s mail server may have a smaller limit, and attachments grow when encoded for sending. Compress to 10MB or less.</p>
+      </details>
+      <details>
+          <summary>Will the recipient see a lower-quality PDF?</summary>
+          <p>SlimIO keeps text sharp whenever it can and only reduces image detail as much as needed. For typical documents the difference is hard to notice.</p>
+      </details>
+      <details>
+          <summary>Is there a size limit for the file I upload?</summary>
+          <p>Files up to 50MB get text-preserving compression on our server. Larger files are compressed entirely in your browser.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Compress to another size</h3>
+      <div class="tools-row">
+          <a class="mini" href="/compress-pdf-to-100kb.html">Compress to 100KB</a>
+          <a class="mini" href="/compress-pdf-to-200kb.html">Compress to 200KB</a>
+          <a class="mini" href="/compress-pdf-to-500kb.html">Compress to 500KB</a>
+          <a class="mini" href="/compress-pdf-to-1mb.html">Compress to 1MB</a>
+      </div>
+</div>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/rotate.html">Rotate PDF</a>
+          <a class="mini" href="/organize.html">Organize PDF</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>No signup · Files are never stored</div>
+          </div>
+      </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js?v=cc1156ba"></script>
+<script src="/target.js?v=61294098"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const drop = $("drop");
+const controls = $("controls");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const statusEl = $("status");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+
+function setFile(f) {
+     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+     SlimIO.clearError();
+     file = f;
+     drop.querySelector(".drop-title").textContent = f.name;
+     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     controls.classList.remove("hidden");
+     result.style.display = "none";
+     goBtn.disabled = false;
+     SlimIO.refreshStatus();
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+     e.preventDefault();
+     drop.classList.remove("drag");
+     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+
+goBtn.addEventListener("click", compress);
+
+async function compress() {
+     if (!file) return;
+     const label = $("target").value;
+     const target = SlimTarget.parseSize(label);
+     SlimIO.clearError();
+     goBtn.disabled = true;
+     goBtn.textContent = "Compressing…";
+     prog.show();
+     prog.set(5);
+     result.style.display = "none";
+     try {
+             const r = await SlimTarget.run(file, target, (p) => prog.set(5 + p * 95), (msg) => (statusEl.textContent = msg));
+             if (r.limited) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+             showResult(r, label);
+     } catch (e) {
+             SlimIO.showError(`Compression failed: ${e.message}`);
+     } finally {
+             goBtn.disabled = false;
+             goBtn.textContent = "Compress PDF";
+             statusEl.textContent = "";
+             prog.hide();
+     }
+}
+
+function showResult(r, label) {
+     result.style.display = "block";
+     $("orig").textContent = SlimIO.formatSize(file.size);
+     $("after").textContent = SlimIO.formatSize(r.bytes.length);
+     $("fit").textContent = r.fits ? `✓ under ${label}` : `✗ over ${label}`;
+     const note = $("note");
+     note.className = "note" + (r.fits ? "" : " warn");
+     if (r.method === "original") note.textContent = `Your PDF is already under ${label} — no compression needed.`;
+     else if (!r.fits) note.textContent = `This is the smallest we could make it. To get under ${label}, remove pages you don't need or split the file into parts.`;
+     else if (r.method === "server") note.textContent = "Text kept sharp and selectable.";
+     else {
+             const dpi = Math.round(r.scale * 72);
+             note.textContent = `To reach ${label}, pages were converted to images at about ${dpi} dpi. The text is no longer selectable.` +
+                     (dpi < 50 ? " Small print may be hard to read — removing pages you don't need will give a sharper result." : "");
+             if (dpi < 50) note.className = "note warn";
+     }
+     const base = file.name.replace(/\.pdf$/i, "");
+     dl.onclick = () => SlimIO.download(r.bytes, `${base}_${label.toLowerCase()}.pdf`, "application/pdf");
+}
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>

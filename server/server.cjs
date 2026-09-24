@@ -82,9 +82,9 @@ async function handle(req, res) {
      }
 
      if (req.url === "/api/consume" && req.method === "POST") {
-        consume(ip);
-        const left = remaining(ip);
-        return sendJson(res, 200, { ok: left > 0, remaining: left, limit: DAILY_LIMIT });
+        const allowed = remaining(ip) > 0;   // decide before counting, so the last use is allowed
+        if (allowed) consume(ip);
+        return sendJson(res, 200, { ok: allowed, remaining: remaining(ip), limit: DAILY_LIMIT });
      }
 
    if (req.url === "/api/compress" && req.method === "POST") {
