@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free PDF Rotator — Rotate PDF Pages | SlimIO</title>
+<meta name="description" content="Free online PDF rotator. Rotate every page of a PDF 90, 180 or 270 degrees in seconds. No signup, no install, runs in your browser — your files never leave your device." />
+<meta name="keywords" content="rotate pdf, rotate pdf pages, turn pdf, rotate pdf online, free pdf rotator, fix sideways pdf" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/rotate.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Free PDF Rotator — Rotate PDF Pages | SlimIO" />
+<meta property="og:description" content="Rotate every page of a PDF 90, 180 or 270 degrees in seconds. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/rotate.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Free PDF Rotator | SlimIO" />
+<meta name="twitter:description" content="Rotate every page of a PDF 90, 180 or 270 degrees in seconds. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO PDF Rotator",
+       "url": "https://pdfslimio.com/rotate.html",
+       "description": "Free, privacy-first online PDF rotator. Rotate PDF pages 90, 180 or 270 degrees. Runs in your browser with no signup.",
+       "applicationCategory": "UtilityApplication",
+       "operatingSystem": "Any",
+       "browserRequirements": "Requires a modern web browser",
+       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+       "featureList": ["Rotate PDF", "Rotate pages", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<script type="application/ld+json">
+{
+         "@context": "https://schema.org",
+         "@type": "FAQPage",
+         "mainEntity": [
+           {"@type": "Question", "name": "How do I rotate a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's PDF rotator, choose a PDF, pick 90, 180 or 270 degrees, and click Rotate. Every page turns and downloads as a new PDF. It runs in your browser, so there is nothing to install and no account needed."}},
+           {"@type": "Question", "name": "Is it safe to rotate a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO rotates the file locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}},
+           {"@type": "Question", "name": "Can I rotate only some pages?", "acceptedAnswer": {"@type": "Answer", "text": "The rotator turns every page for a clean, consistent result. For per-page work, combine it with the Split tool after rotating."}},
+           {"@type": "Question", "name": "Why is my PDF sideways?", "acceptedAnswer": {"@type": "Answer", "text": "Scanners and some apps save pages in landscape. Rotating 90 or 270 degrees usually fixes a sideways PDF."}},
+           {"@type": "Question", "name": "Does the free PDF rotator have a limit?", "acceptedAnswer": {"@type": "Answer", "text": "The free tier includes a per-day operation limit. No signup is required, and you can rotate right away."}}
+         ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
+<script>
+   window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) };
+   plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/rotate.html">Rotate</a>
+               <a href="/how">How it works</a>
+               <a href="/pricing">Pricing</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Rotate your PDF,<br /><b>the right way up.</b></h1>
+           <p>Turn every page of a PDF 90, 180 or 270 degrees in seconds. Free, fast, no install — right in your browser.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub" id="sub">File never leaves your device — rotation happens locally in your browser.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>Rotation</label>
+                   <select id="angle">
+                       <option value="0">No rotate</option>
+                       <option value="90">90° clockwise</option>
+                       <option value="180">180°</option>
+                       <option value="270">270° (90° counter-clockwise)</option>
+                   </select>
+                   <div class="hint">Every page is rotated by the same amount.</div>
+               </div>
+
+               <div class="field" id="pagesinfo" style="display:none;">
+                   <label>Pages in this PDF</label>
+                   <div id="pagecount" style="font-size:13px;color:var(--text);"></div>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Rotate PDF</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+               <div class="row"><span>Rotated</span><span id="rotated" class="v">—</span></div>
+               <a id="dl" class="dl">↓ Download PDF</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+         <!--
+         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
+          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
+          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
+          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
+          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
+         -->
+      </div>
+</div>
+
+<div class="content">
+      <h2>How to rotate a PDF — in 3 steps</h2>
+      <p>SlimIO's PDF rotator turns every page of a document to the orientation you want. Everything runs in your browser, so your file stays private and there is nothing to install.</p>
+      <ul>
+          <li><b>1. Add your PDF.</b> Drop in one file, or click to browse.</li>
+          <li><b>2. Pick an angle.</b> Choose 90, 180 or 270 degrees. Every page turns the same amount.</li>
+          <li><b>3. Download.</b> Click Rotate and save the turned PDF to your device.</li>
+      </ul>
+      <h3>Fix a sideways PDF</h3>
+      <p>Scanners and some apps save pages sideways. Rotating 90 or 270 degrees usually fixes it. To shrink the result afterward, run the <a href="/">PDF compressor</a>, or use <a href="/split.html">Split</a> to keep some pages.</p>
+</div>
+
+<section class="faq">
+      <h2>Rotate PDF — FAQ</h2>
+      <details open>
+          <summary>How do I rotate a PDF for free?</summary>
+          <p>Open SlimIO's PDF rotator, choose a PDF, pick 90, 180 or 270 degrees, and click Rotate. Every page turns and downloads as a new PDF. It runs in your browser, so there is nothing to install and no account needed.</p>
+      </details>
+      <details>
+          <summary>Is it safe to rotate a PDF online?</summary>
+          <p>Yes. SlimIO rotates the file locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
+      </details>
+      <details>
+          <summary>Can I rotate only some pages?</summary>
+          <p>The rotator turns every page for a clean, consistent result. For per-page work, combine it with the Split tool after rotating.</p>
+      </details>
+      <details>
+          <summary>Why is my PDF sideways?</summary>
+          <p>Scanners and some apps save pages in landscape. Rotating 90 or 270 degrees usually fixes a sideways PDF.</p>
+      </details>
+      <details>
+          <summary>Does the free PDF rotator have a limit?</summary>
+          <p>The free tier includes a per-day operation limit. No signup is required, and you can rotate right away.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+          </div>
+      </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+const { PDFDocument, degrees } = PDFLib;
+const drop = $("drop");
+const controls = $("controls");
+const angle = $("angle");
+const pagesInfo = $("pagesinfo");
+const pageCountEl = $("pagecount");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+let pageCount = 0;
+
+function setFile(f) {
+     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+     SlimIO.clearError();
+     file = f;
+     drop.querySelector(".drop-title").textContent = f.name;
+     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     controls.classList.remove("hidden");
+     goBtn.disabled = false;
+     SlimIO.refreshStatus();
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+     e.preventDefault();
+     drop.classList.remove("drag");
+     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+
+goBtn.addEventListener("click", rotate);
+
+async function rotate() {
+     if (!file) return;
+     SlimIO.clearError();
+     goBtn.disabled = true;
+     goBtn.textContent = "Rotating…";
+     prog.show();
+     result.style.display = "none";
+     try {
+             const check = await SlimIO.consume();
+             if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+
+             const data = await file.arrayBuffer();
+             const doc = await PDFDocument.load(data);
+             pageCount = doc.getPageCount();
+             const deg = parseInt(angle.value, 10);
+
+             for (let i = 0; i < pageCount; i++) {
+                 const page = doc.getPage(i);
+                 let current = page.getRotation();
+                 page.setRotation(degrees((current.degrees + deg) % 360));
+                 prog.set(Math.round(((i + 1) / pageCount) * 100));
+             }
+             const out = await doc.save();
+             showResult(pageCount, deg, out);
+     } catch (e) {
+             SlimIO.showError(`Rotate failed: ${e.message}`);
+     } finally {
+             goBtn.disabled = false;
+             goBtn.textContent = "Rotate PDF";
+             prog.hide();
+     }
+}
+
+function showResult(count, deg, bytes) {
+     result.style.display = "block";
+      $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
+      $("rotated").textContent = deg === 0 ? "No rotation" : `${deg}° clockwise`;
+      dl.textContent = "↓ Download PDF";
+      dl.onclick = () => SlimIO.download(bytes, "slimio_rotated.pdf", "application/pdf");
+}
+
+SlimIO.refreshStatus();
+    </script>
+    </body>
+</html>
