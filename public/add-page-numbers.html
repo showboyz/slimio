@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Add Page Numbers to PDF — Free & Online | SlimIO</title>
+<meta name="description" content="Free online tool to add page numbers to a PDF. Pick the position, format and starting number. No signup, no install, runs in your browser — your files never leave your device." />
+<meta name="keywords" content="add page numbers to pdf, number pdf pages, pdf page numbering, insert page numbers pdf, free pdf page numbers" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/add-page-numbers.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Add Page Numbers to PDF — Free & Online | SlimIO" />
+<meta property="og:description" content="Add page numbers to any PDF. Choose position, format and start number. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/add-page-numbers.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Add Page Numbers to PDF | SlimIO" />
+<meta name="twitter:description" content="Add page numbers to any PDF. Choose position, format and start number. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO Add Page Numbers",
+      "url": "https://pdfslimio.com/add-page-numbers.html",
+      "description": "Free, privacy-first tool to add page numbers to a PDF. Choose position, format and starting number. Runs in your browser with no signup.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": ["Add page numbers to PDF", "Custom position and format", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I add page numbers to a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's page numbering tool, choose a PDF, pick a position and format, and click Add page numbers. The numbered PDF downloads right away. It runs in your browser, so there is nothing to install and no account needed."}},
+        {"@type": "Question", "name": "Can I start numbering from a different page?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Set 'Skip first pages' to leave a cover page unnumbered, and set 'Start at' to choose the first number shown."}},
+        {"@type": "Question", "name": "Can I use the 'Page 1 of 10' format?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Choose between 1, Page 1, 1 / 10 and Page 1 of 10."}},
+        {"@type": "Question", "name": "Is it safe to number a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO adds the numbers locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}},
+        {"@type": "Question", "name": "Does it work on rotated or landscape pages?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Numbers are placed as you see the page, so landscape and rotated pages get numbers in the right spot and the right way up."}}
+      ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
+<script>
+   window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function(i) { plausible.o = i || {} };
+   plausible.init();
+</script>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/add-page-numbers.html">Page Numbers</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Add page numbers<br /><b>to any PDF.</b></h1>
+           <p>Number every page in seconds. Pick the position, format and starting number. Free, fast, no install — right in your browser.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub" id="sub">File never leaves your device — numbering happens locally in your browser.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>Position</label>
+                   <select id="pos">
+                       <option value="bottom-center" selected>Bottom center</option>
+                       <option value="bottom-right">Bottom right</option>
+                       <option value="bottom-left">Bottom left</option>
+                       <option value="top-center">Top center</option>
+                       <option value="top-right">Top right</option>
+                       <option value="top-left">Top left</option>
+                   </select>
+               </div>
+
+               <div class="field">
+                   <label>Format</label>
+                   <select id="fmt">
+                       <option value="n" selected>1</option>
+                       <option value="page-n">Page 1</option>
+                       <option value="n-of">1 / 10</option>
+                       <option value="page-n-of">Page 1 of 10</option>
+                   </select>
+               </div>
+
+               <div class="field">
+                   <label>Font size</label>
+                   <select id="size">
+                       <option value="9">Small (9pt)</option>
+                       <option value="11" selected>Medium (11pt)</option>
+                       <option value="14">Large (14pt)</option>
+                   </select>
+               </div>
+
+               <div class="field">
+                   <label>Skip first pages</label>
+                   <select id="skip">
+                       <option value="0" selected>None — number every page</option>
+                       <option value="1">Skip 1 (cover page)</option>
+                       <option value="2">Skip 2</option>
+                       <option value="3">Skip 3</option>
+                   </select>
+                   <div class="hint">Skipped pages stay unnumbered.</div>
+               </div>
+
+               <div class="field">
+                   <label>Start at</label>
+                   <select id="start">
+                       <option value="1" selected>1</option>
+                       <option value="0">0</option>
+                       <option value="2">2</option>
+                       <option value="3">3</option>
+                   </select>
+                   <div class="hint">The number shown on the first numbered page.</div>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Add page numbers</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+               <div class="row"><span>Numbered</span><span id="numbered" class="v">—</span></div>
+               <a id="dl" class="dl">↓ Download PDF</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+      </div>
+</div>
+
+<div class="content">
+      <h2>How to add page numbers to a PDF — in 3 steps</h2>
+      <p>SlimIO's page numbering tool stamps a clean page number on every page of your document. Everything runs in your browser, so your file stays private and there is nothing to install.</p>
+      <ul>
+          <li><b>1. Add your PDF.</b> Drop in one file, or click to browse.</li>
+          <li><b>2. Choose a style.</b> Pick the position (top or bottom, left, center or right), the format and the font size.</li>
+          <li><b>3. Download.</b> Click Add page numbers and save the numbered PDF to your device.</li>
+      </ul>
+      <h3>Skip the cover page</h3>
+      <p>Reports and theses often leave the cover unnumbered. Set <b>Skip first pages</b> to 1 and the numbering starts on page two. Need a different order first? Use <a href="/organize.html">Organize PDF</a>, then number the result. To shrink the file afterward, run the <a href="/">PDF compressor</a>.</p>
+</div>
+
+<section class="faq">
+      <h2>Add page numbers — FAQ</h2>
+      <details open>
+          <summary>How do I add page numbers to a PDF for free?</summary>
+          <p>Open SlimIO's page numbering tool, choose a PDF, pick a position and format, and click Add page numbers. The numbered PDF downloads right away. It runs in your browser, so there is nothing to install and no account needed.</p>
+      </details>
+      <details>
+          <summary>Can I start numbering from a different page?</summary>
+          <p>Yes. Set "Skip first pages" to leave a cover page unnumbered, and set "Start at" to choose the first number shown.</p>
+      </details>
+      <details>
+          <summary>Can I use the "Page 1 of 10" format?</summary>
+          <p>Yes. Choose between 1, Page 1, 1 / 10 and Page 1 of 10.</p>
+      </details>
+      <details>
+          <summary>Is it safe to number a PDF online?</summary>
+          <p>Yes. SlimIO adds the numbers locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
+      </details>
+      <details>
+          <summary>Does it work on rotated or landscape pages?</summary>
+          <p>Yes. Numbers are placed as you see the page, so landscape and rotated pages get numbers in the right spot and the right way up.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/rotate.html">Rotate PDF</a>
+          <a class="mini" href="/organize.html">Organize PDF</a>
+          <a class="mini" href="/watermark.html">Watermark PDF</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+          </div>
+      </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib;
+const drop = $("drop");
+const controls = $("controls");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+
+function setFile(f) {
+     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+     SlimIO.clearError();
+     file = f;
+     drop.querySelector(".drop-title").textContent = f.name;
+     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     controls.classList.remove("hidden");
+     goBtn.disabled = false;
+     SlimIO.refreshStatus();
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+     e.preventDefault();
+     drop.classList.remove("drag");
+     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+
+goBtn.addEventListener("click", addNumbers);
+
+function label(fmt, n, total) {
+     if (fmt === "page-n") return `Page ${n}`;
+     if (fmt === "n-of") return `${n} / ${total}`;
+     if (fmt === "page-n-of") return `Page ${n} of ${total}`;
+     return String(n);
+}
+
+async function addNumbers() {
+     if (!file) return;
+     SlimIO.clearError();
+     goBtn.disabled = true;
+     goBtn.textContent = "Numbering…";
+     prog.show();
+     result.style.display = "none";
+     try {
+             const check = await SlimIO.consume();
+             if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+
+             const doc = await PDFDocument.load(await file.arrayBuffer());
+             const font = await doc.embedFont(StandardFonts.Helvetica);
+             const [vert, horiz] = $("pos").value.split("-");
+             const fmt = $("fmt").value;
+             const size = parseInt($("size").value, 10);
+             const skip = parseInt($("skip").value, 10);
+             const start = parseInt($("start").value, 10);
+             const pages = doc.getPages();
+             const numbered = Math.max(0, pages.length - skip);
+             const lastNumber = start + numbered - 1;
+
+             for (let i = skip; i < pages.length; i++) {
+                 const page = pages[i];
+                 const text = label(fmt, start + i - skip, lastNumber);
+                 const tw = font.widthOfTextAtSize(text, size);
+                 const v = SlimIO.page2user(page);
+                 const margin = Math.max(18, Math.min(v.width, v.height) * 0.04);
+                 const vx = horiz === "left" ? margin : horiz === "right" ? v.width - margin - tw : (v.width - tw) / 2;
+                 const vy = vert === "top" ? v.height - margin - size : margin;
+                 const p = v.map(vx, vy);
+                 page.drawText(text, { x: p.x, y: p.y, size, font, color: rgb(0.2, 0.2, 0.2), rotate: degrees(p.angle) });
+                 prog.set(Math.round(((i + 1) / pages.length) * 100));
+             }
+             const out = await doc.save();
+             showResult(pages.length, numbered, out);
+     } catch (e) {
+             SlimIO.showError(`Numbering failed: ${e.message}`);
+     } finally {
+             goBtn.disabled = false;
+             goBtn.textContent = "Add page numbers";
+             prog.hide();
+     }
+}
+
+function showResult(count, numbered, bytes) {
+     result.style.display = "block";
+     $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
+     $("numbered").textContent = `${numbered} page${numbered === 1 ? "" : "s"}`;
+     dl.onclick = () => SlimIO.download(bytes, "slimio_numbered.pdf", "application/pdf");
+}
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>

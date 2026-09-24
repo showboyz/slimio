@@ -1,36 +1,40 @@
-# SlimIO — PDF Compressor · 핸드오프 문서
+# SlimIO — Free PDF Tools · 핸드오프 문서
 
-**최종 업데이트: 2026-09-23** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com 200)**
+**최종 업데이트: 2026-09-24** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com)** · 도구 10개
 
 ---
 
 ## 👉 다음 세션에서 바로 할 것 (순서대로)
-1. **GSC 제출** (검색 트래픽 1순위) — 아래 "⑤ Google Search Console":
-   - https://search.google.com/search-console
-   - `pdfslimio.com` Domain 추가 → **TXT 인증**(Cloudflare DNS에 GSC가 준 값 추가)
-   - 인증 후 **Sitemaps tab → `pdfslimio.com/sitemap.xml` Add & Test**
-   - Bing Webmaster 도 동일 (https://www.bing.com/webmasters)
-2. **광고 네트워크 가입** — Medvance(0트래픽 승인) 또는 Ezoic → `index.html` `#ad` div의 HTML 주석에 코드 붙임 → 재배포
-3. **og-cover.png는 생성됨** (`public/og-cover.png`, 1200×630) — 배포 시 live
-4. **Fly token 재발급** — `~/.fly/config.yml`의 `access_token`이 대화에 노출됨
-   (Dashboard → API Tokens → 새로 만들되 기존 삭제)
-5. **X 홍보 1차** — 개인(1500 팔로워) → `@slimio` 브랜드계 병행 계획. 포스트 초안 아래 있음.
+1. **Plausible 목표 설정** (1회): Site Settings → Goals → Custom event `Tool Used` 추가 → Custom Properties에 `tool` 추가
+   → 대시보드에서 도구별 **실제 사용 수** 확인 (방문은 Top Pages / Entry Pages / Sources)
+2. **GSC**: TXT 인증 레코드는 DNS에 있음 → 인증 완료 후 `sitemap.xml`(10 URL) 제출, 새 페이지 URL 검사로 색인 요청. Bing은 GSC import
+3. **X 홍보 1차** — "파일이 기기 밖으로 안 나가는 무료 PDF 도구 모음" 앵글로 (초안 아래)
+4. 광고 네트워크는 트래픽 1천+ 이후 (Medvance/Ezoic)
+5. 다음 도구 후보: PNG→PDF 랜딩, PDF 암호 걸기/해제(서버 qpdf 필요), Word→PDF
 
 ---
 
-## 지금 서비스 상태 (확인됨, 2026-09-23)
+## 지금 서비스 상태 (2026-09-24)
 | 항목 | 상태 |
 |---|---|
-| `https://pdfslimio.com` | ✅ **200 LIVE** |
-| `https://glowing-meadowbrook-286.fly.dev` | ✅ 200 |
-| 머신 수 | ✅ **1개** (7845741b401758, 256MB, ~$2.75/월) |
-| 도메인 DNS | ✅ Cloudflare resolve |
-| GS 압축 백엔드 | ✅ 동작 확인 (/screen 12% 등) |
+| `https://pdfslimio.com` | ✅ LIVE |
+| 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · **Organize** · **Page Numbers** · **Watermark** · PDF→JPG · JPG→PDF |
+| Plausible | ✅ 전 페이지 설치 + `Tool Used` 이벤트(props.tool) — 대시보드 Goal 설정 필요 |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
-| `og-cover.png` | ✅ 생성됨 (public/og-cover.png, 1200×630) |
-| 광고 슬롯 | ⚠️ `#ad` div에 Ezoic/AdSense/Medvance 코드 **자리(HTML 주석)预埋됨**, 실제 네트워크 코드 미삽입 |
-| Google Search Console | ❌ 미제출 |
-| Fly token | ⚠️ 재발급 필요 (대화에 노출됨) |
+| Fly token | ✅ 재발급 완료 (2026-09-24) |
+| Google Search Console | ⚠️ TXT 레코드 추가됨, 사이트맵 제출 필요 |
+| 광고 슬롯 | ⚠️ 자리만 있음 |
+
+### 2026-09-24 수정 내역 (중요)
+- 도구 페이지 6개 전부 `$ is not defined`로 **작동 안 하던 문제** 수정 (`lib.js`가 전역 `$` export)
+- Rotate(`.degrees`→`.angle`), Remove Pages(역순 삭제·Set.filter·버튼 비활성), Merge(`clearError`) 버그 수정
+- 다운로드 버튼이 탭을 blob PDF로 이동시키던 문제 수정 (index, merge)
+- 서버: 잘못된 URL(`%E0`)로 **프로세스 크래시** → 400 처리, 업로드 50MB 제한(413), 요청 예외 시 500(크래시 방지), X-Level 화이트리스트, 거부된 요청은 횟수 차감 안 함, 날짜 바뀌면 카운터 정리
+- `robots.txt` → `text/plain`, 404.html 추가, 도구 페이지 nav `/how`·`/pricing` 404 → `/#how`·`/#pricing` + "All tools"
+
+### 새 도구 추가 체크리스트
+`public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ/Plausible) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
+회전 페이지에 텍스트 그릴 땐 `SlimIO.page2user(page)` 사용
 
 ---
 
@@ -60,9 +64,12 @@
 ## 파일 목록
 | 파일 | 설명 |
 |---|---|
-| `public/index.html` | SlimIO UI + 2모드 압축 로직 |
+| `public/index.html` | 메인 압축 UI + 2모드 압축 로직 + 도구 그리드 |
+| `public/*.html` | 도구 페이지 9개 + `404.html` |
+| `public/lib.js` | 공용 헬퍼(`$`, 다운로드, 한도, Plausible `track`, `page2user`) |
+| `public/style.css` | 도구 페이지 공용 스타일 |
 | `public/robots.txt` | `Sitemap: https://pdfslimio.com/sitemap.xml` |
-| `public/sitemap.xml` | `pdfslimio.com/` 1url |
+| `public/sitemap.xml` | 10 URL |
 | `server/server.cjs` | 정적+GS+rate-limit 단일 서버 |
 | `Dockerfile` | `node:20-slim` + `apt install ghostscript` + `node server/server.cjs` |
 | `fly.toml` | app `glowing-meadowbrook-286`, region `sin`, 256MB, `force_https` |
@@ -72,24 +79,7 @@
 
 ### ⚠️ 시크릿
 - `~/.fly/config.yml`의 `access_token`은 로컬에만, git 안 올라감 ✓
-- 그 값이 **이 대화에 노출됨** → **반드시 재발급**
-
----
-
-## 다음 작업 체크리스트
-- [ ] **① GitHub repo 생성 + 푸시** (가장 긴급)
-  ```
-  cd /Users/home/orca/workspaces/mymy/trout
-  git add -A
-  git commit -m "SlimIO: production deploy (GS server + static + same-origin, pdfslimio.com)"
-  gh repo create slimio --public --source . --push
-  ```
-- [ ] **② Fly 카드 등록 / 또는 Oracle Always-Free 이관** → 서비스 재기동
-- [ ] **③ og-cover.png** (1200×630, "PDF Compressor"). `public/og-cover.png` → `index.html` og:image = `https://pdfslimio.com/og-cover.png`
-- [ ] **④ 광고 슬롯预埋**: `index.html` `#ad` div에 Ezoic/Medvance/AdSense. 지금은 "No ads" 문구 + 빈 placeholder
-- [ ] **⑤ Google Search Console 제출**: `pdfslimio.com` 등록 → TXT 인증(Cloudflare DNS) → `sitemap.xml` 제출
-- [ ] **⑥ (선택) Bing Webmaster Tools**
-- [ ] **⑦ (장기) 추가 도구 페이지**: merge/split/pdf-to-jpg → SEO 스케일
+- 2026-09-24 재발급 완료
 
 ---
 

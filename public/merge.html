@@ -66,9 +66,10 @@
         <div class="brand"><span class="logo">📄</span> SlimIO</div>
         <div class="nav-links">
             <a href="/">Compress</a>
+            <a href="/#tools">All tools</a>
             <a href="/merge.html">Merge</a>
-            <a href="/how">How it works</a>
-            <a href="/pricing">Pricing</a>
+            <a href="/#how">How it works</a>
+            <a href="/#pricing">Pricing</a>
         </div>
     </nav>
 </div>
@@ -172,6 +173,9 @@
           <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
            <a class="mini" href="/delete-pages.html">Remove Pages</a>
            <a class="mini" href="/rotate.html">Rotate PDF</a>
+           <a class="mini" href="/organize.html">Organize PDF</a>
+           <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
+           <a class="mini" href="/watermark.html">Watermark PDF</a>
     </div>
 </div>
 
@@ -228,7 +232,7 @@ function onItemAction(action, idx) {
 }
 
 async function addFiles(list) {
-    clearError();
+    SlimIO.clearError();
     for (const f of list) {
         if (f.type !== "application/pdf") { SlimIO.showError("Please choose PDF files."); return; }
         try {
@@ -285,6 +289,7 @@ async function merge() {
         const con = await SlimIO.consume();
         if (con && !con.ok) {
             SlimIO.showError(`Daily limit reached. Come back tomorrow.`);
+            return;
         }
             showResult(items.length, out.getPageCount(), bytes);
     } catch (e) {
@@ -301,8 +306,6 @@ function showResult(fileCount, pageCount, bytes) {
     $("merged").textContent = fileCount;
     $("pages").textContent = pageCount;
     $("after").textContent = SlimIO.formatSize(bytes.length);
-    const url = URL.createObjectURL(SlimIO.toBlob(bytes, "application/pdf"));
-    dl.href = url;
     dl.onclick = () => SlimIO.download(bytes, "slimio_merged.pdf", "application/pdf");
 }
 

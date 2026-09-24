@@ -66,9 +66,10 @@
           <div class="brand"><span class="logo">📄</span> SlimIO</div>
           <div class="nav-links">
               <a href="/">Compress</a>
+              <a href="/#tools">All tools</a>
               <a href="/delete-pages.html">Remove Pages</a>
-              <a href="/how">How it works</a>
-              <a href="/pricing">Pricing</a>
+              <a href="/#how">How it works</a>
+              <a href="/#pricing">Pricing</a>
           </div>
      </nav>
 </div>
@@ -175,6 +176,9 @@
          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
            <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
            <a class="mini" href="/rotate.html">Rotate PDF</a>
+           <a class="mini" href="/organize.html">Organize PDF</a>
+           <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
+           <a class="mini" href="/watermark.html">Watermark PDF</a>
        </div>
 </div>
 
@@ -218,7 +222,7 @@ function parseNumbers(str, max) {
             if (!Number.isNaN(p)) out.add(p);
         }
     });
-    return out.filter((p) => p >= 1 && p <= max).sort((a, b) => a - b);
+    return [...out].filter((p) => p >= 1 && p <= max).sort((a, b) => a - b);
 }
 
 function setFile(f) {
@@ -270,14 +274,15 @@ async function remove() {
             if (removed.length === 0) { SlimIO.showError("None of those page numbers exist in this PDF."); return; }
             if (removed.length >= pageCount) { SlimIO.showError("You can't remove every page — the result would be empty."); return; }
 
-            removed.forEach((p) => src.removePage(p - 1));
+            // remove from the back so earlier indices don't shift
+            [...removed].reverse().forEach((p) => src.removePage(p - 1));
             const out = await src.save();
             prog.set(100);
             showResult(removed.length, src.getPageCount(), out);
      } catch (e) {
             SlimIO.showError(`Remove failed: ${e.message}`);
      } finally {
-            goBtn.disabled = !!pagesInput.value.trim();
+            goBtn.disabled = !pagesInput.value.trim();
             goBtn.textContent = "Remove pages";
             prog.hide();
      }

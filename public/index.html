@@ -368,6 +368,9 @@
                  <a class="toolcard" href="/jpg-to-pdf.html"><div class="ico">📷</div><h3>JPG to PDF</h3><p>Turn images into a PDF</p></a>
                   <a class="toolcard" href="/delete-pages.html"><div class="ico">🗑️</div><h3>Remove Pages</h3><p>Delete pages from a PDF</p></a>
                   <a class="toolcard" href="/rotate.html"><div class="ico">🔄</div><h3>Rotate PDF</h3><p>Turn pages 90/180/270°</p></a>
+                  <a class="toolcard" href="/organize.html"><div class="ico">🗂️</div><h3>Organize PDF</h3><p>Reorder, rotate or delete pages</p></a>
+                  <a class="toolcard" href="/add-page-numbers.html"><div class="ico">🔢</div><h3>Page Numbers</h3><p>Number every page of a PDF</p></a>
+                  <a class="toolcard" href="/watermark.html"><div class="ico">💧</div><h3>Watermark PDF</h3><p>Stamp text on every page</p></a>
               </div>
           </div>
       </section>
@@ -594,6 +597,7 @@ function base64ToBytes(b64) {
 
 // ---- UI helpers ----
 function showResult(orig, after, bytes) {
+    try { window.plausible && window.plausible("Tool Used", { props: { tool: "compress" } }); } catch (e) {}
     result.style.display = "block";
     $("orig").textContent = formatSize(orig);
     $("after").textContent = formatSize(after);
@@ -603,12 +607,7 @@ function showResult(orig, after, bytes) {
 
     const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
     dl.href = url;
-    dl.onclick = () => {
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "trout_" + (file ? file.name : "out.pdf");
-        a.click();
-    };
+    dl.download = "slimio_" + (file ? file.name : "out.pdf");
 }
 
 function updateLimit(remaining, limit) {

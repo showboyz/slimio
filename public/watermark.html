@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Watermark PDF — Add Text Watermark Free | SlimIO</title>
+<meta name="description" content="Free online tool to add a text watermark to a PDF. Stamp CONFIDENTIAL, DRAFT or your own text on every page. No signup, no install, runs in your browser — your files never leave your device." />
+<meta name="keywords" content="watermark pdf, add watermark to pdf, pdf watermark free, stamp pdf, confidential watermark pdf, draft watermark pdf" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/watermark.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Watermark PDF — Add Text Watermark Free | SlimIO" />
+<meta property="og:description" content="Stamp CONFIDENTIAL, DRAFT or your own text on every page of a PDF. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/watermark.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Watermark PDF | SlimIO" />
+<meta name="twitter:description" content="Stamp CONFIDENTIAL, DRAFT or your own text on every page of a PDF. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO PDF Watermark",
+      "url": "https://pdfslimio.com/watermark.html",
+      "description": "Free, privacy-first tool to add a text watermark to every page of a PDF. Runs in your browser with no signup.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": ["Add text watermark to PDF", "Diagonal, centered or tiled", "Runs in your browser (no upload)", "No signup required"]
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I add a watermark to a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's PDF watermark tool, choose a PDF, type your watermark text, pick a style and click Add watermark. The watermarked PDF downloads right away. It runs in your browser, so there is nothing to install and no account needed."}},
+        {"@type": "Question", "name": "Can I add CONFIDENTIAL or DRAFT to a PDF?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. CONFIDENTIAL is the default text, and you can type DRAFT, SAMPLE, COPY, your company name or anything else."}},
+        {"@type": "Question", "name": "Will the watermark cover my content?", "acceptedAnswer": {"@type": "Answer", "text": "The watermark is semi-transparent, so the page stays readable. Lower the opacity for a lighter stamp."}},
+        {"@type": "Question", "name": "Is it safe to watermark a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO adds the watermark locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}},
+        {"@type": "Question", "name": "Which characters can I use in the watermark?", "acceptedAnswer": {"@type": "Answer", "text": "The watermark uses a standard Latin font, so letters A–Z, numbers and common punctuation work. Other scripts are not supported yet."}}
+      ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
+<script>
+   window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function(i) { plausible.o = i || {} };
+   plausible.init();
+</script>
+<style>
+.field input[type=text] {
+     width: 100%; padding: 10px 12px; border-radius: 8px;
+     background: #0e1117; border: 1px solid var(--line); color: var(--text); font-size: 14px;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/watermark.html">Watermark</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Watermark your PDF,<br /><b>in one click.</b></h1>
+           <p>Stamp CONFIDENTIAL, DRAFT or your own text across every page. Free, fast, no install — right in your browser.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub" id="sub">File never leaves your device — the watermark is added locally in your browser.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>Watermark text</label>
+                   <input type="text" id="text" value="CONFIDENTIAL" maxlength="60" />
+                   <div class="hint">Latin letters, numbers and common punctuation.</div>
+               </div>
+
+               <div class="field">
+                   <label>Style</label>
+                   <select id="style">
+                       <option value="diagonal" selected>Diagonal, centered</option>
+                       <option value="center">Horizontal, centered</option>
+                       <option value="tiled">Tiled across the page</option>
+                   </select>
+               </div>
+
+               <div class="field">
+                   <label>Color</label>
+                   <select id="color">
+                       <option value="gray" selected>Gray</option>
+                       <option value="red">Red</option>
+                       <option value="blue">Blue</option>
+                   </select>
+               </div>
+
+               <div class="field">
+                   <label>Opacity <span id="opv">25%</span></label>
+                   <input type="range" id="opacity" min="10" max="60" step="5" value="25" />
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Add watermark</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+               <div class="row"><span>Watermark</span><span id="wm" class="v">—</span></div>
+               <a id="dl" class="dl">↓ Download PDF</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+      </div>
+</div>
+
+<div class="content">
+      <h2>How to watermark a PDF — in 3 steps</h2>
+      <p>SlimIO's PDF watermark tool stamps semi-transparent text on every page of your document. Everything runs in your browser, so your file stays private and there is nothing to install.</p>
+      <ul>
+          <li><b>1. Add your PDF.</b> Drop in one file, or click to browse.</li>
+          <li><b>2. Set the watermark.</b> Type your text, then choose diagonal, centered or tiled, a color and the opacity.</li>
+          <li><b>3. Download.</b> Click Add watermark and save the stamped PDF to your device.</li>
+      </ul>
+      <h3>Mark drafts and confidential files</h3>
+      <p>A visible watermark makes it clear a document is a draft, a sample or not for sharing. Pair it with <a href="/add-page-numbers.html">page numbers</a> for review copies, or run the <a href="/">PDF compressor</a> to make the file easier to email.</p>
+</div>
+
+<section class="faq">
+      <h2>Watermark PDF — FAQ</h2>
+      <details open>
+          <summary>How do I add a watermark to a PDF for free?</summary>
+          <p>Open SlimIO's PDF watermark tool, choose a PDF, type your watermark text, pick a style and click Add watermark. The watermarked PDF downloads right away. It runs in your browser, so there is nothing to install and no account needed.</p>
+      </details>
+      <details>
+          <summary>Can I add CONFIDENTIAL or DRAFT to a PDF?</summary>
+          <p>Yes. CONFIDENTIAL is the default text, and you can type DRAFT, SAMPLE, COPY, your company name or anything else.</p>
+      </details>
+      <details>
+          <summary>Will the watermark cover my content?</summary>
+          <p>The watermark is semi-transparent, so the page stays readable. Lower the opacity for a lighter stamp.</p>
+      </details>
+      <details>
+          <summary>Is it safe to watermark a PDF online?</summary>
+          <p>Yes. SlimIO adds the watermark locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
+      </details>
+      <details>
+          <summary>Which characters can I use in the watermark?</summary>
+          <p>The watermark uses a standard Latin font, so letters A–Z, numbers and common punctuation work. Other scripts are not supported yet.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/rotate.html">Rotate PDF</a>
+          <a class="mini" href="/organize.html">Organize PDF</a>
+          <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+          </div>
+      </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib;
+const drop = $("drop");
+const controls = $("controls");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+const COLORS = { gray: rgb(0.45, 0.45, 0.45), red: rgb(0.85, 0.1, 0.1), blue: rgb(0.1, 0.3, 0.85) };
+
+let file = null;
+
+function setFile(f) {
+     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+     SlimIO.clearError();
+     file = f;
+     drop.querySelector(".drop-title").textContent = f.name;
+     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     controls.classList.remove("hidden");
+     goBtn.disabled = false;
+     SlimIO.refreshStatus();
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+     e.preventDefault();
+     drop.classList.remove("drag");
+     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+$("opacity").addEventListener("input", () => { $("opv").textContent = $("opacity").value + "%"; });
+
+goBtn.addEventListener("click", addWatermark);
+
+// Draw text centered on visual point (cx, cy) at visual angle theta (degrees).
+function stamp(page, v, text, font, size, cx, cy, theta, color, opacity) {
+     const tw = font.widthOfTextAtSize(text, size);
+     const th = font.heightAtSize(size, { descender: false });
+     const t = (theta * Math.PI) / 180;
+     const vx = cx - (tw / 2) * Math.cos(t) + (th / 2) * Math.sin(t);
+     const vy = cy - (tw / 2) * Math.sin(t) - (th / 2) * Math.cos(t);
+     const p = v.map(vx, vy);
+     page.drawText(text, { x: p.x, y: p.y, size, font, color, opacity, rotate: degrees(theta + p.angle) });
+}
+
+async function addWatermark() {
+     if (!file) return;
+     const text = $("text").value.trim();
+     if (!text) { SlimIO.showError("Please type the watermark text."); return; }
+     SlimIO.clearError();
+     goBtn.disabled = true;
+     goBtn.textContent = "Watermarking…";
+     prog.show();
+     result.style.display = "none";
+     try {
+             const check = await SlimIO.consume();
+             if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+
+             const doc = await PDFDocument.load(await file.arrayBuffer());
+             const font = await doc.embedFont(StandardFonts.HelveticaBold);
+             try { font.encodeText(text); }
+             catch (e) { SlimIO.showError("The watermark text has characters this font can't draw. Use Latin letters, numbers and punctuation."); return; }
+
+             const style = $("style").value;
+             const color = COLORS[$("color").value];
+             const opacity = parseInt($("opacity").value, 10) / 100;
+             const pages = doc.getPages();
+
+             for (let i = 0; i < pages.length; i++) {
+                 const page = pages[i];
+                 const v = SlimIO.page2user(page);
+                 const w = v.width, h = v.height;
+                 if (style === "tiled") {
+                     const size = Math.max(14, Math.min(w, h) / 14);
+                     const stepX = font.widthOfTextAtSize(text, size) + size * 3;
+                     const stepY = size * 5;
+                     for (let row = 0, y = -h / 2; y < h * 1.5; row++, y += stepY) {
+                         for (let x = -w / 2 + (row % 2) * (stepX / 2); x < w * 1.5; x += stepX) {
+                             stamp(page, v, text, font, size, x, y, 30, color, opacity);
+                         }
+                     }
+                 } else {
+                     const theta = style === "diagonal" ? (Math.atan2(h, w) * 180) / Math.PI : 0;
+                     const span = style === "diagonal" ? Math.hypot(w, h) : w;
+                     const size = Math.min(span * 0.7 / font.widthOfTextAtSize(text, 1), Math.min(w, h) / 4);
+                     stamp(page, v, text, font, size, w / 2, h / 2, theta, color, opacity);
+                 }
+                 prog.set(Math.round(((i + 1) / pages.length) * 100));
+             }
+             const out = await doc.save();
+             showResult(pages.length, text, out);
+     } catch (e) {
+             SlimIO.showError(`Watermark failed: ${e.message}`);
+     } finally {
+             goBtn.disabled = false;
+             goBtn.textContent = "Add watermark";
+             prog.hide();
+     }
+}
+
+function showResult(count, text, bytes) {
+     result.style.display = "block";
+     $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
+     $("wm").textContent = text;
+     dl.onclick = () => SlimIO.download(bytes, "slimio_watermarked.pdf", "application/pdf");
+}
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>

@@ -68,7 +68,16 @@ const SlimIO = (() => {
       const go = $("go");
       if (go && remaining === 0) go.disabled = true;
    }
+   // Plausible custom event: which tool actually gets used (not just visited)
+   function track(tool) {
+      try { window.plausible && window.plausible("Tool Used", { props: { tool } }); } catch (e) {}
+   }
+   function toolName() {
+      return location.pathname.replace(/^\/|\.html$/g, "") || "compress";
+   }
+
    async function consume() {
+      track(toolName());
       try {
          const c = await fetch(`${API_BASE}/api/consume`, { method: "POST" }).then((r) => r.json());
          updateLimit(c.remaining, c.limit);
@@ -89,6 +98,24 @@ const SlimIO = (() => {
       };
    }
 
+   // Map a point in the page's *visual* space (as the reader sees it, after /Rotate)
+   // to pdf-lib user space. Returns {x, y, angle}: angle is added to the visual text angle.
+   function page2user(page) {
+      const box = page.getCropBox();
+      const r = ((page.getRotation().angle % 360) + 360) % 360;
+      const W = box.width, H = box.height;
+      const vw = r % 180 ? H : W, vh = r % 180 ? W : H;
+      function map(vx, vy) {
+         let x, y;
+         if (r === 90) { x = W - vy; y = vx; }
+         else if (r === 180) { x = W - vx; y = H - vy; }
+         else if (r === 270) { x = vy; y = H - vx; }
+         else { x = vx; y = vy; }
+         return { x: x + box.x, y: y + box.y, angle: r };
+      }
+      return { width: vw, height: vh, map };
+   }
+
    window.addEventListener("error", (e) => log("JS ERROR: " + e.message));
    window.addEventListener("unhandledrejection", (e) =>
       log("REJECTION: " + ((e.reason && e.reason.message) || e.reason)));
@@ -96,6 +123,9 @@ const SlimIO = (() => {
    return {
       $, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress,
+      refreshStatus, updateLimit, consume, bindProgress, track, page2user,
    };
 })();
+
+// Tool pages call $("id") directly.
+const $ = SlimIO.$;

@@ -8,6 +8,8 @@ const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "0.0.0.0";
 const DAILY_LIMIT = parseInt(process.env.DAILY_LIMIT || "20", 10);
 const PUBLIC_DIR = process.env.PUBLIC_DIR || path.join(__dirname, "..", "public");
+const MAX_UPLOAD = 50 * 1024 * 1024; // 256MB machine: cap uploads so one request can't OOM it
+const LEVELS = new Set(["screen", "ebook", "printer", "prepress"]);
 
 const MIME = {
     ".html": "text/html; charset=utf-8",
@@ -18,6 +20,8 @@ const MIME = {
     ".png": "image/png",
     ".jpg": "image/jpeg",
     ".svg": "image/svg+xml",
+    ".txt": "text/plain; charset=utf-8",
+    ".webp": "image/webp",
     ".ico": "image/x-icon",
 };
 
@@ -28,7 +32,9 @@ function clientIp(req) {
    return (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
        req.socket.remoteAddress || "unknown";
 }
+let usageDay = today();
 function consume(ip) {
+   if (usageDay !== today()) { usage.clear(); usageDay = today(); } // drop yesterday's counters
    const key = ip + ":" + today();
    const n = (usage.get(key) || 0) + 1;
    usage.set(key, n);
@@ -62,7 +68,7 @@ function gs(args, input, output) {
    });
 }
 
-const server = http.createServer(async (req, res) => {
+async function handle(req, res) {
    res.setHeader("Access-Control-Allow-Origin", "*");
    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -85,16 +91,24 @@ const server = http.createServer(async (req, res) => {
        if (remaining(ip) <= 0) {
           return sendJson(res, 429, { error: "daily limit reached", limit: DAILY_LIMIT });
        }
-       const level = (req.headers["x-level"] || "ebook").replace(/[^a-zA-Z]/g, "");
+       if (parseInt(req.headers["content-length"] || "0", 10) > MAX_UPLOAD) {
+          return sendJson(res, 413, { error: "file too large (max 50 MB)" });
+       }
+       const level = LEVELS.has(req.headers["x-level"]) ? req.headers["x-level"] : "ebook";
        const jpg = req.headers["x-jpg"] ? parseInt(req.headers["x-jpg"], 10) : undefined;
-       consume(ip);
 
        const chunks = [];
-       for await (const c of req) chunks.push(c);
+       let size = 0;
+       for await (const c of req) {
+          size += c.length;
+          if (size > MAX_UPLOAD) return sendJson(res, 413, { error: "file too large (max 50 MB)" });
+          chunks.push(c);
+       }
        const inBuf = Buffer.concat(chunks);
        if (inBuf.length < 200) return sendJson(res, 400, { error: "empty file" });
+       consume(ip);
 
-       const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}.pdf`);
+       const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
        const tmpOut = tmpIn + "_out.pdf";
        fs.writeFileSync(tmpIn, inBuf);
 
@@ -123,7 +137,13 @@ const server = http.createServer(async (req, res) => {
      }
 
       // static file serving fallback: / -> index.html
-     let urlPath = decodeURIComponent(req.url.split("?")[0]);
+     let urlPath;
+     try {
+         urlPath = decodeURIComponent(req.url.split("?")[0]);
+     } catch (e) {
+         sendJson(res, 400, { error: "bad request" }); // malformed %-escape; must not crash the process
+         return;
+     }
      if (urlPath === "/") urlPath = "/index.html";
      const filePath = path.join(PUBLIC_DIR, path.normalize(urlPath).replace(/^(\.\.[/\\])+/, ""));
 
@@ -134,14 +154,26 @@ const server = http.createServer(async (req, res) => {
 
      fs.readFile(filePath, (err, data) => {
          if (err) {
-             sendJson(res, 404, { error: "not found" });
+             fs.readFile(path.join(PUBLIC_DIR, "404.html"), (e2, page) => {
+                 if (e2) return sendJson(res, 404, { error: "not found" });
+                 res.writeHead(404, { "Content-Type": MIME[".html"] });
+                 res.end(page);
+             });
              return;
          }
          const ext = path.extname(filePath);
          res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
          res.end(data);
      });
-     });
+}
+
+const server = http.createServer((req, res) => {
+   handle(req, res).catch((e) => {
+       console.error("request failed:", req.method, req.url, e);
+       if (!res.headersSent) sendJson(res, 500, { error: "server error" });
+       else res.destroy();
+   });
+});
 
 function sendJson(res, code, body) {
    const data = Buffer.from(JSON.stringify(body));

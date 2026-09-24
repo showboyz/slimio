@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Organize PDF — Reorder, Rotate & Delete Pages Free | SlimIO</title>
+<meta name="description" content="Free online tool to organize PDF pages. Drag to reorder, rotate single pages or delete them, then save. No signup, no install, runs in your browser — your files never leave your device." />
+<meta name="keywords" content="organize pdf, reorder pdf pages, rearrange pdf pages, sort pdf pages, move pdf pages, rotate single pdf page" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/organize.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Organize PDF — Reorder, Rotate & Delete Pages Free | SlimIO" />
+<meta property="og:description" content="Drag to reorder PDF pages, rotate single pages or delete them. Free, no signup, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/organize.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Organize PDF Pages | SlimIO" />
+<meta name="twitter:description" content="Drag to reorder PDF pages, rotate single pages or delete them. Free, no signup, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO Organize PDF",
+      "url": "https://pdfslimio.com/organize.html",
+      "description": "Free, privacy-first tool to reorder, rotate and delete PDF pages with page previews. Runs in your browser with no signup.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": ["Reorder PDF pages", "Rotate single pages", "Delete pages", "Page previews", "Runs in your browser (no upload)"]
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I rearrange pages in a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open SlimIO's Organize PDF tool and choose a PDF. Every page shows as a preview. Drag pages into the order you want, or use the arrow buttons, then click Save PDF."}},
+        {"@type": "Question", "name": "Can I rotate just one page?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Click the rotate button under any page to turn only that page 90 degrees clockwise. Other pages stay as they are."}},
+        {"@type": "Question", "name": "Can I delete pages while reordering?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Click the delete button under a page to drop it from the saved PDF."}},
+        {"@type": "Question", "name": "Does it work on my phone?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. On touch screens, use the left and right arrow buttons under each page to move it."}},
+        {"@type": "Question", "name": "Is it safe to organize a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO reorders the pages locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}}
+      ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css" />
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
+<script>
+   window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function(i) { plausible.o = i || {} };
+   plausible.init();
+</script>
+<style>
+.pages { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 12px; margin: 6px 0 16px; }
+.pg {
+     background: #0e1117; border: 1px solid var(--line); border-radius: 10px;
+     padding: 8px; text-align: center; cursor: grab; user-select: none;
+}
+.pg.dragging { opacity: 0.4; }
+.pg.over { border-color: var(--accent); }
+.pg .thumb { height: 130px; display: flex; align-items: center; justify-content: center; }
+.pg canvas { max-width: 100%; max-height: 130px; background: #fff; border-radius: 3px; box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+.pg .num { font-size: 12px; color: var(--muted); margin: 6px 0 4px; }
+.pg .acts { display: flex; justify-content: center; gap: 2px; }
+.pg .acts button {
+     background: none; border: 0; color: var(--muted); cursor: pointer;
+     font-size: 15px; padding: 4px 6px; border-radius: 6px;
+}
+.pg .acts button:hover { color: var(--text); background: #1a2029; }
+.pg .acts button.del:hover { color: #ff7a7a; }
+.pg .acts button:disabled { opacity: 0.25; cursor: default; background: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/organize.html">Organize</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Organize your PDF,<br /><b>page by page.</b></h1>
+           <p>Drag pages into order, rotate single pages or delete them — with a preview of every page. Free, fast, no install — right in your browser.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub" id="sub">File never leaves your device — pages are rearranged locally in your browser.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>Pages <span id="pagecount"></span></label>
+                   <div class="hint">Drag to reorder, or use ← → · ↻ rotates one page · ✕ removes it.</div>
+               </div>
+               <div class="pages" id="pages"></div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Save PDF</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+               <div class="row"><span>Size</span><span id="size" class="v">—</span></div>
+               <a id="dl" class="dl">↓ Download PDF</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+      </div>
+</div>
+
+<div class="content">
+      <h2>How to reorder PDF pages — in 3 steps</h2>
+      <p>SlimIO's Organize PDF tool shows a preview of every page so you can see exactly what you are moving. Everything runs in your browser, so your file stays private and there is nothing to install.</p>
+      <ul>
+          <li><b>1. Add your PDF.</b> Drop in one file, or click to browse. Each page appears as a thumbnail.</li>
+          <li><b>2. Arrange the pages.</b> Drag pages into the right order, or tap ← and →. Rotate a single page with ↻, or remove it with ✕.</li>
+          <li><b>3. Save.</b> Click Save PDF and download the reorganized file.</li>
+      </ul>
+      <h3>Fix scans that came out of order</h3>
+      <p>Double-sided scans and merged files often end up with pages in the wrong order or upside down. Put them right here, then add <a href="/add-page-numbers.html">page numbers</a> or run the <a href="/">PDF compressor</a>. To combine several files first, use <a href="/merge.html">Merge PDF</a>.</p>
+</div>
+
+<section class="faq">
+      <h2>Organize PDF — FAQ</h2>
+      <details open>
+          <summary>How do I rearrange pages in a PDF for free?</summary>
+          <p>Open SlimIO's Organize PDF tool and choose a PDF. Every page shows as a preview. Drag pages into the order you want, or use the arrow buttons, then click Save PDF.</p>
+      </details>
+      <details>
+          <summary>Can I rotate just one page?</summary>
+          <p>Yes. Click the rotate button under any page to turn only that page 90 degrees clockwise. Other pages stay as they are.</p>
+      </details>
+      <details>
+          <summary>Can I delete pages while reordering?</summary>
+          <p>Yes. Click the delete button under a page to drop it from the saved PDF.</p>
+      </details>
+      <details>
+          <summary>Does it work on my phone?</summary>
+          <p>Yes. On touch screens, use the left and right arrow buttons under each page to move it.</p>
+      </details>
+      <details>
+          <summary>Is it safe to organize a PDF online?</summary>
+          <p>Yes. SlimIO reorders the pages locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/rotate.html">Rotate PDF</a>
+          <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
+          <a class="mini" href="/watermark.html">Watermark PDF</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+          </div>
+      </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="/lib.js"></script>
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+const { PDFDocument, degrees } = PDFLib;
+const drop = $("drop");
+const controls = $("controls");
+const grid = $("pages");
+const goBtn = $("go");
+const result = $("result");
+const dl = $("dl");
+const prog = SlimIO.bindProgress("prog");
+
+let file = null;
+let bytes = null;       // original PDF bytes
+let viewer = null;      // pdf.js document, for thumbnails
+let items = [];         // [{ src: original page index, rot: extra rotation, el }]
+let dragFrom = -1;
+
+async function setFile(f) {
+     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
+     SlimIO.clearError();
+     file = f;
+     drop.querySelector(".drop-title").textContent = f.name;
+     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     result.style.display = "none";
+     grid.innerHTML = "";
+     goBtn.disabled = true;
+     controls.classList.remove("hidden");
+     try {
+             bytes = new Uint8Array(await f.arrayBuffer());
+             viewer = await pdfjsLib.getDocument({ data: bytes.slice() }).promise;
+             items = [];
+             for (let i = 0; i < viewer.numPages; i++) items.push(makeItem(i));
+             render();
+             goBtn.disabled = false;
+             for (const it of items) await drawThumb(it);
+     } catch (e) {
+             SlimIO.showError(`Could not open this PDF: ${e.message}`);
+     }
+     SlimIO.refreshStatus();
+}
+
+function makeItem(src) {
+     const it = { src, rot: 0 };
+     const el = document.createElement("div");
+     el.className = "pg";
+     el.draggable = true;
+     el.innerHTML = `<div class="thumb"><canvas></canvas></div><div class="num"></div>
+          <div class="acts">
+            <button data-a="left" title="Move left">←</button>
+            <button data-a="rot" title="Rotate this page">↻</button>
+            <button data-a="del" class="del" title="Remove this page">✕</button>
+            <button data-a="right" title="Move right">→</button>
+          </div>`;
+     el.addEventListener("click", (e) => {
+             const a = e.target.dataset && e.target.dataset.a;
+             if (!a) return;
+             const i = items.indexOf(it);
+             if (a === "left" && i > 0) move(i, i - 1);
+             else if (a === "right" && i < items.length - 1) move(i, i + 1);
+             else if (a === "rot") { it.rot = (it.rot + 90) % 360; drawThumb(it); }
+             else if (a === "del") { items.splice(i, 1); render(); }
+     });
+     el.addEventListener("dragstart", (e) => {
+             dragFrom = items.indexOf(it);
+             el.classList.add("dragging");
+             e.dataTransfer.effectAllowed = "move";
+             e.dataTransfer.setData("text/plain", "");
+     });
+     el.addEventListener("dragend", () => { el.classList.remove("dragging"); dragFrom = -1; });
+     el.addEventListener("dragover", (e) => { if (dragFrom < 0) return; e.preventDefault(); el.classList.add("over"); });
+     el.addEventListener("dragleave", () => el.classList.remove("over"));
+     el.addEventListener("drop", (e) => {
+             e.preventDefault();
+             e.stopPropagation();
+             el.classList.remove("over");
+             if (dragFrom >= 0) move(dragFrom, items.indexOf(it));
+     });
+     it.el = el;
+     return it;
+}
+
+function move(from, to) {
+     if (from === to) return;
+     const [it] = items.splice(from, 1);
+     items.splice(to, 0, it);
+     render();
+}
+
+function render() {
+     grid.replaceChildren(...items.map((it) => it.el));
+     items.forEach((it, i) => {
+             it.el.querySelector(".num").textContent = `Page ${it.src + 1}`;
+             it.el.querySelector('[data-a="left"]').disabled = i === 0;
+             it.el.querySelector('[data-a="right"]').disabled = i === items.length - 1;
+             it.el.querySelector('[data-a="del"]').disabled = items.length === 1;
+     });
+     $("pagecount").textContent = `${items.length} page${items.length === 1 ? "" : "s"}`;
+}
+
+async function drawThumb(it) {
+     const page = await viewer.getPage(it.src + 1);
+     const base = page.getViewport({ scale: 1, rotation: (page.rotate + it.rot) % 360 });
+     const scale = Math.min(220 / base.width, 260 / base.height);
+     const vp = page.getViewport({ scale, rotation: (page.rotate + it.rot) % 360 });
+     const canvas = document.createElement("canvas");
+     canvas.width = Math.ceil(vp.width);
+     canvas.height = Math.ceil(vp.height);
+     await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+     it.el.querySelector("canvas").replaceWith(canvas);
+}
+
+drop.addEventListener("click", () => $("pdf").click());
+$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => {
+     e.preventDefault();
+     drop.classList.remove("drag");
+     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
+});
+
+goBtn.addEventListener("click", save);
+
+async function save() {
+     if (!bytes || !items.length) return;
+     SlimIO.clearError();
+     goBtn.disabled = true;
+     goBtn.textContent = "Saving…";
+     prog.show();
+     result.style.display = "none";
+     try {
+             const check = await SlimIO.consume();
+             if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
+
+             const src = await PDFDocument.load(bytes);
+             const out = await PDFDocument.create();
+             const copied = await out.copyPages(src, items.map((it) => it.src));
+             copied.forEach((page, i) => {
+                 const rot = items[i].rot;
+                 if (rot) page.setRotation(degrees((page.getRotation().angle + rot) % 360));
+                 out.addPage(page);
+                 prog.set(Math.round(((i + 1) / copied.length) * 100));
+             });
+             const saved = await out.save();
+             showResult(copied.length, saved);
+     } catch (e) {
+             SlimIO.showError(`Save failed: ${e.message}`);
+     } finally {
+             goBtn.disabled = false;
+             goBtn.textContent = "Save PDF";
+             prog.hide();
+     }
+}
+
+function showResult(count, out) {
+     result.style.display = "block";
+     $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
+     $("size").textContent = SlimIO.formatSize(out.length);
+     dl.onclick = () => SlimIO.download(out, "slimio_organized.pdf", "application/pdf");
+}
+
+SlimIO.refreshStatus();
+</script>
+</body>
+</html>
