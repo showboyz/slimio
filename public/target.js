@@ -104,7 +104,7 @@ const SlimTarget = (() => {
       let best = null;
       let charged = false;
       if (file.size <= SERVER_MAX) {
-         onStatus && onStatus("Compressing with Ghostscript…");
+         onStatus && onStatus(SlimIO.t("Compressing with Ghostscript…"));
          try {
             const r = await viaServer(file, target);
             if (r.limited) return { limited: true };
@@ -121,7 +121,7 @@ const SlimTarget = (() => {
          if (c && !c.ok) return { limited: true };
       }
 
-      onStatus && onStatus("Converting pages to images to reach the target…");
+      onStatus && onStatus(SlimIO.t("Converting pages to images to reach the target…"));
       const r = await viaRaster(data, target, onProgress);
       const raster = { bytes: r.bytes, method: "raster", fits: r.fits, scale: r.scale, quality: r.quality };
       if (!best || raster.fits || raster.bytes.length < best.bytes.length) best = raster;

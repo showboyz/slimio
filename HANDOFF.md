@@ -10,7 +10,8 @@
    - Rules → Redirect Rules → 템플릿 "Redirect from WWW to root" → `https://pdfslimio.com` (301)
 2. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
 3. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 (Bing·네이버 등에 즉시 알림) + GSC에서 새 URL 색인 요청
-4. 다음 개발 후보: 한국어 페이지(+네이버 서치어드바이저), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등)
+   - **네이버 서치어드바이저**(https://searchadvisor.naver.com) 사이트 등록 → 소유 확인 → 요청 → 사이트맵 제출 `https://pdfslimio.com/sitemap.xml` (한국어 페이지 유입의 핵심, 사용자 작업)
+4. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 영어 PDF↔JPG 페이지 FAQ 추가
 5. 광고는 트래픽 1천+ 이후
 
 ---
@@ -20,6 +21,7 @@
 |---|---|
 | `https://pdfslimio.com` | ✅ LIVE |
 | 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · **Organize** · **Page Numbers** · **Watermark** · PDF→JPG · JPG→PDF |
+| 한국어 사이트 | `/ko/` 아래 15페이지 (hreflang 연결, 사이트맵 30 URL) |
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
 | Plausible | ✅ 전 페이지 설치 + `Tool Used` 이벤트(props.tool) — 대시보드 Goal 설정 필요 |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
@@ -50,10 +52,23 @@
 - 서버 GS 압축은 **한 번에 1개**, 대기 10개까지, 초과 시 503(브라우저 모드로 폴백), GS 60초 타임아웃 — 256MB 머신 OOM 방지
 - IndexNow 키: `public/<32hex>.txt` (삭제 금지)
 
+### 한국어 사이트 (2026-09-25)
+- **구조:** 페이지 JS는 전부 `public/js/<page>.js` (영어·한국어 공용). 사용자에게 보이는 문구는 `SlimIO.t("English text")`로 감싸고, 한국어는 `public/i18n/ko.js` 사전에서 가져옴 (`<html lang="ko">`일 때)
+- **한국어 페이지는 생성기로 만듦:** `tools/gen_ko.py` — 영어 HTML을 읽어 한국어 텍스트(메타·구조화 데이터·본문·FAQ·UI 라벨)로 바꿔 `public/ko/`에 씀. hreflang·언어 전환 링크·sitemap.xml도 같이 갱신. 영어 페이지를 고치면 다시 실행 (기대한 영어 문구가 없으면 멈추고 알려 줌, 번역 누락도 검사)
+- **영어 페이지나 JS를 고친 뒤 순서:**
+  ```
+  python3 tools/gen_ko.py        # 한국어 페이지 재생성 (+ 사이트맵)
+  python3 tools/check_i18n.py    # JS에 새 문구를 넣었다면 ko.js에 번역 있는지 검사
+  python3 tools/bump_versions.py # 모든 ?v= 해시 갱신 (JS/CSS 바꿨으면 필수)
+  ```
+- Plausible `Tool Used`의 tool 값이 `ko/merge`처럼 언어별로 따로 잡힘
+- 워터마크: 영문은 Helvetica 벡터, 그 외 문자(한글 등)는 브라우저가 그린 투명 PNG로 삽입 (fontkit 서브셋은 글자가 깨지는 버그가 있어 안 씀)
+- Ghostscript 프리셋 표기 수정: ebook 150dpi, printer 300dpi (이전 96/1200 표기는 틀렸음)
+
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ/Plausible) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
 회전 페이지에 텍스트 그릴 땐 `SlimIO.page2user(page)` 사용
-⚠️ **Cloudflare가 .js/.css/.txt를 4시간 캐시함** → `lib.js`/`style.css` 수정 시 HTML의 `?v=` 해시를 갱신:
+⚠️ **Cloudflare가 .js/.css/.txt를 4시간 캐시함** → JS/CSS 수정 시 `python3 tools/bump_versions.py` (아래 명령은 예전 방식, 참고용):
 ```
 cd public && JS=$(shasum lib.js|cut -c1-8) CSS=$(shasum style.css|cut -c1-8) && for f in *.html; do sed -i '' -E "s#/lib\.js(\?v=[a-z0-9]+)?\"#/lib.js?v=$JS\"#g; s#/style\.css(\?v=[a-z0-9]+)?\"#/style.css?v=$CSS\"#g" "$f"; done
 ```
@@ -69,7 +84,7 @@ robots.txt·sitemap.xml 변경은 Cloudflare 대시보드 → Caching → Purge 
 - `index.html`의 `API_BASE`/`SERVER_BASE` = `""` (same-origin)
 - 포트 3001, `force_https`
 - **rate-limit**: IP당 하루 20회, 서버 메모리 `Map`에 저장 (재시작/재배포 시 초기화 — 무료라 OK)
-- **GS 10.08.0**: `/screen`(가장 작음), `/ebook`(96dpi 균형), `/printer`, `/prepress`
+- **GS 10.08.0**: `/screen`(가장 작음), `/ebook`(150dpi 균형), `/printer`, `/prepress`
 
 ### 두 압축 모드
 1. **Browser mode**: pdf.js + pdf-lib, 파일 안 나옴. Quality/Resolution 슬라이더. CDN `cdnjs` pdf.js 3.11.174 + pdf-lib 1.17.1

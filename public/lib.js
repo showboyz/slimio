@@ -6,6 +6,18 @@ const SERVER_BASE = "";
 const SlimIO = (() => {
    const $ = (id) => document.getElementById(id);
 
+   // UI strings: the English text is the key. Korean pages load /i18n/ko.js
+   // (window.SLIMIO_KO) before this file; English pages just get the key back.
+   const lang = (document.documentElement.lang || "en").slice(0, 2);
+   const dict = (lang === "ko" && window.SLIMIO_KO) || {};
+   function t(s, vars) {
+      const out = dict[s] || s;
+      return vars ? out.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m)) : out;
+   }
+   function pages(n) {
+      return lang === "ko" ? `${n}페이지` : `${n} page${n === 1 ? "" : "s"}`;
+   }
+
    function formatSize(n) {
       if (n < 1024) return `${n} B`;
       if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KB`;
@@ -59,12 +71,12 @@ const SlimIO = (() => {
          .then((c) => updateLimit(c.remaining, c.limit))
          .catch(() => {
             const el = $("limit");
-            if (el) el.textContent = "Limit service currently unavailable.";
+            if (el) el.textContent = t("Limit service currently unavailable.");
          });
    }
    function updateLimit(remaining, limit) {
       const el = $("limit");
-      if (el) el.textContent = `Operations left today: ${remaining} / ${limit}`;
+      if (el) el.textContent = t("Operations left today: {remaining} / {limit}", { remaining, limit });
       const go = $("go");
       if (go && remaining === 0) go.disabled = true;
    }
@@ -121,7 +133,7 @@ const SlimIO = (() => {
       log("REJECTION: " + ((e.reason && e.reason.message) || e.reason)));
 
    return {
-      $, formatSize, base64ToBytes, toBlob, download,
+      $, t, pages, lang, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
       refreshStatus, updateLimit, consume, bindProgress, track, page2user,
    };

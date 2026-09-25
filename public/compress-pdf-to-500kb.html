@@ -10,6 +10,9 @@
 <meta name="theme-color" content="#0b0d12" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="canonical" href="https://pdfslimio.com/compress-pdf-to-500kb.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/compress-pdf-to-500kb.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/compress-pdf-to-500kb.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/compress-pdf-to-500kb.html" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SlimIO" />
@@ -90,7 +93,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=582c07ee" />
+<link rel="stylesheet" href="/style.css?v=93cd95b2" />
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
 <script>
@@ -112,6 +115,7 @@
                <a href="/#tools">All tools</a>
                <a href="/#how">How it works</a>
                <a href="/#pricing">Pricing</a>
+              <a href="/ko/compress-pdf-to-500kb.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a>
            </div>
       </nav>
 </div>
@@ -254,96 +258,15 @@
           <div class="foot">
               <div>© 2026 SlimIO · Free PDF tools</div>
               <div>No signup · Files are never stored</div>
+              <div class="lang-foot"><a href="/ko/compress-pdf-to-500kb.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a></div>
           </div>
       </footer>
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/lib.js?v=cc1156ba"></script>
-<script defer src="/target.js?v=61294098"></script>
-<script type="module">
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-const drop = $("drop");
-const controls = $("controls");
-const goBtn = $("go");
-const result = $("result");
-const dl = $("dl");
-const statusEl = $("status");
-const prog = SlimIO.bindProgress("prog");
-
-let file = null;
-
-function setFile(f) {
-     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
-     SlimIO.clearError();
-     file = f;
-     drop.querySelector(".drop-title").textContent = f.name;
-     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
-     controls.classList.remove("hidden");
-     result.style.display = "none";
-     goBtn.disabled = false;
-     SlimIO.refreshStatus();
-}
-
-drop.addEventListener("click", () => $("pdf").click());
-$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
-drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
-drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
-drop.addEventListener("drop", (e) => {
-     e.preventDefault();
-     drop.classList.remove("drag");
-     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
-});
-
-goBtn.addEventListener("click", compress);
-
-async function compress() {
-     if (!file) return;
-     const label = $("target").value;
-     const target = SlimTarget.parseSize(label);
-     SlimIO.clearError();
-     goBtn.disabled = true;
-     goBtn.textContent = "Compressing…";
-     prog.show();
-     prog.set(5);
-     result.style.display = "none";
-     try {
-             const r = await SlimTarget.run(file, target, (p) => prog.set(5 + p * 95), (msg) => (statusEl.textContent = msg));
-             if (r.limited) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
-             showResult(r, label);
-     } catch (e) {
-             SlimIO.showError(`Compression failed: ${e.message}`);
-     } finally {
-             goBtn.disabled = false;
-             goBtn.textContent = "Compress PDF";
-             statusEl.textContent = "";
-             prog.hide();
-     }
-}
-
-function showResult(r, label) {
-     result.style.display = "block";
-     $("orig").textContent = SlimIO.formatSize(file.size);
-     $("after").textContent = SlimIO.formatSize(r.bytes.length);
-     $("fit").textContent = r.fits ? `✓ under ${label}` : `✗ over ${label}`;
-     const note = $("note");
-     note.className = "note" + (r.fits ? "" : " warn");
-     if (r.method === "original") note.textContent = `Your PDF is already under ${label} — no compression needed.`;
-     else if (!r.fits) note.textContent = `This is the smallest we could make it. To get under ${label}, remove pages you don't need or split the file into parts.`;
-     else if (r.method === "server") note.textContent = "Text kept sharp and selectable.";
-     else {
-             const dpi = Math.round(r.scale * 72);
-             note.textContent = `To reach ${label}, pages were converted to images at about ${dpi} dpi. The text is no longer selectable.` +
-                     (dpi < 50 ? " Small print may be hard to read — removing pages you don't need will give a sharper result." : "");
-             if (dpi < 50) note.className = "note warn";
-     }
-     const base = file.name.replace(/\.pdf$/i, "");
-     dl.onclick = () => SlimIO.download(r.bytes, `${base}_${label.toLowerCase()}.pdf`, "application/pdf");
-}
-
-SlimIO.refreshStatus();
-</script>
+<script defer src="/lib.js?v=cb39142c"></script>
+<script defer src="/target.js?v=598616f7"></script>
+<script type="module" src="/js/target-page.js?v=1f9020fb"></script>
 </body>
 </html>

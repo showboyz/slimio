@@ -10,6 +10,9 @@
 <meta name="theme-color" content="#0b0d12" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="canonical" href="https://pdfslimio.com/watermark.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/watermark.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/watermark.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/watermark.html" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SlimIO" />
@@ -47,12 +50,12 @@
         {"@type": "Question", "name": "Can I add CONFIDENTIAL or DRAFT to a PDF?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. CONFIDENTIAL is the default text, and you can type DRAFT, SAMPLE, COPY, your company name or anything else."}},
         {"@type": "Question", "name": "Will the watermark cover my content?", "acceptedAnswer": {"@type": "Answer", "text": "The watermark is semi-transparent, so the page stays readable. Lower the opacity for a lighter stamp."}},
         {"@type": "Question", "name": "Is it safe to watermark a PDF online?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. SlimIO adds the watermark locally in your browser, so your PDF never leaves your device and is not uploaded to a server."}},
-        {"@type": "Question", "name": "Which characters can I use in the watermark?", "acceptedAnswer": {"@type": "Answer", "text": "The watermark uses a standard Latin font, so letters A–Z, numbers and common punctuation work. Other scripts are not supported yet."}}
+        {"@type": "Question", "name": "Can I use Korean or other languages in the watermark?", "acceptedAnswer": {"@type": "Answer", "text": "Any language your device can display works — English, Korean, Japanese and more. Latin text is stored as sharp vector text; other scripts are stamped as a high-resolution image."}}
       ]
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=582c07ee" />
+<link rel="stylesheet" href="/style.css?v=93cd95b2" />
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
 <script>
@@ -76,6 +79,7 @@
                <a href="/watermark.html">Watermark</a>
                <a href="/#how">How it works</a>
                <a href="/#pricing">Pricing</a>
+              <a href="/ko/watermark.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a>
            </div>
       </nav>
 </div>
@@ -104,7 +108,7 @@
                <div class="field">
                    <label>Watermark text</label>
                    <input type="text" id="text" value="CONFIDENTIAL" maxlength="60" />
-                   <div class="hint">Latin letters, numbers and common punctuation.</div>
+                   <div class="hint">Any language works — English, Korean, Japanese and more.</div>
                </div>
 
                <div class="field">
@@ -183,8 +187,8 @@
           <p>Yes. SlimIO adds the watermark locally in your browser, so your PDF never leaves your device and is not uploaded to a server.</p>
       </details>
       <details>
-          <summary>Which characters can I use in the watermark?</summary>
-          <p>The watermark uses a standard Latin font, so letters A–Z, numbers and common punctuation work. Other scripts are not supported yet.</p>
+          <summary>Can I use Korean or other languages in the watermark?</summary>
+          <p>Any language your device can display works — English, Korean, Japanese and more. Latin text is stored as sharp vector text; other scripts are stamped as a high-resolution image.</p>
       </details>
 </section>
 
@@ -208,122 +212,13 @@
           <div class="foot">
               <div>© 2026 SlimIO · Free PDF tools</div>
               <div>Runs in your browser · No signup</div>
+              <div class="lang-foot"><a href="/ko/watermark.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a></div>
           </div>
       </footer>
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/lib.js?v=cc1156ba"></script>
-<script type="module">
-const { PDFDocument, StandardFonts, rgb, degrees } = PDFLib;
-const drop = $("drop");
-const controls = $("controls");
-const goBtn = $("go");
-const result = $("result");
-const dl = $("dl");
-const prog = SlimIO.bindProgress("prog");
-const COLORS = { gray: rgb(0.45, 0.45, 0.45), red: rgb(0.85, 0.1, 0.1), blue: rgb(0.1, 0.3, 0.85) };
-
-let file = null;
-
-function setFile(f) {
-     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
-     SlimIO.clearError();
-     file = f;
-     drop.querySelector(".drop-title").textContent = f.name;
-     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
-     controls.classList.remove("hidden");
-     goBtn.disabled = false;
-     SlimIO.refreshStatus();
-}
-
-drop.addEventListener("click", () => $("pdf").click());
-$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
-drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
-drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
-drop.addEventListener("drop", (e) => {
-     e.preventDefault();
-     drop.classList.remove("drag");
-     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
-});
-$("opacity").addEventListener("input", () => { $("opv").textContent = $("opacity").value + "%"; });
-
-goBtn.addEventListener("click", addWatermark);
-
-// Draw text centered on visual point (cx, cy) at visual angle theta (degrees).
-function stamp(page, v, text, font, size, cx, cy, theta, color, opacity) {
-     const tw = font.widthOfTextAtSize(text, size);
-     const th = font.heightAtSize(size, { descender: false });
-     const t = (theta * Math.PI) / 180;
-     const vx = cx - (tw / 2) * Math.cos(t) + (th / 2) * Math.sin(t);
-     const vy = cy - (tw / 2) * Math.sin(t) - (th / 2) * Math.cos(t);
-     const p = v.map(vx, vy);
-     page.drawText(text, { x: p.x, y: p.y, size, font, color, opacity, rotate: degrees(theta + p.angle) });
-}
-
-async function addWatermark() {
-     if (!file) return;
-     const text = $("text").value.trim();
-     if (!text) { SlimIO.showError("Please type the watermark text."); return; }
-     SlimIO.clearError();
-     goBtn.disabled = true;
-     goBtn.textContent = "Watermarking…";
-     prog.show();
-     result.style.display = "none";
-     try {
-             const check = await SlimIO.consume();
-             if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
-
-             const doc = await PDFDocument.load(await file.arrayBuffer());
-             const font = await doc.embedFont(StandardFonts.HelveticaBold);
-             try { font.encodeText(text); }
-             catch (e) { SlimIO.showError("The watermark text has characters this font can't draw. Use Latin letters, numbers and punctuation."); return; }
-
-             const style = $("style").value;
-             const color = COLORS[$("color").value];
-             const opacity = parseInt($("opacity").value, 10) / 100;
-             const pages = doc.getPages();
-
-             for (let i = 0; i < pages.length; i++) {
-                 const page = pages[i];
-                 const v = SlimIO.page2user(page);
-                 const w = v.width, h = v.height;
-                 if (style === "tiled") {
-                     const size = Math.max(14, Math.min(w, h) / 14);
-                     const stepX = font.widthOfTextAtSize(text, size) + size * 3;
-                     const stepY = size * 5;
-                     for (let row = 0, y = -h / 2; y < h * 1.5; row++, y += stepY) {
-                         for (let x = -w / 2 + (row % 2) * (stepX / 2); x < w * 1.5; x += stepX) {
-                             stamp(page, v, text, font, size, x, y, 30, color, opacity);
-                         }
-                     }
-                 } else {
-                     const theta = style === "diagonal" ? (Math.atan2(h, w) * 180) / Math.PI : 0;
-                     const span = style === "diagonal" ? Math.hypot(w, h) : w;
-                     const size = Math.min(span * 0.7 / font.widthOfTextAtSize(text, 1), Math.min(w, h) / 4);
-                     stamp(page, v, text, font, size, w / 2, h / 2, theta, color, opacity);
-                 }
-                 prog.set(Math.round(((i + 1) / pages.length) * 100));
-             }
-             const out = await doc.save();
-             showResult(pages.length, text, out);
-     } catch (e) {
-             SlimIO.showError(`Watermark failed: ${e.message}`);
-     } finally {
-             goBtn.disabled = false;
-             goBtn.textContent = "Add watermark";
-             prog.hide();
-     }
-}
-
-function showResult(count, text, bytes) {
-     result.style.display = "block";
-     $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
-     $("wm").textContent = text;
-     dl.onclick = () => SlimIO.download(bytes, "slimio_watermarked.pdf", "application/pdf");
-}
-
-SlimIO.refreshStatus();
-</script>
+<script defer src="/lib.js?v=cb39142c"></script>
+<script type="module" src="/js/watermark.js?v=74829d66"></script>
 </body>
 </html>

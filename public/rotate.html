@@ -10,6 +10,9 @@
 <meta name="theme-color" content="#0b0d12" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="canonical" href="https://pdfslimio.com/rotate.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/rotate.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/rotate.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/rotate.html" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SlimIO" />
@@ -52,7 +55,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=582c07ee" />
+<link rel="stylesheet" href="/style.css?v=93cd95b2" />
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
 <script>
@@ -70,6 +73,7 @@
                <a href="/rotate.html">Rotate</a>
                <a href="/#how">How it works</a>
                <a href="/#pricing">Pricing</a>
+              <a href="/ko/rotate.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a>
            </div>
       </nav>
 </div>
@@ -196,92 +200,13 @@
           <div class="foot">
               <div>© 2026 SlimIO · Free PDF tools</div>
               <div>Runs in your browser · No signup</div>
+              <div class="lang-foot"><a href="/ko/rotate.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a></div>
           </div>
       </footer>
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/lib.js?v=cc1156ba"></script>
-<script type="module">
-const { PDFDocument, degrees } = PDFLib;
-const drop = $("drop");
-const controls = $("controls");
-const angle = $("angle");
-const pagesInfo = $("pagesinfo");
-const pageCountEl = $("pagecount");
-const goBtn = $("go");
-const result = $("result");
-const dl = $("dl");
-const prog = SlimIO.bindProgress("prog");
-
-let file = null;
-let pageCount = 0;
-
-function setFile(f) {
-     if (!f || f.type !== "application/pdf") { SlimIO.showError("Please choose a PDF file."); return; }
-     SlimIO.clearError();
-     file = f;
-     drop.querySelector(".drop-title").textContent = f.name;
-     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
-     controls.classList.remove("hidden");
-     goBtn.disabled = false;
-     SlimIO.refreshStatus();
-}
-
-drop.addEventListener("click", () => $("pdf").click());
-$("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
-drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
-drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
-drop.addEventListener("drop", (e) => {
-     e.preventDefault();
-     drop.classList.remove("drag");
-     if (e.dataTransfer.files.length) setFile(e.dataTransfer.files[0]);
-});
-
-goBtn.addEventListener("click", rotate);
-
-async function rotate() {
-     if (!file) return;
-     SlimIO.clearError();
-     goBtn.disabled = true;
-     goBtn.textContent = "Rotating…";
-     prog.show();
-     result.style.display = "none";
-     try {
-             const check = await SlimIO.consume();
-             if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
-
-             const data = await file.arrayBuffer();
-             const doc = await PDFDocument.load(data);
-             pageCount = doc.getPageCount();
-             const deg = parseInt(angle.value, 10);
-
-             for (let i = 0; i < pageCount; i++) {
-                 const page = doc.getPage(i);
-                 let current = page.getRotation();
-                 page.setRotation(degrees((current.angle + deg) % 360));
-                 prog.set(Math.round(((i + 1) / pageCount) * 100));
-             }
-             const out = await doc.save();
-             showResult(pageCount, deg, out);
-     } catch (e) {
-             SlimIO.showError(`Rotate failed: ${e.message}`);
-     } finally {
-             goBtn.disabled = false;
-             goBtn.textContent = "Rotate PDF";
-             prog.hide();
-     }
-}
-
-function showResult(count, deg, bytes) {
-     result.style.display = "block";
-      $("after").textContent = `${count} page${count === 1 ? "" : "s"}`;
-      $("rotated").textContent = deg === 0 ? "No rotation" : `${deg}° clockwise`;
-      dl.textContent = "↓ Download PDF";
-      dl.onclick = () => SlimIO.download(bytes, "slimio_rotated.pdf", "application/pdf");
-}
-
-SlimIO.refreshStatus();
-    </script>
+<script defer src="/lib.js?v=cb39142c"></script>
+<script type="module" src="/js/rotate.js?v=7397cea5"></script>
     </body>
 </html>

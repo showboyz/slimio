@@ -170,8 +170,9 @@ async function handle(req, res) {
          return;
      }
      const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
-     if (urlPath === "/index.html") return redirect(res, "/" + query);   // one URL per page
-     if (urlPath === "/") urlPath = "/index.html";
+     const reqPath = urlPath;
+     if (urlPath.endsWith("/index.html")) return redirect(res, urlPath.slice(0, -"index.html".length) + query);   // one URL per page
+     if (urlPath.endsWith("/")) urlPath += "index.html";   // / and /ko/
      const filePath = path.join(PUBLIC_DIR, path.normalize(urlPath).replace(/^(\.\.[/\\])+/, ""));
 
      if (!filePath.startsWith(PUBLIC_DIR)) {
@@ -181,9 +182,13 @@ async function handle(req, res) {
 
      fs.readFile(filePath, (err, data) => {
          if (err) {
-             // /merge -> /merge.html (people type URLs without the extension)
-             if (!path.extname(urlPath) && fs.existsSync(filePath.replace(/\/$/, "") + ".html")) {
-                 return redirect(res, urlPath.replace(/\/$/, "") + ".html" + query);
+             // /merge -> /merge.html, /ko -> /ko/ (people type URLs without the extension or slash)
+             const bare = reqPath.replace(/\/$/, "");
+             if (bare && !path.extname(bare)) {
+                 const asFile = path.join(PUBLIC_DIR, path.normalize(bare + ".html"));
+                 const asDir = path.join(PUBLIC_DIR, path.normalize(bare), "index.html");
+                 if (asFile.startsWith(PUBLIC_DIR) && fs.existsSync(asFile)) return redirect(res, bare + ".html" + query);
+                 if (asDir.startsWith(PUBLIC_DIR) && !reqPath.endsWith("/") && fs.existsSync(asDir)) return redirect(res, bare + "/" + query);
              }
              fs.readFile(path.join(PUBLIC_DIR, "404.html"), (e2, page) => {
                  if (e2) return sendJson(res, 404, { error: "not found" });

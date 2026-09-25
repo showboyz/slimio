@@ -66,6 +66,7 @@ iLovePDF, Smallpdf, Adobe Acrobat Online, PDF24의 **대안(alternative)**으로
 ### GeekNews (한국) — https://news.hada.io
 한국 개발자 커뮤니티예요. 제목을 **"Show GN:"**으로 시작하면 직접 만든 프로젝트 소개로 올릴 수 있어요.
 - **제목:** `Show GN: SlimIO - 가입 없이 브라우저에서 동작하는 무료 PDF 도구 모음`
+- **URL:** `https://pdfslimio.com/ko/`
 - **본문:**
   > PDF 압축·합치기·나누기·페이지 정리·페이지 번호·워터마크 등을 무료로 쓸 수 있는 사이트를 만들었습니다.
   >
@@ -74,7 +75,9 @@ iLovePDF, Smallpdf, Adobe Acrobat Online, PDF24의 **대안(alternative)**으로
   > - "100KB 이하로 압축"처럼 목표 용량을 정하면, 그 안에 들어가는 가장 좋은 화질을 자동으로 찾아 줍니다. 채용·관공서 사이트 업로드 제한 때문에 만들었습니다.
   > - 가입 없음, 워터마크 없음, 하루 20회 무료
   >
-  > 아직 영어 페이지만 있습니다. 써 보시고 결과가 이상한 PDF가 있으면 알려 주세요!
+  > 한국어 페이지: https://pdfslimio.com/ko/
+  >
+  > 써 보시고 결과가 이상한 PDF가 있으면 알려 주세요!
 
 ### 디스콰이엇 (한국 메이커 커뮤니티) — https://disquiet.io
 - 프로덕트를 등록하고, 위의 GeekNews 본문을 "메이커로그"로 올리세요. 만드는 과정을 꾸준히 올리면 팔로워가 생겨요.
@@ -98,10 +101,10 @@ iLovePDF, Smallpdf, Adobe Acrobat Online, PDF24의 **대안(alternative)**으로
 > PDF 용량 줄이다가 "100KB 이하만 업로드 가능"에 막힌 적 있나요?
 >
 > 목표 용량을 고르면 그 안에 들어가는 가장 좋은 화질을 알아서 찾아 주는 도구를 만들었어요.
-> 합치기·나누기·페이지 정리·워터마크 등 10가지 도구가 있고, 대부분 브라우저 안에서만 동작해요.
+> 합치기·나누기·페이지 정리·한글 워터마크 등 10가지 도구가 있고, 대부분 브라우저 안에서만 동작해요.
 >
 > 가입 없음, 워터마크 없음, 무료
-> https://pdfslimio.com/compress-pdf-to-100kb.html
+> https://pdfslimio.com/ko/compress-pdf-to-100kb.html
 >
 > 써 보고 불편한 점 알려 주세요 🙏
 

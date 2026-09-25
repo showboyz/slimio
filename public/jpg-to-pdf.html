@@ -10,6 +10,9 @@
 <meta name="theme-color" content="#0b0d12" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="canonical" href="https://pdfslimio.com/jpg-to-pdf.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/jpg-to-pdf.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/jpg-to-pdf.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/jpg-to-pdf.html" />
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SlimIO" />
@@ -39,7 +42,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=582c07ee" />
+<link rel="stylesheet" href="/style.css?v=93cd95b2" />
 <!-- Privacy-friendly analytics by Plausible -->
 <script async src="https://plausible.io/js/pa-_FC9iHqycArcM0Jp3F00B.js"></script>
 <script>
@@ -57,6 +60,7 @@
               <a href="/jpg-to-pdf.html">JPG to PDF</a>
               <a href="/#how">How it works</a>
               <a href="/#pricing">Pricing</a>
+              <a href="/ko/jpg-to-pdf.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a>
           </div>
       </nav>
 </div>
@@ -144,165 +148,13 @@
           <div class="foot">
               <div>© 2026 SlimIO · Free PDF tools</div>
               <div>Runs in your browser · No signup</div>
+              <div class="lang-foot"><a href="/ko/jpg-to-pdf.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a></div>
           </div>
       </footer>
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/lib.js?v=cc1156ba"></script>
-<script type="module">
-const { PDFDocument } = PDFLib;
-const drop = $("drop");
-const controls = $("controls");
-const filelist = $("filelist");
-const goBtn = $("go");
-const result = $("result");
-const dl = $("dl");
-const prog = SlimIO.bindProgress("prog");
-
-let items = [];
-
-function render() {
-    filelist.innerHTML = "";
-    items.forEach((it, i) => {
-        const li = document.createElement("li");
-        li.innerHTML =
-              `<span class="fname">${i + 1}. ${escapeHtml(it.name)} <span class="fsize">${SlimIO.formatSize(it.size)}</span></span>`;
-        const actions = document.createElement("span");
-        actions.style.display = "flex";
-        actions.style.gap = "6px";
-        ["up", "down", "rm"].forEach((a) => {
-            const b = document.createElement("button");
-            b.className = "fbtn";
-            b.title = { up: "Move up", down: "Move down", rm: "Remove" }[a];
-            b.textContent = { up: "▲", down: "▼", rm: "✕" }[a];
-            b.addEventListener("click", () => onItemAction(a, i));
-            actions.appendChild(b);
-         });
-        li.appendChild(actions);
-        filelist.appendChild(li);
-     });
-    goBtn.disabled = items.length === 0;
-    controls.classList.toggle("hidden", items.length === 0);
-    SlimIO.refreshStatus();
-}
-
-function onItemAction(action, i) {
-    if (action === "up" && i > 0) { [items[i - 1], items[i]] = [items[i], items[i - 1]]; render(); }
-    else if (action === "down" && i < items.length - 1) { [items[i + 1], items[i]] = [items[i], items[i + 1]]; render(); }
-    else if (action === "rm") { items.splice(i, 1); render(); }
-}
-
-function escapeHtml(s) {
-    return String(s).replace(/[&<>"]/g, (c) =>
-        ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-}
-
-async function addFiles(list) {
-    SlimIO.clearError();
-    for (const f of list) {
-        if (!f.type.startsWith("image/")) { SlimIO.showError("Please choose image files (JPG, PNG, WebP…)."); return; }
-        items.push({ name: f.name, size: f.size, file: f });
-        render();
-     }
-    SlimIO.refreshStatus();
-}
-
-drop.addEventListener("click", () => $("images").click());
-$("images").addEventListener("change", (e) => addFiles(e.target.files));
-drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
-drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
-drop.addEventListener("drop", (e) => {
-    e.preventDefault();
-    drop.classList.remove("drag");
-    if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
-});
-
-goBtn.addEventListener("click", convert);
-
-async function convert() {
-    if (items.length === 0) return;
-    SlimIO.clearError();
-    goBtn.disabled = true;
-    goBtn.textContent = "Converting…";
-    prog.show();
-    result.style.display = "none";
-    try {
-        const check = await SlimIO.consume();
-        if (check && !check.ok) { SlimIO.showError("Daily limit reached. Come back tomorrow."); return; }
-
-        const out = await PDFDocument.create();
-        for (let i = 0; i < items.length; i++) {
-            const it = items[i];
-            const bytes = await it.file.arrayBuffer();
-            let font = await loadImage(out, bytes, it.file.type);
-            if (!font) { SlimIO.showError(`Could not read "${it.name}".`); return; }
-            const page = out.addPage([font.width, font.height]);
-            page.drawImage(font, { x: 0, y: 0, width: font.width, height: font.height });
-            prog.set(Math.round(((i + 1) / items.length) * 100));
-         }
-        const pdfBytes = await out.save();
-        showResult(items.length, pdfBytes);
-     } catch (e) {
-        SlimIO.showError(`Conversion failed: ${e.message}`);
-     } finally {
-        goBtn.disabled = false;
-        goBtn.textContent = "Convert to PDF";
-        prog.hide();
-     }
-}
-
-async function loadImage(out, bytes, mime) {
-    const u = new Uint8Array(bytes);
-    try {
-        if (mime === "image/png") return await out.embedPng(u);
-        if (mime === "image/webp") {
-            const blob = new Blob([u], { type: "image/webp" });
-            const url = URL.createObjectURL(blob);
-            const img = await loadCanvas(url);
-            URL.revokeObjectURL(url);
-            const jpeg = await canvasToJpeg(img, 0.92);
-            return await out.embedJpg(jpeg);
-        }
-        return await out.embedJpg(u);
-     } catch (e) {
-        try {
-            const url = URL.createObjectURL(new Blob([u]));
-            const img = await loadCanvas(url);
-            URL.revokeObjectURL(url);
-            const jpeg = await canvasToJpeg(img, 0.92);
-            return await out.embedJpg(jpeg);
-        } catch (e2) { return null; }
-     }
-}
-
-function loadCanvas(url) {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => resolve(img);
-        img.onerror = () => reject(new Error("image load failed"));
-        img.src = url;
-     });
-}
-
-function canvasToJpeg(canvas, quality) {
-    return new Promise((resolve, reject) => {
-        canvas.toBlob(async (b) => {
-            if (!b) return reject(new Error("toBlob failed"));
-            try { resolve(new Uint8Array(await b.arrayBuffer())); } catch (e) { reject(e); }
-        }, "image/jpeg", quality);
-     });
-}
-
-function showResult(count, bytes) {
-    result.style.display = "block";
-     $("merged").textContent = `${count} image${count === 1 ? "" : "s"}`;
-     $("after").textContent = SlimIO.formatSize(bytes.length);
-    dl.textContent = "↓ Download PDF";
-    dl.onclick = () => SlimIO.download(bytes, "slimio.pdf", "application/pdf");
-}
-
-SlimIO.refreshStatus();
- </script>
+<script defer src="/lib.js?v=cb39142c"></script>
+<script type="module" src="/js/jpg-to-pdf.js?v=f613c553"></script>
  </body>
 </html>

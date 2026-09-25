@@ -1,7 +1,7 @@
 import json, html, sys, os
+# After generating, run tools/bump_versions.py to set the ?v= asset hashes.
 
 OUT = sys.argv[1]
-JSV, CSSV, TGV = sys.argv[2], sys.argv[3], sys.argv[4]
 
 SIZES = ["50KB", "100KB", "150KB", "200KB", "300KB", "500KB", "1MB", "2MB", "5MB", "10MB", "20MB", "25MB"]
 SIBLINGS = [
@@ -201,7 +201,6 @@ for p in PAGES:
         "KEYWORDS": p["keywords"], "URL": url, "APP_LD": json.dumps(app_ld, indent=6), "FAQ_LD": json.dumps(faq_ld, indent=6),
         "H1": p["h1"], "LEAD": p["lead"], "OPTIONS": opts, "CONTENT": p["content"], "FAQ": faq_html,
         "FAQ_TITLE": html.escape(p["short"].split(" |")[0]), "SIBLINGS": sib, "TARGET": p["target"],
-        "JSV": JSV, "CSSV": CSSV, "TGV": TGV,
     }.items():
         out = out.replace("{{" + k + "}}", v)
     assert "{{" not in out, p["slug"]
