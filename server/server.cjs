@@ -11,6 +11,22 @@ const PUBLIC_DIR = process.env.PUBLIC_DIR || path.join(__dirname, "..", "public"
 const MAX_UPLOAD = 50 * 1024 * 1024; // 256MB machine: cap uploads so one request can't OOM it
 const LEVELS = new Set(["screen", "ebook", "printer", "prepress"]);
 
+// One Ghostscript job at a time: on a 256MB machine a traffic spike with several
+// big PDFs in parallel would run out of memory. Extra requests wait in line; once
+// the line is full we answer 503 and the page falls back to in-browser compression.
+const MAX_GS = 1, MAX_WAITING = 10, GS_TIMEOUT_MS = 60000;
+let gsRunning = 0;
+const gsWaiting = [];
+function acquireGs() {
+   if (gsRunning < MAX_GS) { gsRunning++; return Promise.resolve(); }
+   if (gsWaiting.length >= MAX_WAITING) return null;
+   return new Promise((resolve) => gsWaiting.push(resolve));
+}
+function releaseGs() {
+   const next = gsWaiting.shift();
+   if (next) next(); else gsRunning--;
+}
+
 const MIME = {
     ".html": "text/html; charset=utf-8",
     ".css": "text/css",
@@ -60,6 +76,8 @@ function gs(args, input, output) {
        }
        try {
           const proc = spawn("gs", gsArgs, { stdio: ["ignore", "pipe", "pipe"] });
+          const timer = setTimeout(() => proc.kill("SIGKILL"), GS_TIMEOUT_MS);
+          proc.on("close", () => clearTimeout(timer));
           let err = "";
           proc.stderr.on("data", (d) => (err += d));
           proc.on("close", (code) => code === 0 ? resolve() : reject(new Error(err || "gs exit " + code)));
@@ -97,42 +115,49 @@ async function handle(req, res) {
        const level = LEVELS.has(req.headers["x-level"]) ? req.headers["x-level"] : "ebook";
        const jpg = req.headers["x-jpg"] ? parseInt(req.headers["x-jpg"], 10) : undefined;
 
-       const chunks = [];
-       let size = 0;
-       for await (const c of req) {
-          size += c.length;
-          if (size > MAX_UPLOAD) return sendJson(res, 413, { error: "file too large (max 50 MB)" });
-          chunks.push(c);
-       }
-       const inBuf = Buffer.concat(chunks);
-       if (inBuf.length < 200) return sendJson(res, 400, { error: "empty file" });
-       consume(ip);
-
-       const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
-       const tmpOut = tmpIn + "_out.pdf";
-       fs.writeFileSync(tmpIn, inBuf);
-
+       const slot = acquireGs();   // before reading the body, so waiting requests hold no memory
+       if (!slot) return sendJson(res, 503, { error: "server busy — try Browser mode", remaining: remaining(ip), limit: DAILY_LIMIT });
+       await slot;
        try {
-          await gs({ level, jpg }, tmpIn, tmpOut);
-          const outBuf = fs.readFileSync(tmpOut);
-          sendJson(
-             res, 200,
-             {
-                ok: true,
-                inBytes: inBuf.length,
-                outBytes: outBuf.length,
-                savedPct: ((1 - outBuf.length / inBuf.length) * 100).toFixed(1),
-                remaining: remaining(ip),
-                limit: DAILY_LIMIT,
-                pdf: outBuf.toString("base64"),
-             }
-          );
-        } catch (e) {
-          sendJson(res, 500, { error: e.message, inBytes: inBuf.length, outBytes: 0, remaining: remaining(ip), limit: DAILY_LIMIT });
-        } finally {
-          fs.unlink(tmpIn, () => {});
-          fs.unlink(tmpOut, () => {});
-        }
+          const chunks = [];
+          let size = 0;
+          for await (const c of req) {
+             size += c.length;
+             if (size > MAX_UPLOAD) return sendJson(res, 413, { error: "file too large (max 50 MB)" });
+             chunks.push(c);
+          }
+          const inBuf = Buffer.concat(chunks);
+          if (inBuf.length < 200) return sendJson(res, 400, { error: "empty file" });
+          consume(ip);
+
+          const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
+          const tmpOut = tmpIn + "_out.pdf";
+          fs.writeFileSync(tmpIn, inBuf);
+
+          try {
+             await gs({ level, jpg }, tmpIn, tmpOut);
+             const outBuf = fs.readFileSync(tmpOut);
+             sendJson(
+                res, 200,
+                {
+                   ok: true,
+                   inBytes: inBuf.length,
+                   outBytes: outBuf.length,
+                   savedPct: ((1 - outBuf.length / inBuf.length) * 100).toFixed(1),
+                   remaining: remaining(ip),
+                   limit: DAILY_LIMIT,
+                   pdf: outBuf.toString("base64"),
+                }
+             );
+           } catch (e) {
+             sendJson(res, 500, { error: e.message, inBytes: inBuf.length, outBytes: 0, remaining: remaining(ip), limit: DAILY_LIMIT });
+           } finally {
+             fs.unlink(tmpIn, () => {});
+             fs.unlink(tmpOut, () => {});
+           }
+       } finally {
+          releaseGs();
+       }
        return;
      }
 

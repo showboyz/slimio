@@ -1,16 +1,17 @@
 # SlimIO — Free PDF Tools · 핸드오프 문서
 
-**최종 업데이트: 2026-09-24** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com)** · 도구 10개
+**최종 업데이트: 2026-09-25** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com)** · 도구 10개
 
 ---
 
 ## 👉 다음 세션에서 바로 할 것 (순서대로)
-1. **Plausible 목표 설정** (1회): Site Settings → Goals → Custom event `Tool Used` 추가 → Custom Properties에 `tool` 추가
-   → 대시보드에서 도구별 **실제 사용 수** 확인 (방문은 Top Pages / Entry Pages / Sources)
-2. **GSC**: TXT 인증 레코드는 DNS에 있음 → 인증 완료 후 `sitemap.xml`(10 URL) 제출, 새 페이지 URL 검사로 색인 요청. Bing은 GSC import
-3. **X 홍보 1차** — "파일이 기기 밖으로 안 나가는 무료 PDF 도구 모음" 앵글로 (초안 아래)
-4. 광고 네트워크는 트래픽 1천+ 이후 (Medvance/Ezoic)
-5. 다음 도구 후보: PNG→PDF 랜딩, PDF 암호 걸기/해제(서버 qpdf 필요), Word→PDF
+1. **www 연결 (Cloudflare 대시보드, 사용자 작업):** 현재 `www.pdfslimio.com`은 DNS 레코드가 없어 접속 불가
+   - DNS → Add record → `CNAME` / Name `www` / Target `pdfslimio.com` / Proxy **ON**
+   - Rules → Redirect Rules → 템플릿 "Redirect from WWW to root" → `https://pdfslimio.com` (301)
+2. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
+3. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 (Bing·네이버 등에 즉시 알림) + GSC에서 새 URL 색인 요청
+4. 다음 개발 후보: 한국어 페이지(+네이버 서치어드바이저), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등)
+5. 광고는 트래픽 1천+ 이후
 
 ---
 
@@ -42,6 +43,12 @@
   새 용량 추가 시 `PAGES`·`SIBLINGS`에 항목 추가 → 재생성 → `index.html` "Need an exact size?" 줄 + `sitemap.xml`
 - 페이지마다 쓰임새/팁/FAQ를 실제로 다르게 유지할 것 (복제 페이지는 Google이 스팸 처리)
 - `/api/consume`: 차감 **전에** 한도 판단 (이전엔 20번째 사용이 막혔음)
+
+### 성능·운영 (2026-09-25)
+- Lighthouse 모바일: 성능 84~100, 접근성·권장사항·SEO 100. 하단 스크립트 `defer` + 페이지 코드 `type="module"` (새 페이지도 이 패턴 유지)
+- `?v=` 붙은 자산은 1년 immutable 캐시, `/merge`→`/merge.html`, `/index.html`→`/` 301
+- 서버 GS 압축은 **한 번에 1개**, 대기 10개까지, 초과 시 503(브라우저 모드로 폴백), GS 60초 타임아웃 — 256MB 머신 OOM 방지
+- IndexNow 키: `public/<32hex>.txt` (삭제 금지)
 
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ/Plausible) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
