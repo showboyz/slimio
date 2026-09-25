@@ -144,6 +144,8 @@ async function handle(req, res) {
          sendJson(res, 400, { error: "bad request" }); // malformed %-escape; must not crash the process
          return;
      }
+     const query = req.url.includes("?") ? req.url.slice(req.url.indexOf("?")) : "";
+     if (urlPath === "/index.html") return redirect(res, "/" + query);   // one URL per page
      if (urlPath === "/") urlPath = "/index.html";
      const filePath = path.join(PUBLIC_DIR, path.normalize(urlPath).replace(/^(\.\.[/\\])+/, ""));
 
@@ -154,6 +156,10 @@ async function handle(req, res) {
 
      fs.readFile(filePath, (err, data) => {
          if (err) {
+             // /merge -> /merge.html (people type URLs without the extension)
+             if (!path.extname(urlPath) && fs.existsSync(filePath.replace(/\/$/, "") + ".html")) {
+                 return redirect(res, urlPath.replace(/\/$/, "") + ".html" + query);
+             }
              fs.readFile(path.join(PUBLIC_DIR, "404.html"), (e2, page) => {
                  if (e2) return sendJson(res, 404, { error: "not found" });
                  res.writeHead(404, { "Content-Type": MIME[".html"] });
@@ -162,7 +168,10 @@ async function handle(req, res) {
              return;
          }
          const ext = path.extname(filePath);
-         res.writeHead(200, { "Content-Type": MIME[ext] || "application/octet-stream" });
+         const headers = { "Content-Type": MIME[ext] || "application/octet-stream" };
+         if (/[?&]v=/.test(query)) headers["Cache-Control"] = "public, max-age=31536000, immutable";   // content-hashed
+         else if ([".png", ".jpg", ".svg", ".webp", ".ico"].includes(ext)) headers["Cache-Control"] = "public, max-age=86400";
+         res.writeHead(200, headers);
          res.end(data);
      });
 }
@@ -174,6 +183,11 @@ const server = http.createServer((req, res) => {
        else res.destroy();
    });
 });
+
+function redirect(res, location) {
+   res.writeHead(301, { Location: location });
+   res.end();
+}
 
 function sendJson(res, code, body) {
    const data = Buffer.from(JSON.stringify(body));

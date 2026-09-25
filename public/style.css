@@ -164,7 +164,7 @@ footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 30px 0 40
 .content p { color: var(--muted); font-size: 15px; margin: 10px 0; }
 .content ul { color: var(--muted); font-size: 15px; margin: 10px 0 10px 20px; }
 .content li { margin: 6px 0; }
-.content a { color: var(--accent); }
+.content a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
 
 .faq { max-width: 760px; margin: 0 auto; padding: 36px 20px 0; }
 .faq h2 { font-size: 24px; margin-bottom: 18px; }
