@@ -177,7 +177,6 @@ function base64ToBytes(b64) {
 
 // ---- UI helpers ----
 function showResult(orig, after, bytes) {
-    try { window.plausible && window.plausible("Tool Used", { props: { tool: "compress" } }); } catch (e) {}
     result.style.display = "block";
     $("orig").textContent = formatSize(orig);
     $("after").textContent = formatSize(after);

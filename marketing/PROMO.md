@@ -131,8 +131,8 @@ iLovePDF, Smallpdf, Adobe Acrobat Online, PDF24의 **대안(alternative)**으로
 ---
 
 ## 효과 확인
-- **Plausible → Sources:** 어디서 들어왔는지(news.ycombinator.com, reddit.com, alternativeto.net 등)
-- **Plausible → Goal Conversions → Tool Used:** 들어온 사람이 실제로 도구를 썼는지
+- **Cloudflare → Analytics & Logs → Web Analytics → 방문 → 참조자:** 어디서 들어왔는지(news.ycombinator.com, reddit.com, alternativeto.net 등)
+- **같은 화면의 경로:** 어떤 페이지로 들어왔는지
 - 올린 날짜를 이 파일 아래에 적어 두면, 나중에 어떤 채널이 효과가 있었는지 비교하기 쉬워요.
 
 | 날짜 | 채널 | 링크 | 결과 |

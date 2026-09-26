@@ -17,10 +17,6 @@ const SlimTarget = (() => {
       return Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "mb" ? 1024 * 1024 : 1024));
    }
 
-   function toolName() {
-      return location.pathname.replace(/^\/|\.html$/g, "") || "compress";
-   }
-
    async function viaServer(file, target) {
       const level = target >= 1024 * 1024 ? "ebook" : "screen";
       const resp = await fetch(`${SERVER_BASE}/api/compress`, {
@@ -96,10 +92,7 @@ const SlimTarget = (() => {
    // Main entry. Returns { bytes, method, fits, note } or { limited } / throws.
    async function run(file, target, onProgress, onStatus) {
       const data = new Uint8Array(await file.arrayBuffer());
-      if (file.size <= target) {
-         SlimIO.track(toolName());
-         return { bytes: data, method: "original", fits: true };
-      }
+      if (file.size <= target) return { bytes: data, method: "original", fits: true };
 
       let best = null;
       let charged = false;
@@ -111,12 +104,11 @@ const SlimTarget = (() => {
             charged = !r.failed;   // server counted this use
             if (r.bytes) {
                best = { bytes: r.bytes, method: "server", fits: r.bytes.length <= target };
-               if (best.fits) { SlimIO.track(toolName()); return best; }
+               if (best.fits) return best;
             }
          } catch (e) { /* network: fall through to browser */ }
       }
-      if (charged) SlimIO.track(toolName());
-      else {
+      if (!charged) {
          const c = await SlimIO.consume();
          if (c && !c.ok) return { limited: true };
       }

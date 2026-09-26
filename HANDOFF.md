@@ -23,7 +23,7 @@
 | 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · **Organize** · **Page Numbers** · **Watermark** · PDF→JPG · JPG→PDF |
 | 한국어 사이트 | `/ko/` 아래 15페이지 (hreflang 연결, 사이트맵 30 URL) |
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
-| Plausible | ✅ 전 페이지 설치 + `Tool Used` 이벤트(props.tool) — 대시보드 Goal 설정 필요 |
+| 분석 | Cloudflare Web Analytics (무료, 자동 삽입) — Cloudflare → Analytics & Logs → Web Analytics → 방문. 참조자·경로·국가·기기·Core Web Vitals. **도구 사용 횟수(커스텀 이벤트)는 안 됨.** Plausible은 2026-09-26 제거(유료 부담). 도구 사용 횟수가 필요해지면 Umami Cloud 무료(Hobby, 월 10만 이벤트)를 붙일 것: `lib.js`의 `consume()`에서 이벤트 전송 + 각 HTML head에 스크립트 |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
 | Google Search Console | ⚠️ TXT 레코드 추가됨, 사이트맵 제출 필요 |
@@ -61,12 +61,11 @@
   python3 tools/check_i18n.py    # JS에 새 문구를 넣었다면 ko.js에 번역 있는지 검사
   python3 tools/bump_versions.py # 모든 ?v= 해시 갱신 (JS/CSS 바꿨으면 필수)
   ```
-- Plausible `Tool Used`의 tool 값이 `ko/merge`처럼 언어별로 따로 잡힘
 - 워터마크: 영문은 Helvetica 벡터, 그 외 문자(한글 등)는 브라우저가 그린 투명 PNG로 삽입 (fontkit 서브셋은 글자가 깨지는 버그가 있어 안 씀)
 - Ghostscript 프리셋 표기 수정: ebook 150dpi, printer 300dpi (이전 96/1200 표기는 틀렸음)
 
 ### 새 도구 추가 체크리스트
-`public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ/Plausible) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
+`public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
 회전 페이지에 텍스트 그릴 땐 `SlimIO.page2user(page)` 사용
 ⚠️ **Cloudflare가 .js/.css/.txt를 4시간 캐시함** → JS/CSS 수정 시 `python3 tools/bump_versions.py` (아래 명령은 예전 방식, 참고용):
 ```
@@ -104,7 +103,7 @@ robots.txt·sitemap.xml 변경은 Cloudflare 대시보드 → Caching → Purge 
 |---|---|
 | `public/index.html` | 메인 압축 UI + 2모드 압축 로직 + 도구 그리드 |
 | `public/*.html` | 도구 페이지 9개 + `404.html` |
-| `public/lib.js` | 공용 헬퍼(`$`, 다운로드, 한도, Plausible `track`, `page2user`) |
+| `public/lib.js` | 공용 헬퍼(`$`, `t()` 번역, 다운로드, 한도, `page2user`) |
 | `public/style.css` | 도구 페이지 공용 스타일 |
 | `public/robots.txt` | `Sitemap: https://pdfslimio.com/sitemap.xml` |
 | `public/sitemap.xml` | 10 URL |

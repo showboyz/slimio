@@ -80,16 +80,7 @@ const SlimIO = (() => {
       const go = $("go");
       if (go && remaining === 0) go.disabled = true;
    }
-   // Plausible custom event: which tool actually gets used (not just visited)
-   function track(tool) {
-      try { window.plausible && window.plausible("Tool Used", { props: { tool } }); } catch (e) {}
-   }
-   function toolName() {
-      return location.pathname.replace(/^\/|\.html$/g, "") || "compress";
-   }
-
    async function consume() {
-      track(toolName());
       try {
          const c = await fetch(`${API_BASE}/api/consume`, { method: "POST" }).then((r) => r.json());
          updateLimit(c.remaining, c.limit);
@@ -135,7 +126,7 @@ const SlimIO = (() => {
    return {
       $, t, pages, lang, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress, track, page2user,
+      refreshStatus, updateLimit, consume, bindProgress, page2user,
    };
 })();
 
