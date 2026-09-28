@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign PDF — Add Your Signature to a PDF Free | SlimIO</title>
+<meta name="description" content="Sign a PDF online for free. Draw, type or upload your signature, place it anywhere on any page and download. No signup — runs in your browser." />
+<meta name="keywords" content="sign pdf, add signature to pdf, sign pdf online free, electronic signature pdf, draw signature pdf, insert signature in pdf" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/sign-pdf.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/sign-pdf.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/sign-pdf.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/sign-pdf.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Sign PDF — Add Your Signature to a PDF Free | SlimIO" />
+<meta property="og:description" content="Sign a PDF online for free. Draw, type or upload your signature, place it anywhere on any page and download. No signup — runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/sign-pdf.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sign PDF | SlimIO" />
+<meta name="twitter:description" content="Sign a PDF online for free. Draw, type or upload your signature, place it anywhere on any page and download. No signup — runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO Sign PDF",
+      "url": "https://pdfslimio.com/sign-pdf.html",
+      "description": "Free, privacy-first tool to sign PDFs. Draw, type or upload a signature and place it on any page. Runs in your browser with no signup.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": ["Draw a signature", "Type a signature in handwriting fonts", "Upload a signature or stamp image", "Place and resize on any page", "Runs in your browser (no upload)"]
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "How do I sign a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open this page, choose your PDF, and create a signature by drawing it, typing your name or uploading an image. Click Add to page, drag it into place, then click Sign & download."}},
+        {"@type": "Question", "name": "Can I sign on my phone?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Draw your signature with your finger, then drag it into place on the page preview."}},
+        {"@type": "Question", "name": "Can I sign more than one page?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Move between pages with Previous and Next and add your signature wherever you need it. Every placement is saved into the same PDF."}},
+        {"@type": "Question", "name": "Is my PDF uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. The PDF and your signature stay in your browser; nothing is sent to a server."}},
+        {"@type": "Question", "name": "Is a signature added this way legally binding?", "acceptedAnswer": {"@type": "Answer", "text": "For many everyday documents — forms, quotes, agreements between people — a signature image is commonly accepted. It is not a certified digital signature, so for documents that legally require one, check what the recipient accepts."}}
+      ]
+}
+</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+<link rel="stylesheet" href="/style.css?v=93cd95b2" />
+<style>
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tab {
+     flex: 1; padding: 9px; background: #0e1117; color: var(--muted); font-size: 13px;
+     border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
+}
+.tab.on { color: var(--text); border-color: var(--accent); }
+.panel.hidden { display: none; }
+#pad { width: 100%; height: 170px; display: block; background: #fff; border-radius: 10px; touch-action: none; cursor: crosshair; }
+.pad-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.swatch { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; margin-right: 6px; outline: 2px solid #0e1117; }
+.swatch.on { border-color: var(--accent); }
+.linkbtn { background: none; border: 0; color: var(--accent); cursor: pointer; font-size: 13px; padding: 4px 0; }
+.linkbtn:disabled { color: #4b5566; cursor: default; }
+#name {
+     width: 100%; padding: 10px 12px; border-radius: 8px;
+     background: #0e1117; border: 1px solid var(--line); color: var(--text); font-size: 14px;
+}
+.styles { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 10px; }
+.style {
+     background: #fff; border: 2px solid transparent; border-radius: 10px; height: 70px; padding: 6px;
+     display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;
+}
+.style.on { border-color: var(--accent); }
+.style canvas { max-width: 100%; max-height: 100%; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.upprev { background: #fff; border-radius: 10px; min-height: 70px; margin-top: 8px; display: flex; align-items: center; justify-content: center; padding: 8px; }
+.upprev img { max-height: 120px; max-width: 100%; }
+button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid var(--line); }
+.stage { position: relative; background: #0e1117; border-radius: 8px; overflow: hidden; }
+#pagecanvas { display: block; width: 100%; }
+.layer { position: absolute; inset: 0; }
+.item { position: absolute; outline: 1px dashed var(--accent); cursor: move; touch-action: none; user-select: none; }
+.item img { width: 100%; height: 100%; display: block; pointer-events: none; }
+.item .x {
+     position: absolute; top: -10px; right: -10px; width: 20px; height: 20px; padding: 0;
+     border-radius: 50%; border: 0; background: #ff5c5c; color: #fff; font-size: 11px; line-height: 20px; cursor: pointer;
+}
+.item .h { position: absolute; right: -7px; bottom: -7px; width: 14px; height: 14px; border-radius: 3px; background: var(--accent); cursor: nwse-resize; touch-action: none; }
+.pager { display: flex; justify-content: space-between; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/sign-pdf.html">Sign PDF</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+              <a href="/ko/sign-pdf.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Sign your PDF,<br /><b>in your browser.</b></h1>
+           <p>Draw, type or upload your signature and place it anywhere on the page. Free, private, no install.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="drop" id="drop">
+               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <div class="drop-title">Drop your PDF here</div>
+               <div class="drop-or">or click to browse</div>
+               <div class="drop-sub">File never leaves your device — signing happens locally in your browser.</div>
+           </div>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>1. Create your signature</label>
+                   <div class="tabs" id="tabs">
+                       <button type="button" class="tab on" data-mode="draw">Draw</button>
+                       <button type="button" class="tab" data-mode="type">Type</button>
+                       <button type="button" class="tab" data-mode="upload">Upload</button>
+                   </div>
+                   <div class="panel" id="panel-draw">
+                       <canvas id="pad"></canvas>
+                       <div class="pad-row">
+                           <span>
+                               <button type="button" class="swatch on" data-color="#111111" style="background:#111111" title="Black ink"></button>
+                               <button type="button" class="swatch" data-color="#1a3fb5" style="background:#1a3fb5" title="Blue ink"></button>
+                           </span>
+                           <button type="button" class="linkbtn" id="clear">Clear</button>
+                       </div>
+                   </div>
+                   <div class="panel hidden" id="panel-type">
+                       <input type="text" id="name" maxlength="24" placeholder="Type your name" />
+                       <div class="styles" id="styles"></div>
+                   </div>
+                   <div class="panel hidden" id="panel-upload">
+                       <input type="file" id="sigfile" accept="image/*" hidden />
+                       <button type="button" class="linkbtn" id="pickimg">Choose a signature or stamp image</button>
+                       <label class="check"><input type="checkbox" id="knockout" checked /> Remove white background</label>
+                       <div class="upprev"><img id="upimg" alt="" /></div>
+                   </div>
+                   <div class="run-row">
+                       <button type="button" class="btn ghost" id="add">+ Add to page</button>
+                   </div>
+               </div>
+
+               <div class="field">
+                   <label>2. Place it <span id="pageinfo"></span></label>
+                   <div class="stage" id="stage"><canvas id="pagecanvas"></canvas><div class="layer" id="layer"></div></div>
+                   <div class="pager">
+                       <button type="button" class="linkbtn" id="prev">← Previous page</button>
+                       <button type="button" class="linkbtn" id="next">Next page →</button>
+                   </div>
+                   <div class="hint">Drag to move · drag the green corner to resize · ✕ removes it.</div>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>Sign &amp; download</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="row"><span>Pages</span><span id="after" class="v">—</span></div>
+               <div class="row"><span>Signatures</span><span id="count" class="v">—</span></div>
+               <a id="dl" class="dl">↓ Download PDF</a>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+      </div>
+</div>
+
+<div class="content">
+      <h2>How to sign a PDF — in 3 steps</h2>
+      <ul>
+          <li><b>1. Add your PDF.</b> Drop it in or click to browse. The first page appears as a preview.</li>
+          <li><b>2. Create your signature.</b> Draw it with your mouse or finger, type your name in a handwriting style, or upload a photo of your signature or stamp.</li>
+          <li><b>3. Place and download.</b> Click Add to page, drag it into position, resize it with the corner, then click Sign &amp; download.</li>
+      </ul>
+      <h3>Upload a signature or stamp</h3>
+      <p>Sign on white paper, take a photo, and upload it. SlimIO removes the white background so only the ink lands on the page. It works the same way for a company stamp.</p>
+      <h3>Sign several pages</h3>
+      <p>Use Previous and Next to move through the document and add your signature or initials wherever they are needed. To add a watermark such as COPY as well, use <a href="/watermark.html">Watermark PDF</a>. To send the signed file by email, <a href="/compress-pdf-for-email.html">compress it for email</a>.</p>
+</div>
+
+<section class="faq">
+      <h2>Sign PDF — FAQ</h2>
+      <details open>
+          <summary>How do I sign a PDF for free?</summary>
+          <p>Open this page, choose your PDF, and create a signature by drawing it, typing your name or uploading an image. Click Add to page, drag it into place, then click Sign &amp; download.</p>
+      </details>
+      <details>
+          <summary>Can I sign on my phone?</summary>
+          <p>Yes. Draw your signature with your finger, then drag it into place on the page preview.</p>
+      </details>
+      <details>
+          <summary>Can I sign more than one page?</summary>
+          <p>Yes. Move between pages with Previous and Next and add your signature wherever you need it. Every placement is saved into the same PDF.</p>
+      </details>
+      <details>
+          <summary>Is my PDF uploaded?</summary>
+          <p>No. The PDF and your signature stay in your browser; nothing is sent to a server.</p>
+      </details>
+      <details>
+          <summary>Is a signature added this way legally binding?</summary>
+          <p>For many everyday documents — forms, quotes, agreements between people — a signature image is commonly accepted. It is not a certified digital signature, so for documents that legally require one, check what the recipient accepts.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/watermark.html">Watermark PDF</a>
+          <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/rotate.html">Rotate PDF</a>
+          <a class="mini" href="/organize.html">Organize PDF</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+          <a class="mini" href="/compress-image.html">Compress Image</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+              <div class="lang-foot"><a href="/ko/sign-pdf.html" hreflang="ko" lang="ko" class="lang-switch">한국어</a></div>
+          </div>
+      </footer>
+</div>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script defer src="/lib.js?v=fd82dca4"></script>
+<script type="module" src="/js/sign-pdf.js?v=8e85bbfe"></script>
+</body>
+</html>

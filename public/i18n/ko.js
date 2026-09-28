@@ -95,4 +95,25 @@ window.SLIMIO_KO = {
    "Conversion failed: {msg}": "변환하지 못했어요: {msg}",
    "{n} image": "이미지 {n}장",
    "{n} images": "이미지 {n}장",
+
+   // compress image
+   "Compress images": "사진 용량 줄이기",
+   "↓ Download": "↓ 다운로드",
+   "Total: {before} → {after} ({change})": "전체: {before} → {after} ({change})",
+   "already optimized, kept as is": "이미 최적화된 파일이라 그대로 두었어요",
+   "This image can't be opened in this browser (HEIC photos, for example). Save it as JPG and try again.": "이 브라우저에서 열 수 없는 사진이에요(아이폰 HEIC 등). JPG로 저장한 뒤 다시 시도해 주세요.",
+
+   // sign pdf
+   "Page {n} / {total}": "{n} / {total}페이지",
+   "Draw your signature first.": "먼저 서명을 그려 주세요.",
+   "Type your name first.": "먼저 이름을 입력해 주세요.",
+   "Choose a signature image first.": "먼저 서명이나 도장 이미지를 골라 주세요.",
+   "Add a signature to the page first.": "먼저 페이지에 서명을 추가해 주세요.",
+   "Signing…": "서명하는 중…",
+   "Sign & download": "서명하고 다운로드",
+   "Sign failed: {msg}": "서명하지 못했어요: {msg}",
+   "{n} signature": "서명 {n}개",
+   "{n} signatures": "서명 {n}개",
+   "Seal": "도장",
+   "Your name": "홍길동",
 };

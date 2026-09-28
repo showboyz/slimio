@@ -18,8 +18,8 @@
 | 항목 | 상태 |
 |---|---|
 | `https://pdfslimio.com` | ✅ LIVE |
-| 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · **Organize** · **Page Numbers** · **Watermark** · PDF→JPG · JPG→PDF |
-| 한국어 사이트 | `/ko/` 아래 15페이지 (hreflang 연결, 사이트맵 30 URL) |
+| 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · Organize · Page Numbers · Watermark · PDF→JPG · JPG→PDF · **Sign PDF** · **Compress Image** (2026-09-28 추가) |
+| 한국어 사이트 | `/ko/` 아래 17페이지 (hreflang 연결, 사이트맵 34 URL) |
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
 | 분석 | Cloudflare Web Analytics (무료, 자동 삽입) — Cloudflare → Analytics & Logs → Web Analytics → 방문. 참조자·경로·국가·기기·Core Web Vitals. **도구 사용 횟수(커스텀 이벤트)는 안 됨.** Plausible은 2026-09-26 제거(유료 부담). 도구 사용 횟수가 필요해지면 Umami Cloud 무료(Hobby, 월 10만 이벤트)를 붙일 것: `lib.js`의 `consume()`에서 이벤트 전송 + 각 HTML head에 스크립트 |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
@@ -61,6 +61,12 @@
   ```
 - 워터마크: 영문은 Helvetica 벡터, 그 외 문자(한글 등)는 브라우저가 그린 투명 PNG로 삽입 (fontkit 서브셋은 글자가 깨지는 버그가 있어 안 씀)
 - Ghostscript 프리셋 표기 수정: ebook 150dpi, printer 300dpi (이전 96/1200 표기는 틀렸음)
+
+### 사진 용량 줄이기 · PDF 서명 (2026-09-28)
+- `compress-image.html` + `js/compress-image.js`: 브라우저 전용. 목표 KB면 JPEG/WebP 품질 이진탐색 → 안 되면 20%씩 축소(증명사진 프리셋은 픽셀 고정이라 축소 안 함). EXIF 방향 반영, 재인코딩으로 EXIF(GPS) 제거. 결과가 원본보다 크고 형식·크기 동일하면 원본 유지(단 EXIF 있는 JPEG는 재인코딩본). HEIC는 브라우저가 못 열면 안내
+- `sign-pdf.html` + `js/sign-pdf.js`: 그리기(pointer events, 터치 OK) / 이름(Google Fonts 손글씨·나눔 폰트, **도장** 스타일: 명조 빨간 원, 한글 세로·4자 2×2 우→좌) / 이미지 업로드(흰 배경 투명화). 미리보기에서 드래그·리사이즈, 여러 페이지. 저장 시 `SlimIO.page2user`로 회전 페이지 좌표 변환
+- 한글 웹폰트는 unicode-range 조각이라 캔버스에 그리기 전 `document.fonts.load(font, text)` 필수 (`ensureGlyphs`)
+- 향후: "사진 100KB/200KB 줄이기", "증명사진 용량 줄이기" 롱테일 페이지 (한국 검색량 큼)
 
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)

@@ -20,7 +20,8 @@ TODAY = datetime.date.today().isoformat()
 SIZE_PAGES = ["compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html", "compress-pdf-to-500kb.html",
               "compress-pdf-to-1mb.html", "compress-pdf-for-email.html"]
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
-         "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html"] + SIZE_PAGES
+         "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
+         "sign-pdf.html", "compress-image.html"] + SIZE_PAGES
 
 
 def en_path(p): return "/" if p == "index.html" else "/" + p
@@ -61,6 +62,8 @@ COMMON = [
     (">Watermark PDF</a>", ">워터마크</a>"),
     (">PDF to JPG</a>", ">PDF → JPG</a>"),
     (">JPG to PDF</a>", ">JPG → PDF</a>"),
+    (">Sign PDF</a>", ">PDF 서명</a>"),
+    (">Compress Image</a>", ">사진 용량 줄이기</a>"),
     (">Compress to 100KB</a>", ">100KB로 줄이기</a>"),
     (">Compress to 200KB</a>", ">200KB로 줄이기</a>"),
     (">Compress to 500KB</a>", ">500KB로 줄이기</a>"),
@@ -148,6 +151,8 @@ KO["index.html"] = dict(
         ("<h3>Organize PDF</h3><p>Reorder, rotate or delete pages</p>", "<h3>페이지 순서 변경</h3><p>순서 바꾸기 · 회전 · 삭제</p>"),
         ("<h3>Page Numbers</h3><p>Number every page of a PDF</p>", "<h3>페이지 번호</h3><p>모든 페이지에 쪽번호</p>"),
         ("<h3>Watermark PDF</h3><p>Stamp text on every page</p>", "<h3>워터마크</h3><p>대외비 · 사본 문구 넣기</p>"),
+        ("<h3>Sign PDF</h3><p>Draw, type or upload a signature</p>", "<h3>PDF 서명</h3><p>그리기 · 이름 · 도장으로 서명</p>"),
+        ("<h3>Compress Image</h3><p>Shrink JPG and PNG photos to any size</p>", "<h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p>"),
         ("Need an exact size?", "정해진 용량에 맞춰야 하나요?"),
         (">Compress PDF to 100KB</a>", ">PDF 100KB로 줄이기</a>"),
         (">for email</a>", ">메일 첨부용</a>"),
@@ -573,6 +578,111 @@ KO["jpg-to-pdf.html"] = dict(
     ],
 )
 
+KO["compress-image.html"] = dict(
+    title="사진 용량 줄이기 - 이미지 용량·크기 줄이기 무료 | SlimIO",
+    desc="사진·이미지 용량을 100KB, 200KB처럼 원하는 크기로 줄이세요. 증명사진 규격 맞추기와 위치정보 삭제까지. 회원가입 없이 무료, 브라우저에서 처리돼요.",
+    keywords="사진 용량 줄이기, 이미지 용량 줄이기, 사진 크기 줄이기, 증명사진 용량 줄이기, 사진 100KB 줄이기, JPG 용량 줄이기, 이미지 압축",
+    short="사진 용량 줄이기 | SlimIO",
+    app_name="SlimIO 사진 용량 줄이기",
+    app_desc="사진과 이미지 용량을 원하는 KB로 줄이는 무료 도구. 증명사진 규격 맞추기와 위치정보 삭제도 돼요. 브라우저에서 처리돼 사진이 업로드되지 않아요.",
+    features=["사진 용량 줄이기 (JPG · PNG · WebP)", "원하는 KB로 맞추기", "증명사진 · 여권사진 규격", "위치정보(EXIF) 삭제", "브라우저에서 처리 (업로드 없음)"],
+    h1="사진 용량 줄이기,<br /><b>화질은 그대로.</b>",
+    lead="JPG·PNG 사진을 100KB, 200KB처럼 원하는 용량으로. 여러 장도 한 번에, 무료로, 설치 없이.",
+    ui=[
+        (">Drop images here<", ">사진을 여기에 끌어다 놓으세요<"),
+        ("Images never leave your device. Location data (EXIF) is removed.", "사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요."),
+        ("<label>Target size</label>", "<label>목표 용량</label>"),
+        (">No limit — just optimize<", ">제한 없음 — 알맞게 최적화<"),
+        ("Each image gets the best quality that still fits.", "사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요."),
+        ("<label>Resize</label>", "<label>크기 조절</label>"),
+        (">Keep original dimensions<", ">원래 크기 유지<"),
+        (">Longest side 1920px<", ">긴 변 1920px<"), (">Longest side 1280px<", ">긴 변 1280px<"), (">Longest side 800px<", ">긴 변 800px<"),
+        (">ID photo 3×4 cm (354×472px)<", ">증명사진 3×4cm (354×472px)<"),
+        (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
+        ("ID and passport presets crop from the center to the right shape.", "증명·여권사진은 가운데를 기준으로 규격 비율에 맞게 잘라요."),
+        ("<label>Format</label>", "<label>저장 형식</label>"),
+        (">JPG — works everywhere<", ">JPG — 어디서나 호환<"),
+        (">WebP — smaller, keeps transparency<", ">WebP — 더 작고 투명 배경 유지<"),
+        (">PNG — lossless, larger<", ">PNG — 무손실, 용량 큼<"),
+        (">Compress images</button>", ">사진 용량 줄이기</button>"),
+        ("↓ Download all (ZIP)", "↓ 전체 다운로드 (ZIP)"),
+    ],
+    content="""
+      <h2>사진 용량 줄이는 방법</h2>
+      <ul>
+          <li><b>1. 사진 올리기.</b> JPG, PNG, WebP 사진을 한 장이든 여러 장이든 끌어다 놓으세요.</li>
+          <li><b>2. 용량 고르기.</b> “200KB 이하”처럼 목표 용량을 고르고, 필요하면 크기도 조절하세요. “제한 없음”으로 두면 알맞게 최적화만 해요.</li>
+          <li><b>3. 다운로드.</b> 한 장씩 받거나, 전체를 ZIP 하나로 받으세요.</li>
+      </ul>
+      <h3>업로드 용량 제한에 걸렸다면</h3>
+      <p>채용 사이트, 학교 시스템, 관공서 민원 신청에서는 사진을 100KB나 200KB 이하로 제한하는 경우가 많아요. 그 용량을 고르면 먼저 화질을 조절하고, 그래도 크면 크기를 조금씩 줄여서 제한 안에서 가장 선명한 사진을 만들어요.</p>
+      <h3>증명사진 · 여권사진 규격</h3>
+      <p>“증명사진 3×4cm”, “여권사진 3.5×4.5cm”를 고르면 사진 가운데를 기준으로 규격 비율에 맞게 자르고, 온라인 접수에서 흔히 요구하는 픽셀 크기로 맞춰요. 얼굴이 가운데에 있는 사진일수록 결과가 좋아요.</p>
+      <h3>위치정보도 함께 지워요</h3>
+      <p>모든 처리는 브라우저 안에서 이루어져서 사진이 서버로 올라가지 않아요. 다시 저장하는 과정에서 사진에 숨어 있는 촬영 위치(GPS), 기종, 촬영 날짜 같은 정보(EXIF)도 지워져요. 사진을 문서로 묶어야 한다면 <a href="/ko/jpg-to-pdf.html">JPG → PDF</a>로 만든 뒤 <a href="/ko/">PDF 용량 줄이기</a>를 쓰세요.</p>""",
+    faq_title="사진 용량 줄이기",
+    faq=[
+        ("사진 용량을 무료로 줄이려면 어떻게 하나요?", "이 페이지에 사진을 올리고 “200KB 이하”처럼 목표 용량을 고른 뒤 사진 용량 줄이기를 누르세요. 사진마다 그 용량 안에서 가장 좋은 화질로 만들어 주고, 한 장씩 또는 ZIP으로 받을 수 있어요."),
+        ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
+        ("사진의 위치정보도 지워지나요?", "네. 사진을 다시 저장하면서 촬영 위치(GPS), 기종, 촬영 날짜 같은 EXIF 정보가 지워져요."),
+        ("증명사진 규격에 맞출 수 있나요?", "네. 증명사진 3×4cm나 여권사진 3.5×4.5cm를 고르면 가운데를 기준으로 비율에 맞게 자르고, 접수 사이트에서 흔히 요구하는 픽셀 크기로 맞춰요."),
+        ("아이폰 사진이 안 열려요.", "아이폰 사진은 HEIC 형식인 경우가 많은데, 이 형식은 브라우저에 따라 열리지 않아요. 사진을 JPG로 공유하거나, 아이폰 설정 → 카메라 → 포맷에서 ‘높은 호환성’으로 바꾼 뒤 다시 시도해 주세요."),
+    ],
+)
+
+KO["sign-pdf.html"] = dict(
+    title="PDF 서명 넣기 - 전자서명·도장 무료 | SlimIO",
+    desc="PDF에 서명이나 도장을 무료로 넣으세요. 직접 그리거나, 이름으로 만들거나, 도장 이미지를 올려서 원하는 위치에. 회원가입 없이 브라우저에서 처리돼요.",
+    keywords="PDF 서명, PDF 서명 넣기, PDF 전자서명, PDF 도장 넣기, PDF 사인, 전자 도장 만들기",
+    short="PDF 서명 넣기 | SlimIO",
+    app_name="SlimIO PDF 서명",
+    app_desc="PDF에 서명과 도장을 넣는 무료 도구. 직접 그리거나 이름으로 만들거나 이미지를 올려 원하는 위치에 넣어요. 브라우저에서 처리돼 파일이 업로드되지 않아요.",
+    features=["직접 그려서 서명", "이름으로 손글씨 서명 · 도장 만들기", "서명 · 도장 이미지 올리기 (흰 배경 자동 제거)", "원하는 페이지 · 위치에 배치", "브라우저에서 처리 (업로드 없음)"],
+    h1="PDF 서명,<br /><b>도장까지 한 번에.</b>",
+    lead="서명을 그리거나, 이름으로 만들거나, 도장 이미지를 올려서 원하는 곳에. 무료로, 설치 없이 브라우저에서 바로.",
+    ui=[
+        ("File never leaves your device — signing happens locally in your browser.", LOCAL_ONLY.format("서명을 넣어요")),
+        ("<label>1. Create your signature</label>", "<label>1. 서명 만들기</label>"),
+        ('data-mode="draw">Draw<', 'data-mode="draw">직접 그리기<'),
+        ('data-mode="type">Type<', 'data-mode="type">이름 입력<'),
+        ('data-mode="upload">Upload<', 'data-mode="upload">이미지 올리기<'),
+        ('title="Black ink"', 'title="검은색"'),
+        ('title="Blue ink"', 'title="파란색"'),
+        ('id="clear">Clear<', 'id="clear">지우기<'),
+        ('placeholder="Type your name"', 'placeholder="이름을 입력하세요"'),
+        ('id="pickimg">Choose a signature or stamp image<', 'id="pickimg">서명 · 도장 이미지 고르기<'),
+        ("Remove white background", "흰 배경 자동 제거"),
+        ('id="add">+ Add to page<', 'id="add">+ 페이지에 추가<'),
+        ("<label>2. Place it <span", "<label>2. 위치 정하기 <span"),
+        ("← Previous page", "← 이전 페이지"),
+        ("Next page →", "다음 페이지 →"),
+        ("Drag to move · drag the green corner to resize · ✕ removes it.", "끌어서 옮기기 · 초록색 모서리로 크기 조절 · ✕로 삭제"),
+        (">Sign &amp; download</button>", ">서명하고 다운로드</button>"),
+        ("<span>Signatures</span>", "<span>서명</span>"),
+    ],
+    content="""
+      <h2>PDF에 서명 넣는 방법</h2>
+      <ul>
+          <li><b>1. PDF 올리기.</b> 파일을 끌어다 놓거나 클릭해서 선택하면 첫 페이지가 미리보기로 나와요.</li>
+          <li><b>2. 서명 만들기.</b> 마우스나 손가락으로 직접 그리거나, 이름을 입력해 손글씨 서명·도장을 고르거나, 서명·도장 사진을 올리세요.</li>
+          <li><b>3. 배치하고 다운로드.</b> 페이지에 추가를 누르고 원하는 자리로 끌어 옮긴 뒤, 모서리로 크기를 맞추고 서명하고 다운로드를 누르세요.</li>
+      </ul>
+      <h3>이름으로 도장 만들기</h3>
+      <p>이름 입력 탭에서 이름을 적고 빨간 원형 스타일을 고르면 도장이 만들어져요. 두 글자는 세로로, 세 글자 이름은 세로 한 줄로, 네 글자는 오른쪽 위부터 읽는 방식으로 배치해요.</p>
+      <h3>실제 도장이나 서명을 쓰고 싶다면</h3>
+      <p>흰 종이에 도장을 찍거나 서명한 뒤 사진을 찍어 올리세요. 흰 배경을 자동으로 지워서 도장·서명만 PDF에 들어가요. 회사 직인도 같은 방법으로 넣을 수 있어요.</p>
+      <h3>여러 페이지에 서명하기</h3>
+      <p>이전 · 다음 페이지로 넘기면서 필요한 곳마다 서명을 추가하세요. 모두 한 파일에 저장돼요. 사본 표시가 필요하면 <a href="/ko/watermark.html">워터마크</a>를, 메일로 보낼 파일이라면 <a href="/ko/compress-pdf-for-email.html">메일 첨부용으로 줄이기</a>를 함께 쓰세요.</p>""",
+    faq_title="PDF 서명 넣기",
+    faq=[
+        ("PDF에 서명을 무료로 넣으려면요?", "이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 페이지에 추가를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요."),
+        ("도장도 넣을 수 있나요?", "네. 이름 입력 탭에서 빨간 원형 도장 스타일을 고르거나, 도장을 찍은 종이를 사진으로 올리면 흰 배경을 지우고 도장만 넣어요."),
+        ("휴대폰에서도 되나요?", "네. 손가락으로 서명을 그리고, 미리보기에서 끌어서 위치를 정할 수 있어요."),
+        ("PDF가 서버로 올라가나요?", "아니요. PDF와 서명 모두 브라우저 안에서만 처리돼서 서버로 가지 않아요."),
+        ("이렇게 넣은 서명도 효력이 있나요?", "일상적인 신청서, 견적서, 개인 간 계약서 등에는 서명 이미지가 흔히 쓰여요. 다만 공동인증서(옛 공인인증서)를 이용한 전자서명과는 다르니, 특정 전자서명이 필요한 서류라면 받는 곳의 요구사항을 확인하세요."),
+    ],
+)
+
 SIZE_FAQ_PRIVACY = ("파일이 서버에 남나요?", "글자를 유지하는 압축 단계에서 파일을 서버로 보내지만, 압축이 끝나면 바로 삭제해요. 이미지로 바꾸는 단계는 브라우저 안에서만 처리돼요.")
 
 KO["compress-pdf-to-100kb.html"] = dict(
@@ -863,7 +973,7 @@ INDEX_EXTRA_CSS = """
 """
 
 ALLOWED_EN = {"PDF", "PDFs", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
-              "Page", "of", "English", "OO", "Pro", "SNS"}
+              "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
 
 
 def leftover_english(s):
@@ -889,7 +999,7 @@ def build(page):
         if en not in s:
             sys.exit(f"[{page}] UI text not found (English page changed?): {en!r}")
         s = s.replace(en, ko)
-    if page in SIZE_PAGES:
+    if page in SIZE_PAGES or page == "compress-image.html":
         s = re.sub(r">Under (\d+(?:KB|MB))<", r">\1 이하<", s)
     for en, ko in COMMON:
         s = s.replace(en, ko)
