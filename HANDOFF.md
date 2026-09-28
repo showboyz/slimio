@@ -5,9 +5,7 @@
 ---
 
 ## 👉 다음 세션에서 바로 할 것 (순서대로)
-1. **www 연결 (Cloudflare 대시보드, 사용자 작업):** 현재 `www.pdfslimio.com`은 DNS 레코드가 없어 접속 불가
-   - DNS → Add record → `CNAME` / Name `www` / Target `pdfslimio.com` / Proxy **ON**
-   - Rules → Redirect Rules → 템플릿 "Redirect from WWW to root" → `https://pdfslimio.com` (301)
+1. ~~www 연결~~ ✅ 2026-09-28 완료: DNS `www A 192.0.2.1`(프록시) + Redirect Rule `*://www.pdfslimio.com/*` → `https://pdfslimio.com/${2}` (301, 쿼리 유지). `_acme-challenge` CNAME은 **DNS 전용**이어야 Fly 인증서 자동 갱신됨 (프록시로 돼 있던 것 수정함)
 2. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
 3. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 (Bing·네이버 등에 즉시 알림) + GSC에서 새 URL 색인 요청
    - **네이버 서치어드바이저**(https://searchadvisor.naver.com) 사이트 등록 → 소유 확인 → 요청 → 사이트맵 제출 `https://pdfslimio.com/sitemap.xml` (한국어 페이지 유입의 핵심, 사용자 작업)
