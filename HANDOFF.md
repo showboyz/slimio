@@ -1,20 +1,24 @@
 # SlimIO — Free PDF Tools · 핸드오프 문서
 
-**최종 업데이트: 2026-09-25** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com)** · 도구 10개
+**최종 업데이트: 2026-09-29** · **상태: ✅ 서비스 LIVE (1 머신, pdfslimio.com)** · 도구 12개 · 47페이지(영·한) · **AdSense 심사 중**
 
 ---
 
 ## 👉 다음 세션에서 바로 할 것 (순서대로)
-1. ~~www 연결~~ ✅ 2026-09-28 완료: DNS `www A 192.0.2.1`(프록시) + Redirect Rule `*://www.pdfslimio.com/*` → `https://pdfslimio.com/${2}` (301, 쿼리 유지). `_acme-challenge` CNAME은 **DNS 전용**이어야 Fly 인증서 자동 갱신됨 (프록시로 돼 있던 것 수정함)
-2. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
-3. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 (Bing·네이버 등에 즉시 알림) + GSC에서 새 URL 색인 요청
-   - **네이버 서치어드바이저**(https://searchadvisor.naver.com) 사이트 등록 → 소유 확인 → 요청 → 사이트맵 제출 `https://pdfslimio.com/sitemap.xml` (한국어 페이지 유입의 핵심, 사용자 작업)
-4. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 영어 PDF↔JPG 페이지 FAQ 추가
-5. 광고는 트래픽 1천+ 이후
+1. **AdSense 승인 대기** (2026-09-29 심사 요청, 보통 며칠~2주, 최대 4주. 결과는 Gmail로 옴)
+   - 끝난 것: 계정(결제국가 한국) · 결제 정보 입력(사용자) · 메타 태그로 소유권 확인 · 심사 요청 · **EU 동의 메시지 = Google CMP 3선택지**(동의/동의 안 함/옵션 관리, Privacy & messaging에서 변경 가능)
+   - 홈 카드 "Connect your site — Required ⚠️"와 Sites의 "Ads.txt: Not found"는 **심사 중이라 뜨는 것, 조치 불필요**. `https://pdfslimio.com/ads.txt`는 200 text/plain으로 정상 확인됨
+   - **승인되면:** 전 페이지 head에 `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5339352429300786" crossorigin="anonymous"></script>` 추가 → `#ad` 자리에 광고 단위 넣기(또는 Auto ads) → `bump_versions.py` → 배포. 이후 "일일 한도 도달 시 광고 보고 +N회" 보상형(공식 rewarded 포맷만) 검토, 그때는 IP 메모리 카운터 보강 필요
+   - **거절되면:** 사유(콘텐츠 부족/탐색 문제 등)에 맞춰 보완 후 재신청
+2. **모니터링 (1~2주):** Umami(Events → tool-used, 참조자), Cloudflare Web Analytics, GSC(색인 수·검색어), 네이버 서치어드바이저
+3. **사용자 확인할 것:** 다른 계정(네이버 메일 등)에서 `contact@pdfslimio.com`으로 테스트 메일 → Gmail 수신 확인 / 폰에서 `pdfslimio.com/?notrack` 한 번 열기
+4. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
+5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
+6. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 이미지 50KB/20KB·JPG 크기 줄이기 롱테일 추가
 
 ---
 
-## 지금 서비스 상태 (2026-09-24)
+## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
 |---|---|
 | `https://pdfslimio.com` | ✅ LIVE |
@@ -23,12 +27,13 @@
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
 | 이메일 | `contact@pdfslimio.com` → Cloudflare Email Routing → todays777@gmail.com (수신 전용, 무료). 답장은 Gmail에서 |
 | 정책 페이지 | about / terms / privacy / contact (영·한), 전 페이지 하단 링크. AdSense 심사용 |
-| AdSense | 게시자 `ca-pub-5339352429300786`, 결제국가 한국. 전 페이지 `google-adsense-account` 메타 태그 + `/ads.txt`. **심사 중** — 승인 후 광고 스크립트/광고 단위를 `#ad` 자리에 넣고, Privacy & messaging에서 EU 동의 메시지 켜기 |
+| AdSense | 게시자 `ca-pub-5339352429300786`, 결제국가 한국. 전 페이지 `google-adsense-account` 메타 태그 + `/ads.txt`. **심사 중(2026-09-29 요청)**, EU 동의 메시지(Google CMP 3선택지) 설정 완료. 승인 후 광고 스크립트/광고 단위를 `#ad` 자리에 넣기 (위 '다음 할 것' 1번) |
 | 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
-| Google Search Console | ⚠️ TXT 레코드 추가됨, 사이트맵 제출 필요 |
-| 광고 슬롯 | ⚠️ 자리만 있음 |
+| Google Search Console | ✅ `sc-domain:pdfslimio.com`, 사이트맵 제출·주요 URL 색인 요청 완료 |
+| 네이버 서치어드바이저 | ✅ `https://pdfslimio.com` 등록·소유확인(홈 메타 태그)·사이트맵 제출·수집 요청 완료 |
+| 광고 슬롯 | ⚠️ `#ad` 자리만 있음 (AdSense 승인 후 채움) |
 
 ### 2026-09-24 수정 내역 (중요)
 - 도구 페이지 6개 전부 `$ is not defined`로 **작동 안 하던 문제** 수정 (`lib.js`가 전역 `$` export)
@@ -129,8 +134,8 @@ robots.txt·sitemap.xml 변경은 Cloudflare 대시보드 → Caching → Purge 
 ---
 
 ## 수익화 전략 (결정됨)
-- **지금은 완전 무료 20회/일 유지** (광고 0원)
-- 트래픽 1천+ → Medvance/Ezoic → 1천뷰+ → AdSense
+- **지금은 완전 무료 20회/일 유지**
+- 2026-09-29 AdSense 바로 신청함(심사 중). 승인되면 광고 게재, 이후 보상형 광고로 한도 추가 검토
 - **Pro $5/월**(무제한/no-ad)은 보조, "Coming soon"으로预埋
 - **$5/월 Fly 유지** (24/7 autostart 가치). 256MB 1머신 ~$2.75/월. **머신 1개로 유지**(2개면 4.5/월)
 
