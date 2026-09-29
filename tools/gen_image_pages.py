@@ -15,6 +15,39 @@ BASE = "compress-image.html"
 
 PAGES = [
 {
+ "slug": "compress-id-photo", "target": "100KB", "resize": "id-3x4",
+ "title": "Passport & ID Photo Resizer — Crop and Compress to KB Free | SlimIO",
+ "short": "ID Photo Resizer | SlimIO",
+ "desc": "Crop a photo to passport or ID size (3.5×4.5 cm, 3×4 cm) and compress it under 100KB, 50KB or 20KB for online applications. Free, runs in your browser.",
+ "keywords": "passport size photo resize, id photo resizer, passport photo size in kb, resize photo for online application, 3.5x4.5 photo, compress id photo",
+ "h1": "ID &amp; passport photos,<br /><b>the right size.</b>",
+ "lead": "Crop to 3×4 cm or 3.5×4.5 cm and get under the KB limit in one step — ready for online application forms.",
+ "content": """
+      <h2>How to resize an ID or passport photo</h2>
+      <ul>
+          <li><b>1. Add your photo.</b> The ID photo 3×4 cm preset and a 100KB target are already selected.</li>
+          <li><b>2. Match the form.</b> Switch Resize to Passport photo 3.5×4.5 cm if needed, and pick the KB limit the form states (for example 50KB or 20KB).</li>
+          <li><b>3. Click Compress images and download.</b> The photo is cropped from the center, scaled and compressed in one go.</li>
+      </ul>
+      <h3>Photo sizes at a glance</h3>
+      <ul>
+          <li><b>3×4 cm</b> → 354×472px. Common on résumés, job and exam applications.</li>
+          <li><b>3.5×4.5 cm</b> → 413×531px. The usual passport-size photo, also used for many ID cards and visa forms.</li>
+      </ul>
+      <p>Both are 300 dpi — sharp enough to print at the stated size. Always check the exact size and KB range in the form's instructions; they differ from site to site.</p>
+      <h3>Getting a good crop</h3>
+      <p>The presets crop from the center, so start with a photo where your face is roughly in the middle, taken straight on against a plain, light background. Leave some space above your head: most rules want the head to fill a bit over half of the photo's height.</p>
+      <h3>Safe to submit</h3>
+      <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>""",
+ "faq": [
+  ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."),
+  ("What size in KB should a passport or ID photo be?", "It depends on the form — common limits are 20–50KB, 100KB or 200KB. Select the limit from the target list; SlimIO keeps the best quality that fits."),
+  ("Why was my photo cropped wrong?", "The presets crop from the center. If your face isn't centered, crop the photo roughly around your head and shoulders first, then use the preset."),
+  ("Can I change the background color?", "No. SlimIO resizes and compresses but doesn't edit the background, so take the photo against a plain light wall."),
+  ("Are my photos uploaded?", "No. Everything runs in your browser, so your photos never leave your device."),
+ ],
+},
+{
  "slug": "compress-image-to-50kb", "target": "50KB",
  "title": "Compress Image to 50KB — Reduce Photo Size Online Free | SlimIO",
  "short": "Compress Image to 50KB | SlimIO",
@@ -148,7 +181,8 @@ SIZE_LINKS = [("/compress-image.html", "Compress image (any size)"),
               ("/compress-image-to-20kb.html", "Compress image to 20KB"),
               ("/compress-image-to-50kb.html", "Compress image to 50KB"),
               ("/compress-image-to-100kb.html", "Compress image to 100KB"),
-              ("/compress-image-to-200kb.html", "Compress image to 200KB")]
+              ("/compress-image-to-200kb.html", "Compress image to 200KB"),
+              ("/compress-id-photo.html", "ID / passport photo")]
 
 
 def sub1(pattern, repl, s, what):
@@ -190,6 +224,9 @@ def build(p, base):
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + p["h1"] + m.group(2) + p["lead"] + m.group(3), s, "hero")
     s = s.replace('<option value="" selected>', '<option value="">')
     s = sub1(rf'<option value="{p["target"]}">', f'<option value="{p["target"]}" selected>', s, "target option")
+    if p.get("resize"):
+        s = sub1(r'<option value="1920" selected>', '<option value="1920">', s, "default resize")
+        s = sub1(rf'<option value="{p["resize"]}">', f'<option value="{p["resize"]}" selected>', s, "resize option")
     faq = "\n".join(f"      <details{' open' if i == 0 else ''}>\n          <summary>{html.escape(q)}</summary>\n          <p>{html.escape(a)}</p>\n      </details>"
                     for i, (q, a) in enumerate(p["faq"]))
     title = p["short"].split(" |")[0]

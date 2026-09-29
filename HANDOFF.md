@@ -14,7 +14,7 @@
 3. **사용자 확인할 것:** 다른 계정(네이버 메일 등)에서 `contact@pdfslimio.com`으로 테스트 메일 → Gmail 수신 확인 / 폰에서 `pdfslimio.com/?notrack` 한 번 열기
 4. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
 5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
-6. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 증명사진/서명 전용 페이지, JPG 크기 줄이기 롱테일 (이미지 50KB/20KB는 2026-09-29 완료)
+6. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 서명 전용 페이지, 증명사진 픽셀 직접 입력(예: 150×200px), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지는 2026-09-29 완료)
 
 ---
 
@@ -77,6 +77,7 @@
 - 사진 용량별 롱테일: `compress-image-to-100kb.html`, `-200kb.html` (+ `/ko/`). **생성기** `tools/gen_image_pages.py` (compress-image.html을 바탕으로 목표 용량 미리 선택 + 페이지별 문구·FAQ, "다른 용량" 링크 줄 관리). 한국어 문구는 `gen_ko.py`의 KO[...]. 새 용량 추가: `PAGES`·`SIZE_LINKS`에 항목 → `gen_image_pages.py` → `gen_ko.py`(KO 항목 + PAGES 목록 추가) → `bump_versions.py`
 - 향후: "증명사진 용량 줄이기" 전용 페이지 (한국 검색량 큼)
 - 2026-09-29: `compress-image-to-50kb`, `-20kb` 추가 (+`/ko/`). 인도 시험·채용 원서(사진 20~50KB, 서명 10~20KB) 수요 겨냥. 20KB 옵션을 `compress-image.html` 목표 목록에 추가
+- 2026-09-29: **증명사진 전용 페이지** `compress-id-photo.html` (+`/ko/`, 키워드 "증명사진 용량 줄이기"). 생성기 `PAGES` 항목에 `"resize": "id-3x4"`로 크기 프리셋 미리 선택 가능. gen_ko는 `compress-image*` 또는 `compress-id-photo`를 사진 페이지로 취급(UI 번역 공유)
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 
 ### 새 도구 추가 체크리스트

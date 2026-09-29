@@ -22,7 +22,7 @@ SIZE_PAGES = ["compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html", "compr
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
          "sign-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
-         "compress-image-to-100kb.html", "compress-image-to-200kb.html"] + SIZE_PAGES
+         "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html"] + SIZE_PAGES
 
 
 # Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
@@ -78,6 +78,7 @@ COMMON = [
     (">Compress image to 50KB</a>", ">사진 50KB로 줄이기</a>"),
     (">Compress image to 100KB</a>", ">사진 100KB로 줄이기</a>"),
     (">Compress image to 200KB</a>", ">사진 200KB로 줄이기</a>"),
+    (">ID / passport photo</a>", ">증명사진 용량 줄이기</a>"),
     (">Compress to 100KB</a>", ">100KB로 줄이기</a>"),
     (">Compress to 200KB</a>", ">200KB로 줄이기</a>"),
     (">Compress to 500KB</a>", ">500KB로 줄이기</a>"),
@@ -644,6 +645,44 @@ KO["compress-image.html"] = dict(
     ],
 )
 
+KO["compress-id-photo.html"] = dict(
+    title="증명사진 용량 줄이기 - 증명·여권사진 규격 맞추기 무료 | SlimIO",
+    desc="증명사진·여권사진을 3×4cm, 3.5×4.5cm 규격으로 자르고 100KB, 50KB처럼 원하는 용량으로 한 번에 줄이세요. 입사지원·시험 접수용. 무료, 브라우저에서 처리돼요.",
+    keywords="증명사진 용량 줄이기, 증명사진 크기 줄이기, 여권사진 용량 줄이기, 증명사진 규격, 반명함 사진 크기, 이력서 사진 용량, 증명사진 100KB",
+    short="증명사진 용량 줄이기 | SlimIO",
+    app_name="SlimIO 증명사진 용량 줄이기",
+    app_desc="증명사진과 여권사진을 규격에 맞게 자르고 원하는 KB 이하로 줄이는 무료 도구. 브라우저에서 처리돼 사진이 업로드되지 않아요.",
+    features=["증명사진 3×4cm · 여권사진 3.5×4.5cm 규격", "원하는 KB 이하로 압축", "가운데 기준 자동 자르기", "위치정보(EXIF) 삭제", "브라우저에서 처리 (업로드 없음)"],
+    h1="증명사진,<br /><b>규격도 용량도 한 번에.</b>",
+    lead="3×4cm·3.5×4.5cm로 자르고 접수 사이트의 용량 제한까지 맞춰요. 설치 없이, 무료로.",
+    ui=None,
+    content="""
+      <h2>증명사진 용량 줄이는 방법</h2>
+      <ul>
+          <li><b>1. 사진 올리기.</b> 증명사진 3×4cm 규격과 100KB가 이미 골라져 있어요.</li>
+          <li><b>2. 접수 조건에 맞추기.</b> 여권·신분증용이면 크기 조절을 여권사진 3.5×4.5cm로, 용량은 공고문에 적힌 제한(예: 50KB, 200KB)으로 바꾸세요.</li>
+          <li><b>3. 사진 용량 줄이기 → 다운로드.</b> 가운데를 기준으로 자르고, 크기를 맞추고, 용량까지 한 번에 줄여요.</li>
+      </ul>
+      <h3>증명사진 규격 한눈에 보기</h3>
+      <ul>
+          <li><b>3×4cm (반명함)</b> → 354×472px. 이력서, 입사지원서, 자격시험 접수에 많이 써요.</li>
+          <li><b>3.5×4.5cm (여권용)</b> → 413×531px. 여권, 주민등록증, 운전면허증에 쓰는 크기예요.</li>
+      </ul>
+      <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
+      <h3>잘 잘리게 찍는 팁</h3>
+      <p>규격은 사진 가운데를 기준으로 잘라요. 얼굴이 가운데 오도록 정면에서, 밝고 단색인 벽 앞에서 찍으면 결과가 좋아요. 머리 위로 약간 여백을 두세요. 여권 사진은 흰색 배경이어야 하니, 흰 벽 앞에서 찍는 게 안전해요.</p>
+      <h3>안심하고 제출하세요</h3>
+      <p>모든 처리는 브라우저 안에서 이루어져서 사진이 서버로 올라가지 않아요. 다시 저장하면서 촬영 위치(GPS)나 기종 같은 정보(EXIF)도 지워져요.</p>""",
+    faq_title="증명사진 용량 줄이기",
+    faq=[
+        ("증명사진 용량을 줄이려면 어떻게 하나요?", "이 페이지에 사진을 올리고 사진 용량 줄이기를 누르세요. 증명사진 3×4cm 규격과 100KB가 기본으로 골라져 있고, 접수 사이트에 맞게 규격과 용량을 바꿀 수 있어요."),
+        ("증명사진은 몇 KB로 줄여야 하나요?", "사이트마다 달라요. 50KB, 100KB, 200KB 이하가 흔하니 공고문을 확인하고 목표 용량에서 고르세요. 그 안에서 가장 좋은 화질로 맞춰 드려요."),
+        ("반명함과 여권사진 크기는 어떻게 다른가요?", "반명함은 3×4cm(354×472px)이고, 여권·주민등록증·운전면허증용은 3.5×4.5cm(413×531px)예요."),
+        ("얼굴이 잘려 나갔어요.", "규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요."),
+        ("배경색도 바꿀 수 있나요?", "아니요. 크기와 용량만 맞추고 배경은 바꾸지 않아요. 밝은 단색 벽 앞에서 찍어 주세요."),
+    ],
+)
+
 KO["compress-image-to-50kb.html"] = dict(
     title="사진 50KB 줄이기 - 증명사진·이미지 용량 50KB 이하로 무료 | SlimIO",
     desc="증명사진·지원서 사진을 50KB 이하로 줄이세요. 시험 접수·채용·원서용으로 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.",
@@ -1157,12 +1196,13 @@ def build(page):
     s = set_meta(s, d, page)
     s = set_ld(s, d, page)
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + d["h1"] + m.group(2) + d["lead"] + m.group(3), s, f"{page} hero")
-    ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if page.startswith("compress-image") else [])) + (SIZE_UI if page in SIZE_PAGES else [])
+    image_page = page.startswith("compress-image") or page == "compress-id-photo.html"   # built from compress-image.html
+    ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if image_page else [])) + (SIZE_UI if page in SIZE_PAGES else [])
     for en, ko in ui:
         if en not in s:
             sys.exit(f"[{page}] UI text not found (English page changed?): {en!r}")
         s = s.replace(en, ko)
-    if page in SIZE_PAGES or page.startswith("compress-image"):
+    if page in SIZE_PAGES or image_page:
         s = re.sub(r">Under (\d+(?:KB|MB))<", r">\1 이하<", s)
     for en, ko in COMMON:
         s = s.replace(en, ko)
