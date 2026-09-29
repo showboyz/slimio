@@ -944,10 +944,11 @@ def lang_links(s, page, lang):
            f'\n<link rel="alternate" hreflang="ko" href="{SITE}{ko_path(page)}" />'
            f'\n<link rel="alternate" hreflang="x-default" href="{SITE}{en_path(page)}" />')
     s = sub1(r'(<link rel="canonical" href="[^"]*" />)', lambda m: m.group(1) + alt, s, f"{page} canonical")
-    s = re.sub(r'\n\s*<a [^>]*class="lang-switch"[^>]*>[^<]*</a>', "", s)
+    s = re.sub(r'\n\s*<a [^>]*class="lang-switch"[^>]*>.*?</a>', "", s)
     s = re.sub(r'\n\s*<div class="lang-foot">.*?</div>', "", s)
-    other, label, code = (ko_path(page), "한국어", "ko") if lang == "en" else (en_path(page), "English", "en")
-    link = f'<a href="{other}" hreflang="{code}" lang="{code}" class="lang-switch">{label}</a>'
+    other, label, code, flag = (ko_path(page), "한국어", "ko", "kr") if lang == "en" else (en_path(page), "English", "en", "us")
+    link = (f'<a href="{other}" hreflang="{code}" lang="{code}" class="lang-switch">'
+            f'<img src="/img/flag-{flag}.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />{label}</a>')
     s = sub1(r'(<div class="nav-links">.*?)(\n\s*</div>)', lambda m: m.group(1) + "\n              " + link + m.group(2), s, f"{page} nav")
     s = sub1(r'(<div class="foot">.*?)(\n\s*</div>\n\s*</footer>)', lambda m: m.group(1) + f'\n              <div class="lang-foot">{link}</div>' + m.group(2), s, f"{page} footer")
     return s
