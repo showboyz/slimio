@@ -36,6 +36,7 @@ const SlimIO = (() => {
    }
 
    function download(bytes, name, type) {
+      trackDownload();
       const url = URL.createObjectURL(toBlob(bytes, type || "application/pdf"));
       const a = document.createElement("a");
       a.href = url;
@@ -83,9 +84,20 @@ const SlimIO = (() => {
    // Umami custom event: a tool was actually used, not just visited.
    // Visiting any page with ?notrack stops counting this browser (for the site owner).
    try { if (/[?&]notrack\b/.test(location.search)) localStorage.setItem("umami.disabled", "1"); } catch (e) {}
+   function toolName() {
+      const p = location.pathname.replace(/^\/|\.html$/g, "").replace(/\/$/, "");
+      return !p ? "compress" : p === "ko" ? "ko/compress" : p;
+   }
+   // Any Umami event, tagged with the current tool (props may override it).
+   function event(name, props) {
+      try { window.umami && window.umami.track(name, Object.assign({ tool: toolName() }, props)); } catch (e) {}
+   }
    function track(tool) {
-      tool = tool || location.pathname.replace(/^\/|\.html$/g, "").replace(/\/$/, "") || "compress";
-      try { window.umami && window.umami.track("tool-used", { tool }); } catch (e) {}
+      event("tool-used", tool ? { tool } : null);
+   }
+   // The user actually took the result (not just ran the tool).
+   function trackDownload() {
+      event("downloaded");
    }
 
    async function consume() {
@@ -135,7 +147,7 @@ const SlimIO = (() => {
    return {
       $, t, pages, lang, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress, track, page2user,
+      refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, page2user,
    };
 })();
 

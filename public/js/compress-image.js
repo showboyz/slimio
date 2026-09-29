@@ -229,6 +229,7 @@ function showResult(done, label) {
                      const a = document.createElement("a");
                      a.href = url;
                      a.download = d.name;
+                     a.addEventListener("click", () => SlimIO.trackDownload());
                      a.textContent = SlimIO.t("↓ Download");
                      info.append(name, meta);
                      li.append(info, a);

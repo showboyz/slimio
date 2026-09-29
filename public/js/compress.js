@@ -27,6 +27,7 @@ const sub = $("sub");
 const logEl = $("log");
 
 let file = null;
+dl.addEventListener("click", () => SlimIO.trackDownload());
 
 quality.oninput = () => (qval.textContent = quality.value + "%");
 scale.oninput = () => (sval.textContent = (scale.value / 100).toFixed(1) + "x");

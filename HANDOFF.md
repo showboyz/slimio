@@ -10,7 +10,7 @@
    - 홈 카드 "Connect your site — Required ⚠️"와 Sites의 "Ads.txt: Not found"는 **심사 중이라 뜨는 것, 조치 불필요**. `https://pdfslimio.com/ads.txt`는 200 text/plain으로 정상 확인됨
    - **승인되면:** 전 페이지 head에 `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5339352429300786" crossorigin="anonymous"></script>` 추가 → `#ad` 자리에 광고 단위 넣기(또는 Auto ads) → `bump_versions.py` → 배포. 이후 "일일 한도 도달 시 광고 보고 +N회" 보상형(공식 rewarded 포맷만) 검토, 그때는 IP 메모리 카운터 보강 필요
    - **거절되면:** 사유(콘텐츠 부족/탐색 문제 등)에 맞춰 보완 후 재신청
-2. **모니터링 (1~2주):** Umami(Events → tool-used, 참조자), Cloudflare Web Analytics, GSC(색인 수·검색어), 네이버 서치어드바이저
+2. **모니터링 (1~2주):** Umami(Events → tool-used→downloaded 전환율, target-result의 fits=false 비율, 참조자). 첫 실사용자 2026-09-29: 인도(하이데라바드), google.com → /compress-pdf-to-500kb, Cloudflare Web Analytics, GSC(색인 수·검색어), 네이버 서치어드바이저
 3. **사용자 확인할 것:** 다른 계정(네이버 메일 등)에서 `contact@pdfslimio.com`으로 테스트 메일 → Gmail 수신 확인 / 폰에서 `pdfslimio.com/?notrack` 한 번 열기
 4. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
 5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
@@ -28,7 +28,7 @@
 | 이메일 | `contact@pdfslimio.com` → Cloudflare Email Routing → todays777@gmail.com (수신 전용, 무료). 답장은 Gmail에서 |
 | 정책 페이지 | about / terms / privacy / contact (영·한), 전 페이지 하단 링크. AdSense 심사용 |
 | AdSense | 게시자 `ca-pub-5339352429300786`, 결제국가 한국. 전 페이지 `google-adsense-account` 메타 태그 + `/ads.txt`. **심사 중(2026-09-29 요청)**, EU 동의 메시지(Google CMP 3선택지) 설정 완료. 승인 후 광고 스크립트/광고 단위를 `#ad` 자리에 넣기 (위 '다음 할 것' 1번) |
-| 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
+| 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **이벤트 3종**(2026-09-29~): `tool-used`(도구 실행) · `downloaded`(결과 다운로드, `SlimIO.download`·index `#dl`·사진 개별 링크) · `target-result`(용량 목표 페이지만: `{target, fits, method: original/server/raster, inKB, outKB}`) — 새 이벤트는 `SlimIO.event(name, props)`. **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
 | Google Search Console | ✅ `sc-domain:pdfslimio.com`, 사이트맵 제출·주요 URL 색인 요청 완료 |

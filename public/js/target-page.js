@@ -59,6 +59,11 @@ async function compress() {
 }
 
 function showResult(r, label) {
+     // fits: got under the target? method: original / server (text kept) / raster (pages became images)
+     SlimIO.event("target-result", {
+             target: label, fits: r.fits, method: r.method,
+             inKB: Math.round(file.size / 1024), outKB: Math.round(r.bytes.length / 1024),
+     });
      result.style.display = "block";
      $("orig").textContent = SlimIO.formatSize(file.size);
      $("after").textContent = SlimIO.formatSize(r.bytes.length);
