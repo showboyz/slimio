@@ -100,7 +100,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=145060a1" />
+<link rel="stylesheet" href="/style.css?v=33d27049" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -180,8 +180,17 @@
                        <option value="800">Longest side 800px</option>
                        <option value="id-3x4">ID photo 3×4 cm (354×472px)</option>
                        <option value="passport">Passport photo 3.5×4.5 cm (413×531px)</option>
+                       <option value="custom">Custom size in pixels…</option>
                    </select>
-                   <div class="hint">ID and passport presets crop from the center to the right shape.</div>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">Width</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" inputmode="numeric" />
+                       <span>×</span>
+                       <label for="ch">Height</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">ID, passport and custom sizes crop from the center to the right shape.</div>
                </div>
 
                <div class="field">
@@ -293,7 +302,7 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/lib.js?v=be726565"></script>
-<script type="module" src="/js/compress-image.js?v=3d796410"></script>
+<script defer src="/lib.js?v=e8c285ba"></script>
+<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
 </body>
 </html>

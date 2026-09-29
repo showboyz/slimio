@@ -35,6 +35,8 @@ PAGES = [
           <li><b>3.5×4.5 cm</b> → 413×531px. The usual passport-size photo, also used for many ID cards and visa forms.</li>
       </ul>
       <p>Both are 300 dpi — sharp enough to print at the stated size. Always check the exact size and KB range in the form's instructions; they differ from site to site.</p>
+      <h3>Form asks for exact pixels?</h3>
+      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. Choose <b>Custom size in pixels</b> under Resize and type the width and height. The photo is cropped from the center to that shape and saved at exactly that size, under your KB limit.</p>
       <h3>Getting a good crop</h3>
       <p>The presets crop from the center, so start with a photo where your face is roughly in the middle, taken straight on against a plain, light background. Leave some space above your head: most rules want the head to fill a bit over half of the photo's height.</p>
       <h3>Safe to submit</h3>
@@ -42,8 +44,8 @@ PAGES = [
  "faq": [
   ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."),
   ("What size in KB should a passport or ID photo be?", "It depends on the form — common limits are 20–50KB, 100KB or 200KB. Select the limit from the target list; SlimIO keeps the best quality that fits."),
+  ("The form wants 150×200 pixels. Can I do that?", "Yes. Choose Custom size in pixels under Resize, enter 150 and 200, and pick the KB limit. The photo is cropped to that shape and saved at exactly 150×200px."),
   ("Why was my photo cropped wrong?", "The presets crop from the center. If your face isn't centered, crop the photo roughly around your head and shoulders first, then use the preset."),
-  ("Can I change the background color?", "No. SlimIO resizes and compresses but doesn't edit the background, so take the photo against a plain light wall."),
   ("Are my photos uploaded?", "No. Everything runs in your browser, so your photos never leave your device."),
  ],
 },

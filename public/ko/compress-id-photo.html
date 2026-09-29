@@ -83,25 +83,25 @@
             },
             {
                   "@type": "Question",
-                  "name": "얼굴이 잘려 나갔어요.",
+                  "name": "사이트에서 150×200 픽셀로 올리라고 해요.",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요."
+                        "text": "크기 조절에서 픽셀 직접 입력을 고르고 가로 150, 세로 200을 입력한 뒤 목표 용량을 고르세요. 비율에 맞게 잘라서 정확히 150×200px로 저장해요."
                   }
             },
             {
                   "@type": "Question",
-                  "name": "배경색도 바꿀 수 있나요?",
+                  "name": "얼굴이 잘려 나갔어요.",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "아니요. 크기와 용량만 맞추고 배경은 바꾸지 않아요. 밝은 단색 벽 앞에서 찍어 주세요."
+                        "text": "규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요."
                   }
             }
       ]
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=145060a1" />
+<link rel="stylesheet" href="/style.css?v=33d27049" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -181,8 +181,17 @@
                        <option value="800">긴 변 800px</option>
                        <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
                        <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="custom">픽셀 직접 입력…</option>
                    </select>
-                   <div class="hint">증명·여권사진은 가운데를 기준으로 규격 비율에 맞게 잘라요.</div>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" inputmode="numeric" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 가운데를 기준으로 비율에 맞게 잘라요.</div>
                </div>
 
                <div class="field">
@@ -228,6 +237,8 @@
           <li><b>3.5×4.5cm (여권용)</b> → 413×531px. 여권, 주민등록증, 운전면허증에 쓰는 크기예요.</li>
       </ul>
       <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
+      <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
+      <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 가운데를 기준으로 그 비율에 맞게 자른 뒤 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
       <p>규격은 사진 가운데를 기준으로 잘라요. 얼굴이 가운데 오도록 정면에서, 밝고 단색인 벽 앞에서 찍으면 결과가 좋아요. 머리 위로 약간 여백을 두세요. 여권 사진은 흰색 배경이어야 하니, 흰 벽 앞에서 찍는 게 안전해요.</p>
       <h3>안심하고 제출하세요</h3>
@@ -249,12 +260,12 @@
           <p>반명함은 3×4cm(354×472px)이고, 여권·주민등록증·운전면허증용은 3.5×4.5cm(413×531px)예요.</p>
       </details>
       <details>
-          <summary>얼굴이 잘려 나갔어요.</summary>
-          <p>규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요.</p>
+          <summary>사이트에서 150×200 픽셀로 올리라고 해요.</summary>
+          <p>크기 조절에서 픽셀 직접 입력을 고르고 가로 150, 세로 200을 입력한 뒤 목표 용량을 고르세요. 비율에 맞게 잘라서 정확히 150×200px로 저장해요.</p>
       </details>
       <details>
-          <summary>배경색도 바꿀 수 있나요?</summary>
-          <p>아니요. 크기와 용량만 맞추고 배경은 바꾸지 않아요. 밝은 단색 벽 앞에서 찍어 주세요.</p>
+          <summary>얼굴이 잘려 나갔어요.</summary>
+          <p>규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요.</p>
       </details>
 </section>
 
@@ -298,8 +309,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=c8cb3375"></script>
-<script defer src="/lib.js?v=be726565"></script>
-<script type="module" src="/js/compress-image.js?v=3d796410"></script>
+<script defer src="/i18n/ko.js?v=7d8f9edf"></script>
+<script defer src="/lib.js?v=e8c285ba"></script>
+<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
 </body>
 </html>

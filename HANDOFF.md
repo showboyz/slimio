@@ -14,7 +14,7 @@
 3. **사용자 확인할 것:** 다른 계정(네이버 메일 등)에서 `contact@pdfslimio.com`으로 테스트 메일 → Gmail 수신 확인 / 폰에서 `pdfslimio.com/?notrack` 한 번 열기
 4. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
 5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
-6. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 서명 전용 페이지, 증명사진 픽셀 직접 입력(예: 150×200px), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지는 2026-09-29 완료)
+6. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 서명 전용 페이지, JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
 
 ---
 
@@ -78,6 +78,8 @@
 - 향후: "증명사진 용량 줄이기" 전용 페이지 (한국 검색량 큼)
 - 2026-09-29: `compress-image-to-50kb`, `-20kb` 추가 (+`/ko/`). 인도 시험·채용 원서(사진 20~50KB, 서명 10~20KB) 수요 겨냥. 20KB 옵션을 `compress-image.html` 목표 목록에 추가
 - 2026-09-29: **증명사진 전용 페이지** `compress-id-photo.html` (+`/ko/`, 키워드 "증명사진 용량 줄이기"). 생성기 `PAGES` 항목에 `"resize": "id-3x4"`로 크기 프리셋 미리 선택 가능. gen_ko는 `compress-image*` 또는 `compress-id-photo`를 사진 페이지로 취급(UI 번역 공유)
+- 2026-09-29: **픽셀 직접 입력** — 크기 조절 `custom` 옵션 + `#cw`/`#ch`(16~4000px). 프리셋처럼 가운데 기준으로 비율에 맞게 자르고 정확히 그 픽셀로 저장(축소 안 함). 잘못된 값은 횟수 차감 전에 안내
+- 2026-09-29: `#log` 디버그 패널은 **`?debug`로 열 때만 표시**(예전엔 오류·홈 압축 결과마다 사용자에게 보였음). 홈 압축은 결과가 원본보다 크면 원본을 돌려줌. 사진 합계 감소율은 최대 −99%로 표시
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 
 ### 새 도구 추가 체크리스트
@@ -150,7 +152,7 @@ robots.txt·sitemap.xml 변경은 Cloudflare 대시보드 → Caching → Purge 
 - **Browser mode**: PDJ.js가 `cdnjs` 로드 → 네트워크 필요, text 약간 부드러움
 - **Server mode**: `/screen` 72dpi가 34% 축소, `/ebook` 균형(약 5% on test), `/printer` 오히려 커질 수 있음
 - **rate-limit**: 메모리 기반이라 재배포 시 초기화 (무료라 OK)
-- **모델 이미지 입력 불가** → 스크린샷 못 봄. `#log` 패널 텍스트로 디버깅
+- 디버깅: 아무 페이지나 `?debug`를 붙여 열면 `#log` 패널 표시. (이제 모델이 스크린샷을 읽을 수 있음 — Umami 분석도 캡처로)
 
 ## 로컬 실행
 ```

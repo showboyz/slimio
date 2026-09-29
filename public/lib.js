@@ -57,10 +57,12 @@ const SlimIO = (() => {
       if (el) el.style.display = "none";
    }
 
+   // The #log panel is for debugging only: open any page with ?debug to show it.
+   const debug = /[?&]debug\b/.test(location.search);
    function log(msg) {
       const el = $("log");
       if (!el) return;
-      el.style.display = "block";
+      if (debug) el.style.display = "block";
       el.textContent += msg + "\n";
       el.scrollTop = el.scrollHeight;
    }
@@ -145,7 +147,7 @@ const SlimIO = (() => {
       log("REJECTION: " + ((e.reason && e.reason.message) || e.reason)));
 
    return {
-      $, t, pages, lang, formatSize, base64ToBytes, toBlob, download,
+      $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
       refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, page2user,
    };

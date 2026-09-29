@@ -179,6 +179,9 @@ function base64ToBytes(b64) {
 // ---- UI helpers ----
 function showResult(orig, after, bytes) {
     SlimIO.track(SlimIO.lang === "ko" ? "ko/compress" : "compress");
+    // Never hand back a bigger file: if compression didn't help, the original is the best result.
+    const keep = after >= orig && file;
+    if (keep) after = orig;
     result.style.display = "block";
     $("orig").textContent = formatSize(orig);
     $("after").textContent = formatSize(after);
@@ -186,7 +189,7 @@ function showResult(orig, after, bytes) {
     $("gain").textContent = pct > 0 ? `−${pct.toFixed(1)}%` : SlimIO.t("0% (already optimized)");
     log(`OK original=${formatSize(orig)} after=${formatSize(after)} saved=${pct.toFixed(1)}%`);
 
-    const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+    const url = URL.createObjectURL(keep ? file : new Blob([bytes], { type: "application/pdf" }));
     dl.href = url;
     dl.download = "slimio_" + (file ? file.name : "out.pdf");
 }
@@ -205,7 +208,7 @@ function showError(msg) {
 function clearError() { errEl.style.display = "none"; }
 
 function log(msg) {
-    logEl.style.display = "block";
+    if (SlimIO.debug) logEl.style.display = "block";
     logEl.textContent += msg + "\n";
     logEl.scrollTop = logEl.scrollHeight;
 }

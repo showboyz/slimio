@@ -67,9 +67,24 @@ async function loadImage(file) {
      }
 }
 
+// Resize choice: a preset key, a max side ("1920"), or [w, h] for a custom pixel size.
+// null when the custom size is out of range.
+function resizeChoice() {
+     const v = $("resize").value;
+     if (v !== "custom") return v;
+     const w = Math.round(Number($("cw").value)), h = Math.round(Number($("ch").value));
+     return w >= 16 && w <= 4000 && h >= 16 && h <= 4000 ? [w, h] : null;
+}
+function syncCustom() {
+     $("custom").hidden = $("resize").value !== "custom";
+}
+$("resize").addEventListener("change", syncCustom);
+syncCustom();   // the browser may restore "custom" on back/refresh
+
 function geometry(w, h, resize) {
-     if (PRESETS[resize]) {
-             const [tw, th] = PRESETS[resize];
+     const box = Array.isArray(resize) ? resize : PRESETS[resize];
+     if (box) {
+             const [tw, th] = box;
              const aspect = tw / th;
              let sw = w, sh = h;
              if (w / h > aspect) sw = h * aspect; else sh = w / aspect;
@@ -156,7 +171,7 @@ async function shrink(img, opts) {
                      }
                      if (!smallest || fit.size < smallest.blob.size) smallest = out(fit);
              }
-             if (g.fixed) break;   // ID photos must keep their pixel size
+             if (g.fixed) break;   // ID photos and custom sizes must keep their pixel size
      }
      return { ...smallest, fits: false };
 }
@@ -164,6 +179,8 @@ async function shrink(img, opts) {
 async function run() {
      if (!files.length) return;
      SlimIO.clearError();
+     const resize = resizeChoice();
+     if (!resize) { SlimIO.showError(SlimIO.t("Enter a width and height between 16 and 4000 pixels.")); return; }
      goBtn.disabled = true;
      goBtn.textContent = SlimIO.t("Compressing…");
      prog.show();
@@ -171,7 +188,7 @@ async function run() {
      urls.forEach((u) => URL.revokeObjectURL(u));
      urls = [];
      const label = $("target").value;
-     const opts = { target: parseSize(label), resize: $("resize").value, format: $("format").value };
+     const opts = { target: parseSize(label), resize, format: $("format").value };
      try {
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
@@ -245,7 +262,8 @@ function showResult(done, label) {
              }
              list.appendChild(li);
      }
-     const pct = before ? Math.round((1 - after / before) * 100) : 0;
+     // never round a real file down to "−100%"
+     const pct = before ? Math.min(Math.round((1 - after / before) * 100), after > 0 ? 99 : 100) : 0;
      const change = pct > 0 ? `−${pct}%` : pct < 0 ? `+${-pct}%` : "0%";
      $("total").textContent = ok.length
              ? SlimIO.t("Total: {before} → {after} ({change})", { before: SlimIO.formatSize(before), after: SlimIO.formatSize(after), change })

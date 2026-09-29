@@ -98,6 +98,7 @@ window.SLIMIO_KO = {
 
    // compress image
    "Compress images": "사진 용량 줄이기",
+   "Enter a width and height between 16 and 4000 pixels.": "가로와 세로를 16~4000픽셀 사이로 입력해 주세요.",
    "↓ Download": "↓ 다운로드",
    "Total: {before} → {after} ({change})": "전체: {before} → {after} ({change})",
    "already optimized, kept as is": "이미 최적화된 파일이라 그대로 두었어요",
