@@ -92,7 +92,10 @@ const SlimTarget = (() => {
    // Main entry. Returns { bytes, method, fits, note } or { limited } / throws.
    async function run(file, target, onProgress, onStatus) {
       const data = new Uint8Array(await file.arrayBuffer());
-      if (file.size <= target) return { bytes: data, method: "original", fits: true };
+      if (file.size <= target) {
+         SlimIO.track();
+         return { bytes: data, method: "original", fits: true };
+      }
 
       let best = null;
       let charged = false;
@@ -104,11 +107,12 @@ const SlimTarget = (() => {
             charged = !r.failed;   // server counted this use
             if (r.bytes) {
                best = { bytes: r.bytes, method: "server", fits: r.bytes.length <= target };
-               if (best.fits) return best;
+               if (best.fits) { SlimIO.track(); return best; }
             }
          } catch (e) { /* network: fall through to browser */ }
       }
-      if (!charged) {
+      if (charged) SlimIO.track();   // server path counted the use but the result didn't fit
+      else {
          const c = await SlimIO.consume();
          if (c && !c.ok) return { limited: true };
       }

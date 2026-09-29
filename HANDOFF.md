@@ -21,7 +21,7 @@
 | 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · Organize · Page Numbers · Watermark · PDF→JPG · JPG→PDF · **Sign PDF** · **Compress Image** (2026-09-28 추가) |
 | 한국어 사이트 | `/ko/` 아래 17페이지 (hreflang 연결, 사이트맵 34 URL) |
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
-| 분석 | Cloudflare Web Analytics (무료, 자동 삽입) — Cloudflare → Analytics & Logs → Web Analytics → 방문. 참조자·경로·국가·기기·Core Web Vitals. **도구 사용 횟수(커스텀 이벤트)는 안 됨.** Plausible은 2026-09-26 제거(유료 부담). 도구 사용 횟수가 필요해지면 Umami Cloud 무료(Hobby, 월 10만 이벤트)를 붙일 것: `lib.js`의 `consume()`에서 이벤트 전송 + 각 HTML head에 스크립트 |
+| 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
 | Google Search Console | ⚠️ TXT 레코드 추가됨, 사이트맵 제출 필요 |

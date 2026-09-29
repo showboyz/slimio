@@ -177,6 +177,7 @@ function base64ToBytes(b64) {
 
 // ---- UI helpers ----
 function showResult(orig, after, bytes) {
+    SlimIO.track(SlimIO.lang === "ko" ? "ko/compress" : "compress");
     result.style.display = "block";
     $("orig").textContent = formatSize(orig);
     $("after").textContent = formatSize(after);

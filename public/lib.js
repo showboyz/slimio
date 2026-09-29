@@ -80,7 +80,16 @@ const SlimIO = (() => {
       const go = $("go");
       if (go && remaining === 0) go.disabled = true;
    }
+   // Umami custom event: a tool was actually used, not just visited.
+   // Visiting any page with ?notrack stops counting this browser (for the site owner).
+   try { if (/[?&]notrack\b/.test(location.search)) localStorage.setItem("umami.disabled", "1"); } catch (e) {}
+   function track(tool) {
+      tool = tool || location.pathname.replace(/^\/|\.html$/g, "").replace(/\/$/, "") || "compress";
+      try { window.umami && window.umami.track("tool-used", { tool }); } catch (e) {}
+   }
+
    async function consume() {
+      track();
       try {
          const c = await fetch(`${API_BASE}/api/consume`, { method: "POST" }).then((r) => r.json());
          updateLimit(c.remaining, c.limit);
@@ -126,7 +135,7 @@ const SlimIO = (() => {
    return {
       $, t, pages, lang, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress, page2user,
+      refreshStatus, updateLimit, consume, bindProgress, track, page2user,
    };
 })();
 
