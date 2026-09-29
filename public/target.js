@@ -11,14 +11,15 @@ const SlimTarget = (() => {
    const QUALITIES = [0.85, 0.75, 0.65, 0.57, 0.5, 0.44, 0.38, 0.33, 0.28, 0.25, 0.22, 0.2];
    const SERVER_MAX = 50 * 1024 * 1024;
 
+   // Decimal (1KB = 1000 bytes) so the file passes whichever definition an upload form checks against.
    function parseSize(s) {
       const m = String(s).match(/^(\d+(?:\.\d+)?)\s*(kb|mb)$/i);
       if (!m) return null;
-      return Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "mb" ? 1024 * 1024 : 1024));
+      return Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "mb" ? 1e6 : 1e3));
    }
 
    async function viaServer(file, target) {
-      const level = target >= 1024 * 1024 ? "ebook" : "screen";
+      const level = target >= 1e6 ? "ebook" : "screen";
       const resp = await fetch(`${SERVER_BASE}/api/compress`, {
          method: "POST",
          headers: { "X-Level": level },

@@ -10,9 +10,11 @@ const prog = SlimIO.bindProgress("prog");
 const PRESETS = { "id-3x4": [354, 472], passport: [413, 531] };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
-function parseSize(s) {   // "200KB" -> bytes
+// "200KB" -> bytes. Decimal (1KB = 1000 bytes) so the file passes whichever
+// definition an upload form checks against.
+function parseSize(s) {
      const m = String(s).match(/^(\d+(?:\.\d+)?)\s*(kb|mb)$/i);
-     return m ? Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "mb" ? 1048576 : 1024)) : 0;
+     return m ? Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "mb" ? 1e6 : 1e3)) : 0;
 }
 
 let files = [];

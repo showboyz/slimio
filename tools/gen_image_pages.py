@@ -15,6 +15,72 @@ BASE = "compress-image.html"
 
 PAGES = [
 {
+ "slug": "compress-image-to-50kb", "target": "50KB",
+ "title": "Compress Image to 50KB — Reduce Photo Size Online Free | SlimIO",
+ "short": "Compress Image to 50KB | SlimIO",
+ "desc": "Reduce a photo to under 50KB for exam, job and government application forms. Crops ID photos to size and keeps the best quality that fits. Free, runs in your browser.",
+ "keywords": "compress image to 50kb, reduce photo size to 50kb, photo under 50kb, image 50kb, compress jpg to 50kb, photo resize 50kb",
+ "h1": "Compress images<br /><b>to 50KB.</b>",
+ "lead": "Application form wants a photo under 50KB? Drop it in and get the sharpest version that fits.",
+ "content": """
+      <h2>How to compress an image to 50KB</h2>
+      <ul>
+          <li><b>1. Add your photo.</b> The target is already set to 50KB.</li>
+          <li><b>2. Pick a size if the form asks for one.</b> Under Resize, the ID and passport presets crop the photo to the right shape.</li>
+          <li><b>3. Click Compress images and download.</b> SlimIO finds the highest JPEG quality that still fits under 50KB.</li>
+      </ul>
+      <h3>Where the 50KB limit shows up</h3>
+      <p>Online applications for exams, government jobs, scholarships and admissions often ask for a passport-style photo between 20KB and 50KB. A phone photo is usually 2–5MB, around 50–100 times too big, so it has to shrink a lot without turning blurry.</p>
+      <h3>Why a cropped photo looks better at 50KB</h3>
+      <p>The same 50KB spread over fewer pixels means more detail per pixel. An ID-size photo (354×472px) fits comfortably under 50KB with sharp facial detail, while a full-frame photo has to be scaled down much further. Crop to your face and shoulders — or use the ID photo preset — before compressing.</p>
+      <h3>Checklist before you upload</h3>
+      <ul>
+          <li>Format: keep JPG. Most forms accept only JPG/JPEG.</li>
+          <li>Dimensions: if the form gives pixels or cm, use the matching Resize preset.</li>
+          <li>File size: the result card shows the final size, so you can check it against the limit.</li>
+      </ul>""",
+ "faq": [
+  ("How do I reduce a photo to 50KB for an application form?", "Drop the photo on this page — the target is already 50KB — and click Compress images. If the form also asks for ID or passport dimensions, choose that preset under Resize first."),
+  ("Will a 50KB photo be clear enough?", "Yes, at ID-photo dimensions. A 354×472px photo keeps sharp facial detail under 50KB. Larger photos are scaled down step by step until they fit, keeping the best quality possible."),
+  ("The form says the photo must be between 20KB and 50KB. Will this work?", "Usually, yes. SlimIO picks the highest quality that fits under 50KB, so ID-size photos normally come out well above 20KB. Check the size shown on the result."),
+  ("Can I compress my signature image to 50KB too?", "Yes. Crop the signature tightly, then compress it here. If the form asks for a smaller signature file, use the 20KB page."),
+  ("Are my photos uploaded?", "No. Everything runs in your browser, so your photos never leave your device."),
+ ],
+},
+{
+ "slug": "compress-image-to-20kb", "target": "20KB",
+ "title": "Compress Image to 20KB — Photo & Signature Size Reducer Free | SlimIO",
+ "short": "Compress Image to 20KB | SlimIO",
+ "desc": "Reduce a photo or signature image to under 20KB for online exam and job forms. Keeps the best quality that fits. Free, no signup, runs in your browser.",
+ "keywords": "compress image to 20kb, reduce photo size to 20kb, signature 20kb, photo under 20kb, image 20kb, compress jpg to 20kb, signature resize",
+ "h1": "Compress images<br /><b>to 20KB.</b>",
+ "lead": "Photo or signature must be under 20KB? SlimIO squeezes it down and keeps it readable.",
+ "content": """
+      <h2>How to compress an image to 20KB</h2>
+      <ul>
+          <li><b>1. Add your photo or signature scan.</b> The target is already set to 20KB.</li>
+          <li><b>2. Crop first if you can.</b> For a photo, the ID photo preset under Resize crops and scales it for you.</li>
+          <li><b>3. Click Compress images and download.</b> Quality is lowered just enough to fit, then the image is scaled down only if needed.</li>
+      </ul>
+      <h3>Signatures under 20KB</h3>
+      <p>Many online application forms ask for a scanned signature between 10KB and 20KB. Sign in black or dark blue ink on plain white paper, take the photo in good light, and crop tightly around the signature. A cropped signature fits under 20KB easily and stays crisp.</p>
+      <h3>Photos under 20KB</h3>
+      <p>20KB is very small for a photo, so dimensions matter most. Choose the ID photo 3×4 cm preset (354×472px) — the face stays recognizable at that size. A full phone photo would have to be scaled down to a few hundred pixels to fit.</p>
+      <h3>If it still looks too soft</h3>
+      <ul>
+          <li>Crop away as much background as the form allows.</li>
+          <li>Keep JPG as the format; PNG is lossless and rarely fits under 20KB.</li>
+          <li>Check whether the form allows a bigger file, such as <a href="/compress-image-to-50kb.html">50KB</a>, for the photo.</li>
+      </ul>""",
+ "faq": [
+  ("How do I compress a signature to 20KB?", "Crop the scanned signature tightly, drop it on this page — the target is already 20KB — and click Compress images. Signatures are simple images, so they stay sharp at this size."),
+  ("Can a photo really fit under 20KB?", "Yes, at ID-photo size. Choose the ID photo 3×4 cm preset under Resize; the photo is scaled to 354×472px and then compressed under 20KB."),
+  ("Why does my photo get smaller in pixels?", "If lowering the JPEG quality isn't enough to reach 20KB, SlimIO scales the image down 20% at a time until it fits. Cropping first keeps more detail."),
+  ("Should I use JPG or PNG for 20KB?", "JPG. PNG keeps every pixel exactly and is usually much larger, so it rarely fits under 20KB."),
+  ("Are my files uploaded?", "No. Everything runs in your browser, so your photos and signatures never leave your device."),
+ ],
+},
+{
  "slug": "compress-image-to-100kb", "target": "100KB",
  "title": "Compress Image to 100KB — Reduce Photo Size Online Free | SlimIO",
  "short": "Compress Image to 100KB | SlimIO",
@@ -79,6 +145,8 @@ PAGES = [
 ]
 
 SIZE_LINKS = [("/compress-image.html", "Compress image (any size)"),
+              ("/compress-image-to-20kb.html", "Compress image to 20KB"),
+              ("/compress-image-to-50kb.html", "Compress image to 50KB"),
               ("/compress-image-to-100kb.html", "Compress image to 100KB"),
               ("/compress-image-to-200kb.html", "Compress image to 200KB")]
 
