@@ -23,6 +23,7 @@
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
 | 이메일 | `contact@pdfslimio.com` → Cloudflare Email Routing → todays777@gmail.com (수신 전용, 무료). 답장은 Gmail에서 |
 | 정책 페이지 | about / terms / privacy / contact (영·한), 전 페이지 하단 링크. AdSense 심사용 |
+| AdSense | 게시자 `ca-pub-5339352429300786`, 결제국가 한국. 전 페이지 `google-adsense-account` 메타 태그 + `/ads.txt`. **심사 중** — 승인 후 광고 스크립트/광고 단위를 `#ad` 자리에 넣고, Privacy & messaging에서 EU 동의 메시지 켜기 |
 | 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
