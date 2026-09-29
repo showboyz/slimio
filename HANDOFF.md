@@ -21,6 +21,8 @@
 | 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · Organize · Page Numbers · Watermark · PDF→JPG · JPG→PDF · **Sign PDF** · **Compress Image** (2026-09-28 추가) |
 | 한국어 사이트 | `/ko/` 아래 19페이지 (hreflang 연결, 사이트맵 38 URL) |
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
+| 이메일 | `contact@pdfslimio.com` → Cloudflare Email Routing → todays777@gmail.com (수신 전용, 무료). 답장은 Gmail에서 |
+| 정책 페이지 | about / terms / privacy / contact (영·한), 전 페이지 하단 링크. AdSense 심사용 |
 | 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |

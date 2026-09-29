@@ -190,3 +190,6 @@ footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 30px 0 40
    .grid, .plans { grid-template-columns: 1fr; }
    .nav-links { display: none; }
 }
+
+.foot-links a { color: var(--muted); }
+.foot-links a:hover { color: var(--text); }

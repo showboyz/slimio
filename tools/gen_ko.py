@@ -24,6 +24,10 @@ PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.
          "sign-pdf.html", "compress-image.html", "compress-image-to-100kb.html", "compress-image-to-200kb.html"] + SIZE_PAGES
 
 
+# Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
+INFO_PAGES = ["about.html", "terms.html", "privacy.html", "contact.html"]
+
+
 def en_path(p): return "/" if p == "index.html" else "/" + p
 def ko_path(p): return "/ko/" if p == "index.html" else "/ko/" + p
 
@@ -63,6 +67,10 @@ COMMON = [
     (">PDF to JPG</a>", ">PDF → JPG</a>"),
     (">JPG to PDF</a>", ">JPG → PDF</a>"),
     (">Sign PDF</a>", ">PDF 서명</a>"),
+    (">About</a>", ">서비스 소개</a>"),
+    (">Terms</a>", ">이용약관</a>"),
+    (">Privacy Policy</a>", ">개인정보처리방침</a>"),
+    (">Contact</a>", ">문의하기</a>"),
     (">Compress Image</a>", ">사진 용량 줄이기</a>"),
     (">Compress image (any size)</a>", ">사진 용량 줄이기 (용량 자유)</a>"),
     (">Compress image to 100KB</a>", ">사진 100KB로 줄이기</a>"),
@@ -1006,7 +1014,7 @@ def rewrite_links(s):
         path, _, frag = target.partition("#")
         if path in ("", "/") and target.startswith("/"):
             return f'{m.group(1)}/ko/{("#" + frag) if frag else ""}"'
-        if path.startswith("/") and path[1:] in PAGES:
+        if path.startswith("/") and (path[1:] in PAGES or path[1:] in INFO_PAGES):
             return f'{m.group(1)}/ko{target}"'
         return m.group(0)
     return re.sub(r'(href=")(/[^"]*)"', fix, s)
@@ -1100,7 +1108,7 @@ def build(page):
 
 
 def write_sitemap():
-    urls = [en_path(p) for p in PAGES] + [ko_path(p) for p in PAGES]
+    urls = [en_path(p) for p in PAGES + INFO_PAGES] + [ko_path(p) for p in PAGES + INFO_PAGES]
     body = "".join(f"""       <url>
            <loc>{SITE}{u}</loc>
            <lastmod>{TODAY}</lastmod>
@@ -1122,5 +1130,9 @@ if __name__ == "__main__":
         en_html = lang_links(open(en_file).read(), p, "en")   # read fully before reopening for write
         open(en_file, "w").write(en_html)
         print("ok", ko_path(p))
+    for p in INFO_PAGES:
+        for path, lang in ((os.path.join(ROOT, p), "en"), (os.path.join(ROOT, "ko", p), "ko")):
+            html_ = lang_links(open(path).read(), p, lang)
+            open(path, "w").write(html_)
     write_sitemap()
-    print(f"sitemap: {2 * len(PAGES)} URLs")
+    print(f"sitemap: {2 * len(PAGES + INFO_PAGES)} URLs")
