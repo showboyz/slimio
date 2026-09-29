@@ -15,7 +15,7 @@ BASE = "compress-image.html"
 
 PAGES = [
 {
- "slug": "compress-id-photo", "target": "100KB", "resize": "id-3x4",
+ "slug": "compress-id-photo", "target": "100KB", "resize": "id-3x4", "picker": True,
  "title": "Passport & ID Photo Resizer — Crop and Compress to KB Free | SlimIO",
  "short": "ID Photo Resizer | SlimIO",
  "desc": "Crop a photo to passport or ID size (3.5×4.5 cm, 3×4 cm) and compress it under 100KB, 50KB or 20KB for online applications. Free, runs in your browser.",
@@ -27,8 +27,20 @@ PAGES = [
       <ul>
           <li><b>1. Add your photo.</b> The ID photo 3×4 cm preset and a 100KB target are already selected.</li>
           <li><b>2. Match the form.</b> Switch Resize to Passport photo 3.5×4.5 cm if needed, and pick the KB limit the form states (for example 50KB or 20KB).</li>
-          <li><b>3. Click Compress images and download.</b> The photo is cropped from the center, scaled and compressed in one go.</li>
+          <li><b>3. Adjust the frame.</b> Drag the green frame onto your face and zoom until your head fills the dashed guide.</li>
+          <li><b>4. Click Compress images and download.</b> The photo is cropped, scaled and compressed in one go.</li>
       </ul>
+      <figure class="demo">
+          <div class="demo-row">
+              <div class="demo-src"><img src="/img/id-sample.webp" width="900" height="600" loading="lazy" alt="An ordinary phone photo with the person off to one side" /><span>Phone photo · 1.8 MB</span></div>
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <div class="demo-out">
+                  <div><img src="/img/id-sample-3x4.webp" width="354" height="472" loading="lazy" alt="3×4 cm · 30 KB" /><span>3×4 cm · 30 KB</span></div>
+                  <div><img src="/img/id-sample-passport.webp" width="413" height="531" loading="lazy" alt="3.5×4.5 cm · 38 KB" /><span>3.5×4.5 cm · 38 KB</span></div>
+              </div>
+          </div>
+          <figcaption>Made with this page: frame dragged onto the face, zoomed a little, saved under 100KB. (Sample photo of a fictional person.)</figcaption>
+      </figure>
       <h3>Photo sizes at a glance</h3>
       <ul>
           <li><b>3×4 cm</b> → 354×472px. Common on résumés, job and exam applications.</li>
@@ -36,16 +48,16 @@ PAGES = [
       </ul>
       <p>Both are 300 dpi — sharp enough to print at the stated size. Always check the exact size and KB range in the form's instructions; they differ from site to site.</p>
       <h3>Form asks for exact pixels?</h3>
-      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. Choose <b>Custom size in pixels</b> under Resize and type the width and height. The photo is cropped from the center to that shape and saved at exactly that size, under your KB limit.</p>
+      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. Choose <b>Custom size in pixels</b> under Resize and type the width and height. Move the frame onto your face, and the photo is cropped to that shape and saved at exactly that size, under your KB limit.</p>
       <h3>Getting a good crop</h3>
-      <p>The presets crop from the center, so start with a photo where your face is roughly in the middle, taken straight on against a plain, light background. Leave some space above your head: most rules want the head to fill a bit over half of the photo's height.</p>
+      <p>Take the photo straight on against a plain, light background — it doesn't matter where you are in the frame, because you place the crop yourself. Most rules want the head (top of the hair to the chin) to fill roughly 70% of the photo's height, with a little space above; the dashed oval shows about that size.</p>
       <h3>Safe to submit</h3>
       <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>""",
  "faq": [
   ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."),
   ("What size in KB should a passport or ID photo be?", "It depends on the form — common limits are 20–50KB, 100KB or 200KB. Select the limit from the target list; SlimIO keeps the best quality that fits."),
   ("The form wants 150×200 pixels. Can I do that?", "Yes. Choose Custom size in pixels under Resize, enter 150 and 200, and pick the KB limit. The photo is cropped to that shape and saved at exactly 150×200px."),
-  ("Why was my photo cropped wrong?", "The presets crop from the center. If your face isn't centered, crop the photo roughly around your head and shoulders first, then use the preset."),
+  ("My face isn't in the middle of the photo. Is that a problem?", "No. After you add the photo, drag the green frame onto your face and use Zoom to make your head fill the dashed guide. The download uses exactly that crop."),
   ("Are my photos uploaded?", "No. Everything runs in your browser, so your photos never leave your device."),
  ],
 },
@@ -133,7 +145,7 @@ PAGES = [
       <h3>Where the 100KB limit shows up</h3>
       <p>Job application sites, exam registrations, school portals and government forms often cap photo uploads — especially ID photos — at 100KB. A phone photo is usually 2–5MB, so it needs to shrink by 95% or more.</p>
       <h3>ID photos: size and dimensions</h3>
-      <p>Many forms ask for a specific pixel size as well, such as 3×4 cm. Pick the ID photo preset under Resize: the photo is cropped from the center to the right shape, scaled to 354×472px, and then kept under 100KB — at that size it usually stays very sharp.</p>
+      <p>Many forms ask for a specific pixel size as well, such as 3×4 cm. Pick the ID photo preset under Resize: drag the frame onto your face, and the photo is cropped to the right shape, scaled to 354×472px, and then kept under 100KB — at that size it usually stays very sharp.</p>
       <h3>Tips for a clearer result</h3>
       <ul>
           <li>Crop away background you don't need before compressing — fewer pixels means more quality per KB.</li>
@@ -178,6 +190,22 @@ PAGES = [
  ],
 },
 ]
+
+# Size tiles above the drop zone on the ID photo page; the silhouette SVGs are drawn to each ratio.
+_PERSON = '<circle cx="{cx}" cy="{hy}" r="{hr}" fill="currentColor" opacity=".55"/><path d="M{l} {h} q0 -{sh} {cx0} -{sh} q{cx0} 0 {cx0} {sh}z" fill="currentColor" opacity=".55"/>'
+def _tile(w, h, dashed=False):
+    frame = f'<rect x="1" y="1" width="{w-2}" height="{h-2}" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"{" stroke-dasharray=\"4 3\"" if dashed else ""}/>'
+    cx = w / 2
+    person = "" if dashed else _PERSON.format(cx=cx, hy=round(h * .40, 1), hr=round(w * .2, 1), l=round(w * .14, 1), h=h - 1, sh=round(h * .24, 1), cx0=round(cx - w * .14, 1))
+    extra = f'<path d="M{cx-6} {h/2}h12M{cx} {h/2-6}v12" stroke="currentColor" stroke-width="1.5"/>' if dashed else ""
+    return f'<svg viewBox="0 0 {w} {h}" aria-hidden="true">{frame}{person}{extra}</svg>'
+PICKER = f"""
+               <div class="presets" role="group" aria-label="Photo size">
+                   <button type="button" class="preset" data-resize="id-3x4">{_tile(30, 40)}<b>3×4 cm</b><span>ID photo</span></button>
+                   <button type="button" class="preset" data-resize="passport">{_tile(35, 45)}<b>3.5×4.5 cm</b><span>Passport</span></button>
+                   <button type="button" class="preset" data-resize="custom">{_tile(34, 40, True)}<b>Custom</b><span>Any pixels</span></button>
+               </div>
+"""
 
 SIZE_LINKS = [("/compress-image.html", "Compress image (any size)"),
               ("/compress-image-to-20kb.html", "Compress image to 20KB"),
@@ -226,6 +254,8 @@ def build(p, base):
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + p["h1"] + m.group(2) + p["lead"] + m.group(3), s, "hero")
     s = s.replace('<option value="" selected>', '<option value="">')
     s = sub1(rf'<option value="{p["target"]}">', f'<option value="{p["target"]}" selected>', s, "target option")
+    if p.get("picker"):
+        s = sub1(r'(\n(\s*)<div class="drop" id="drop">)', lambda m: "\n" + m.group(2) + PICKER.strip() + m.group(1), s, "picker")
     if p.get("resize"):
         s = sub1(r'<option value="1920" selected>', '<option value="1920">', s, "default resize")
         s = sub1(rf'<option value="{p["resize"]}">', f'<option value="{p["resize"]}" selected>', s, "resize option")

@@ -98,6 +98,8 @@ window.SLIMIO_KO = {
 
    // compress image
    "Compress images": "사진 용량 줄이기",
+   "Drag the frame so your face sits inside the guide.": "틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.",
+   "Drag the frame to set the crop on the first photo. The others are cropped from the center.": "틀을 끌어서 첫 번째 사진의 자를 위치를 정하세요. 나머지 사진은 가운데를 기준으로 잘라요.",
    "Enter a width and height between 16 and 4000 pixels.": "가로와 세로를 16~4000픽셀 사이로 입력해 주세요.",
    "↓ Download": "↓ 다운로드",
    "Total: {before} → {after} ({change})": "전체: {before} → {after} ({change})",

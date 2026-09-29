@@ -34,6 +34,7 @@ function setFiles(fileList) {
      result.style.display = "none";
      goBtn.disabled = false;
      SlimIO.refreshStatus();
+     loadPreview();
 }
 
 drop.addEventListener("click", () => $("images").click());
@@ -79,16 +80,39 @@ function syncCustom() {
      $("custom").hidden = $("resize").value !== "custom";
 }
 $("resize").addEventListener("change", syncCustom);
+
+// Size tiles (ID photo page): a friendlier front for the Resize select.
+const tiles = document.querySelectorAll(".preset[data-resize]");
+function syncTiles() {
+     tiles.forEach((t) => t.classList.toggle("on", t.dataset.resize === $("resize").value));
+}
+tiles.forEach((t) => t.addEventListener("click", () => {
+     $("resize").value = t.dataset.resize;
+     $("resize").dispatchEvent(new Event("change"));
+}));
+$("resize").addEventListener("change", syncTiles);
+syncTiles();
 syncCustom();   // the browser may restore "custom" on back/refresh
 
-function geometry(w, h, resize) {
+// Source rectangle for a fixed-size output: the largest box of the right shape, shrunk by
+// `crop.z` and centered on (crop.fx, crop.fy) — fractions of the image — or the middle.
+function cropRect(w, h, tw, th, crop) {
+     const aspect = tw / th;
+     let sw = w, sh = h;
+     if (w / h > aspect) sw = h * aspect; else sh = w / aspect;
+     const z = (crop && crop.z) || 1;
+     sw /= z; sh /= z;
+     const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+     const cx = clamp(crop ? crop.fx * w : w / 2, sw / 2, w - sw / 2);
+     const cy = clamp(crop ? crop.fy * h : h / 2, sh / 2, h - sh / 2);
+     return { sx: cx - sw / 2, sy: cy - sh / 2, sw, sh };
+}
+
+function geometry(w, h, resize, crop) {
      const box = Array.isArray(resize) ? resize : PRESETS[resize];
      if (box) {
              const [tw, th] = box;
-             const aspect = tw / th;
-             let sw = w, sh = h;
-             if (w / h > aspect) sw = h * aspect; else sh = w / aspect;
-             return { sx: (w - sw) / 2, sy: (h - sh) / 2, sw, sh, dw: tw, dh: th, fixed: true };
+             return { ...cropRect(w, h, tw, th, crop), dw: tw, dh: th, fixed: true };
      }
      const max = parseInt(resize, 10) || 0;
      const s = max && Math.max(w, h) > max ? max / Math.max(w, h) : 1;
@@ -124,10 +148,10 @@ function encode(canvas, format, quality) {
 
 // Best-looking image that fits `target` bytes: search JPEG/WebP quality first,
 // then scale down 20% at a time. PNG is lossless, so only scaling helps there.
-async function compressOne(file, opts) {
+async function compressOne(file, opts, crop) {
      const img = await loadImage(file);
      try {
-             const r = await shrink(img, opts);
+             const r = await shrink(img, opts, crop);
              // Never hand back a bigger file than the user gave us when nothing else had to change.
              // A JPEG with EXIF still gets the re-encoded copy, so location data is always removed.
              const unchanged = file.type === "image/" + opts.format && r.w === img.width && r.h === img.height;
@@ -141,8 +165,8 @@ async function compressOne(file, opts) {
      }
 }
 
-async function shrink(img, opts) {
-     const g = geometry(img.width, img.height, opts.resize);
+async function shrink(img, opts, crop) {
+     const g = geometry(img.width, img.height, opts.resize, crop);
      const lossy = opts.format !== "png";
      if (!opts.target) {
              const c = draw(img, g, 1, opts.format);
@@ -176,6 +200,121 @@ async function shrink(img, opts) {
      return { ...smallest, fits: false };
 }
 
+// ---- crop preview: shown for ID / passport / custom sizes, set on the first photo ----
+const cropBox = $("crop");
+const cv = $("cropcv");
+const zoom = $("zoom");
+let preview = null;           // decoded first photo
+let crop = { fx: 0.5, fy: 0.5, z: 1 };
+let view = null;              // how the photo is laid out on the canvas: { s, ox, oy }
+
+async function loadPreview() {
+     if (preview && preview.close) preview.close();
+     preview = null;
+     crop = { fx: 0.5, fy: 0.5, z: 1 };
+     zoom.value = 100;
+     try { preview = await loadImage(files[0]); } catch (e) { /* HEIC etc: the run shows the error */ }
+     syncCrop();
+}
+
+function outputBox() {
+     const r = resizeChoice();
+     return Array.isArray(r) ? r : PRESETS[r] || null;
+}
+
+function cropState() {
+     return cropBox.hidden ? null : { ...crop };
+}
+
+function syncCrop() {
+     const box = outputBox();
+     cropBox.hidden = !(preview && box);
+     if (cropBox.hidden) return;
+     $("crophint").textContent = files.length > 1
+             ? SlimIO.t("Drag the frame to set the crop on the first photo. The others are cropped from the center.")
+             : SlimIO.t("Drag the frame so your face sits inside the guide.");
+     drawCrop();
+}
+
+function drawCrop() {
+     const box = outputBox();
+     if (!preview || !box) return;
+     const dpr = window.devicePixelRatio || 1;
+     const W = cv.clientWidth || 520;
+     const H = Math.min(420, Math.round(W * preview.height / preview.width));
+     cv.style.height = H + "px";
+     cv.width = Math.round(W * dpr);
+     cv.height = Math.round(H * dpr);
+     const ctx = cv.getContext("2d");
+     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+     const s = Math.min(W / preview.width, H / preview.height);
+     view = { s, ox: (W - preview.width * s) / 2, oy: (H - preview.height * s) / 2 };
+     ctx.clearRect(0, 0, W, H);
+     ctx.drawImage(preview, view.ox, view.oy, preview.width * s, preview.height * s);
+
+     const r = cropRect(preview.width, preview.height, box[0], box[1], crop);
+     const x = view.ox + r.sx * s, y = view.oy + r.sy * s, w = r.sw * s, h = r.sh * s;
+     // dim everything outside the frame
+     ctx.fillStyle = "rgba(8, 10, 14, 0.62)";
+     ctx.beginPath();
+     ctx.rect(0, 0, W, H);
+     ctx.rect(x, y, w, h);
+     ctx.fill("evenodd");
+     // frame + face guide (head roughly 70% of the photo height, eyes a little above the middle)
+     ctx.strokeStyle = "#46e0a0";
+     ctx.lineWidth = 2;
+     ctx.strokeRect(x + 1, y + 1, w - 2, h - 2);
+     ctx.setLineDash([5, 5]);
+     ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
+     ctx.lineWidth = 1.5;
+     ctx.beginPath();
+     ctx.ellipse(x + w / 2, y + h * 0.44, w * 0.29, h * 0.33, 0, 0, Math.PI * 2);
+     ctx.stroke();
+     ctx.setLineDash([]);
+}
+
+// Drag anywhere on the photo: the frame follows the pointer.
+let drag = null;
+cv.addEventListener("pointerdown", (e) => {
+     if (!view) return;
+     cv.setPointerCapture(e.pointerId);
+     cv.classList.add("dragging");
+     drag = { x: e.offsetX, y: e.offsetY, fx: crop.fx, fy: crop.fy };
+     const r = cropRect(preview.width, preview.height, ...outputBox(), crop);
+     const px = (e.offsetX - view.ox) / view.s, py = (e.offsetY - view.oy) / view.s;
+     if (px < r.sx || px > r.sx + r.sw || py < r.sy || py > r.sy + r.sh) {   // outside the frame: jump there
+             crop.fx = px / preview.width;
+             crop.fy = py / preview.height;
+             settle();
+             drag = { x: e.offsetX, y: e.offsetY, fx: crop.fx, fy: crop.fy };
+             drawCrop();
+     }
+});
+cv.addEventListener("pointermove", (e) => {
+     if (!drag) return;
+     crop.fx = drag.fx + (e.offsetX - drag.x) / view.s / preview.width;
+     crop.fy = drag.fy + (e.offsetY - drag.y) / view.s / preview.height;
+     settle();
+     drawCrop();
+});
+const endDrag = () => { drag = null; cv.classList.remove("dragging"); };
+cv.addEventListener("pointerup", endDrag);
+cv.addEventListener("pointercancel", endDrag);
+
+// Keep the stored center where the frame actually is (the frame can't leave the photo).
+function settle() {
+     const r = cropRect(preview.width, preview.height, ...outputBox(), crop);
+     crop.fx = (r.sx + r.sw / 2) / preview.width;
+     crop.fy = (r.sy + r.sh / 2) / preview.height;
+}
+
+zoom.addEventListener("input", () => { crop.z = zoom.value / 100; settle(); drawCrop(); });
+$("cropreset").addEventListener("click", () => { crop = { fx: 0.5, fy: 0.5, z: 1 }; zoom.value = 100; drawCrop(); });
+$("resize").addEventListener("change", syncCrop);
+$("cw").addEventListener("input", syncCrop);
+$("ch").addEventListener("input", syncCrop);
+window.addEventListener("resize", () => { if (!cropBox.hidden) drawCrop(); });
+
 async function run() {
      if (!files.length) return;
      SlimIO.clearError();
@@ -197,7 +336,7 @@ async function run() {
              for (let i = 0; i < files.length; i++) {
                      const file = files[i];
                      try {
-                             const r = await compressOne(file, opts);
+                             const r = await compressOne(file, opts, i === 0 ? cropState() : null);   // the frame is set on the first photo
                              done.push({ file, ...r, name: file.name.replace(/\.[^.]+$/, "") + "_slimio." + EXT[opts.format] });
                      } catch (e) {
                              done.push({ file, error: e.message });

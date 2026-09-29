@@ -100,7 +100,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=33d27049" />
+<link rel="stylesheet" href="/style.css?v=575f7b68" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -190,7 +190,17 @@
                        <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
                        <span>px</span>
                    </div>
-                   <div class="hint">ID, passport and custom sizes crop from the center to the right shape.</div>
+                   <div class="hint">ID, passport and custom sizes are cropped to the right shape — you can move the frame.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="Crop preview"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">Zoom</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">Reset</button>
+                   </div>
+                   <div class="hint" id="crophint">Drag the frame so your face sits inside the guide.</div>
                </div>
 
                <div class="field">
@@ -233,7 +243,7 @@
       <h3>Where the 100KB limit shows up</h3>
       <p>Job application sites, exam registrations, school portals and government forms often cap photo uploads — especially ID photos — at 100KB. A phone photo is usually 2–5MB, so it needs to shrink by 95% or more.</p>
       <h3>ID photos: size and dimensions</h3>
-      <p>Many forms ask for a specific pixel size as well, such as 3×4 cm. Pick the ID photo preset under Resize: the photo is cropped from the center to the right shape, scaled to 354×472px, and then kept under 100KB — at that size it usually stays very sharp.</p>
+      <p>Many forms ask for a specific pixel size as well, such as 3×4 cm. Pick the ID photo preset under Resize: drag the frame onto your face, and the photo is cropped to the right shape, scaled to 354×472px, and then kept under 100KB — at that size it usually stays very sharp.</p>
       <h3>Tips for a clearer result</h3>
       <ul>
           <li>Crop away background you don't need before compressing — fewer pixels means more quality per KB.</li>
@@ -307,6 +317,6 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="/lib.js?v=e8c285ba"></script>
-<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
+<script type="module" src="/js/compress-image.js?v=0043f251"></script>
 </body>
 </html>

@@ -616,7 +616,11 @@ KO["compress-image.html"] = dict(
         (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
         (">Custom size in pixels…<", ">픽셀 직접 입력…<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
-        ("ID, passport and custom sizes crop from the center to the right shape.", "증명·여권사진과 직접 입력한 크기는 가운데를 기준으로 비율에 맞게 잘라요."),
+        ("ID, passport and custom sizes are cropped to the right shape — you can move the frame.", "증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요."),
+        ('aria-label="Crop preview"', 'aria-label="자르기 미리보기"'),
+        ('<label for="zoom">Zoom</label>', '<label for="zoom">확대</label>'),
+        ('id="cropreset">Reset</button>', 'id="cropreset">처음으로</button>'),
+        ("Drag the frame so your face sits inside the guide.</div>", "틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>"),
         ("<label>Format</label>", "<label>저장 형식</label>"),
         (">JPG — works everywhere<", ">JPG — 어디서나 호환<"),
         (">WebP — smaller, keeps transparency<", ">WebP — 더 작고 투명 배경 유지<"),
@@ -634,7 +638,7 @@ KO["compress-image.html"] = dict(
       <h3>업로드 용량 제한에 걸렸다면</h3>
       <p>채용 사이트, 학교 시스템, 관공서 민원 신청에서는 사진을 100KB나 200KB 이하로 제한하는 경우가 많아요. 그 용량을 고르면 먼저 화질을 조절하고, 그래도 크면 크기를 조금씩 줄여서 제한 안에서 가장 선명한 사진을 만들어요.</p>
       <h3>증명사진 · 여권사진 규격</h3>
-      <p>“증명사진 3×4cm”, “여권사진 3.5×4.5cm”를 고르면 사진 가운데를 기준으로 규격 비율에 맞게 자르고, 온라인 접수에서 흔히 요구하는 픽셀 크기로 맞춰요. 얼굴이 가운데에 있는 사진일수록 결과가 좋아요.</p>
+      <p>“증명사진 3×4cm”, “여권사진 3.5×4.5cm”를 고르면 규격 비율에 맞게 자르고, 온라인 접수에서 흔히 요구하는 픽셀 크기로 맞춰요. 사진 위에 나오는 틀을 얼굴로 옮기고 확대하면 원하는 부분만 남길 수 있어요. 자세한 방법은 <a href="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>에서 볼 수 있어요.</p>
       <h3>위치정보도 함께 지워요</h3>
       <p>모든 처리는 브라우저 안에서 이루어져서 사진이 서버로 올라가지 않아요. 다시 저장하는 과정에서 사진에 숨어 있는 촬영 위치(GPS), 기종, 촬영 날짜 같은 정보(EXIF)도 지워져요. 사진을 문서로 묶어야 한다면 <a href="/ko/jpg-to-pdf.html">JPG → PDF</a>로 만든 뒤 <a href="/ko/">PDF 용량 줄이기</a>를 쓰세요.</p>""",
     faq_title="사진 용량 줄이기",
@@ -642,7 +646,7 @@ KO["compress-image.html"] = dict(
         ("사진 용량을 무료로 줄이려면 어떻게 하나요?", "이 페이지에 사진을 올리고 “200KB 이하”처럼 목표 용량을 고른 뒤 사진 용량 줄이기를 누르세요. 사진마다 그 용량 안에서 가장 좋은 화질로 만들어 주고, 한 장씩 또는 ZIP으로 받을 수 있어요."),
         ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
         ("사진의 위치정보도 지워지나요?", "네. 사진을 다시 저장하면서 촬영 위치(GPS), 기종, 촬영 날짜 같은 EXIF 정보가 지워져요."),
-        ("증명사진 규격에 맞출 수 있나요?", "네. 증명사진 3×4cm나 여권사진 3.5×4.5cm를 고르면 가운데를 기준으로 비율에 맞게 자르고, 접수 사이트에서 흔히 요구하는 픽셀 크기로 맞춰요."),
+        ("증명사진 규격에 맞출 수 있나요?", "네. 증명사진 3×4cm나 여권사진 3.5×4.5cm를 고르면 비율에 맞게 자르고(틀을 끌어서 위치 조정 가능), 접수 사이트에서 흔히 요구하는 픽셀 크기로 맞춰요."),
         ("아이폰 사진이 안 열려요.", "아이폰 사진은 HEIC 형식인 경우가 많은데, 이 형식은 브라우저에 따라 열리지 않아요. 사진을 JPG로 공유하거나, 아이폰 설정 → 카메라 → 포맷에서 ‘높은 호환성’으로 바꾼 뒤 다시 시도해 주세요."),
     ],
 )
@@ -656,6 +660,12 @@ KO["compress-id-photo.html"] = dict(
     app_desc="증명사진과 여권사진을 규격에 맞게 자르고 원하는 KB 이하로 줄이는 무료 도구. 브라우저에서 처리돼 사진이 업로드되지 않아요.",
     features=["증명사진 3×4cm · 여권사진 3.5×4.5cm 규격", "원하는 KB 이하로 압축", "가운데 기준 자동 자르기", "위치정보(EXIF) 삭제", "브라우저에서 처리 (업로드 없음)"],
     h1="증명사진,<br /><b>규격도 용량도 한 번에.</b>",
+    ui_extra=[
+        ('aria-label="Photo size"', 'aria-label="사진 규격"'),
+        ("<b>3×4 cm</b><span>ID photo</span>", "<b>3×4cm</b><span>반명함 · 이력서</span>"),
+        ("<b>3.5×4.5 cm</b><span>Passport</span>", "<b>3.5×4.5cm</b><span>여권 · 신분증</span>"),
+        ("<b>Custom</b><span>Any pixels</span>", "<b>직접 입력</b><span>원하는 픽셀</span>"),
+    ],
     lead="3×4cm·3.5×4.5cm로 자르고 접수 사이트의 용량 제한까지 맞춰요. 설치 없이, 무료로.",
     ui=None,
     content="""
@@ -663,8 +673,20 @@ KO["compress-id-photo.html"] = dict(
       <ul>
           <li><b>1. 사진 올리기.</b> 증명사진 3×4cm 규격과 100KB가 이미 골라져 있어요.</li>
           <li><b>2. 접수 조건에 맞추기.</b> 여권·신분증용이면 크기 조절을 여권사진 3.5×4.5cm로, 용량은 공고문에 적힌 제한(예: 50KB, 200KB)으로 바꾸세요.</li>
-          <li><b>3. 사진 용량 줄이기 → 다운로드.</b> 가운데를 기준으로 자르고, 크기를 맞추고, 용량까지 한 번에 줄여요.</li>
+          <li><b>3. 자르기 틀 맞추기.</b> 초록색 틀을 얼굴로 끌어 오고, 확대해서 머리가 점선 안에 들어오게 하세요.</li>
+          <li><b>4. 사진 용량 줄이기 → 다운로드.</b> 자르기, 크기 맞추기, 용량 줄이기를 한 번에 해요.</li>
       </ul>
+      <figure class="demo">
+          <div class="demo-row">
+              <div class="demo-src"><img src="/img/id-sample.webp" width="900" height="600" loading="lazy" alt="인물이 한쪽에 치우친 평범한 휴대폰 사진" /><span>휴대폰 사진 · 1.8MB</span></div>
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <div class="demo-out">
+                  <div><img src="/img/id-sample-3x4.webp" width="354" height="472" loading="lazy" alt="3×4cm · 30KB" /><span>3×4cm · 30KB</span></div>
+                  <div><img src="/img/id-sample-passport.webp" width="413" height="531" loading="lazy" alt="3.5×4.5cm · 38KB" /><span>3.5×4.5cm · 38KB</span></div>
+              </div>
+          </div>
+          <figcaption>이 페이지로 만든 결과예요. 틀을 얼굴로 옮기고 살짝 확대한 뒤 100KB 이하로 저장했어요. (가상 인물 예시 사진)</figcaption>
+      </figure>
       <h3>증명사진 규격 한눈에 보기</h3>
       <ul>
           <li><b>3×4cm (반명함)</b> → 354×472px. 이력서, 입사지원서, 자격시험 접수에 많이 써요.</li>
@@ -672,9 +694,9 @@ KO["compress-id-photo.html"] = dict(
       </ul>
       <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
       <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
-      <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 가운데를 기준으로 그 비율에 맞게 자른 뒤 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
+      <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 틀을 얼굴에 맞춰 옮기면 그 비율로 잘라서 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
-      <p>규격은 사진 가운데를 기준으로 잘라요. 얼굴이 가운데 오도록 정면에서, 밝고 단색인 벽 앞에서 찍으면 결과가 좋아요. 머리 위로 약간 여백을 두세요. 여권 사진은 흰색 배경이어야 하니, 흰 벽 앞에서 찍는 게 안전해요.</p>
+      <p>밝고 단색인 벽 앞에서 정면으로 찍으세요. 자르는 위치는 직접 정할 수 있으니 얼굴이 사진 한쪽에 있어도 괜찮아요. 머리(정수리~턱)가 사진 높이의 70% 정도를 차지하고 위에 약간 여백이 있으면 좋아요. 점선 타원이 대략 그 크기예요. 여권 사진은 흰색 배경이어야 하니 흰 벽 앞에서 찍는 게 안전해요.</p>
       <h3>안심하고 제출하세요</h3>
       <p>모든 처리는 브라우저 안에서 이루어져서 사진이 서버로 올라가지 않아요. 다시 저장하면서 촬영 위치(GPS)나 기종 같은 정보(EXIF)도 지워져요.</p>""",
     faq_title="증명사진 용량 줄이기",
@@ -683,7 +705,7 @@ KO["compress-id-photo.html"] = dict(
         ("증명사진은 몇 KB로 줄여야 하나요?", "사이트마다 달라요. 50KB, 100KB, 200KB 이하가 흔하니 공고문을 확인하고 목표 용량에서 고르세요. 그 안에서 가장 좋은 화질로 맞춰 드려요."),
         ("반명함과 여권사진 크기는 어떻게 다른가요?", "반명함은 3×4cm(354×472px)이고, 여권·주민등록증·운전면허증용은 3.5×4.5cm(413×531px)예요."),
         ("사이트에서 150×200 픽셀로 올리라고 해요.", "크기 조절에서 픽셀 직접 입력을 고르고 가로 150, 세로 200을 입력한 뒤 목표 용량을 고르세요. 비율에 맞게 잘라서 정확히 150×200px로 저장해요."),
-        ("얼굴이 잘려 나갔어요.", "규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요."),
+        ("얼굴이 사진 가운데에 있지 않아요.", "괜찮아요. 사진을 올린 뒤 초록색 틀을 얼굴로 끌어 오고, 확대로 머리가 점선 안에 들어오게 맞추세요. 다운로드하면 정확히 그 부분이 저장돼요."),
     ],
 )
 
@@ -784,7 +806,7 @@ KO["compress-image-to-100kb.html"] = dict(
       <h3>100KB 제한은 어디서 만나나요?</h3>
       <p>공공기관·기업 채용 사이트, 자격시험 접수, 학교 시스템, 각종 민원 신청에서 사진(특히 증명사진)을 100KB 이하로 제한하는 경우가 많아요. 휴대폰 사진은 보통 2~5MB라서 95% 이상 줄여야 해요.</p>
       <h3>증명사진은 용량과 규격을 함께</h3>
-      <p>접수 사이트는 용량뿐 아니라 “3×4cm”처럼 크기도 요구하는 경우가 많아요. 크기 조절에서 <b>증명사진 3×4cm</b>를 고르면 가운데를 기준으로 비율에 맞게 자르고 354×472px로 맞춘 뒤 100KB 안에 넣어요. 이 크기면 대부분 아주 선명하게 들어가요.</p>
+      <p>접수 사이트는 용량뿐 아니라 “3×4cm”처럼 크기도 요구하는 경우가 많아요. 크기 조절에서 <b>증명사진 3×4cm</b>를 고르고 틀을 얼굴에 맞추면 비율에 맞게 잘라 354×472px로 맞춘 뒤 100KB 안에 넣어요. 이 크기면 대부분 아주 선명하게 들어가요.</p>
       <h3>더 선명하게 만드는 팁</h3>
       <ul>
           <li>필요 없는 배경을 먼저 잘라 내면 같은 용량에서 더 선명해져요.</li>
@@ -1201,7 +1223,7 @@ def build(page):
     s = set_ld(s, d, page)
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + d["h1"] + m.group(2) + d["lead"] + m.group(3), s, f"{page} hero")
     image_page = page.startswith("compress-image") or page == "compress-id-photo.html"   # built from compress-image.html
-    ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if image_page else [])) + (SIZE_UI if page in SIZE_PAGES else [])
+    ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if image_page else [])) + d.get("ui_extra", []) + (SIZE_UI if page in SIZE_PAGES else [])
     for en, ko in ui:
         if en not in s:
             sys.exit(f"[{page}] UI text not found (English page changed?): {en!r}")

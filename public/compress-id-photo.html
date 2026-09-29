@@ -82,10 +82,10 @@
             },
             {
                   "@type": "Question",
-                  "name": "Why was my photo cropped wrong?",
+                  "name": "My face isn't in the middle of the photo. Is that a problem?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "The presets crop from the center. If your face isn't centered, crop the photo roughly around your head and shoulders first, then use the preset."
+                        "text": "No. After you add the photo, drag the green frame onto your face and use Zoom to make your head fill the dashed guide. The download uses exactly that crop."
                   }
             },
             {
@@ -100,7 +100,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=33d27049" />
+<link rel="stylesheet" href="/style.css?v=575f7b68" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -147,6 +147,11 @@
       </div>
 
       <div class="tool">
+           <div class="presets" role="group" aria-label="Photo size">
+                   <button type="button" class="preset" data-resize="id-3x4"><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="1" y="1" width="28" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="15.0" cy="16.0" r="6.0" fill="currentColor" opacity=".55"/><path d="M4.2 39 q0 -9.6 10.8 -9.6 q10.8 0 10.8 9.6z" fill="currentColor" opacity=".55"/></svg><b>3×4 cm</b><span>ID photo</span></button>
+                   <button type="button" class="preset" data-resize="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5 cm</b><span>Passport</span></button>
+                   <button type="button" class="preset" data-resize="custom"><svg viewBox="0 0 34 40" aria-hidden="true"><rect x="1" y="1" width="32" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M11.0 20.0h12M17.0 14.0v12" stroke="currentColor" stroke-width="1.5"/></svg><b>Custom</b><span>Any pixels</span></button>
+               </div>
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
                <div class="drop-title">Drop images here</div>
@@ -190,7 +195,17 @@
                        <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
                        <span>px</span>
                    </div>
-                   <div class="hint">ID, passport and custom sizes crop from the center to the right shape.</div>
+                   <div class="hint">ID, passport and custom sizes are cropped to the right shape — you can move the frame.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="Crop preview"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">Zoom</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">Reset</button>
+                   </div>
+                   <div class="hint" id="crophint">Drag the frame so your face sits inside the guide.</div>
                </div>
 
                <div class="field">
@@ -228,8 +243,20 @@
       <ul>
           <li><b>1. Add your photo.</b> The ID photo 3×4 cm preset and a 100KB target are already selected.</li>
           <li><b>2. Match the form.</b> Switch Resize to Passport photo 3.5×4.5 cm if needed, and pick the KB limit the form states (for example 50KB or 20KB).</li>
-          <li><b>3. Click Compress images and download.</b> The photo is cropped from the center, scaled and compressed in one go.</li>
+          <li><b>3. Adjust the frame.</b> Drag the green frame onto your face and zoom until your head fills the dashed guide.</li>
+          <li><b>4. Click Compress images and download.</b> The photo is cropped, scaled and compressed in one go.</li>
       </ul>
+      <figure class="demo">
+          <div class="demo-row">
+              <div class="demo-src"><img src="/img/id-sample.webp" width="900" height="600" loading="lazy" alt="An ordinary phone photo with the person off to one side" /><span>Phone photo · 1.8 MB</span></div>
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <div class="demo-out">
+                  <div><img src="/img/id-sample-3x4.webp" width="354" height="472" loading="lazy" alt="3×4 cm · 30 KB" /><span>3×4 cm · 30 KB</span></div>
+                  <div><img src="/img/id-sample-passport.webp" width="413" height="531" loading="lazy" alt="3.5×4.5 cm · 38 KB" /><span>3.5×4.5 cm · 38 KB</span></div>
+              </div>
+          </div>
+          <figcaption>Made with this page: frame dragged onto the face, zoomed a little, saved under 100KB. (Sample photo of a fictional person.)</figcaption>
+      </figure>
       <h3>Photo sizes at a glance</h3>
       <ul>
           <li><b>3×4 cm</b> → 354×472px. Common on résumés, job and exam applications.</li>
@@ -237,9 +264,9 @@
       </ul>
       <p>Both are 300 dpi — sharp enough to print at the stated size. Always check the exact size and KB range in the form's instructions; they differ from site to site.</p>
       <h3>Form asks for exact pixels?</h3>
-      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. Choose <b>Custom size in pixels</b> under Resize and type the width and height. The photo is cropped from the center to that shape and saved at exactly that size, under your KB limit.</p>
+      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. Choose <b>Custom size in pixels</b> under Resize and type the width and height. Move the frame onto your face, and the photo is cropped to that shape and saved at exactly that size, under your KB limit.</p>
       <h3>Getting a good crop</h3>
-      <p>The presets crop from the center, so start with a photo where your face is roughly in the middle, taken straight on against a plain, light background. Leave some space above your head: most rules want the head to fill a bit over half of the photo's height.</p>
+      <p>Take the photo straight on against a plain, light background — it doesn't matter where you are in the frame, because you place the crop yourself. Most rules want the head (top of the hair to the chin) to fill roughly 70% of the photo's height, with a little space above; the dashed oval shows about that size.</p>
       <h3>Safe to submit</h3>
       <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>
 </div>
@@ -259,8 +286,8 @@
           <p>Yes. Choose Custom size in pixels under Resize, enter 150 and 200, and pick the KB limit. The photo is cropped to that shape and saved at exactly 150×200px.</p>
       </details>
       <details>
-          <summary>Why was my photo cropped wrong?</summary>
-          <p>The presets crop from the center. If your face isn&#x27;t centered, crop the photo roughly around your head and shoulders first, then use the preset.</p>
+          <summary>My face isn&#x27;t in the middle of the photo. Is that a problem?</summary>
+          <p>No. After you add the photo, drag the green frame onto your face and use Zoom to make your head fill the dashed guide. The download uses exactly that crop.</p>
       </details>
       <details>
           <summary>Are my photos uploaded?</summary>
@@ -309,6 +336,6 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="/lib.js?v=e8c285ba"></script>
-<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
+<script type="module" src="/js/compress-image.js?v=0043f251"></script>
 </body>
 </html>

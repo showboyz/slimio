@@ -91,17 +91,17 @@
             },
             {
                   "@type": "Question",
-                  "name": "얼굴이 잘려 나갔어요.",
+                  "name": "얼굴이 사진 가운데에 있지 않아요.",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요."
+                        "text": "괜찮아요. 사진을 올린 뒤 초록색 틀을 얼굴로 끌어 오고, 확대로 머리가 점선 안에 들어오게 맞추세요. 다운로드하면 정확히 그 부분이 저장돼요."
                   }
             }
       ]
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=33d27049" />
+<link rel="stylesheet" href="/style.css?v=575f7b68" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -148,6 +148,11 @@
       </div>
 
       <div class="tool">
+           <div class="presets" role="group" aria-label="사진 규격">
+                   <button type="button" class="preset" data-resize="id-3x4"><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="1" y="1" width="28" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="15.0" cy="16.0" r="6.0" fill="currentColor" opacity=".55"/><path d="M4.2 39 q0 -9.6 10.8 -9.6 q10.8 0 10.8 9.6z" fill="currentColor" opacity=".55"/></svg><b>3×4cm</b><span>반명함 · 이력서</span></button>
+                   <button type="button" class="preset" data-resize="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5cm</b><span>여권 · 신분증</span></button>
+                   <button type="button" class="preset" data-resize="custom"><svg viewBox="0 0 34 40" aria-hidden="true"><rect x="1" y="1" width="32" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M11.0 20.0h12M17.0 14.0v12" stroke="currentColor" stroke-width="1.5"/></svg><b>직접 입력</b><span>원하는 픽셀</span></button>
+               </div>
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
                <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
@@ -191,7 +196,17 @@
                        <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
                        <span>px</span>
                    </div>
-                   <div class="hint">증명·여권사진과 직접 입력한 크기는 가운데를 기준으로 비율에 맞게 잘라요.</div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
                </div>
 
                <div class="field">
@@ -229,8 +244,20 @@
       <ul>
           <li><b>1. 사진 올리기.</b> 증명사진 3×4cm 규격과 100KB가 이미 골라져 있어요.</li>
           <li><b>2. 접수 조건에 맞추기.</b> 여권·신분증용이면 크기 조절을 여권사진 3.5×4.5cm로, 용량은 공고문에 적힌 제한(예: 50KB, 200KB)으로 바꾸세요.</li>
-          <li><b>3. 사진 용량 줄이기 → 다운로드.</b> 가운데를 기준으로 자르고, 크기를 맞추고, 용량까지 한 번에 줄여요.</li>
+          <li><b>3. 자르기 틀 맞추기.</b> 초록색 틀을 얼굴로 끌어 오고, 확대해서 머리가 점선 안에 들어오게 하세요.</li>
+          <li><b>4. 사진 용량 줄이기 → 다운로드.</b> 자르기, 크기 맞추기, 용량 줄이기를 한 번에 해요.</li>
       </ul>
+      <figure class="demo">
+          <div class="demo-row">
+              <div class="demo-src"><img src="/img/id-sample.webp" width="900" height="600" loading="lazy" alt="인물이 한쪽에 치우친 평범한 휴대폰 사진" /><span>휴대폰 사진 · 1.8MB</span></div>
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <div class="demo-out">
+                  <div><img src="/img/id-sample-3x4.webp" width="354" height="472" loading="lazy" alt="3×4cm · 30KB" /><span>3×4cm · 30KB</span></div>
+                  <div><img src="/img/id-sample-passport.webp" width="413" height="531" loading="lazy" alt="3.5×4.5cm · 38KB" /><span>3.5×4.5cm · 38KB</span></div>
+              </div>
+          </div>
+          <figcaption>이 페이지로 만든 결과예요. 틀을 얼굴로 옮기고 살짝 확대한 뒤 100KB 이하로 저장했어요. (가상 인물 예시 사진)</figcaption>
+      </figure>
       <h3>증명사진 규격 한눈에 보기</h3>
       <ul>
           <li><b>3×4cm (반명함)</b> → 354×472px. 이력서, 입사지원서, 자격시험 접수에 많이 써요.</li>
@@ -238,9 +265,9 @@
       </ul>
       <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
       <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
-      <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 가운데를 기준으로 그 비율에 맞게 자른 뒤 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
+      <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 틀을 얼굴에 맞춰 옮기면 그 비율로 잘라서 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
-      <p>규격은 사진 가운데를 기준으로 잘라요. 얼굴이 가운데 오도록 정면에서, 밝고 단색인 벽 앞에서 찍으면 결과가 좋아요. 머리 위로 약간 여백을 두세요. 여권 사진은 흰색 배경이어야 하니, 흰 벽 앞에서 찍는 게 안전해요.</p>
+      <p>밝고 단색인 벽 앞에서 정면으로 찍으세요. 자르는 위치는 직접 정할 수 있으니 얼굴이 사진 한쪽에 있어도 괜찮아요. 머리(정수리~턱)가 사진 높이의 70% 정도를 차지하고 위에 약간 여백이 있으면 좋아요. 점선 타원이 대략 그 크기예요. 여권 사진은 흰색 배경이어야 하니 흰 벽 앞에서 찍는 게 안전해요.</p>
       <h3>안심하고 제출하세요</h3>
       <p>모든 처리는 브라우저 안에서 이루어져서 사진이 서버로 올라가지 않아요. 다시 저장하면서 촬영 위치(GPS)나 기종 같은 정보(EXIF)도 지워져요.</p>
 </div>
@@ -264,8 +291,8 @@
           <p>크기 조절에서 픽셀 직접 입력을 고르고 가로 150, 세로 200을 입력한 뒤 목표 용량을 고르세요. 비율에 맞게 잘라서 정확히 150×200px로 저장해요.</p>
       </details>
       <details>
-          <summary>얼굴이 잘려 나갔어요.</summary>
-          <p>규격은 가운데를 기준으로 잘라요. 얼굴이 가운데에 있지 않다면 먼저 머리와 어깨 주변으로 대충 잘라 둔 뒤 다시 해 보세요.</p>
+          <summary>얼굴이 사진 가운데에 있지 않아요.</summary>
+          <p>괜찮아요. 사진을 올린 뒤 초록색 틀을 얼굴로 끌어 오고, 확대로 머리가 점선 안에 들어오게 맞추세요. 다운로드하면 정확히 그 부분이 저장돼요.</p>
       </details>
 </section>
 
@@ -309,8 +336,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=7d8f9edf"></script>
+<script defer src="/i18n/ko.js?v=6bf11f0b"></script>
 <script defer src="/lib.js?v=e8c285ba"></script>
-<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
+<script type="module" src="/js/compress-image.js?v=0043f251"></script>
 </body>
 </html>

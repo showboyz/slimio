@@ -101,7 +101,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=33d27049" />
+<link rel="stylesheet" href="/style.css?v=575f7b68" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -191,7 +191,17 @@
                        <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
                        <span>px</span>
                    </div>
-                   <div class="hint">증명·여권사진과 직접 입력한 크기는 가운데를 기준으로 비율에 맞게 잘라요.</div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
                </div>
 
                <div class="field">
@@ -307,8 +317,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=7d8f9edf"></script>
+<script defer src="/i18n/ko.js?v=6bf11f0b"></script>
 <script defer src="/lib.js?v=e8c285ba"></script>
-<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
+<script type="module" src="/js/compress-image.js?v=0043f251"></script>
 </body>
 </html>

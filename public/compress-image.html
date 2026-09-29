@@ -49,13 +49,13 @@
         {"@type": "Question", "name": "How do I reduce the size of a photo for free?", "acceptedAnswer": {"@type": "Answer", "text": "Drop your photos on this page, pick a target size such as under 200KB, and click Compress images. Each photo is shrunk to the best quality that fits, and you can download them one by one or as a ZIP."}},
         {"@type": "Question", "name": "Are my photos uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. Compression happens entirely in your browser, so your photos never leave your device."}},
         {"@type": "Question", "name": "Does compressing remove location data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Photos are re-encoded, which drops EXIF metadata such as GPS location, camera model and date taken."}},
-        {"@type": "Question", "name": "Can I make an ID or passport photo the right size?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The 3×4 cm and 3.5×4.5 cm presets crop the photo to the right shape from the center and scale it to the pixel size most forms ask for."}},
+        {"@type": "Question", "name": "Can I make an ID or passport photo the right size?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The 3×4 cm and 3.5×4.5 cm presets crop the photo to the right shape — drag the frame to choose what's kept — and scale it to the pixel size most forms ask for."}},
         {"@type": "Question", "name": "Why won't my iPhone photo open?", "acceptedAnswer": {"@type": "Answer", "text": "iPhone photos are often HEIC files, which many browsers can't open. Share the photo as JPG, or set Camera → Formats → Most Compatible on the iPhone, and try again."}}
       ]
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=33d27049" />
+<link rel="stylesheet" href="/style.css?v=575f7b68" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -145,7 +145,17 @@
                        <input type="number" id="ch" min="16" max="4000" value="200" inputmode="numeric" />
                        <span>px</span>
                    </div>
-                   <div class="hint">ID, passport and custom sizes crop from the center to the right shape.</div>
+                   <div class="hint">ID, passport and custom sizes are cropped to the right shape — you can move the frame.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="Crop preview"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">Zoom</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">Reset</button>
+                   </div>
+                   <div class="hint" id="crophint">Drag the frame so your face sits inside the guide.</div>
                </div>
 
                <div class="field">
@@ -188,7 +198,7 @@
       <h3>Hit an upload limit?</h3>
       <p>Job portals, school systems and government forms often cap photos at 100KB or 200KB. Pick that size and SlimIO finds the highest quality that fits — first by adjusting JPEG quality, then by scaling down only if it has to.</p>
       <h3>ID and passport photos</h3>
-      <p>The 3×4 cm and 3.5×4.5 cm presets crop the photo from the center to the standard shape and scale it to the pixel size most online forms expect. Start from a photo where your face is roughly centered for the best result.</p>
+      <p>The 3×4 cm and 3.5×4.5 cm presets crop the photo to the standard shape and scale it to the pixel size most online forms expect. A frame appears on your photo: drag it onto your face and zoom until your head fills the dashed guide. For a dedicated walkthrough, see the <a href="/compress-id-photo.html">ID photo resizer</a>.</p>
       <h3>Private by default</h3>
       <p>Everything happens in your browser, so photos are never uploaded. Re-encoding also strips hidden EXIF data such as GPS location and camera details — handy before posting a photo online. Need to put the photos in a document? Use <a href="/jpg-to-pdf.html">JPG to PDF</a>, then <a href="/">compress the PDF</a>.</p>
 </div>
@@ -209,7 +219,7 @@
       </details>
       <details>
           <summary>Can I make an ID or passport photo the right size?</summary>
-          <p>Yes. The 3×4 cm and 3.5×4.5 cm presets crop the photo to the right shape from the center and scale it to the pixel size most forms ask for.</p>
+          <p>Yes. The 3×4 cm and 3.5×4.5 cm presets crop the photo to the right shape — drag the frame to choose what's kept — and scale it to the pixel size most forms ask for.</p>
       </details>
       <details>
           <summary>Why won't my iPhone photo open?</summary>
@@ -258,6 +268,6 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="/lib.js?v=e8c285ba"></script>
-<script type="module" src="/js/compress-image.js?v=2f7ce7e6"></script>
+<script type="module" src="/js/compress-image.js?v=0043f251"></script>
 </body>
 </html>
