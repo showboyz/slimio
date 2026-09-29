@@ -21,7 +21,7 @@ SIZE_PAGES = ["compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html", "compr
               "compress-pdf-to-1mb.html", "compress-pdf-for-email.html"]
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
-         "sign-pdf.html", "compress-image.html"] + SIZE_PAGES
+         "sign-pdf.html", "compress-image.html", "compress-image-to-100kb.html", "compress-image-to-200kb.html"] + SIZE_PAGES
 
 
 def en_path(p): return "/" if p == "index.html" else "/" + p
@@ -64,6 +64,9 @@ COMMON = [
     (">JPG to PDF</a>", ">JPG → PDF</a>"),
     (">Sign PDF</a>", ">PDF 서명</a>"),
     (">Compress Image</a>", ">사진 용량 줄이기</a>"),
+    (">Compress image (any size)</a>", ">사진 용량 줄이기 (용량 자유)</a>"),
+    (">Compress image to 100KB</a>", ">사진 100KB로 줄이기</a>"),
+    (">Compress image to 200KB</a>", ">사진 200KB로 줄이기</a>"),
     (">Compress to 100KB</a>", ">100KB로 줄이기</a>"),
     (">Compress to 200KB</a>", ">200KB로 줄이기</a>"),
     (">Compress to 500KB</a>", ">500KB로 줄이기</a>"),
@@ -630,6 +633,78 @@ KO["compress-image.html"] = dict(
     ],
 )
 
+KO["compress-image-to-100kb.html"] = dict(
+    title="사진 100KB 줄이기 - 이미지 용량 100KB 이하로 무료 | SlimIO",
+    desc="증명사진·지원서 사진을 100KB 이하로 줄이세요. 제한 안에서 가장 선명하게 맞춰요. 증명사진 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.",
+    keywords="사진 100KB 줄이기, 사진 용량 100KB, 증명사진 100KB, 이미지 100KB 이하, 사진 100KB 이하로, JPG 100KB 줄이기",
+    short="사진 100KB 줄이기 | SlimIO",
+    app_name="SlimIO 사진 100KB 줄이기",
+    app_desc="사진과 이미지를 100KB 이하로 줄이는 무료 도구. 제한 안에서 가장 좋은 화질을 자동으로 찾아요.",
+    features=["사진 100KB 이하로 압축", "증명사진 규격 맞추기", "여러 장 한 번에", "위치정보(EXIF) 삭제", "브라우저에서 처리 (업로드 없음)"],
+    h1="사진을<br /><b>100KB 이하로.</b>",
+    lead="“100KB 이하 사진만 첨부 가능”에 막혔나요? 사진을 넣으면 제한 안에서 가장 선명하게 맞춰 드려요.",
+    ui=None,
+    content="""
+      <h2>사진을 100KB로 줄이는 방법</h2>
+      <ul>
+          <li><b>1. 사진 올리기.</b> 목표 용량은 이미 100KB로 맞춰져 있어요. 여러 장을 한 번에 올려도 돼요.</li>
+          <li><b>2. 사진 용량 줄이기.</b> 먼저 화질을 필요한 만큼만 낮추고, 그래도 크면 크기를 조금씩 줄여서 100KB 안에 맞춰요.</li>
+          <li><b>3. 다운로드.</b> 한 장씩 받거나, 전체를 ZIP으로 받으세요.</li>
+      </ul>
+      <h3>100KB 제한은 어디서 만나나요?</h3>
+      <p>공공기관·기업 채용 사이트, 자격시험 접수, 학교 시스템, 각종 민원 신청에서 사진(특히 증명사진)을 100KB 이하로 제한하는 경우가 많아요. 휴대폰 사진은 보통 2~5MB라서 95% 이상 줄여야 해요.</p>
+      <h3>증명사진은 용량과 규격을 함께</h3>
+      <p>접수 사이트는 용량뿐 아니라 “3×4cm”처럼 크기도 요구하는 경우가 많아요. 크기 조절에서 <b>증명사진 3×4cm</b>를 고르면 가운데를 기준으로 비율에 맞게 자르고 354×472px로 맞춘 뒤 100KB 안에 넣어요. 이 크기면 대부분 아주 선명하게 들어가요.</p>
+      <h3>더 선명하게 만드는 팁</h3>
+      <ul>
+          <li>필요 없는 배경을 먼저 잘라 내면 같은 용량에서 더 선명해져요.</li>
+          <li>저장 형식은 JPG로 두세요. 거의 모든 접수 사이트가 받아 줘요.</li>
+          <li>위치정보(EXIF)는 자동으로 지워져서 그대로 제출해도 안전해요.</li>
+      </ul>""",
+    faq_title="사진 100KB 줄이기",
+    faq=[
+        ("사진을 100KB로 무료로 줄이려면요?", "이 페이지에 사진을 올리고 사진 용량 줄이기를 누르세요. 목표는 이미 100KB로 맞춰져 있고, 회원가입 없이 바로 받을 수 있어요."),
+        ("100KB로 줄이면 사진이 흐려지나요?", "증명사진 크기라면 거의 티가 나지 않아요. 큰 휴대폰 사진은 화질부터 조절하고 필요할 때만 크기를 줄여서, 100KB 안에서 가장 선명하게 만들어요."),
+        ("증명사진 규격과 100KB를 한 번에 맞출 수 있나요?", "네. 크기 조절에서 증명사진 3×4cm를 고르면 354×472px로 맞춘 뒤 100KB 이하로 저장해요."),
+        ("여러 장을 한꺼번에 100KB로 줄일 수 있나요?", "네. 여러 장을 올리면 각각 100KB 이하로 줄이고, ZIP 하나로 받을 수 있어요."),
+        ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
+    ],
+)
+
+KO["compress-image-to-200kb.html"] = dict(
+    title="사진 200KB 줄이기 - 이미지 용량 200KB 이하로 무료 | SlimIO",
+    desc="사진·이미지를 200KB 이하로 줄이세요. 입학·장학금 서류, 온라인 신청, 메일 첨부용으로. 제한 안에서 가장 선명하게. 회원가입 없이 무료.",
+    keywords="사진 200KB 줄이기, 사진 용량 200KB, 이미지 200KB 이하, 사진 200KB 이하로, JPG 200KB 줄이기",
+    short="사진 200KB 줄이기 | SlimIO",
+    app_name="SlimIO 사진 200KB 줄이기",
+    app_desc="사진과 이미지를 200KB 이하로 줄이는 무료 도구. 제한 안에서 가장 좋은 화질을 자동으로 찾아요.",
+    features=["사진 200KB 이하로 압축", "여러 장 한 번에", "위치정보(EXIF) 삭제", "브라우저에서 처리 (업로드 없음)"],
+    h1="사진을<br /><b>200KB 이하로.</b>",
+    lead="사진마다 “200KB 이하” 제한이 있나요? 제한 안에서 가장 선명하게 맞춰 드려요.",
+    ui=None,
+    content="""
+      <h2>사진을 200KB로 줄이는 방법</h2>
+      <ul>
+          <li><b>1. 사진 올리기.</b> 목표 용량은 이미 200KB로 맞춰져 있어요.</li>
+          <li><b>2. 사진 용량 줄이기.</b> 화질을 필요한 만큼만 낮추고, 그래도 크면 크기를 조금씩 줄여요.</li>
+          <li><b>3. 다운로드.</b> 한 장씩 받거나, 전체를 ZIP으로 받으세요.</li>
+      </ul>
+      <h3>200KB 제한을 자주 만나는 곳</h3>
+      <p>대학 입학·장학금 신청, 비자·회원 가입 서류, 중고거래·쇼핑몰 상품 사진은 한 장당 200KB 안팎으로 제한하는 경우가 많아요. 메일에 첨부하거나 문서에 넣기에도 알맞은 크기예요.</p>
+      <h3>200KB면 어느 정도 화질일까요?</h3>
+      <p>대부분의 사진은 긴 변 1600px 정도를 유지한 채 200KB 안에 들어가요. 화면으로 보거나 작게 인쇄하기에 충분하고, 상품 사진·인물 사진·스캔한 증명서 모두 잘 맞아요.</p>
+      <h3>사진을 문서로 묶어야 한다면</h3>
+      <p>여기서 먼저 줄인 다음 <a href="/ko/jpg-to-pdf.html">JPG → PDF</a>로 묶으면 처음부터 가벼운 PDF가 만들어져요.</p>""",
+    faq_title="사진 200KB 줄이기",
+    faq=[
+        ("사진을 200KB로 줄이려면 어떻게 하나요?", "이 페이지에 사진을 올리고 사진 용량 줄이기를 누르세요. 목표는 이미 200KB이고, 그 안에서 가장 좋은 화질로 만들어 드려요."),
+        ("줄인 사진은 몇 픽셀 정도가 되나요?", "사진마다 다르지만, 200KB면 대부분 긴 변 1600px 안팎을 유지해요."),
+        ("색이 바뀌지는 않나요?", "아니요. 색은 그대로이고, 용량을 줄이려고 아주 세밀한 부분만 조금 줄어들어요."),
+        ("투명 배경을 유지할 수 있나요?", "저장 형식에서 WebP를 고르세요. JPG는 투명 배경을 지원하지 않아서 흰색으로 바뀌어요."),
+        ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
+    ],
+)
+
 KO["sign-pdf.html"] = dict(
     title="PDF 서명 넣기 - 전자서명·도장 무료 | SlimIO",
     desc="PDF에 서명이나 도장을 무료로 넣으세요. 직접 그리거나, 이름으로 만들거나, 도장 이미지를 올려서 원하는 위치에. 회원가입 없이 브라우저에서 처리돼요.",
@@ -995,12 +1070,12 @@ def build(page):
     s = set_meta(s, d, page)
     s = set_ld(s, d, page)
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + d["h1"] + m.group(2) + d["lead"] + m.group(3), s, f"{page} hero")
-    ui = d.get("ui", []) + (SIZE_UI if page in SIZE_PAGES else [])
+    ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if page.startswith("compress-image") else [])) + (SIZE_UI if page in SIZE_PAGES else [])
     for en, ko in ui:
         if en not in s:
             sys.exit(f"[{page}] UI text not found (English page changed?): {en!r}")
         s = s.replace(en, ko)
-    if page in SIZE_PAGES or page == "compress-image.html":
+    if page in SIZE_PAGES or page.startswith("compress-image"):
         s = re.sub(r">Under (\d+(?:KB|MB))<", r">\1 이하<", s)
     for en, ko in COMMON:
         s = s.replace(en, ko)

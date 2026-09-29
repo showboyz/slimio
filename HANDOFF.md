@@ -19,7 +19,7 @@
 |---|---|
 | `https://pdfslimio.com` | ✅ LIVE |
 | 도구 | Compress(/) · Merge · Split · Remove Pages · Rotate · Organize · Page Numbers · Watermark · PDF→JPG · JPG→PDF · **Sign PDF** · **Compress Image** (2026-09-28 추가) |
-| 한국어 사이트 | `/ko/` 아래 17페이지 (hreflang 연결, 사이트맵 34 URL) |
+| 한국어 사이트 | `/ko/` 아래 19페이지 (hreflang 연결, 사이트맵 38 URL) |
 | 롱테일 SEO | `compress-pdf-to-100kb/200kb/500kb/1mb`, `compress-pdf-for-email` (목표 용량 압축, `public/target.js`) |
 | 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
@@ -66,7 +66,8 @@
 - `compress-image.html` + `js/compress-image.js`: 브라우저 전용. 목표 KB면 JPEG/WebP 품질 이진탐색 → 안 되면 20%씩 축소(증명사진 프리셋은 픽셀 고정이라 축소 안 함). EXIF 방향 반영, 재인코딩으로 EXIF(GPS) 제거. 결과가 원본보다 크고 형식·크기 동일하면 원본 유지(단 EXIF 있는 JPEG는 재인코딩본). HEIC는 브라우저가 못 열면 안내
 - `sign-pdf.html` + `js/sign-pdf.js`: 그리기(pointer events, 터치 OK) / 이름(Google Fonts 손글씨·나눔 폰트, **도장** 스타일: 명조 빨간 원, 한글 세로·4자 2×2 우→좌) / 이미지 업로드(흰 배경 투명화). 미리보기에서 드래그·리사이즈, 여러 페이지. 저장 시 `SlimIO.page2user`로 회전 페이지 좌표 변환
 - 한글 웹폰트는 unicode-range 조각이라 캔버스에 그리기 전 `document.fonts.load(font, text)` 필수 (`ensureGlyphs`)
-- 향후: "사진 100KB/200KB 줄이기", "증명사진 용량 줄이기" 롱테일 페이지 (한국 검색량 큼)
+- 사진 용량별 롱테일: `compress-image-to-100kb.html`, `-200kb.html` (+ `/ko/`). **생성기** `tools/gen_image_pages.py` (compress-image.html을 바탕으로 목표 용량 미리 선택 + 페이지별 문구·FAQ, "다른 용량" 링크 줄 관리). 한국어 문구는 `gen_ko.py`의 KO[...]. 새 용량 추가: `PAGES`·`SIZE_LINKS`에 항목 → `gen_image_pages.py` → `gen_ko.py`(KO 항목 + PAGES 목록 추가) → `bump_versions.py`
+- 향후: "증명사진 용량 줄이기" 전용 페이지 (한국 검색량 큼)
 
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
