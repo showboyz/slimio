@@ -36,7 +36,6 @@ function grow(p) {
 let last = null;
 pad.addEventListener("pointerdown", (e) => {
      e.preventDefault();
-     SlimIO.inputAdded("draw");
      sizePad();
      pad.setPointerCapture(e.pointerId);
      last = padPoint(e);
@@ -50,6 +49,7 @@ pad.addEventListener("pointerdown", (e) => {
 });
 pad.addEventListener("pointermove", (e) => {
      if (!last) return;
+     SlimIO.inputAdded("draw");   // an actual stroke, not just a touch
      const p = padPoint(e);
      const mid = { x: (last.x + p.x) / 2, y: (last.y + p.y) / 2 };
      padCtx.beginPath();
@@ -60,6 +60,7 @@ pad.addEventListener("pointermove", (e) => {
      grow(p);
 });
 const penUp = () => { last = null; };
+$("padstart").addEventListener("click", () => { pad.parentElement.classList.add("live"); sizePad(); });
 pad.addEventListener("pointerup", penUp);
 pad.addEventListener("pointercancel", penUp);
 

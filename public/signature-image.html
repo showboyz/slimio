@@ -100,7 +100,7 @@
       ]
 }
 </script>
-<link rel="stylesheet" href="/style.css?v=575f7b68" />
+<link rel="stylesheet" href="/style.css?v=a0d83cb9" />
 <style>
 .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
@@ -169,7 +169,7 @@
                <button type="button" class="tab" data-mode="upload">📷 Upload a photo</button>
            </div>
            <div class="panel" id="panel-draw">
-               <canvas id="pad" aria-label="Signature pad"></canvas>
+               <div class="padwrap"><canvas id="pad" aria-label="Signature pad"></canvas><button type="button" class="pad-start" id="padstart">✍️ Tap here to sign</button></div>
                <div class="pad-row">
                    <span>
                        <button type="button" class="swatch on" data-color="#111111" style="background:#111111" title="Black ink"></button>
@@ -319,6 +319,6 @@
 </div>
 
 <script defer src="/lib.js?v=5f6f2857"></script>
-<script type="module" src="/js/signature-image.js?v=0ceb57f5"></script>
+<script type="module" src="/js/signature-image.js?v=7923679b"></script>
 </body>
 </html>

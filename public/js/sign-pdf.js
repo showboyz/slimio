@@ -200,6 +200,7 @@ pad.addEventListener("pointermove", (e) => {
      grow(p);
 });
 const penUp = () => { last = null; };
+$("padstart").addEventListener("click", () => { pad.parentElement.classList.add("live"); sizePad(); });
 pad.addEventListener("pointerup", penUp);
 pad.addEventListener("pointercancel", penUp);
 

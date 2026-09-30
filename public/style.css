@@ -112,6 +112,19 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
    .demo-out { width: 72%; }
 }
 
+/* signature pads: on touch screens the pad starts locked, so a swipe over it scrolls the
+   page instead of drawing a stray line. Tapping the overlay turns drawing on. */
+.padwrap { position: relative; }
+.pad-start { display: none; }
+@media (pointer: coarse) {
+   .padwrap:not(.live) #pad { touch-action: pan-y; }
+   .padwrap:not(.live) .pad-start {
+      display: flex; align-items: center; justify-content: center; position: absolute; inset: 0;
+      background: rgba(255, 255, 255, 0.92); color: #111; border: 0; border-radius: 10px;
+      font: inherit; font-size: 15px; font-weight: 700; cursor: pointer;
+   }
+}
+
 /* crop preview (image tools) */
 .crop { margin: -4px 0 14px; }
 .crop[hidden] { display: none; }

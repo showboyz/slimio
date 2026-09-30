@@ -55,7 +55,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=575f7b68" />
+<link rel="stylesheet" href="/style.css?v=a0d83cb9" />
 <style>
 .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
@@ -144,7 +144,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
                        <button type="button" class="tab" data-mode="upload">Upload</button>
                    </div>
                    <div class="panel" id="panel-draw">
-                       <canvas id="pad"></canvas>
+                       <div class="padwrap"><canvas id="pad"></canvas><button type="button" class="pad-start" id="padstart">✍️ Tap here to sign</button></div>
                        <div class="pad-row">
                            <span>
                                <button type="button" class="swatch on" data-color="#111111" style="background:#111111" title="Black ink"></button>
@@ -269,6 +269,6 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/lib.js?v=5f6f2857"></script>
-<script type="module" src="/js/sign-pdf.js?v=8e85bbfe"></script>
+<script type="module" src="/js/sign-pdf.js?v=8a8114b6"></script>
 </body>
 </html>

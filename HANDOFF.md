@@ -86,6 +86,7 @@
 - 2026-09-30: **증명사진 페이지 디자인** — 규격 타일(`.presets`, 생성기 `"picker": True`, SVG는 `gen_image_pages.py`의 `_tile`), 전/후 예시(`.demo`, `public/img/id-sample*.webp` 총 31KB). 예시 인물은 **Codex CLI 이미지 생성**(`codex exec --skip-git-repo-check -s workspace-write "…save as sample.png"`)으로 만든 가상 인물, 결과 사진은 우리 도구로 직접 잘라 만든 것. gen_ko는 페이지별 추가 UI 번역을 `ui_extra`로 받음
 - 로컬 테스트 주의: 서버 메모리 한도 20회/일 — 테스트를 많이 돌리면 버튼이 비활성화됨. 서버 재시작으로 초기화
 - 2026-09-30: **서명 이미지 만들기** `signature-image.html` + `js/signature-image.js` (+`/ko/`, 홈 카드·사진 페이지 링크·PDF 서명 관련 링크). 그리기 / 사진 업로드(종이 밝기 백분위 + 주변 대비로 잉크 판별 → 연결 덩어리 중 테두리에 닿거나 갈색(책상)인 것 제거 → 잉크에 맞춰 자르기). 크기: 자동/픽셀 직접, 용량: 제한 없음/10~20KB/20·50·100KB 이하, JPG(흰 배경)/PNG(투명). **최소 용량**은 화질 최대 후에도 작으면 JPEG COM 세그먼트·PNG tEXt 청크로 여백 데이터 추가(이미지 불변). 예시 사진은 Codex 생성(가상 서명), 결과는 도구로 직접 만든 것
+- 2026-09-30: **모바일 스크롤 함정 수정** — 서명 칸(`#pad`, 서명 이미지·PDF 서명)이 터치를 가로채 페이지가 스크롤되지 않던 문제(첸나이 Android 사용자가 열자마자 이탈). 터치 기기(`pointer: coarse`)에선 `.padwrap` 위 "✍️ Tap here to sign" 오버레이로 잠금 → 누르면 `.live`. `file-added(draw)`는 실제 선을 그을 때만. **새 캔버스 UI를 만들면 모바일에서 '위로 쓸기'로 스크롤되는지 꼭 테스트**
 - 홈 도구 카드 13개(증명사진·서명 이미지 추가) — 4열이라 마지막 줄 1개. 도구가 늘면 채워짐
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 
