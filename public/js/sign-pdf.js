@@ -435,14 +435,21 @@ $("add").addEventListener("click", async () => {
              // a seal is about 2 cm across; a signature about a third of the page wide
              const w = sig.kind === "seal" ? 56 : Math.min(pageSize.w * 0.32, 190);
              const h = (w * img.h) / img.w;
+             // Drop it in the middle of the part of the page that's on screen (on a phone the
+             // bottom of the page is often below the fold or under the browser bar).
              const nth = items.filter((it) => it.page === pageNo).length;
+             const r = stage.getBoundingClientRect();
+             const top = Math.max(r.top, 0), bottom = Math.min(r.bottom, window.innerHeight - 80);
+             const cy = bottom - top > h * scale ? (top + bottom) / 2 - r.top : r.height / 2;
              items.push({
                      page: pageNo, img, w, h,
-                     x: clamp(pageSize.w * 0.88 - w - nth * 14, 0, pageSize.w - w),
-                     y: clamp(pageSize.h * 0.86 - h - nth * 14, 0, pageSize.h - h),
+                     x: clamp(pageSize.w / 2 - w / 2 + nth * 14, 0, pageSize.w - w),
+                     y: clamp(cy / scale - h / 2 + nth * 14, 0, pageSize.h - h),
              });
              drawItems();
              updateGo();
+             const el = layer.lastElementChild, er = el.getBoundingClientRect();
+             if (er.top < 0 || er.bottom > window.innerHeight - 80) el.scrollIntoView({ block: "center", behavior: "smooth" });
      } catch (e) {
              SlimIO.showError(e.message);
      }
@@ -504,3 +511,18 @@ drop.addEventListener("drop", (e) => {
 });
 
 SlimIO.refreshStatus();
+
+// A signature handed over from the signature image maker (same tab, never uploaded):
+// open it in the Upload tab, ready to add once a PDF is chosen.
+(async () => {
+     let data = null;
+     try { data = sessionStorage.getItem("slimio.signature"); sessionStorage.removeItem("slimio.signature"); } catch (e) { return; }
+     if (!data) return;
+     try {
+             uploaded = await decode(await (await fetch(data)).blob());
+             $("knockout").checked = false;   // already transparent
+             document.querySelector('.tab[data-mode="upload"]').click();
+             showUpload();
+             $("handoff").hidden = false;
+     } catch (e) { /* ignore: the page works as usual */ }
+})();

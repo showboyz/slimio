@@ -726,7 +726,11 @@ KO["signature-image.html"] = dict(
     lead="직접 그리거나 종이에 쓴 서명을 찍어 올리세요. 원서가 요구하는 픽셀과 용량의 깨끗한 JPG·투명 PNG로 만들어요.",
     ui=[
         ('data-mode="draw">✍️ Draw<', 'data-mode="draw">✍️ 직접 그리기<'),
-        ('data-mode="upload">📷 Upload a photo<', 'data-mode="upload">📷 사진 올리기<'),
+        ('data-mode="upload">📷 Paper signature photo<', 'data-mode="upload">📷 종이 서명 사진<'),
+        ("Want to sign a PDF document instead? ", "PDF 문서에 바로 서명하려면 "),
+        (">Sign PDF →</a>", ">PDF 서명 →</a>"),
+        ("Upload forms usually accept only JPG. For putting on documents, a transparent PNG looks cleaner.", "원서 사이트는 대부분 JPG만 받아요. 문서에 넣을 서명은 투명한 PNG가 깔끔해요."),
+        (">✍️ Use this signature to sign a PDF →<", ">✍️ 이 서명으로 PDF에 서명하기 →<"),
         ('aria-label="Signature pad"', 'aria-label="서명 입력판"'),
         ("✍️ Tap here to sign", "✍️ 여기를 눌러 서명하기"),
         ('title="Black ink"', 'title="검은색"'),
@@ -739,13 +743,13 @@ KO["signature-image.html"] = dict(
         (">Exact size in pixels…<", ">픽셀 직접 입력…<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("<label>File size</label>", "<label>파일 용량</label>"),
-        (">No limit<", ">제한 없음<"),
-        (">10–20KB<", ">10~20KB<"),
+        ('<option value="">No limit</option>', '<option value="" selected>제한 없음</option>'),
+        ('<option value="10-20" selected>10–20KB</option>', '<option value="10-20">10~20KB</option>'),
         (">Under 20KB<", ">20KB 이하<"), (">Under 50KB<", ">50KB 이하<"), (">Under 100KB<", ">100KB 이하<"),
         ("Check the form's instructions — many ask for a signature between 10KB and 20KB.", "원서 안내를 확인하세요. 서명은 10~20KB를 요구하는 경우가 많아요."),
         ("<label>Format</label>", "<label>저장 형식</label>"),
-        (">JPG — white background, accepted everywhere<", ">JPG — 흰 배경, 어디서나 호환<"),
-        (">PNG — transparent background<", ">PNG — 투명 배경<"),
+        ('<option value="jpeg" selected>JPG — white background</option>', '<option value="jpeg">JPG — 흰 배경</option>'),
+        ('<option value="png">PNG — transparent background</option>', '<option value="png" selected>PNG — 투명 배경</option>'),
         (">Make signature image</button>", ">서명 이미지 만들기</button>"),
         ('alt="Your signature image"', 'alt="만든 서명 이미지"'),
         ("↓ Download signature", "↓ 서명 다운로드"),
@@ -753,9 +757,9 @@ KO["signature-image.html"] = dict(
     content="""
       <h2>서명 이미지 만드는 방법</h2>
       <ul>
-          <li><b>1. 그리거나 올리기.</b> 손가락이나 마우스로 서명하거나, 흰 종이에 쓴 서명 사진을 올리세요.</li>
+          <li><b>1. 그리거나 올리기.</b> 손가락이나 마우스로 서명하거나, 흰 종이에 쓴 서명을 찍어 ‘종이 서명 사진’으로 올리세요.</li>
           <li><b>2. 크기 고르기.</b> 서명에 맞게 자르거나, 원서가 요구하는 픽셀(예: 140×60)을 직접 입력하세요.</li>
-          <li><b>3. 용량과 형식 고르기.</b> 기본은 10~20KB예요. 투명 배경이 필요하면 PNG를 고르세요.</li>
+          <li><b>3. 용량과 형식 고르기.</b> 기본은 투명 PNG예요. 원서 사이트에 올릴 거라면 JPG와 요구 용량(예: 10~20KB)을 고르세요.</li>
           <li><b>4. 만들고 다운로드.</b> 미리보기 아래 나오는 크기와 용량을 확인한 뒤 제출하세요.</li>
       </ul>
       <div class="sig-demo">
@@ -954,7 +958,8 @@ KO["sign-pdf.html"] = dict(
         ('placeholder="Type your name"', 'placeholder="이름을 입력하세요"'),
         ('id="pickimg">Choose a signature or stamp image<', 'id="pickimg">서명 · 도장 이미지 고르기<'),
         ("Remove white background", "흰 배경 자동 제거"),
-        ('id="add">+ Add to page<', 'id="add">+ 페이지에 추가<'),
+        ('id="add">+ Add signature to this page<', 'id="add">+ 이 페이지에 서명 넣기<'),
+        ("✓ Your signature is ready. Choose the PDF you want to sign.", "✓ 서명이 준비됐어요. 서명할 PDF를 골라 주세요."),
         ("<label>2. Place it <span", "<label>2. 위치 정하기 <span"),
         ("← Previous page", "← 이전 페이지"),
         ("Next page →", "다음 페이지 →"),
@@ -967,7 +972,7 @@ KO["sign-pdf.html"] = dict(
       <ul>
           <li><b>1. PDF 올리기.</b> 파일을 끌어다 놓거나 클릭해서 선택하면 첫 페이지가 미리보기로 나와요.</li>
           <li><b>2. 서명 만들기.</b> 마우스나 손가락으로 직접 그리거나, 이름을 입력해 손글씨 서명·도장을 고르거나, 서명·도장 사진을 올리세요.</li>
-          <li><b>3. 배치하고 다운로드.</b> 페이지에 추가를 누르고 원하는 자리로 끌어 옮긴 뒤, 모서리로 크기를 맞추고 서명하고 다운로드를 누르세요.</li>
+          <li><b>3. 배치하고 다운로드.</b> 이 페이지에 서명 넣기를 누르고 원하는 자리로 끌어 옮긴 뒤, 모서리로 크기를 맞추고 서명하고 다운로드를 누르세요.</li>
       </ul>
       <h3>이름으로 도장 만들기</h3>
       <p>이름 입력 탭에서 이름을 적고 빨간 원형 스타일을 고르면 도장이 만들어져요. 두 글자는 세로로, 세 글자 이름은 세로 한 줄로, 네 글자는 오른쪽 위부터 읽는 방식으로 배치해요.</p>
@@ -977,7 +982,7 @@ KO["sign-pdf.html"] = dict(
       <p>이전 · 다음 페이지로 넘기면서 필요한 곳마다 서명을 추가하세요. 모두 한 파일에 저장돼요. 사본 표시가 필요하면 <a href="/ko/watermark.html">워터마크</a>를, 메일로 보낼 파일이라면 <a href="/ko/compress-pdf-for-email.html">메일 첨부용으로 줄이기</a>를 함께 쓰세요.</p>""",
     faq_title="PDF 서명 넣기",
     faq=[
-        ("PDF에 서명을 무료로 넣으려면요?", "이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 페이지에 추가를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요."),
+        ("PDF에 서명을 무료로 넣으려면요?", "이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 이 페이지에 서명 넣기를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요."),
         ("도장도 넣을 수 있나요?", "네. 이름 입력 탭에서 빨간 원형 도장 스타일을 고르거나, 도장을 찍은 종이를 사진으로 올리면 흰 배경을 지우고 도장만 넣어요."),
         ("휴대폰에서도 되나요?", "네. 손가락으로 서명을 그리고, 미리보기에서 끌어서 위치를 정할 수 있어요."),
         ("PDF가 서버로 올라가나요?", "아니요. PDF와 서명 모두 브라우저 안에서만 처리돼서 서버로 가지 않아요."),

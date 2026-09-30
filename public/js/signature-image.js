@@ -367,6 +367,12 @@ function sizeChoice() {
 
 const goBtn = $("go");
 let outUrl = null;
+let lastSig = null;   // the trimmed, transparent signature behind the latest result
+
+// Hand the signature to Sign PDF in this tab (sessionStorage: stays in the browser).
+$("topdf").addEventListener("click", () => {
+     try { if (lastSig) sessionStorage.setItem("slimio.signature", lastSig.toDataURL("image/png")); } catch (e) { /* storage off: Sign PDF just opens empty */ }
+});
 
 goBtn.addEventListener("click", async () => {
      SlimIO.clearError();
@@ -386,6 +392,7 @@ goBtn.addEventListener("click", async () => {
              let bytes = new Uint8Array(await r.blob.arrayBuffer());
              const padded = min && bytes.length < min;
              if (padded) bytes = padTo(bytes, format, min);
+             lastSig = sig;
              showResult(bytes, r, format, { min, max, padded });
      } catch (e) {
              SlimIO.showError(SlimIO.t("Something went wrong: {msg}", { msg: e.message }));

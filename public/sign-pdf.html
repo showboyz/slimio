@@ -46,7 +46,7 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type": "Question", "name": "How do I sign a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open this page, choose your PDF, and create a signature by drawing it, typing your name or uploading an image. Click Add to page, drag it into place, then click Sign & download."}},
+        {"@type": "Question", "name": "How do I sign a PDF for free?", "acceptedAnswer": {"@type": "Answer", "text": "Open this page, choose your PDF, and create a signature by drawing it, typing your name or uploading an image. Click Add signature to this page, drag it into place, then click Sign & download."}},
         {"@type": "Question", "name": "Can I sign on my phone?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Draw your signature with your finger, then drag it into place on the page preview."}},
         {"@type": "Question", "name": "Can I sign more than one page?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Move between pages with Previous and Next and add your signature wherever you need it. Every placement is saved into the same PDF."}},
         {"@type": "Question", "name": "Is my PDF uploaded?", "acceptedAnswer": {"@type": "Answer", "text": "No. The PDF and your signature stay in your browser; nothing is sent to a server."}},
@@ -96,6 +96,8 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 }
 .item .h { position: absolute; right: -7px; bottom: -7px; width: 14px; height: 14px; border-radius: 3px; background: var(--accent); cursor: nwse-resize; touch-action: none; }
 .pager { display: flex; justify-content: space-between; margin-top: 8px; }
+.handoff { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #10231c; border: 1px solid var(--accent); color: var(--accent); font-size: 13px; text-align: center; }
+.handoff[hidden] { display: none; }
 </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
@@ -128,6 +130,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       </div>
 
       <div class="tool">
+           <div class="handoff" id="handoff" hidden>✓ Your signature is ready. Choose the PDF you want to sign.</div>
            <div class="drop" id="drop">
                <input type="file" id="pdf" accept="application/pdf" hidden />
                <div class="drop-title">Drop your PDF here</div>
@@ -164,7 +167,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
                        <div class="upprev"><img id="upimg" alt="" /></div>
                    </div>
                    <div class="run-row">
-                       <button type="button" class="btn ghost" id="add">+ Add to page</button>
+                       <button type="button" class="btn ghost" id="add">+ Add signature to this page</button>
                    </div>
                </div>
 
@@ -205,7 +208,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       <ul>
           <li><b>1. Add your PDF.</b> Drop it in or click to browse. The first page appears as a preview.</li>
           <li><b>2. Create your signature.</b> Draw it with your mouse or finger, type your name in a handwriting style, or upload a photo of your signature or stamp.</li>
-          <li><b>3. Place and download.</b> Click Add to page, drag it into position, resize it with the corner, then click Sign &amp; download.</li>
+          <li><b>3. Place and download.</b> Click Add signature to this page, drag it into position, resize it with the corner, then click Sign &amp; download.</li>
       </ul>
       <h3>Upload a signature or stamp</h3>
       <p>Sign on white paper, take a photo, and upload it. SlimIO removes the white background so only the ink lands on the page. It works the same way for a company stamp.</p>
@@ -217,7 +220,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       <h2>Sign PDF — FAQ</h2>
       <details open>
           <summary>How do I sign a PDF for free?</summary>
-          <p>Open this page, choose your PDF, and create a signature by drawing it, typing your name or uploading an image. Click Add to page, drag it into place, then click Sign &amp; download.</p>
+          <p>Open this page, choose your PDF, and create a signature by drawing it, typing your name or uploading an image. Click Add signature to this page, drag it into place, then click Sign &amp; download.</p>
       </details>
       <details>
           <summary>Can I sign on my phone?</summary>
@@ -269,6 +272,6 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/lib.js?v=5f6f2857"></script>
-<script type="module" src="/js/sign-pdf.js?v=8a8114b6"></script>
+<script type="module" src="/js/sign-pdf.js?v=238bc542"></script>
 </body>
 </html>

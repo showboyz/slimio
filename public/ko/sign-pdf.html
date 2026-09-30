@@ -62,7 +62,7 @@
                   "name": "PDF에 서명을 무료로 넣으려면요?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 페이지에 추가를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요."
+                        "text": "이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 이 페이지에 서명 넣기를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요."
                   }
             },
             {
@@ -142,6 +142,8 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 }
 .item .h { position: absolute; right: -7px; bottom: -7px; width: 14px; height: 14px; border-radius: 3px; background: var(--accent); cursor: nwse-resize; touch-action: none; }
 .pager { display: flex; justify-content: space-between; margin-top: 8px; }
+.handoff { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; background: #10231c; border: 1px solid var(--accent); color: var(--accent); font-size: 13px; text-align: center; }
+.handoff[hidden] { display: none; }
 </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
@@ -174,6 +176,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       </div>
 
       <div class="tool">
+           <div class="handoff" id="handoff" hidden>✓ 서명이 준비됐어요. 서명할 PDF를 골라 주세요.</div>
            <div class="drop" id="drop">
                <input type="file" id="pdf" accept="application/pdf" hidden />
                <div class="drop-title">PDF 파일을 여기에 끌어다 놓으세요</div>
@@ -210,7 +213,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
                        <div class="upprev"><img id="upimg" alt="" /></div>
                    </div>
                    <div class="run-row">
-                       <button type="button" class="btn ghost" id="add">+ 페이지에 추가</button>
+                       <button type="button" class="btn ghost" id="add">+ 이 페이지에 서명 넣기</button>
                    </div>
                </div>
 
@@ -251,7 +254,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       <ul>
           <li><b>1. PDF 올리기.</b> 파일을 끌어다 놓거나 클릭해서 선택하면 첫 페이지가 미리보기로 나와요.</li>
           <li><b>2. 서명 만들기.</b> 마우스나 손가락으로 직접 그리거나, 이름을 입력해 손글씨 서명·도장을 고르거나, 서명·도장 사진을 올리세요.</li>
-          <li><b>3. 배치하고 다운로드.</b> 페이지에 추가를 누르고 원하는 자리로 끌어 옮긴 뒤, 모서리로 크기를 맞추고 서명하고 다운로드를 누르세요.</li>
+          <li><b>3. 배치하고 다운로드.</b> 이 페이지에 서명 넣기를 누르고 원하는 자리로 끌어 옮긴 뒤, 모서리로 크기를 맞추고 서명하고 다운로드를 누르세요.</li>
       </ul>
       <h3>이름으로 도장 만들기</h3>
       <p>이름 입력 탭에서 이름을 적고 빨간 원형 스타일을 고르면 도장이 만들어져요. 두 글자는 세로로, 세 글자 이름은 세로 한 줄로, 네 글자는 오른쪽 위부터 읽는 방식으로 배치해요.</p>
@@ -265,7 +268,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       <h2>PDF 서명 넣기 — 자주 묻는 질문</h2>
       <details open>
           <summary>PDF에 서명을 무료로 넣으려면요?</summary>
-          <p>이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 페이지에 추가를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요.</p>
+          <p>이 페이지에 PDF를 올리고, 서명을 그리거나 이름으로 만들거나 이미지를 올린 뒤 이 페이지에 서명 넣기를 누르세요. 원하는 자리로 옮기고 서명하고 다운로드를 누르면 돼요.</p>
       </details>
       <details>
           <summary>도장도 넣을 수 있나요?</summary>
@@ -318,6 +321,6 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/i18n/ko.js?v=8bd98ac1"></script>
 <script defer src="/lib.js?v=5f6f2857"></script>
-<script type="module" src="/js/sign-pdf.js?v=8a8114b6"></script>
+<script type="module" src="/js/sign-pdf.js?v=238bc542"></script>
 </body>
 </html>
