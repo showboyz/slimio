@@ -212,7 +212,8 @@ SIZE_LINKS = [("/compress-image.html", "Compress image (any size)"),
               ("/compress-image-to-50kb.html", "Compress image to 50KB"),
               ("/compress-image-to-100kb.html", "Compress image to 100KB"),
               ("/compress-image-to-200kb.html", "Compress image to 200KB"),
-              ("/compress-id-photo.html", "ID / passport photo")]
+              ("/compress-id-photo.html", "ID / passport photo"),
+              ("/signature-image.html", "Signature image")]
 
 
 def sub1(pattern, repl, s, what):

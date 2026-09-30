@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Signature Image Maker — Resize Signature to 20KB, JPG or PNG | SlimIO</title>
+<meta name="description" content="Draw your signature or upload a photo of it, clean the background and save a JPG or transparent PNG at the exact size and KB your form needs (e.g. under 20KB). Free, runs in your browser." />
+<meta name="keywords" content="signature resize 20kb, signature image maker, signature to png, transparent signature png, resize signature for online form, signature 10kb to 20kb, scan signature" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/signature-image.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/signature-image.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/signature-image.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/signature-image.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Signature Image Maker — Resize Signature to 20KB, JPG or PNG | SlimIO" />
+<meta property="og:description" content="Draw your signature or upload a photo of it, clean the background and save a JPG or transparent PNG at the exact size and KB your form needs (e.g. under 20KB). Free, runs in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/signature-image.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Signature Image Maker | SlimIO" />
+<meta name="twitter:description" content="Draw your signature or upload a photo of it, clean the background and save a JPG or transparent PNG at the exact size and KB your form needs (e.g. under 20KB). Free, runs in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO Signature Image Maker",
+      "url": "https://pdfslimio.com/signature-image.html",
+      "description": "Free tool to draw or scan a signature, clean the background and save it as JPG or transparent PNG at an exact pixel size and KB limit. Runs in your browser.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+      },
+      "featureList": [
+            "Draw a signature",
+            "Clean up a photographed signature",
+            "Transparent PNG or JPG",
+            "Exact pixel size",
+            "Fit under 20KB or 10–20KB",
+            "Runs in your browser (no upload)"
+      ]
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "How do I resize my signature to 20KB?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Draw your signature or upload a photo of it, choose Under 20KB (or 10–20KB) as the file size and click Make signature image. SlimIO trims the empty space and keeps the sharpest version that fits."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "The form says the signature must be between 10KB and 20KB. Can this do that?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Choose 10–20KB. SlimIO keeps the best quality under 20KB, and if a small signature still comes out under 10KB, it adds harmless padding data to the file so it meets the minimum — the picture itself doesn't change."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How do I get a clean signature from a photo?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Sign in black or dark blue ink on plain white paper, take the photo in good light, then upload it. Clean up background turns the paper pure white (or transparent for PNG) and crops to the ink."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Can I make a signature with a transparent background?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. Choose PNG — transparent background. It's ideal for placing on documents. Many upload forms only accept JPG, which always has a white background."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Is my signature uploaded anywhere?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. Drawing, cleanup and resizing all happen in your browser. Your signature never leaves your device."
+                  }
+            }
+      ]
+}
+</script>
+<link rel="stylesheet" href="/style.css?v=575f7b68" />
+<style>
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tab {
+     flex: 1; padding: 9px; background: #0e1117; color: var(--muted); font-size: 13px;
+     border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
+}
+.tab.on { color: var(--text); border-color: var(--accent); }
+.panel.hidden { display: none; }
+#pad { width: 100%; height: 190px; display: block; background: #fff; border-radius: 10px; touch-action: none; cursor: crosshair; }
+.pad-row { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.swatch { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; margin-right: 6px; outline: 2px solid #0e1117; }
+.swatch.on { border-color: var(--accent); }
+.linkbtn { background: none; border: 0; color: var(--accent); cursor: pointer; font-size: 13px; padding: 4px 0; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.pick {
+     width: 100%; padding: 26px 12px; border: 2px dashed #333d4d; border-radius: 12px; background: #10141b;
+     color: var(--text); font: inherit; font-weight: 700; cursor: pointer;
+}
+.pick:hover { border-color: var(--accent); }
+.pick small { display: block; margin-top: 6px; color: var(--muted); font-weight: 400; font-size: 12px; }
+.sigout { margin-top: 12px; border-radius: 10px; padding: 14px; display: flex; justify-content: center;
+     background: repeating-conic-gradient(#e8ebf0 0% 25%, #fff 0% 50%) 0 0 / 16px 16px; }
+.sigout img { max-width: 100%; max-height: 180px; display: block; }
+.meta { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.meta b { color: var(--text); }
+.sig-demo { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin: 18px 0; }
+.sig-demo img { width: 100%; height: auto; border-radius: 8px; display: block; }
+.sig-demo .arr { color: var(--accent); font-size: 22px; font-weight: 800; }
+.sig-demo span { display: block; text-align: center; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.sig-demo .out { padding: 14px; border-radius: 8px; background: repeating-conic-gradient(#e8ebf0 0% 25%, #fff 0% 50%) 0 0 / 14px 14px; }
+@media (max-width: 560px) { .sig-demo { grid-template-columns: 1fr; } .sig-demo .arr { transform: rotate(90deg); justify-self: center; } }
+</style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
+<meta name="google-adsense-account" content="ca-pub-5339352429300786" />
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/signature-image.html">Signature Image</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+              <a href="/ko/signature-image.html" hreflang="ko" lang="ko" class="lang-switch"><img src="/img/flag-kr.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />한국어</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Your signature,<br /><b>the right size.</b></h1>
+           <p>Draw it or snap a photo of it. Get a clean JPG or transparent PNG at the exact pixels and KB your form asks for.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="tabs" id="tabs">
+               <button type="button" class="tab on" data-mode="draw">✍️ Draw</button>
+               <button type="button" class="tab" data-mode="upload">📷 Upload a photo</button>
+           </div>
+           <div class="panel" id="panel-draw">
+               <canvas id="pad" aria-label="Signature pad"></canvas>
+               <div class="pad-row">
+                   <span>
+                       <button type="button" class="swatch on" data-color="#111111" style="background:#111111" title="Black ink"></button>
+                       <button type="button" class="swatch" data-color="#1a3fb5" style="background:#1a3fb5" title="Blue ink"></button>
+                   </span>
+                   <button type="button" class="linkbtn" id="clear">Clear</button>
+               </div>
+           </div>
+           <div class="panel hidden" id="panel-upload">
+               <input type="file" id="sigfile" accept="image/*" hidden />
+               <button type="button" class="pick" id="pickimg">Choose a photo or scan of your signature<small>Signed on plain white paper, in good light</small></button>
+               <label class="check"><input type="checkbox" id="knockout" checked /> Clean up background (paper becomes white)</label>
+           </div>
+
+           <div class="controls" id="controls">
+               <div class="field">
+                   <label>Size</label>
+                   <select id="size">
+                       <option value="auto" selected>Trim to the signature</option>
+                       <option value="custom">Exact size in pixels…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">Width</label>
+                       <input type="number" id="cw" min="16" max="4000" value="140" inputmode="numeric" />
+                       <span>×</span>
+                       <label for="ch">Height</label>
+                       <input type="number" id="ch" min="16" max="4000" value="60" inputmode="numeric" />
+                       <span>px</span>
+                   </div>
+               </div>
+               <div class="field">
+                   <label>File size</label>
+                   <select id="target">
+                       <option value="">No limit</option>
+                       <option value="10-20" selected>10–20KB</option>
+                       <option value="20">Under 20KB</option>
+                       <option value="50">Under 50KB</option>
+                       <option value="100">Under 100KB</option>
+                   </select>
+                   <div class="hint">Check the form's instructions — many ask for a signature between 10KB and 20KB.</div>
+               </div>
+               <div class="field">
+                   <label>Format</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — white background, accepted everywhere</option>
+                       <option value="png">PNG — transparent background</option>
+                   </select>
+               </div>
+               <div class="run-row">
+                   <button id="go" class="btn">Make signature image</button>
+               </div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="sigout"><img id="outimg" alt="Your signature image" /></div>
+               <div class="meta" id="outmeta"></div>
+               <div class="run-row"><a id="dl" class="dl">↓ Download signature</a></div>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+
+      <div class="ad" id="ad">
+     SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
+      </div>
+</div>
+
+<div class="content">
+      <h2>How to make a signature image</h2>
+      <ul>
+          <li><b>1. Draw or upload.</b> Sign with your finger or mouse, or upload a photo of your signature on white paper.</li>
+          <li><b>2. Pick the size.</b> Keep it trimmed to the signature, or enter the exact pixels the form asks for, such as 140×60.</li>
+          <li><b>3. Pick the file size and format.</b> 10–20KB is selected by default; choose PNG if you need a transparent background.</li>
+          <li><b>4. Make and download.</b> Check the size shown under the preview before you upload it.</li>
+      </ul>
+      <div class="sig-demo">
+          <div><img src="/img/sig-demo-photo.webp" width="600" height="400" loading="lazy" alt="Photo of a signature on paper" /><span>Phone photo of a signature</span></div>
+          <div class="arr" aria-hidden="true">→</div>
+          <div><div class="out"><img src="/img/sig-demo-out.webp" width="600" height="182" loading="lazy" alt="Cleaned signature with a transparent background" /></div><span>Cleaned, trimmed, transparent PNG</span></div>
+      </div>
+      <h3>Signature requirements on online forms</h3>
+      <p>Exam, job and government application forms often ask for a scanned signature as a JPG between 10KB and 20KB, sometimes with fixed dimensions (for example 140×60 pixels or 3.5×1.5 cm). Requirements change between forms and years, so always follow the exact numbers in the official notice.</p>
+      <h3>Tips for a clean signature photo</h3>
+      <ul>
+          <li>Use black or dark blue ink on plain white paper — no lines or grid.</li>
+          <li>Photograph it in daylight or under a bright lamp, straight from above, without your phone's shadow.</li>
+          <li>Fill most of the photo with the signature; the cleanup trims the rest.</li>
+      </ul>
+      <h3>Need a photo too?</h3>
+      <p>Most forms ask for a photo alongside the signature. Use the <a href="/compress-id-photo.html">ID photo resizer</a> to crop it to 3×4 or 3.5×4.5 cm and fit it under the KB limit, or <a href="/sign-pdf.html">Sign PDF</a> to put your signature straight onto a document.</p>
+</div>
+
+<section class="faq">
+      <h2>Signature Image Maker — FAQ</h2>
+      <details open>
+          <summary>How do I resize my signature to 20KB?</summary>
+          <p>Draw your signature or upload a photo of it, choose Under 20KB (or 10–20KB) as the file size and click Make signature image. SlimIO trims the empty space and keeps the sharpest version that fits.</p>
+      </details>
+      <details>
+          <summary>The form says the signature must be between 10KB and 20KB. Can this do that?</summary>
+          <p>Yes. Choose 10–20KB. SlimIO keeps the best quality under 20KB, and if a small signature still comes out under 10KB, it adds harmless padding data to the file so it meets the minimum — the picture itself doesn&#x27;t change.</p>
+      </details>
+      <details>
+          <summary>How do I get a clean signature from a photo?</summary>
+          <p>Sign in black or dark blue ink on plain white paper, take the photo in good light, then upload it. Clean up background turns the paper pure white (or transparent for PNG) and crops to the ink.</p>
+      </details>
+      <details>
+          <summary>Can I make a signature with a transparent background?</summary>
+          <p>Yes. Choose PNG — transparent background. It&#x27;s ideal for placing on documents. Many upload forms only accept JPG, which always has a white background.</p>
+      </details>
+      <details>
+          <summary>Is my signature uploaded anywhere?</summary>
+          <p>No. Drawing, cleanup and resizing all happen in your browser. Your signature never leaves your device.</p>
+      </details>
+</section>
+
+<div class="related">
+      <h3>Related tools</h3>
+      <div class="tools-row">
+          <a class="mini" href="/sign-pdf.html">Sign PDF</a>
+          <a class="mini" href="/compress-id-photo.html">ID / passport photo</a>
+          <a class="mini" href="/">Compress PDF</a>
+          <a class="mini" href="/watermark.html">Watermark PDF</a>
+          <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
+          <a class="mini" href="/merge.html">Merge PDF</a>
+          <a class="mini" href="/split.html">Split PDF</a>
+          <a class="mini" href="/delete-pages.html">Remove Pages</a>
+          <a class="mini" href="/rotate.html">Rotate PDF</a>
+          <a class="mini" href="/organize.html">Organize PDF</a>
+          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
+          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
+          <a class="mini" href="/compress-image.html">Compress Image</a>
+      </div>
+</div>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div class="foot-links"><a href="/about.html">About</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a></div>
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+              <div class="lang-foot"><a href="/ko/signature-image.html" hreflang="ko" lang="ko" class="lang-switch"><img src="/img/flag-kr.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />한국어</a></div>
+          </div>
+      </footer>
+</div>
+
+<script defer src="/lib.js?v=5f6f2857"></script>
+<script type="module" src="/js/signature-image.js?v=0ceb57f5"></script>
+</body>
+</html>

@@ -101,6 +101,21 @@ const SlimIO = (() => {
    function trackDownload() {
       event("downloaded");
    }
+   // Funnel step between "viewed" and "tool-used": the visitor gave the tool something to
+   // work on (picked, dropped or drew). Sent once per page view.
+   let added = false;
+   function inputAdded(how) {
+      if (added) return;
+      added = true;
+      event("file-added", { how });
+   }
+   document.addEventListener("change", (e) => {
+      const t = e.target;
+      if (t && t.type === "file" && t.files && t.files.length) inputAdded("pick");
+   }, true);
+   document.addEventListener("drop", (e) => {
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) inputAdded("drop");
+   }, true);
 
    async function consume() {
       track();
@@ -149,7 +164,7 @@ const SlimIO = (() => {
    return {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, page2user,
+      refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, inputAdded, page2user,
    };
 })();
 

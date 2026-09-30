@@ -22,7 +22,8 @@ SIZE_PAGES = ["compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html", "compr
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
          "sign-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
-         "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html"] + SIZE_PAGES
+         "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
+         "signature-image.html"] + SIZE_PAGES
 
 
 # Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
@@ -79,6 +80,8 @@ COMMON = [
     (">Compress image to 100KB</a>", ">사진 100KB로 줄이기</a>"),
     (">Compress image to 200KB</a>", ">사진 200KB로 줄이기</a>"),
     (">ID / passport photo</a>", ">증명사진 용량 줄이기</a>"),
+    (">Signature image</a>", ">서명 이미지 만들기</a>"),
+    (">Signature Image</a>", ">서명 이미지</a>"),
     (">Compress to 100KB</a>", ">100KB로 줄이기</a>"),
     (">Compress to 200KB</a>", ">200KB로 줄이기</a>"),
     (">Compress to 500KB</a>", ">500KB로 줄이기</a>"),
@@ -168,6 +171,8 @@ KO["index.html"] = dict(
         ("<h3>Watermark PDF</h3><p>Stamp text on every page</p>", "<h3>워터마크</h3><p>대외비 · 사본 문구 넣기</p>"),
         ("<h3>Sign PDF</h3><p>Draw, type or upload a signature</p>", "<h3>PDF 서명</h3><p>그리기 · 이름 · 도장으로 서명</p>"),
         ("<h3>Compress Image</h3><p>Shrink JPG and PNG photos to any size</p>", "<h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p>"),
+        ("<h3>ID Photo</h3><p>Crop to passport or ID size, under the KB limit</p>", "<h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p>"),
+        ("<h3>Signature Image</h3><p>Clean JPG or PNG signature, 10–20KB</p>", "<h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p>"),
         ("Need an exact size?", "정해진 용량에 맞춰야 하나요?"),
         (">Compress PDF to 100KB</a>", ">PDF 100KB로 줄이기</a>"),
         (">for email</a>", ">메일 첨부용</a>"),
@@ -706,6 +711,74 @@ KO["compress-id-photo.html"] = dict(
         ("반명함과 여권사진 크기는 어떻게 다른가요?", "반명함은 3×4cm(354×472px)이고, 여권·주민등록증·운전면허증용은 3.5×4.5cm(413×531px)예요."),
         ("사이트에서 150×200 픽셀로 올리라고 해요.", "크기 조절에서 픽셀 직접 입력을 고르고 가로 150, 세로 200을 입력한 뒤 목표 용량을 고르세요. 비율에 맞게 잘라서 정확히 150×200px로 저장해요."),
         ("얼굴이 사진 가운데에 있지 않아요.", "괜찮아요. 사진을 올린 뒤 초록색 틀을 얼굴로 끌어 오고, 확대로 머리가 점선 안에 들어오게 맞추세요. 다운로드하면 정확히 그 부분이 저장돼요."),
+    ],
+)
+
+KO["signature-image.html"] = dict(
+    title="서명 이미지 만들기 - 서명 용량 20KB 줄이기, 투명 PNG 무료 | SlimIO",
+    desc="서명을 직접 그리거나 종이에 쓴 서명 사진을 올려서 배경을 지우고, 원서 규격(예: 10~20KB, 140×60px)에 맞는 JPG나 투명 PNG로 만드세요. 무료, 브라우저에서 처리돼요.",
+    keywords="서명 이미지 만들기, 서명 용량 줄이기, 서명 20KB, 서명 투명 PNG, 서명 사진 배경 제거, 전자서명 이미지, 원서 서명 스캔",
+    short="서명 이미지 만들기 | SlimIO",
+    app_name="SlimIO 서명 이미지 만들기",
+    app_desc="서명을 그리거나 사진으로 올려 배경을 지우고, 원하는 픽셀 크기와 용량(KB)의 JPG·투명 PNG로 만드는 무료 도구. 브라우저에서 처리돼요.",
+    features=["직접 그려서 서명", "종이 서명 사진 배경 정리", "JPG · 투명 PNG", "정확한 픽셀 크기", "20KB 이하 · 10~20KB 맞추기", "브라우저에서 처리 (업로드 없음)"],
+    h1="서명 이미지,<br /><b>규격에 딱 맞게.</b>",
+    lead="직접 그리거나 종이에 쓴 서명을 찍어 올리세요. 원서가 요구하는 픽셀과 용량의 깨끗한 JPG·투명 PNG로 만들어요.",
+    ui=[
+        ('data-mode="draw">✍️ Draw<', 'data-mode="draw">✍️ 직접 그리기<'),
+        ('data-mode="upload">📷 Upload a photo<', 'data-mode="upload">📷 사진 올리기<'),
+        ('aria-label="Signature pad"', 'aria-label="서명 입력판"'),
+        ('title="Black ink"', 'title="검은색"'),
+        ('title="Blue ink"', 'title="파란색"'),
+        ('id="clear">Clear<', 'id="clear">지우기<'),
+        ("Choose a photo or scan of your signature<small>Signed on plain white paper, in good light</small>", "서명 사진이나 스캔 고르기<small>흰 종이에 쓴 서명을 밝은 곳에서 찍어 주세요</small>"),
+        ("Clean up background (paper becomes white)", "배경 정리 (종이를 흰색으로)"),
+        ("<label>Size</label>", "<label>크기</label>"),
+        (">Trim to the signature<", ">서명에 맞게 자르기<"),
+        (">Exact size in pixels…<", ">픽셀 직접 입력…<"),
+        ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
+        ("<label>File size</label>", "<label>파일 용량</label>"),
+        (">No limit<", ">제한 없음<"),
+        (">10–20KB<", ">10~20KB<"),
+        (">Under 20KB<", ">20KB 이하<"), (">Under 50KB<", ">50KB 이하<"), (">Under 100KB<", ">100KB 이하<"),
+        ("Check the form's instructions — many ask for a signature between 10KB and 20KB.", "원서 안내를 확인하세요. 서명은 10~20KB를 요구하는 경우가 많아요."),
+        ("<label>Format</label>", "<label>저장 형식</label>"),
+        (">JPG — white background, accepted everywhere<", ">JPG — 흰 배경, 어디서나 호환<"),
+        (">PNG — transparent background<", ">PNG — 투명 배경<"),
+        (">Make signature image</button>", ">서명 이미지 만들기</button>"),
+        ('alt="Your signature image"', 'alt="만든 서명 이미지"'),
+        ("↓ Download signature", "↓ 서명 다운로드"),
+    ],
+    content="""
+      <h2>서명 이미지 만드는 방법</h2>
+      <ul>
+          <li><b>1. 그리거나 올리기.</b> 손가락이나 마우스로 서명하거나, 흰 종이에 쓴 서명 사진을 올리세요.</li>
+          <li><b>2. 크기 고르기.</b> 서명에 맞게 자르거나, 원서가 요구하는 픽셀(예: 140×60)을 직접 입력하세요.</li>
+          <li><b>3. 용량과 형식 고르기.</b> 기본은 10~20KB예요. 투명 배경이 필요하면 PNG를 고르세요.</li>
+          <li><b>4. 만들고 다운로드.</b> 미리보기 아래 나오는 크기와 용량을 확인한 뒤 제출하세요.</li>
+      </ul>
+      <div class="sig-demo">
+          <div><img src="/img/sig-demo-photo.webp" width="600" height="400" loading="lazy" alt="종이에 쓴 서명을 찍은 사진" /><span>종이 서명을 폰으로 찍은 사진</span></div>
+          <div class="arr" aria-hidden="true">→</div>
+          <div><div class="out"><img src="/img/sig-demo-out.webp" width="600" height="182" loading="lazy" alt="배경을 지운 투명 서명 이미지" /></div><span>배경 정리 · 자르기 · 투명 PNG</span></div>
+      </div>
+      <h3>원서의 서명 규격</h3>
+      <p>시험 접수, 채용, 관공서 온라인 신청에서는 서명을 JPG 10~20KB로, 때로는 “140×60 픽셀”이나 “3.5×1.5cm”처럼 크기까지 정해서 요구해요. 기준은 원서와 연도마다 바뀔 수 있으니 공고문의 숫자를 꼭 따르세요.</p>
+      <h3>깨끗한 서명 사진 찍는 팁</h3>
+      <ul>
+          <li>줄이나 격자가 없는 흰 종이에 검은색이나 진한 파란색 펜으로 쓰세요.</li>
+          <li>낮이나 밝은 조명 아래에서, 바로 위에서 폰 그림자가 지지 않게 찍으세요.</li>
+          <li>서명이 사진의 대부분을 차지하게 찍으면 좋아요. 나머지는 자동으로 잘라요.</li>
+      </ul>
+      <h3>사진도 같이 내야 한다면</h3>
+      <p>원서는 서명과 함께 증명사진도 요구하는 경우가 많아요. <a href="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>로 3×4·3.5×4.5cm 규격과 용량을 맞추거나, <a href="/ko/sign-pdf.html">PDF 서명</a>으로 문서에 바로 서명을 넣을 수 있어요.</p>""",
+    faq_title="서명 이미지 만들기",
+    faq=[
+        ("서명을 20KB 이하로 줄이려면 어떻게 하나요?", "서명을 그리거나 사진으로 올리고, 파일 용량에서 20KB 이하(또는 10~20KB)를 고른 뒤 서명 이미지 만들기를 누르세요. 빈 공간을 잘라 내고 그 용량 안에서 가장 선명하게 만들어요."),
+        ("“10KB 이상 20KB 이하”처럼 최소 용량도 있어요.", "10~20KB를 고르세요. 20KB 안에서 가장 좋은 화질로 만들고, 그래도 10KB보다 작으면 파일에 무해한 여백 데이터를 더해서 최소 용량을 맞춰요. 이미지 자체는 바뀌지 않아요."),
+        ("종이에 쓴 서명 사진을 깨끗하게 만들 수 있나요?", "네. 흰 종이에 진한 펜으로 서명하고 밝은 곳에서 찍어 올리세요. 배경 정리를 켜 두면 종이를 흰색(PNG는 투명)으로 바꾸고 서명 부분만 잘라 줘요."),
+        ("투명 배경 서명을 만들 수 있나요?", "네. 저장 형식에서 PNG — 투명 배경을 고르세요. 문서에 얹기 좋아요. 다만 원서 사이트는 JPG만 받는 경우가 많고, JPG는 항상 흰 배경이에요."),
+        ("서명이 서버로 올라가나요?", "아니요. 그리기, 배경 정리, 크기 조절이 모두 브라우저 안에서 이루어져서 서명이 내 기기 밖으로 나가지 않아요."),
     ],
 )
 

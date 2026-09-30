@@ -16,7 +16,7 @@
 5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
    - 2026-09-29: 증명사진·50KB·20KB 6개 GSC 색인 요청 + GSC 사이트맵 재제출, 네이버 `/ko/` 3개 수집 요청 완료 (Claude가 `orca computer`로 Chrome 조작 — 사용자 로그인 세션 사용)
    - 참고: 그날 GSC 개요는 '색인 0 / 미색인 1'로 표시(리포트 지연 가능). 1~2주 뒤 Pages 리포트 확인
-6. 다음 개발 후보: PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), 서명 전용 페이지, JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
+6. 다음 개발 후보: 규격별 페이지(미국 비자 사진 600×600·240KB, 인도 시험 사진+서명, 큐넷·정부24), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
 
 ---
 
@@ -30,7 +30,7 @@
 | 이메일 | `contact@pdfslimio.com` → Cloudflare Email Routing → todays777@gmail.com (수신 전용, 무료). 답장은 Gmail에서 |
 | 정책 페이지 | about / terms / privacy / contact (영·한), 전 페이지 하단 링크. AdSense 심사용 |
 | AdSense | 게시자 `ca-pub-5339352429300786`, 결제국가 한국. 전 페이지 `google-adsense-account` 메타 태그 + `/ads.txt`. **심사 중(2026-09-29 요청)**, EU 동의 메시지(Google CMP 3선택지) 설정 완료. 승인 후 광고 스크립트/광고 단위를 `#ad` 자리에 넣기 (위 '다음 할 것' 1번) |
-| 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **이벤트 3종**(2026-09-29~): `tool-used`(도구 실행) · `downloaded`(결과 다운로드, `SlimIO.download`·index `#dl`·사진 개별 링크) · `target-result`(용량 목표 페이지만: `{target, fits, method: original/server/raster, inKB, outKB}`) — 새 이벤트는 `SlimIO.event(name, props)`. **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
+| 분석 | **Umami Cloud 무료(Hobby)** (2026-09-29~) — website id `ab53f00a-b92a-4d4d-aaf0-6b5329869de7`, 전 페이지 head. 도구 사용 시 `tool-used` 이벤트(`{tool: "merge" / "ko/sign-pdf" / "compress" …}`, `lib.js`의 `SlimIO.track`). **이벤트 4종**: `file-added`(2026-09-30~, 파일 선택·드롭·서명 그리기, 페이지당 1회, `{how: pick/drop/draw}`, lib.js 전역 리스너) · `tool-used`(도구 실행) · `downloaded`(결과 다운로드, `SlimIO.download`·index `#dl`·사진 개별 링크) · `target-result`(용량 목표 페이지만: `{target, fits, method: original/server/raster, inKB, outKB}`) — 새 이벤트는 `SlimIO.event(name, props)`. **`?notrack` 한 번 열면 그 브라우저는 집계 제외**(localStorage `umami.disabled`). Cloudflare Web Analytics도 병행(참조자·Core Web Vitals) |
 | GitHub | ✅ `https://github.com/showboyz/slimio` (trout 브랜치) |
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
 | Google Search Console | ✅ `sc-domain:pdfslimio.com`, 사이트맵 제출·주요 URL 색인 요청 완료 |
@@ -85,6 +85,8 @@
 - 2026-09-30: **자르기 위치 조정** — 증명·여권·직접 입력 크기일 때 첫 사진 위에 초록 틀 + 점선 얼굴 가이드(canvas `#cropcv`), 드래그로 이동·`#zoom`으로 확대, `cropRect()`가 `{fx, fy, z}`로 잘라냄. 여러 장이면 첫 장만 틀 적용, 나머지는 가운데
 - 2026-09-30: **증명사진 페이지 디자인** — 규격 타일(`.presets`, 생성기 `"picker": True`, SVG는 `gen_image_pages.py`의 `_tile`), 전/후 예시(`.demo`, `public/img/id-sample*.webp` 총 31KB). 예시 인물은 **Codex CLI 이미지 생성**(`codex exec --skip-git-repo-check -s workspace-write "…save as sample.png"`)으로 만든 가상 인물, 결과 사진은 우리 도구로 직접 잘라 만든 것. gen_ko는 페이지별 추가 UI 번역을 `ui_extra`로 받음
 - 로컬 테스트 주의: 서버 메모리 한도 20회/일 — 테스트를 많이 돌리면 버튼이 비활성화됨. 서버 재시작으로 초기화
+- 2026-09-30: **서명 이미지 만들기** `signature-image.html` + `js/signature-image.js` (+`/ko/`, 홈 카드·사진 페이지 링크·PDF 서명 관련 링크). 그리기 / 사진 업로드(종이 밝기 백분위 + 주변 대비로 잉크 판별 → 연결 덩어리 중 테두리에 닿거나 갈색(책상)인 것 제거 → 잉크에 맞춰 자르기). 크기: 자동/픽셀 직접, 용량: 제한 없음/10~20KB/20·50·100KB 이하, JPG(흰 배경)/PNG(투명). **최소 용량**은 화질 최대 후에도 작으면 JPEG COM 세그먼트·PNG tEXt 청크로 여백 데이터 추가(이미지 불변). 예시 사진은 Codex 생성(가상 서명), 결과는 도구로 직접 만든 것
+- 홈 도구 카드 13개(증명사진·서명 이미지 추가) — 4열이라 마지막 줄 1개. 도구가 늘면 채워짐
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 
 ### 새 도구 추가 체크리스트
