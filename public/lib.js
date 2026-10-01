@@ -100,6 +100,8 @@ const SlimIO = (() => {
    // The user actually took the result (not just ran the tool).
    function trackDownload() {
       event("downloaded");
+      const next = $("next");   // "Next, you might want to…" cards (tools/gen_related.py)
+      if (next && next.hidden) next.hidden = false;
    }
    // Funnel step between "viewed" and "tool-used": the visitor gave the tool something to
    // work on (picked, dropped or drew). Sent once per page view.

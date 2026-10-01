@@ -5,14 +5,112 @@ OUT = sys.argv[1]
 
 SIZES = ["50KB", "100KB", "150KB", "200KB", "300KB", "500KB", "1MB", "2MB", "5MB", "10MB", "20MB", "25MB"]
 SIBLINGS = [
+    ("/compress-pdf-to-50kb.html", "Compress to 50KB"),
     ("/compress-pdf-to-100kb.html", "Compress to 100KB"),
     ("/compress-pdf-to-200kb.html", "Compress to 200KB"),
+    ("/compress-pdf-to-300kb.html", "Compress to 300KB"),
     ("/compress-pdf-to-500kb.html", "Compress to 500KB"),
     ("/compress-pdf-to-1mb.html", "Compress to 1MB"),
+    ("/compress-pdf-to-2mb.html", "Compress to 2MB"),
     ("/compress-pdf-for-email.html", "Compress for email"),
 ]
 
 PAGES = [
+{
+ "slug": "compress-pdf-to-50kb", "target": "50KB",
+ "title": "Compress PDF to 50KB — Free Online, Keeps It Readable | SlimIO",
+ "short": "Compress PDF to 50KB | SlimIO",
+ "desc": "Compress a one-page PDF — certificate, ID proof or signed form — to under 50KB for online applications. Free, no signup, keeps the text as readable as the limit allows.",
+ "keywords": "compress pdf to 50kb, pdf under 50kb, reduce pdf size to 50kb, pdf 50kb, compress pdf below 50kb, certificate pdf 50kb",
+ "h1": "Compress PDF<br /><b>to 50KB.</b>",
+ "lead": "50KB is tiny — about one scanned page. SlimIO finds the clearest version of your document that still fits.",
+ "content": """
+      <h2>How to compress a PDF to 50KB</h2>
+      <ul>
+          <li><b>1. Keep it to the page the form needs.</b> 50KB realistically holds one page. Use <a href="/delete-pages.html">Remove Pages</a> first if your file has more.</li>
+          <li><b>2. Drop it in and click Compress.</b> The target is already 50KB. A text PDF usually fits as is; a scan is re-rendered at the highest resolution that fits.</li>
+          <li><b>3. Check it before you upload.</b> Open the result and zoom in on the smallest text, like a certificate number.</li>
+      </ul>
+      <h3>What fits in 50KB</h3>
+      <p>A one-page PDF made from Word or a web form is often only 20–40KB already. A scanned page is different: a phone scan in color can be 1–3MB, so it has to shrink 20–60 times. At 50KB a grayscale scan of an A4 page stays readable at around 100 dpi; a color photo of a document gets noticeably soft.</p>
+      <h3>Scan it so it compresses well</h3>
+      <ul>
+          <li>Scan in <b>grayscale</b> (or black &amp; white), not color — it's the biggest saving.</li>
+          <li>Put the page on a dark, plain surface and fill the frame, so there is no desk or shadow around it.</li>
+          <li>150 dpi is plenty; 300 dpi only makes the file bigger before we shrink it back.</li>
+      </ul>
+      <h3>Does the form accept JPG too?</h3>
+      <p>If the form accepts an image instead of a PDF, a JPG of the same page is often clearer at 50KB. Use <a href="/compress-image-to-50kb.html">Compress image to 50KB</a> for that.</p>""",
+ "faq": [
+  ("How do I compress a PDF to 50KB?", "Drop your PDF on this page and click Compress — the target is already 50KB. SlimIO tries to keep the text first and only turns the page into an image if that's the only way to fit."),
+  ("Can a 3-page PDF fit in 50KB?", "Only if the pages are mostly text created digitally. Three scanned pages at 50KB come out blurry. Remove pages the form doesn't need, or upload them separately if it allows."),
+  ("Why does my scanned certificate look soft after compressing?", "To reach 50KB a color scan has to lose a lot of detail. Rescan it in grayscale at 150 dpi and compress again — the result is usually much sharper."),
+  ("The form needs between 20KB and 50KB. Will this work?", "SlimIO aims for the best quality under 50KB, so the result is usually well above 20KB unless the original was already small. Check the size shown on the result."),
+  ("Is my document uploaded?", "The image step runs entirely in your browser. The text-preserving step sends the file to our server over HTTPS and deletes it as soon as it is compressed; nothing is kept."),
+ ],
+},
+{
+ "slug": "compress-pdf-to-300kb", "target": "300KB",
+ "title": "Compress PDF to 300KB — Free for Certificates & Mark Sheets | SlimIO",
+ "short": "Compress PDF to 300KB | SlimIO",
+ "desc": "Compress scanned certificates, mark sheets and multi-page documents to under 300KB for application portals. Free, no signup, keeps the best quality that fits.",
+ "keywords": "compress pdf to 300kb, pdf under 300kb, reduce pdf size to 300kb, pdf 300kb, compress pdf below 300kb, mark sheet pdf 300kb",
+ "h1": "Compress PDF<br /><b>to 300KB.</b>",
+ "lead": "Portal asks for each document under 300KB? Shrink your scans to fit and keep every page readable.",
+ "content": """
+      <h2>How to compress a PDF to 300KB</h2>
+      <ul>
+          <li><b>1. Put the pages together.</b> If the portal wants one file per document, combine the scans with <a href="/merge.html">Merge PDF</a> or photos with <a href="/jpg-to-pdf.html">JPG to PDF</a>.</li>
+          <li><b>2. Drop the PDF in and click Compress.</b> The target is already 300KB.</li>
+          <li><b>3. Download and check.</b> The result shows the final size and whether the text is still selectable.</li>
+      </ul>
+      <h3>Where 300KB shows up</h3>
+      <p>Admission, scholarship and recruitment portals often ask for each supporting document — mark sheets, degree certificates, experience letters, category or income certificates — as a PDF under 300KB. That's roughly two to five scanned pages.</p>
+      <h3>Why phone scans come out so big</h3>
+      <p>Scanning apps save every page as a high-resolution color photo, so a three-page scan is easily 5–10MB. SlimIO first tries a compression that keeps the text; if the file is still over 300KB, it re-renders the pages at the highest resolution that fits.</p>
+      <h3>Several documents to upload?</h3>
+      <ul>
+          <li>Compress each document separately so each gets the full 300KB.</li>
+          <li>Leave out blank backs of pages with <a href="/delete-pages.html">Remove Pages</a> — they cost as much space as a full page.</li>
+          <li>Rotate sideways scans with <a href="/rotate.html">Rotate PDF</a> before compressing so they read the right way up.</li>
+      </ul>""",
+ "faq": [
+  ("How do I reduce a PDF to 300KB?", "Drop it on this page and click Compress. The target is preset to 300KB, and SlimIO keeps the sharpest version that fits. No signup."),
+  ("How many pages fit in 300KB?", "Digitally created PDFs can have dozens of pages. For scans, about two to five pages stay clearly readable."),
+  ("Can I combine several certificates into one PDF under 300KB?", "Yes. Merge them first with Merge PDF (or JPG to PDF for photos), then compress the merged file here."),
+  ("Will colored stamps and seals still show?", "Yes. Colors are kept; only fine detail is reduced to reach the target."),
+  ("Is there a limit on how often I can use it?", "The free tier includes a daily number of operations. No signup is needed."),
+ ],
+},
+{
+ "slug": "compress-pdf-to-2mb", "target": "2MB",
+ "title": "Compress PDF to 2MB — Free, Keeps Text Sharp | SlimIO",
+ "short": "Compress PDF to 2MB | SlimIO",
+ "desc": "Compress a PDF to under 2MB for university, bank, insurance and government upload portals. At 2MB most documents keep sharp, selectable text. Free, no signup.",
+ "keywords": "compress pdf to 2mb, pdf under 2mb, reduce pdf size to 2mb, pdf 2mb, compress pdf less than 2mb, scanned pdf 2mb",
+ "h1": "Compress PDF<br /><b>to 2MB.</b>",
+ "lead": "Upload limit of 2MB? Most PDFs fit with text that stays crisp, selectable and searchable.",
+ "content": """
+      <h2>How to compress a PDF to 2MB</h2>
+      <ul>
+          <li><b>1. Add your PDF.</b> The target is already 2MB.</li>
+          <li><b>2. Click Compress.</b> At this size SlimIO uses a gentler setting that keeps text as real text and only resamples large images.</li>
+          <li><b>3. Download.</b> The result tells you whether the text is still selectable.</li>
+      </ul>
+      <h3>Where 2MB limits are common</h3>
+      <p>University application systems, bank and insurance document uploads, visa and tender portals, and many HR systems cap each file at 2MB. Typical files that go over: scanning-app PDFs, reports with photos, slides saved as PDF, and theses with figures.</p>
+      <h3>Why a scanning app's PDF is 15MB</h3>
+      <p>Apps like phone scanners store each page as a full-resolution photo — often 2–4MB per page. Those photos are what SlimIO shrinks; the page itself keeps its layout. A 10-page scan usually fits under 2MB with readable text.</p>
+      <h3>Keep it searchable</h3>
+      <p>Reviewers often search inside PDFs. At 2MB, digitally created documents almost always keep their text layer, so names and numbers stay searchable and copyable. If a file can only fit by turning pages into images, SlimIO tells you on the result.</p>""",
+ "faq": [
+  ("How do I make a PDF smaller than 2MB?", "Drop it on this page and click Compress. The target is already 2MB; SlimIO keeps text sharp and reduces only the images as much as needed."),
+  ("Will my PDF stay searchable at 2MB?", "Almost always for documents created on a computer. Scanned pages were images to begin with, so they stay images — just smaller."),
+  ("My phone scan is 15MB. Can it get under 2MB?", "Usually, yes. Most of that size is high-resolution photos of each page, which compress very well."),
+  ("Can I compress several PDFs to 2MB each?", "Yes. Compress them one after another; each file gets its own 2MB target."),
+  ("Is my file uploaded?", "Files up to 50MB are compressed on our server over HTTPS with a text-preserving method and deleted right after. The image step runs only in your browser."),
+ ],
+},
 {
  "slug": "compress-pdf-to-100kb", "target": "100KB",
  "title": "Compress PDF to 100KB — Free Online, No Signup | SlimIO",

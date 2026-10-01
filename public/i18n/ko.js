@@ -39,7 +39,7 @@ window.SLIMIO_KO = {
    "✓ under {size}": "✓ {size} 이하",
    "✗ over {size}": "✗ {size} 초과",
    "Your PDF is already under {size} — no compression needed.": "이미 {size}보다 작아서 압축할 필요가 없어요.",
-   "Text kept sharp and selectable.": "글자가 선명하고, 복사도 그대로 돼요.",
+   "Pages kept as they are — only the images inside were compressed, so any text stays sharp and selectable.": "페이지는 그대로 두고 안의 이미지만 줄였어요. 문서에 글자가 있다면 선명하고 복사도 그대로 돼요.",
    "This is the smallest we could make it. To get under {size}, remove pages you don't need or split the file into parts.": "이게 만들 수 있는 가장 작은 크기예요. {size} 이하로 맞추려면 필요 없는 페이지를 지우거나 파일을 나눠 주세요.",
    "To reach {size}, pages were converted to images at about {dpi} dpi. The text is no longer selectable.": "{size}에 맞추려고 페이지를 약 {dpi}dpi 이미지로 바꿨어요. 글자는 더 이상 선택·복사되지 않아요.",
    " Small print may be hard to read — removing pages you don't need will give a sharper result.": " 작은 글씨는 읽기 어려울 수 있어요. 필요 없는 페이지를 빼면 더 선명해져요.",

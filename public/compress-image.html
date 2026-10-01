@@ -55,7 +55,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=a0d83cb9" />
+<link rel="stylesheet" href="/style.css?v=f8ebaa98" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -182,7 +182,16 @@
            <div class="limit" id="limit"></div>
            <div class="log" id="log"></div>
       </div>
-
+<!-- next-steps:start -->
+<div class="next-steps" id="next" hidden>
+      <b class="nh">Next, you might want to…</b>
+      <div class="tcards three">
+          <a class="tcard" href="/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>ID Photo</b><small>Passport & ID sizes, under the KB limit</small></span></a>
+          <a class="tcard" href="/jpg-to-pdf.html"><span class="ico">📷</span><span class="tx"><b>JPG to PDF</b><small>Turn photos into one PDF</small></span></a>
+          <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
+      </div>
+</div>
+<!-- next-steps:end -->
       <div class="ad" id="ad">
      SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
       </div>
@@ -239,22 +248,34 @@
       </div>
 </div>
 
-<div class="related">
-      <h3>Related tools</h3>
-      <div class="tools-row">
-          <a class="mini" href="/">Compress PDF</a>
-          <a class="mini" href="/jpg-to-pdf.html">JPG to PDF</a>
-          <a class="mini" href="/pdf-to-jpg.html">PDF to JPG</a>
-          <a class="mini" href="/sign-pdf.html">Sign PDF</a>
-          <a class="mini" href="/merge.html">Merge PDF</a>
-          <a class="mini" href="/split.html">Split PDF</a>
-          <a class="mini" href="/delete-pages.html">Remove Pages</a>
-          <a class="mini" href="/rotate.html">Rotate PDF</a>
-          <a class="mini" href="/organize.html">Organize PDF</a>
-          <a class="mini" href="/add-page-numbers.html">Page Numbers</a>
-          <a class="mini" href="/watermark.html">Watermark PDF</a>
+<!-- more-tools:start -->
+<section class="more">
+      <a class="feature" href="/signature-image.html">
+          <span class="feature-art"><img src="/img/sig-demo-out.webp" width="600" height="182" loading="lazy" alt="" /></span>
+          <span class="feature-body"><span class="tag">New</span><b class="ft">Your signature as a clean image</b><span class="fx">Draw it, or photograph it on paper — get a JPG or transparent PNG at the size forms ask for.</span><span class="cta">Make a signature image →</span></span>
+      </a>
+      <h2 class="more-h">More free tools</h2>
+      <p class="more-sub">PDF tools</p>
+      <div class="tcards">
+          <a class="tcard" href="/"><span class="ico">🗜️</span><span class="tx"><b>Compress PDF</b><small>Smaller files, text kept sharp</small></span></a>
+          <a class="tcard" href="/merge.html"><span class="ico">➕</span><span class="tx"><b>Merge PDF</b><small>Combine multiple PDFs into one</small></span></a>
+          <a class="tcard" href="/split.html"><span class="ico">✂️</span><span class="tx"><b>Split PDF</b><small>Extract pages or split by range</small></span></a>
+          <a class="tcard" href="/delete-pages.html"><span class="ico">🗑️</span><span class="tx"><b>Remove Pages</b><small>Delete pages from a PDF</small></span></a>
+          <a class="tcard" href="/rotate.html"><span class="ico">🔄</span><span class="tx"><b>Rotate PDF</b><small>Turn pages 90/180/270°</small></span></a>
+          <a class="tcard" href="/organize.html"><span class="ico">🗂️</span><span class="tx"><b>Organize PDF</b><small>Reorder, rotate or delete pages</small></span></a>
+          <a class="tcard" href="/add-page-numbers.html"><span class="ico">🔢</span><span class="tx"><b>Page Numbers</b><small>Number every page of a PDF</small></span></a>
+          <a class="tcard" href="/watermark.html"><span class="ico">💧</span><span class="tx"><b>Watermark PDF</b><small>Stamp text on every page</small></span></a>
+          <a class="tcard" href="/sign-pdf.html"><span class="ico">✍️</span><span class="tx"><b>Sign PDF</b><small>Put your signature on any page</small></span></a>
+          <a class="tcard" href="/pdf-to-jpg.html"><span class="ico">🖼️</span><span class="tx"><b>PDF to JPG</b><small>Convert pages to images</small></span></a>
+          <a class="tcard" href="/jpg-to-pdf.html"><span class="ico">📷</span><span class="tx"><b>JPG to PDF</b><small>Turn photos into one PDF</small></span></a>
       </div>
-</div>
+      <p class="more-sub">Photo &amp; signature tools</p>
+      <div class="tcards">
+          <a class="tcard" href="/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>ID Photo</b><small>Passport & ID sizes, under the KB limit</small></span></a>
+          <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
+      </div>
+</section>
+<!-- more-tools:end -->
 
 <div class="wrap">
       <footer>
@@ -268,7 +289,7 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/lib.js?v=5f6f2857"></script>
+<script defer src="/lib.js?v=644bfd3f"></script>
 <script type="module" src="/js/compress-image.js?v=0043f251"></script>
 </body>
 </html>

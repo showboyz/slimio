@@ -230,7 +230,7 @@ def size_row(slug):
 
 def with_size_row(s, slug):
     s = re.sub(r'<div class="related sizes">.*?</div>\n</div>\n\n', "", s, flags=re.S)   # idempotent
-    return sub1(r'(<div class="related">\s*<h3>Related tools</h3>)', lambda m: size_row(slug) + m.group(1), s, slug)
+    return sub1(r'(<!-- more-tools:start -->|<div class="related">\s*<h3>Related tools</h3>)', lambda m: size_row(slug) + m.group(1), s, slug)
 
 
 def build(p, base):

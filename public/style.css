@@ -243,6 +243,66 @@ footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 30px 0 40
 .faq details[open] summary::after { content: "−"; }
 .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 
+/* cross-links (tools/gen_related.py): next steps after a download, feature banner, tool cards */
+.tcards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tcard {
+   display: flex; align-items: flex-start; gap: 10px; padding: 14px; border-radius: 12px;
+   background: var(--card); border: 1px solid var(--line); color: var(--text); transition: 0.15s;
+}
+.tcard:hover { border-color: var(--accent); transform: translateY(-2px); }
+.tcard .ico { font-size: 22px; line-height: 1.1; flex-shrink: 0; }
+.tcard .tx { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.tcard b { font-size: 14px; }
+.tcard small { color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+.next-steps {
+   max-width: 620px; margin: 18px auto 0; padding: 18px; border-radius: 16px;
+   background: #0f1f1a; border: 1px solid #24503f; animation: rise 0.3s ease-out;
+}
+.next-steps[hidden] { display: none; }
+.next-steps .nh { display: block; text-align: center; font-size: 15px; margin-bottom: 12px; }
+.tcards.three { grid-template-columns: repeat(3, 1fr); }
+.next-steps .tcard { background: #121a22; flex-direction: column; gap: 4px; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.more { max-width: 920px; margin: 56px auto 0; padding: 0 20px; }
+.feature {
+   display: flex; align-items: center; gap: 26px; padding: 24px 28px; border-radius: 20px; color: var(--text);
+   background: radial-gradient(120% 140% at 0% 0%, #1b4a3a 0%, #13241f 45%, #141a24 100%);
+   border: 1px solid #285744; transition: 0.15s;
+}
+.feature:hover { border-color: var(--accent); transform: translateY(-2px); }
+.feature-art { display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0; max-width: 100%; min-width: 0; }
+.feature-art img {
+   width: auto; height: auto; max-width: 100%; max-height: 132px; min-width: 0; border-radius: 10px; background: #fff;
+   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+.feature-art img:nth-child(2) { max-height: 150px; }
+.feature-art img:only-child { padding: 10px 14px; }   /* wide signature sample: give it a paper margin */
+.feature-body { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.feature .tag {
+   font-size: 11px; font-weight: 800; letter-spacing: 0.4px; color: #062a1c;
+   background: var(--accent); padding: 2px 9px; border-radius: 20px;
+}
+.feature .ft { font-size: 22px; line-height: 1.25; }
+.feature .fx { color: var(--muted); font-size: 14px; max-width: 460px; }
+.feature .cta { margin-top: 4px; color: var(--accent); font-weight: 700; font-size: 15px; }
+.more-h { text-align: center; font-size: 22px; margin: 44px 0 0; }
+.more-sub { color: var(--muted); font-size: 13px; font-weight: 600; margin: 18px 0 10px; }
+
+@media (max-width: 760px) {
+   .tcards { grid-template-columns: repeat(2, 1fr); }
+   .feature { flex-direction: column; align-items: stretch; text-align: left; gap: 18px; padding: 20px; }
+   .feature-art { justify-content: center; }
+   .feature-art img { max-height: 108px; }
+   .feature-art img:nth-child(2) { max-height: 122px; }
+   .feature .ft { font-size: 19px; }
+}
+@media (max-width: 560px) {
+   .tcards.three { grid-template-columns: 1fr; }
+   .next-steps .tcard { flex-direction: row; align-items: center; }
+}
+
 .related {
    max-width: 760px; margin: 40px auto 0; padding: 0 20px;
    text-align: center;

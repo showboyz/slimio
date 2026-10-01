@@ -12,13 +12,16 @@ Re-run it after changing an English page. If a UI string it expects is gone,
 it stops and tells you which one, so the Korean page never silently drifts.
 """
 import html, json, os, re, sys, datetime
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import gen_related   # cross-link blocks: written into the English pages first, translated with COMMON
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "public")
 SITE = "https://pdfslimio.com"
 TODAY = datetime.date.today().isoformat()
 
-SIZE_PAGES = ["compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html", "compress-pdf-to-500kb.html",
-              "compress-pdf-to-1mb.html", "compress-pdf-for-email.html"]
+SIZE_PAGES = ["compress-pdf-to-50kb.html", "compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html",
+              "compress-pdf-to-300kb.html", "compress-pdf-to-500kb.html", "compress-pdf-to-1mb.html",
+              "compress-pdf-to-2mb.html", "compress-pdf-for-email.html"]
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
          "sign-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
@@ -86,6 +89,9 @@ COMMON = [
     (">Compress to 200KB</a>", ">200KB로 줄이기</a>"),
     (">Compress to 500KB</a>", ">500KB로 줄이기</a>"),
     (">Compress to 1MB</a>", ">1MB로 줄이기</a>"),
+    (">Compress to 50KB</a>", ">50KB로 줄이기</a>"),
+    (">Compress to 300KB</a>", ">300KB로 줄이기</a>"),
+    (">Compress to 2MB</a>", ">2MB로 줄이기</a>"),
     (">Compress for email</a>", ">메일 첨부용으로 줄이기</a>"),
     ("<span>Pages</span>", "<span>페이지</span>"),
     ("↓ Download PDF", "↓ PDF 다운로드"),
@@ -174,7 +180,7 @@ KO["index.html"] = dict(
         ("<h3>ID Photo</h3><p>Crop to passport or ID size, under the KB limit</p>", "<h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p>"),
         ("<h3>Signature Image</h3><p>Clean JPG or PNG signature, 10–20KB</p>", "<h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p>"),
         ("Need an exact size?", "정해진 용량에 맞춰야 하나요?"),
-        (">Compress PDF to 100KB</a>", ">PDF 100KB로 줄이기</a>"),
+        (">Compress PDF to 50KB</a>", ">PDF 50KB로 줄이기</a>"),
         (">for email</a>", ">메일 첨부용</a>"),
         ('<h2 class="sec">Simple, free pricing</h2>', '<h2 class="sec">간단한 요금제</h2>'),
         ("Start free. Upgrade only if you need more.", "무료로 시작하고, 더 필요할 때만 업그레이드하세요."),
@@ -992,6 +998,113 @@ KO["sign-pdf.html"] = dict(
 
 SIZE_FAQ_PRIVACY = ("파일이 서버에 남나요?", "글자를 유지하는 압축 단계에서 파일을 서버로 보내지만, 압축이 끝나면 바로 삭제해요. 이미지로 바꾸는 단계는 브라우저 안에서만 처리돼요.")
 
+KO["compress-pdf-to-50kb.html"] = dict(
+    title="PDF 50KB 이하로 줄이기 - 증명서 한 장도 선명하게 무료 | SlimIO",
+    desc="증명서·신분증 사본·서명한 서류 한 장을 PDF 50KB 이하로 줄이세요. 이 용량 안에서 가장 읽기 좋게 맞춰요. 회원가입 없이 무료.",
+    keywords="PDF 50KB 줄이기, PDF 50KB 이하, PDF 용량 50KB, 증명서 PDF 50KB, PDF 50KB 압축",
+    short="PDF 50KB 이하로 줄이기 | SlimIO",
+    app_name="SlimIO PDF 50KB 압축",
+    app_desc="한 장짜리 PDF를 50KB 이하로 줄이는 무료 도구. 이 용량 안에서 가장 읽기 좋은 상태로 맞춰요.",
+    features=["PDF 50KB 이하로 압축", "목표 용량 자동 맞춤", "회원가입 없음"],
+    h1="PDF를<br /><b>50KB 이하로.</b>",
+    lead="50KB는 스캔 한 장 정도의 아주 작은 용량이에요. 그 안에서 가장 선명한 버전을 찾아 드려요.",
+    content="""
+      <h2>PDF를 50KB로 줄이는 방법</h2>
+      <ul>
+          <li><b>1. 필요한 페이지만 남기기.</b> 50KB에는 현실적으로 한 장이 들어가요. 여러 장이라면 먼저 <a href="/ko/delete-pages.html">페이지 삭제</a>로 빼 주세요.</li>
+          <li><b>2. 올리고 압축하기.</b> 목표는 이미 50KB예요. 한글·워드로 만든 PDF는 그대로 들어가는 경우가 많고, 스캔은 들어가는 가장 높은 해상도로 다시 만들어요.</li>
+          <li><b>3. 올리기 전에 확인.</b> 결과를 열어 증명서 번호처럼 가장 작은 글자를 확대해 보세요.</li>
+      </ul>
+      <h3>50KB에는 얼마나 들어가나요?</h3>
+      <p>한글·워드나 웹에서 만든 한 장짜리 PDF는 원래 20~40KB인 경우가 많아요. 스캔은 달라요. 폰으로 컬러 스캔한 한 장은 1~3MB라서 20~60배 줄여야 해요. 흑백 스캔은 50KB에서도 읽을 만하지만, 컬러로 찍은 서류 사진은 눈에 띄게 흐려져요.</p>
+      <h3>잘 줄어들게 스캔하는 법</h3>
+      <ul>
+          <li>컬러 대신 <b>흑백(회색조)</b>으로 스캔하세요. 가장 크게 줄어요.</li>
+          <li>어둡고 단색인 바닥에 종이를 놓고 화면을 꽉 채워 찍으세요. 책상이나 그림자가 없게요.</li>
+          <li>해상도는 150dpi면 충분해요. 300dpi는 파일만 커져요.</li>
+      </ul>
+      <h3>JPG로 내도 된다면</h3>
+      <p>원서가 PDF 대신 이미지도 받는다면, 같은 페이지를 JPG로 내는 편이 50KB에서 더 선명한 경우가 많아요. <a href="/ko/compress-image-to-50kb.html">사진 50KB로 줄이기</a>를 쓰세요.</p>""",
+    faq_title="PDF 50KB 이하로 줄이기",
+    faq=[
+        ("PDF를 50KB로 줄이려면 어떻게 하나요?", "이 페이지에 PDF를 넣고 압축하기를 누르세요. 목표는 이미 50KB예요. 글자를 유지하는 압축을 먼저 해 보고, 그래야만 들어갈 때만 페이지를 이미지로 바꿔요."),
+        ("세 장짜리 PDF도 50KB에 들어가나요?", "컴퓨터로 만든 글자 위주 문서라면 가능해요. 스캔 세 장을 50KB에 넣으면 흐려져요. 필요 없는 페이지를 빼거나, 가능하면 따로 올리세요."),
+        ("스캔한 증명서가 흐릿해졌어요.", "컬러 스캔을 50KB로 맞추려면 세밀함이 많이 줄어요. 흑백 150dpi로 다시 스캔해서 압축하면 대개 훨씬 선명해요."),
+        ("“20KB 이상 50KB 이하”처럼 최소 용량도 있어요.", "50KB 안에서 가장 좋은 화질로 만들기 때문에, 원본이 아주 작지 않다면 대개 20KB보다 넉넉히 커요. 결과에 나온 용량을 확인해 주세요."),
+        SIZE_FAQ_PRIVACY,
+    ],
+)
+
+KO["compress-pdf-to-300kb.html"] = dict(
+    title="PDF 300KB 이하로 줄이기 - 증명서·성적표 스캔 무료 압축 | SlimIO",
+    desc="성적증명서·졸업증명서·경력증명서처럼 여러 장 스캔한 PDF를 300KB 이하로 줄이세요. 회원가입 없이 무료, 들어가는 가장 좋은 화질로.",
+    keywords="PDF 300KB 줄이기, PDF 300KB 이하, PDF 용량 300KB, 증명서 PDF 300KB, 스캔 PDF 300KB",
+    short="PDF 300KB 이하로 줄이기 | SlimIO",
+    app_name="SlimIO PDF 300KB 압축",
+    app_desc="여러 장 스캔한 PDF를 300KB 이하로 줄이는 무료 도구. 들어가는 가장 좋은 화질을 찾아요.",
+    features=["PDF 300KB 이하로 압축", "목표 용량 자동 맞춤", "회원가입 없음"],
+    h1="PDF를<br /><b>300KB 이하로.</b>",
+    lead="서류마다 “300KB 이하”인가요? 스캔한 증명서를 모든 페이지가 읽히게 맞춰 드려요.",
+    content="""
+      <h2>PDF를 300KB로 줄이는 방법</h2>
+      <ul>
+          <li><b>1. 페이지 모으기.</b> 서류 하나를 파일 하나로 내야 한다면, 스캔 PDF는 <a href="/ko/merge.html">PDF 합치기</a>로, 사진은 <a href="/ko/jpg-to-pdf.html">JPG → PDF</a>로 먼저 묶으세요.</li>
+          <li><b>2. 올리고 압축하기.</b> 목표는 이미 300KB예요.</li>
+          <li><b>3. 다운로드하고 확인.</b> 결과에 최종 용량과 글자 선택이 가능한지가 나와요.</li>
+      </ul>
+      <h3>300KB 제한을 자주 만나는 곳</h3>
+      <p>입학·장학금·채용 시스템은 성적증명서, 졸업증명서, 경력증명서, 자격증 사본 같은 첨부 서류를 한 파일에 300KB 이하로 제한하는 경우가 많아요. 스캔으로 치면 대략 두세 장에서 다섯 장 정도예요.</p>
+      <h3>폰으로 스캔하면 왜 이렇게 클까요?</h3>
+      <p>스캔 앱은 페이지마다 고해상도 컬러 사진으로 저장해서, 세 장만 스캔해도 5~10MB가 되기 쉬워요. SlimIO는 먼저 글자를 유지하는 압축을 해 보고, 그래도 300KB를 넘으면 들어가는 가장 높은 해상도로 페이지를 다시 만들어요.</p>
+      <h3>서류가 여러 개라면</h3>
+      <ul>
+          <li>서류마다 따로 압축하세요. 그래야 각 파일이 300KB를 온전히 쓸 수 있어요.</li>
+          <li>빈 뒷면은 <a href="/ko/delete-pages.html">페이지 삭제</a>로 빼세요. 빈 페이지도 한 장만큼 용량을 차지해요.</li>
+          <li>옆으로 누운 스캔은 <a href="/ko/rotate.html">PDF 회전</a>으로 바로 세운 뒤 압축하세요.</li>
+      </ul>""",
+    faq_title="PDF 300KB 이하로 줄이기",
+    faq=[
+        ("PDF를 300KB로 줄이려면요?", "이 페이지에 PDF를 넣고 압축하기를 누르세요. 목표는 이미 300KB이고, 그 안에서 가장 선명하게 만들어 드려요. 회원가입은 필요 없어요."),
+        ("300KB에 몇 장까지 들어가나요?", "컴퓨터로 만든 PDF는 수십 장도 들어가요. 스캔은 두 장에서 다섯 장 정도까지 또렷하게 읽혀요."),
+        ("증명서 여러 개를 PDF 하나로 묶어서 300KB로 만들 수 있나요?", "네. 먼저 PDF 합치기(사진은 JPG → PDF)로 묶은 뒤 여기서 압축하세요."),
+        ("빨간 직인이나 도장도 남나요?", "네. 색은 그대로 남고, 용량을 맞추려고 세밀한 부분만 조금 줄어요."),
+        SIZE_FAQ_PRIVACY,
+    ],
+)
+
+KO["compress-pdf-to-2mb.html"] = dict(
+    title="PDF 2MB 이하로 줄이기 - 글자 선명하게 무료 압축 | SlimIO",
+    desc="학교·공공기관·은행·보험 제출 시스템의 2MB 제한에 맞춰 PDF를 줄이세요. 2MB면 대부분 글자가 선명하고 검색도 돼요. 회원가입 없이 무료.",
+    keywords="PDF 2MB 줄이기, PDF 2MB 이하, PDF 용량 2MB, PDF 2MB 압축, 스캔 PDF 2MB",
+    short="PDF 2MB 이하로 줄이기 | SlimIO",
+    app_name="SlimIO PDF 2MB 압축",
+    app_desc="PDF를 2MB 이하로 줄이는 무료 도구. 대부분 글자를 선명하고 검색 가능한 상태로 유지해요.",
+    features=["PDF 2MB 이하로 압축", "글자 선명하게 유지", "회원가입 없음"],
+    h1="PDF를<br /><b>2MB 이하로.</b>",
+    lead="업로드 제한이 2MB인가요? 대부분의 PDF는 글자가 선명하고 검색되는 그대로 들어가요.",
+    content="""
+      <h2>PDF를 2MB로 줄이는 방법</h2>
+      <ul>
+          <li><b>1. PDF 올리기.</b> 목표 용량은 2MB로 맞춰져 있어요.</li>
+          <li><b>2. 압축하기.</b> 이 용량에서는 글자를 그대로 두고 큰 이미지만 줄이는 부드러운 설정을 써요.</li>
+          <li><b>3. 다운로드.</b> 결과에 글자 선택이 가능한지 함께 나와요.</li>
+      </ul>
+      <h3>2MB 제한을 자주 만나는 곳</h3>
+      <p>대학 입학·대학원 원서 시스템, 공공기관 민원·입찰 첨부, 은행·보험 서류 제출, 회사 인사 시스템은 파일당 2MB로 제한하는 경우가 많아요. 스캔 앱으로 만든 PDF, 사진이 많은 보고서, PDF로 저장한 발표 자료, 그림이 많은 논문이 주로 넘어가요.</p>
+      <h3>스캔 앱 PDF는 왜 15MB나 될까요?</h3>
+      <p>폰 스캔 앱은 페이지마다 원본 해상도 사진으로 저장해서 한 장에 2~4MB가 되기도 해요. SlimIO가 줄이는 건 이 사진들이고, 페이지 배치는 그대로예요. 10장짜리 스캔도 대개 글자가 읽히는 상태로 2MB 안에 들어가요.</p>
+      <h3>검색되는 PDF로 남기기</h3>
+      <p>심사하는 쪽은 PDF 안에서 이름이나 번호를 검색하곤 해요. 컴퓨터로 만든 문서는 2MB에서 거의 항상 글자 정보가 그대로 남아서 검색과 복사가 돼요. 페이지를 이미지로 바꿔야만 들어가는 경우에는 결과에 알려 드려요.</p>""",
+    faq_title="PDF 2MB 이하로 줄이기",
+    faq=[
+        ("PDF를 2MB보다 작게 만들려면요?", "이 페이지에 PDF를 넣고 압축하기를 누르세요. 목표는 이미 2MB이고, 글자는 선명하게 두고 이미지만 필요한 만큼 줄여요."),
+        ("2MB로 줄여도 PDF 안에서 검색이 되나요?", "컴퓨터로 만든 문서라면 거의 항상 돼요. 스캔한 페이지는 원래 이미지라서 이미지인 채로 크기만 작아져요."),
+        ("폰으로 스캔한 15MB PDF도 2MB로 줄어드나요?", "대개 줄어요. 용량 대부분이 페이지마다 저장된 고해상도 사진이라 잘 줄어들어요."),
+        ("PDF 여러 개를 각각 2MB로 줄일 수 있나요?", "네. 하나씩 차례로 압축하면 파일마다 2MB 목표로 맞춰요."),
+        SIZE_FAQ_PRIVACY,
+    ],
+)
+
 KO["compress-pdf-to-100kb.html"] = dict(
     title="PDF 100KB 이하로 줄이기 - 무료 용량 맞춤 압축 | SlimIO",
     desc="채용·공공기관 사이트 업로드용으로 PDF를 100KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.",
@@ -1345,7 +1458,10 @@ def write_sitemap():
         '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + body + "</urlset>\n")
 
 
+COMMON += gen_related.ko_pairs()
+
 if __name__ == "__main__":
+    gen_related.run()
     missing = [p for p in PAGES if p not in KO]
     if missing:
         sys.exit(f"no Korean text for: {missing}")

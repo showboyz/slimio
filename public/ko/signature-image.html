@@ -101,7 +101,7 @@
       ]
 }
 </script>
-<link rel="stylesheet" href="/style.css?v=a0d83cb9" />
+<link rel="stylesheet" href="/style.css?v=f8ebaa98" />
 <style>
 .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
@@ -239,7 +239,16 @@
            <div class="limit" id="limit"></div>
            <div class="log" id="log"></div>
       </div>
-
+<!-- next-steps:start -->
+<div class="next-steps" id="next" hidden>
+      <b class="nh">이어서 이런 것도 해 보세요</b>
+      <div class="tcards three">
+          <a class="tcard" href="/ko/sign-pdf.html"><span class="ico">✍️</span><span class="tx"><b>PDF 서명</b><small>원하는 위치에 서명 · 도장</small></span></a>
+          <a class="tcard" href="/ko/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>증명사진</b><small>여권·반명함 규격 + 용량 맞추기</small></span></a>
+          <a class="tcard" href="/ko/"><span class="ico">🗜️</span><span class="tx"><b>PDF 압축</b><small>글자는 선명하게, 용량은 작게</small></span></a>
+      </div>
+</div>
+<!-- next-steps:end -->
       <div class="ad" id="ad">
      SlimIO는 무료예요. 계속 무료로 운영할 수 있도록 이 자리에 작은 <b>배너 광고</b>가 표시될 수 있어요.
       </div>
@@ -294,24 +303,34 @@
       </details>
 </section>
 
-<div class="related">
-      <h3>다른 PDF 도구</h3>
-      <div class="tools-row">
-          <a class="mini" href="/ko/sign-pdf.html">PDF 서명</a>
-          <a class="mini" href="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>
-          <a class="mini" href="/ko/">PDF 압축</a>
-          <a class="mini" href="/ko/watermark.html">워터마크</a>
-          <a class="mini" href="/ko/add-page-numbers.html">페이지 번호</a>
-          <a class="mini" href="/ko/merge.html">PDF 합치기</a>
-          <a class="mini" href="/ko/split.html">PDF 나누기</a>
-          <a class="mini" href="/ko/delete-pages.html">페이지 삭제</a>
-          <a class="mini" href="/ko/rotate.html">PDF 회전</a>
-          <a class="mini" href="/ko/organize.html">페이지 순서 변경</a>
-          <a class="mini" href="/ko/pdf-to-jpg.html">PDF → JPG</a>
-          <a class="mini" href="/ko/jpg-to-pdf.html">JPG → PDF</a>
-          <a class="mini" href="/ko/compress-image.html">사진 용량 줄이기</a>
+<!-- more-tools:start -->
+<section class="more">
+      <a class="feature" href="/ko/compress-id-photo.html">
+          <span class="feature-art"><img src="/img/id-sample-3x4.webp" width="354" height="472" loading="lazy" alt="" /><img src="/img/id-sample-passport.webp" width="413" height="531" loading="lazy" alt="" /></span>
+          <span class="feature-body"><span class="tag">새 기능</span><b class="ft">증명사진, 규격도 용량도 한 번에</b><span class="fx">틀을 얼굴에 맞추고 3×4·3.5×4.5cm를 고르면 원서 용량 제한까지 맞춰요.</span><span class="cta">증명사진 만들기 →</span></span>
+      </a>
+      <h2 class="more-h">다른 무료 도구</h2>
+      <p class="more-sub">PDF 도구</p>
+      <div class="tcards">
+          <a class="tcard" href="/ko/"><span class="ico">🗜️</span><span class="tx"><b>PDF 압축</b><small>글자는 선명하게, 용량은 작게</small></span></a>
+          <a class="tcard" href="/ko/merge.html"><span class="ico">➕</span><span class="tx"><b>PDF 합치기</b><small>여러 PDF를 하나로</small></span></a>
+          <a class="tcard" href="/ko/split.html"><span class="ico">✂️</span><span class="tx"><b>PDF 나누기</b><small>페이지별로 나누거나 범위 추출</small></span></a>
+          <a class="tcard" href="/ko/delete-pages.html"><span class="ico">🗑️</span><span class="tx"><b>페이지 삭제</b><small>필요 없는 페이지 빼기</small></span></a>
+          <a class="tcard" href="/ko/rotate.html"><span class="ico">🔄</span><span class="tx"><b>PDF 회전</b><small>90° · 180° · 270° 돌리기</small></span></a>
+          <a class="tcard" href="/ko/organize.html"><span class="ico">🗂️</span><span class="tx"><b>페이지 순서 변경</b><small>순서 바꾸기 · 회전 · 삭제</small></span></a>
+          <a class="tcard" href="/ko/add-page-numbers.html"><span class="ico">🔢</span><span class="tx"><b>페이지 번호</b><small>모든 페이지에 쪽번호</small></span></a>
+          <a class="tcard" href="/ko/watermark.html"><span class="ico">💧</span><span class="tx"><b>워터마크</b><small>대외비 · 사본 문구 넣기</small></span></a>
+          <a class="tcard" href="/ko/sign-pdf.html"><span class="ico">✍️</span><span class="tx"><b>PDF 서명</b><small>원하는 위치에 서명 · 도장</small></span></a>
+          <a class="tcard" href="/ko/pdf-to-jpg.html"><span class="ico">🖼️</span><span class="tx"><b>PDF → JPG</b><small>페이지를 이미지로 변환</small></span></a>
+          <a class="tcard" href="/ko/jpg-to-pdf.html"><span class="ico">📷</span><span class="tx"><b>JPG → PDF</b><small>사진을 PDF 하나로 묶기</small></span></a>
       </div>
-</div>
+      <p class="more-sub">사진 · 서명 도구</p>
+      <div class="tcards">
+          <a class="tcard" href="/ko/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>증명사진</b><small>여권·반명함 규격 + 용량 맞추기</small></span></a>
+          <a class="tcard" href="/ko/compress-image.html"><span class="ico">📸</span><span class="tx"><b>사진 용량 줄이기</b><small>사진을 원하는 KB로</small></span></a>
+      </div>
+</section>
+<!-- more-tools:end -->
 
 <div class="wrap">
       <footer>
@@ -324,8 +343,8 @@
       </footer>
 </div>
 
-<script defer src="/i18n/ko.js?v=8bd98ac1"></script>
-<script defer src="/lib.js?v=5f6f2857"></script>
+<script defer src="/i18n/ko.js?v=0cc2eb5e"></script>
+<script defer src="/lib.js?v=644bfd3f"></script>
 <script type="module" src="/js/signature-image.js?v=899c3c62"></script>
 </body>
 </html>
