@@ -26,7 +26,7 @@ PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
          "sign-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
          "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
-         "signature-image.html"] + SIZE_PAGES
+         "us-visa-photo.html", "signature-image.html"] + SIZE_PAGES
 
 
 # Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
@@ -83,6 +83,7 @@ COMMON = [
     (">Compress image to 100KB</a>", ">사진 100KB로 줄이기</a>"),
     (">Compress image to 200KB</a>", ">사진 200KB로 줄이기</a>"),
     (">ID / passport photo</a>", ">증명사진 용량 줄이기</a>"),
+    (">US visa photo</a>", ">미국 비자 사진</a>"),
     (">Signature image</a>", ">서명 이미지 만들기</a>"),
     (">Signature Image</a>", ">서명 이미지</a>"),
     (">Compress to 100KB</a>", ">100KB로 줄이기</a>"),
@@ -178,6 +179,7 @@ KO["index.html"] = dict(
         ("<h3>Sign PDF</h3><p>Draw, type or upload a signature</p>", "<h3>PDF 서명</h3><p>그리기 · 이름 · 도장으로 서명</p>"),
         ("<h3>Compress Image</h3><p>Shrink JPG and PNG photos to any size</p>", "<h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p>"),
         ("<h3>ID Photo</h3><p>Crop to passport or ID size, under the KB limit</p>", "<h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p>"),
+        ("<h3>US Visa Photo</h3><p>600×600 for the DS-160, under 240KB</p>", "<h3>미국 비자 사진</h3><p>DS-160용 600×600 · 240KB 이하</p>"),
         ("<h3>Signature Image</h3><p>Clean JPG or PNG signature, 10–20KB</p>", "<h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p>"),
         ("Need an exact size?", "정해진 용량에 맞춰야 하나요?"),
         (">Compress PDF to 50KB</a>", ">PDF 50KB로 줄이기</a>"),
@@ -625,6 +627,7 @@ KO["compress-image.html"] = dict(
         (">Longest side 1920px<", ">긴 변 1920px<"), (">Longest side 1280px<", ">긴 변 1280px<"), (">Longest side 800px<", ">긴 변 800px<"),
         (">ID photo 3×4 cm (354×472px)<", ">증명사진 3×4cm (354×472px)<"),
         (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
+        (">US visa 600×600 px (square)<", ">미국 비자 600×600px (정사각형)<"),
         (">Custom size in pixels…<", ">픽셀 직접 입력…<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("ID, passport and custom sizes are cropped to the right shape — you can move the frame.", "증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요."),
@@ -659,6 +662,55 @@ KO["compress-image.html"] = dict(
         ("사진의 위치정보도 지워지나요?", "네. 사진을 다시 저장하면서 촬영 위치(GPS), 기종, 촬영 날짜 같은 EXIF 정보가 지워져요."),
         ("증명사진 규격에 맞출 수 있나요?", "네. 증명사진 3×4cm나 여권사진 3.5×4.5cm를 고르면 비율에 맞게 자르고(틀을 끌어서 위치 조정 가능), 접수 사이트에서 흔히 요구하는 픽셀 크기로 맞춰요."),
         ("아이폰 사진이 안 열려요.", "아이폰 사진은 HEIC 형식인 경우가 많은데, 이 형식은 브라우저에 따라 열리지 않아요. 사진을 JPG로 공유하거나, 아이폰 설정 → 카메라 → 포맷에서 ‘높은 호환성’으로 바꾼 뒤 다시 시도해 주세요."),
+    ],
+)
+
+KO["us-visa-photo.html"] = dict(
+    title="미국 비자 사진 만들기 - DS-160 600×600·240KB 규격 무료 | SlimIO",
+    desc="DS-160에 올릴 미국 비자 사진을 600×600 정사각형, 240KB 이하 JPG로 만드세요. 머리 크기·눈 높이 가이드까지. 무료, 브라우저에서 처리돼요.",
+    keywords="미국 비자 사진, DS-160 사진, 미국 비자 사진 규격, 600x600 사진, 비자 사진 240KB, DS160 사진 업로드 오류, 미국 비자 사진 크기",
+    short="미국 비자 사진 만들기 | SlimIO",
+    app_name="SlimIO 미국 비자 사진",
+    app_desc="DS-160용 미국 비자 사진을 600×600 정사각형, 240KB 이하 JPG로 만드는 무료 도구. 머리 크기와 눈 높이 가이드를 보여 줘요.",
+    features=["600×600 정사각형 자르기", "240KB 이하 JPG", "머리 크기 · 눈 높이 가이드", "브라우저에서 처리 (업로드 없음)"],
+    h1="미국 비자 사진,<br /><b>600×600 · 240KB 이하.</b>",
+    lead="DS-160 규격대로 정사각형으로 자르고, 가이드에 머리를 맞추면 용량 검사를 통과하는 JPG가 나와요.",
+    ui=None,
+    content="""
+      <h2>DS-160용 미국 비자 사진 만드는 방법</h2>
+      <ul>
+          <li><b>1. 사진 올리기.</b> 미국 비자 600×600과 240KB 제한이 이미 골라져 있어요.</li>
+          <li><b>2. 위치 맞추기.</b> 초록색 틀을 끌어 머리가 점선 타원을 채우고, 눈이 두 점선 사이에 오게 하세요.</li>
+          <li><b>3. 사진 용량 줄이기 → 다운로드.</b> 600×600px, 240KB 이하의 정사각형 JPG가 나와요. 바로 올릴 수 있어요.</li>
+      </ul>
+      <figure class="demo">
+          <div class="demo-row">
+              <div class="demo-src"><img src="/img/id-sample.webp" width="900" height="600" loading="lazy" alt="흰 벽 앞에서 찍은 평범한 휴대폰 사진" /><span>휴대폰 사진 · 1.8MB</span></div>
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <div class="demo-out"><div><img src="/img/us-visa-sample.webp" width="600" height="600" loading="lazy" alt="600×600 정사각형 비자 사진" /><span>600×600px · JPG</span></div></div>
+          </div>
+          <figcaption>가상 인물 예시 사진으로 이 페이지에서 만든 결과예요.</figcaption>
+      </figure>
+      <h3>공식 디지털 사진 규격</h3>
+      <ul>
+          <li><b>모양·크기:</b> 정사각형, 최소 600×600 ~ 최대 1200×1200 픽셀</li>
+          <li><b>파일:</b> JPEG, 240KB 이하</li>
+          <li><b>머리 크기:</b> 머리카락 끝부터 턱까지가 사진 높이의 50~69%</li>
+          <li><b>배경:</b> 흰색 또는 미색의 단색</li>
+          <li><b>최근·무보정:</b> 6개월 이내 촬영, 안경 불가, 얼굴을 바꾸는 디지털 보정 불가</li>
+      </ul>
+      <p>출처: 미국 국무부 <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html" rel="noopener">사진 규정(영문)</a>. 기준은 바뀔 수 있으니 신청 전에 공식 페이지를 확인하세요.</p>
+      <h3>SlimIO가 하는 일과 하지 않는 일</h3>
+      <p>자르기, 크기 맞추기, 용량 줄이기만 해요. 얼굴 보정이나 배경 바꾸기는 하지 않아요. 규정상 어차피 허용되지 않아요. 흰 벽 앞에서 정면을 보고, 그림자 없이 고르게 밝은 곳에서 찍으세요.</p>
+      <h3>2×2인치로 인쇄해야 한다면</h3>
+      <p>600×600 픽셀을 300dpi로 인쇄하면 정확히 2×2인치(51×51mm)예요. 미국 비자·여권 인화 사진 크기와 같아요.</p>""",
+    faq_title="미국 비자 사진 만들기",
+    faq=[
+        ("DS-160에 올릴 사진 크기는 어떻게 맞추나요?", "이 페이지에 사진을 올리세요. 미국 비자 600×600과 240KB가 이미 골라져 있어요. 틀을 얼굴에 맞추고 사진 용량 줄이기를 누르면 240KB 이하의 정사각형 JPG가 나와요."),
+        ("DS-160에서 사진이 통과되지 않아요.", "흔한 이유는 240KB 초과, 정사각형이 아니거나 600×600보다 작은 크기, 너무 작거나 큰 머리예요. 앞의 세 가지는 이 페이지가 맞춰 주고, 머리 크기는 가이드를 보고 맞추세요."),
+        ("미국 비자 사진에 안경을 써도 되나요?", "안 돼요. 의사 소견서가 있는 드문 의료 사유를 빼고는 안경을 쓸 수 없어요."),
+        ("배경을 흰색으로 바꿔 주나요?", "아니요. 배경이나 얼굴은 바꾸지 않아요. 디지털로 고친 사진은 받아 주지 않아요. 흰색이나 미색 벽 앞에서 찍어 주세요."),
+        ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
     ],
 )
 
@@ -1393,7 +1445,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "DS", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
 
 
@@ -1415,7 +1467,7 @@ def build(page):
     s = set_meta(s, d, page)
     s = set_ld(s, d, page)
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + d["h1"] + m.group(2) + d["lead"] + m.group(3), s, f"{page} hero")
-    image_page = page.startswith("compress-image") or page == "compress-id-photo.html"   # built from compress-image.html
+    image_page = page.startswith("compress-image") or page in ("compress-id-photo.html", "us-visa-photo.html")   # built from compress-image.html
     ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if image_page else [])) + d.get("ui_extra", []) + (SIZE_UI if page in SIZE_PAGES else [])
     for en, ko in ui:
         if en not in s:

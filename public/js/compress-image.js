@@ -7,7 +7,13 @@ const dlzip = $("dlzip");
 const prog = SlimIO.bindProgress("prog");
 
 // ID photo presets: crop to this shape from the center, then scale to these pixels
-const PRESETS = { "id-3x4": [354, 472], passport: [413, 531] };
+const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600] };
+// Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
+// and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
+const GUIDES = {
+     default: { cy: 0.44, rx: 0.29, ry: 0.33 },
+     "us-visa": { cy: 0.38, rx: 0.22, ry: 0.3, eyes: [0.31, 0.44] },   // head ≈ 60% (rule: 50–69%), eyes mid-band
+};
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
 // "200KB" -> bytes. Decimal (1KB = 1000 bytes) so the file passes whichever
@@ -232,6 +238,8 @@ function syncCrop() {
      if (cropBox.hidden) return;
      $("crophint").textContent = files.length > 1
              ? SlimIO.t("Drag the frame to set the crop on the first photo. The others are cropped from the center.")
+             : $("resize").value === "us-visa"
+             ? SlimIO.t("Drag the frame and zoom: head inside the oval, eyes between the two dotted lines.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");
      drawCrop();
 }
@@ -267,9 +275,20 @@ function drawCrop() {
      ctx.setLineDash([5, 5]);
      ctx.strokeStyle = "rgba(255, 255, 255, 0.75)";
      ctx.lineWidth = 1.5;
+     const gd = GUIDES[$("resize").value] || GUIDES.default;
      ctx.beginPath();
-     ctx.ellipse(x + w / 2, y + h * 0.44, w * 0.29, h * 0.33, 0, 0, Math.PI * 2);
+     ctx.ellipse(x + w / 2, y + h * gd.cy, w * gd.rx, h * gd.ry, 0, 0, Math.PI * 2);
      ctx.stroke();
+     if (gd.eyes) {
+             ctx.strokeStyle = "rgba(70, 224, 160, 0.8)";
+             ctx.setLineDash([3, 6]);
+             for (const f of gd.eyes) {
+                     ctx.beginPath();
+                     ctx.moveTo(x + w * 0.12, y + h * f);
+                     ctx.lineTo(x + w * 0.88, y + h * f);
+                     ctx.stroke();
+             }
+     }
      ctx.setLineDash([]);
 }
 

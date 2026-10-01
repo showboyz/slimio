@@ -15,6 +15,50 @@ BASE = "compress-image.html"
 
 PAGES = [
 {
+ "slug": "us-visa-photo", "target": "240KB", "resize": "us-visa",
+ "title": "US Visa Photo Tool — 600×600, Under 240KB for DS-160 | SlimIO",
+ "short": "US Visa Photo Tool | SlimIO",
+ "desc": "Make a US visa photo for the DS-160: square 600×600 px JPEG under 240KB, with a head-size and eye-line guide. Free, runs in your browser.",
+ "keywords": "us visa photo, ds-160 photo, us visa photo size, 600x600 photo, visa photo 240kb, ds160 photo upload, us visa photo resize",
+ "h1": "US visa photo,<br /><b>600×600 under 240KB.</b>",
+ "lead": "Crop your photo to the DS-160 square, line your head up with the guide and get a JPEG that passes the size check.",
+ "content": """
+      <h2>How to make a US visa photo for the DS-160</h2>
+      <ul>
+          <li><b>1. Add a photo.</b> US visa 600×600 and a 240KB limit are already selected.</li>
+          <li><b>2. Line it up.</b> Drag the green frame so your head fills the dashed oval and your eyes sit between the two dotted lines.</li>
+          <li><b>3. Click Compress images and download.</b> You get a square JPEG, 600×600 px, under 240KB, ready to upload.</li>
+      </ul>
+      <figure class="demo">
+          <div class="demo-row">
+              <div class="demo-src"><img src="/img/id-sample.webp" width="900" height="600" loading="lazy" alt="An ordinary phone photo against a white wall" /><span>Phone photo · 1.8 MB</span></div>
+              <div class="demo-arrow" aria-hidden="true">→</div>
+              <div class="demo-out"><div><img src="/img/us-visa-sample.webp" width="600" height="600" loading="lazy" alt="Square 600×600 visa photo" /><span>600×600 px · JPG</span></div></div>
+          </div>
+          <figcaption>Made with this page from a sample photo of a fictional person.</figcaption>
+      </figure>
+      <h3>The official digital photo rules</h3>
+      <ul>
+          <li><b>Shape and size:</b> square, at least 600×600 and at most 1200×1200 pixels.</li>
+          <li><b>File:</b> JPEG, 240 kB or less.</li>
+          <li><b>Head size:</b> 50–69% of the image height, from the top of the hair to the chin.</li>
+          <li><b>Background:</b> plain white or off-white.</li>
+          <li><b>Recent and unedited:</b> taken in the last 6 months, with no glasses and no digital changes to your appearance.</li>
+      </ul>
+      <p>Source: the U.S. Department of State's <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html" rel="noopener">photo requirements</a>. Rules can change, so check the official page before you apply.</p>
+      <h3>What SlimIO does — and doesn't do</h3>
+      <p>It crops, resizes and compresses. It doesn't retouch your face or change the background, which the rules don't allow anyway. So take the photo against a white wall, face the camera straight on, with even light and no shadows.</p>
+      <h3>Printing a 2×2 inch photo?</h3>
+      <p>600×600 pixels printed at 300 dpi is exactly 2×2 inches (51×51 mm), the printed size used for US visa and passport photos.</p>""",
+ "faq": [
+  ("How do I resize a photo for the DS-160?", "Add your photo here — US visa 600×600 and 240KB are already selected — drag the frame onto your face and click Compress images. The download is a square JPEG under 240KB."),
+  ("Why does the DS-160 say my photo failed?", "The most common reasons are a file over 240KB, a photo that isn't square or is under 600×600 pixels, or a head that's too small or too big. This page fixes the first three; use the guide to get the head size right."),
+  ("Can I wear glasses in a US visa photo?", "No. Glasses are no longer allowed except in rare medical cases with a doctor's statement."),
+  ("Will SlimIO make my background white?", "No. It doesn't edit the background or your appearance — digitally altered photos are not accepted. Take the photo against a plain white or off-white wall."),
+  ("Is my photo uploaded?", "No. Everything runs in your browser, so your photo never leaves your device."),
+ ],
+},
+{
  "slug": "compress-id-photo", "target": "100KB", "resize": "id-3x4", "picker": True,
  "title": "Passport & ID Photo Resizer — Crop and Compress to KB Free | SlimIO",
  "short": "ID Photo Resizer | SlimIO",
@@ -213,6 +257,7 @@ SIZE_LINKS = [("/compress-image.html", "Compress image (any size)"),
               ("/compress-image-to-100kb.html", "Compress image to 100KB"),
               ("/compress-image-to-200kb.html", "Compress image to 200KB"),
               ("/compress-id-photo.html", "ID / passport photo"),
+              ("/us-visa-photo.html", "US visa photo"),
               ("/signature-image.html", "Signature image")]
 
 
@@ -254,6 +299,9 @@ def build(p, base):
 
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + p["h1"] + m.group(2) + p["lead"] + m.group(3), s, "hero")
     s = s.replace('<option value="" selected>', '<option value="">')
+    if f'<option value="{p["target"]}">' not in s:   # a size the shared list doesn't have (e.g. 240KB for US visas)
+        s = sub1(r'(\n(\s*)<option value="200KB">[^<]*</option>)',
+                 lambda m: m.group(1) + "\n" + m.group(2) + f'<option value="{p["target"]}">Under {p["target"]}</option>', s, "extra target")
     s = sub1(rf'<option value="{p["target"]}">', f'<option value="{p["target"]}" selected>', s, "target option")
     if p.get("picker"):
         s = sub1(r'(\n(\s*)<div class="drop" id="drop">)', lambda m: "\n" + m.group(2) + PICKER.strip() + m.group(1), s, "picker")

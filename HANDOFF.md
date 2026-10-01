@@ -16,7 +16,7 @@
 5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
    - 2026-09-29: 증명사진·50KB·20KB 6개 GSC 색인 요청 + GSC 사이트맵 재제출, 네이버 `/ko/` 3개 수집 요청 완료 (Claude가 `orca computer`로 Chrome 조작 — 사용자 로그인 세션 사용)
    - 참고: 그날 GSC 개요는 '색인 0 / 미색인 1'로 표시(리포트 지연 가능). 1~2주 뒤 Pages 리포트 확인
-6. 다음 개발 후보: 규격별 페이지(미국 비자 사진 600×600·240KB, 인도 시험 사진+서명, 큐넷·정부24), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
+6. 다음 개발 후보: 규격별 페이지(인도 시험 사진+서명, 큐넷·정부24, 쉥겐 비자 35×45mm 등), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
 
 ---
 
@@ -91,7 +91,9 @@
 - 2026-09-30: **PDF 50KB·300KB·2MB 페이지** (+`/ko/`, `gen_size_pages.py` PAGES/SIBLINGS, gen_ko SIZE_PAGES·KO·COMMON, 홈 "Need an exact size?" 줄). 주제 분리: 50KB=증명서 한 장·흑백 스캔 팁·JPG 대안, 300KB=여러 장 증명서·합치기·폰 스캔, 2MB=기관 제출·검색 가능 유지. 실제 사진 PDF로 확인: 1장 0.45MB→33KB, 3장 6.5MB→102KB, 6장 18MB→0.68MB (모두 서버 GS, 0.3~3초). 서버 압축 결과 문구를 "페이지는 그대로 두고 이미지만 줄였어요"로 정정(스캔 PDF에 '글자 선택 가능'이라 하던 것)
 - 2026-10-01: **도구 간 연결 재디자인** — `tools/gen_related.py`(도구 표 TOOLS 영·한 한 곳 관리). ① 다운로드 직후 "이어서 이런 것도 해 보세요" 카드 3개(`#next`, lib.js `trackDownload`가 표시, 페이지별 맥락 PAGES) ② 하단 추천 배너(PDF 페이지→증명사진, 사진 페이지→서명 이미지, 실제 예시 이미지) ③ 전체 도구 카드(PDF / 사진·서명). 마커 `<!-- next-steps:… -->`, `<!-- more-tools:… -->` 사이를 교체 → 여러 번 돌려도 동일. **gen_ko.py가 시작할 때 gen_related를 먼저 실행**하고 번역 쌍(`ko_pairs`)을 COMMON에 붙임. 새 도구 추가 시 TOOLS·PDF_TOOLS/PHOTO_TOOLS·PAGES에 등록
 - **생성 순서(전체):** `cd public && python3 ../tools/gen_size_pages.py . x x x && cd ..` → `python3 tools/gen_image_pages.py` → `python3 tools/gen_ko.py`(gen_related 포함) → `python3 tools/check_i18n.py` → `python3 tools/bump_versions.py`
-- 홈 도구 카드 13개(증명사진·서명 이미지 추가) — 4열이라 마지막 줄 1개. 도구가 늘면 채워짐
+- 2026-10-01: **미국 비자 사진** `us-visa-photo.html` (+`/ko/`, 홈 카드, gen_related TOOLS·PHOTO_TOOLS). 공식 기준(travel.state.gov 확인): 정사각형 600×600~1200×1200, JPEG 240kB 이하, 머리 50~69%, 흰/미색 배경, 6개월 이내, 안경·보정 불가. 사진 도구에 `us-visa` 프리셋(600×600) 추가 + 전용 가이드(`GUIDES`: 머리 타원 + 눈 높이 허용 구간 31~44% 점선). 생성기는 공용 목록에 없는 목표 용량(240KB)을 그 페이지에만 추가. 예시는 도구로 만든 600×600(머리 63%, 눈 38%)
+- gen_ko `ALLOWED_EN`에 DS, JPEG, mm, cm, px 추가(한국어 페이지에서 허용하는 영문 표기)
+- 홈 도구 카드 14개(증명사진·미국 비자·서명 이미지 포함) — 4열이라 마지막 줄 2개
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 
 ### 새 도구 추가 체크리스트

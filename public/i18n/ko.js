@@ -98,6 +98,7 @@ window.SLIMIO_KO = {
 
    // compress image
    "Compress images": "사진 용량 줄이기",
+   "Drag the frame and zoom: head inside the oval, eyes between the two dotted lines.": "틀을 옮기고 확대해서 머리는 타원 안에, 눈은 두 점선 사이에 오게 하세요.",
    "Drag the frame so your face sits inside the guide.": "틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.",
    "Drag the frame to set the crop on the first photo. The others are cropped from the center.": "틀을 끌어서 첫 번째 사진의 자를 위치를 정하세요. 나머지 사진은 가운데를 기준으로 잘라요.",
    "No signature found in the photo. Try a darker pen or a brighter photo.": "사진에서 서명을 찾지 못했어요. 더 진한 펜으로 쓰거나 더 밝게 찍어 주세요.",
