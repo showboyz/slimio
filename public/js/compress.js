@@ -97,7 +97,7 @@ async function compressOnServer() {
     prog.style.width = "60%";
     const resp = await fetch(`${SERVER_BASE}/api/compress`, {
         method: "POST",
-        headers: { "X-Level": gslevel.value },
+        headers: SlimIO.apiHeaders({ "X-Level": gslevel.value }),
         body: await file.arrayBuffer(),
     });
     const j = await resp.json();
@@ -118,7 +118,7 @@ async function compressOnServer() {
 }
 
 async function compressInBrowser() {
-    const check = await fetch(`${API_BASE}/api/check`).then((r) => r.json());
+    const check = await fetch(`${API_BASE}/api/check`, { headers: SlimIO.apiHeaders() }).then((r) => r.json());
     if (!check.ok) {
         showError(SlimIO.t("Daily limit reached. {limit} per day. Come back tomorrow.", { limit: check.limit }));
         refreshStatus();
@@ -153,7 +153,7 @@ async function compressInBrowser() {
     }
 
     const bytes = await out.save();
-    const consume = await fetch(`${API_BASE}/api/consume`, { method: "POST" }).then((r) => r.json());
+    const consume = await fetch(`${API_BASE}/api/consume`, { method: "POST", headers: SlimIO.apiHeaders() }).then((r) => r.json());
     showResult(file.size, bytes.length, bytes);
     updateLimit(consume.remaining, consume.limit);
 }
@@ -215,7 +215,7 @@ function log(msg) {
 
 function refreshStatus() {
     const base = mode.value === "server" ? SERVER_BASE : API_BASE;
-    fetch(`${base}/api/check`)
+    fetch(`${base}/api/check`, { headers: SlimIO.apiHeaders() })
         .then((r) => r.json())
         .then((c) => updateLimit(c.remaining, c.limit))
         .catch(() => { limitEl.textContent = SlimIO.t("Limit service currently unavailable."); });

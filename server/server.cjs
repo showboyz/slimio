@@ -3,10 +3,13 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { spawn } = require("child_process");
+const crypto = require("crypto");
 
 const PORT = process.env.PORT || 3001;
 const HOST = process.env.HOST || "0.0.0.0";
-const DAILY_LIMIT = parseInt(process.env.DAILY_LIMIT || "20", 10);
+const DAILY_LIMIT = parseInt(process.env.DAILY_LIMIT || "20", 10);           // per browser
+const IP_DAILY_LIMIT = parseInt(process.env.IP_DAILY_LIMIT || "200", 10);   // safety cap per IP
+const STATS_KEY = process.env.STATS_KEY || "";                              // /api/stats is off without it
 const PUBLIC_DIR = process.env.PUBLIC_DIR || path.join(__dirname, "..", "public");
 const MAX_UPLOAD = 50 * 1024 * 1024; // 256MB machine: cap uploads so one request can't OOM it
 const LEVELS = new Set(["screen", "ebook", "printer", "prepress"]);
@@ -41,24 +44,70 @@ const MIME = {
     ".ico": "image/x-icon",
 };
 
-// naive per-IP daily counter
-const usage = new Map();
+// Daily free uses, counted per browser (a random ID the page keeps in localStorage and sends
+// as X-Device), with a much higher cap per IP. Mobile carriers put many people behind one IP
+// (CGNAT), so a per-IP limit alone would block strangers who never used the site.
+// Requests without a device ID (old cached pages) fall back to the old per-IP limit.
+// Everything lives in memory and is cleared daily. Logs carry only a salted IP hash whose
+// salt changes every day, so they can't be traced back to an address or across days.
 function today() { return new Date().toISOString().slice(0, 10); }
 function clientIp(req) {
-   return (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
+   return req.headers["cf-connecting-ip"] ||   // set by Cloudflare; a visitor can't spoof it through Cloudflare
+       req.headers["fly-client-ip"] ||
+       (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
        req.socket.remoteAddress || "unknown";
 }
-let usageDay = today();
-function consume(ip) {
-   if (usageDay !== today()) { usage.clear(); usageDay = today(); } // drop yesterday's counters
-   const key = ip + ":" + today();
-   const n = (usage.get(key) || 0) + 1;
-   usage.set(key, n);
-   return n;
+function deviceId(req) {
+   const d = req.headers["x-device"];
+   return typeof d === "string" && /^[a-z0-9]{16,40}$/i.test(d) ? d : null;
 }
-function remaining(ip) {
-   const key = ip + ":" + today();
-   return Math.max(0, DAILY_LIMIT - (usage.get(key) || 0));
+let day = today();
+let salt = crypto.randomBytes(16).toString("hex");
+let byKey = new Map();    // "d:<device>" or "i:<ip>" -> uses
+let byIp = new Map();     // ip -> uses
+let ipDevices = new Map(); // ip -> Set of devices seen
+let stats = { uses: 0, limitedByDevice: 0, limitedByIp: 0 };
+function rollDay() {
+   if (day === today()) return;
+   console.log("usage-summary", JSON.stringify({ day, ...snapshot() }));
+   day = today();
+   salt = crypto.randomBytes(16).toString("hex");
+   byKey = new Map(); byIp = new Map(); ipDevices = new Map();
+   stats = { uses: 0, limitedByDevice: 0, limitedByIp: 0 };
+}
+function who(req) {
+   rollDay();
+   const ip = clientIp(req), dev = deviceId(req);
+   if (dev) {
+      if (!ipDevices.has(ip)) ipDevices.set(ip, new Set());
+      ipDevices.get(ip).add(dev);
+   }
+   return { ip, dev, key: dev ? "d:" + dev : "i:" + ip };
+}
+function remaining(u) {
+   const own = DAILY_LIMIT - (byKey.get(u.key) || 0);
+   const shared = IP_DAILY_LIMIT - (byIp.get(u.ip) || 0);
+   return Math.max(0, Math.min(own, shared));
+}
+function consume(u) {
+   byKey.set(u.key, (byKey.get(u.key) || 0) + 1);
+   byIp.set(u.ip, (byIp.get(u.ip) || 0) + 1);
+   stats.uses++;
+}
+function limitHit(u) {
+   const byIpCap = (byIp.get(u.ip) || 0) >= IP_DAILY_LIMIT;
+   if (byIpCap) stats.limitedByIp++; else stats.limitedByDevice++;
+   const ipHash = crypto.createHash("sha256").update(salt + u.ip).digest("hex").slice(0, 8);
+   console.log("limit-hit", byIpCap ? "ip-cap" : u.dev ? "device" : "ip-legacy", "ip#" + ipHash,
+      "devicesOnIp=" + (ipDevices.get(u.ip)?.size || 0), "ipUses=" + (byIp.get(u.ip) || 0));
+}
+function snapshot() {
+   let shared = 0, maxDev = 0, maxIpUses = 0;
+   for (const s of ipDevices.values()) { if (s.size > 1) shared++; maxDev = Math.max(maxDev, s.size); }
+   for (const n of byIp.values()) maxIpUses = Math.max(maxIpUses, n);
+   const devices = [...byKey.keys()].filter((k) => k.startsWith("d:")).length;
+   return { ...stats, devicesThatUsed: devices, ipsThatUsed: byIp.size, ipsWithSeveralDevices: shared,
+            maxDevicesOnOneIp: maxDev, maxUsesFromOneIp: maxIpUses, limit: DAILY_LIMIT, ipLimit: IP_DAILY_LIMIT };
 }
 
 function gs(args, input, output) {
@@ -89,24 +138,31 @@ function gs(args, input, output) {
 async function handle(req, res) {
    res.setHeader("Access-Control-Allow-Origin", "*");
    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+   res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Device, X-Level");
    if (req.method === "OPTIONS") { res.writeHead(204); return res.end(); }
 
-   const ip = clientIp(req);
+     if (req.url === "/api/stats" && req.method === "GET") {
+        if (!STATS_KEY || req.headers["x-stats-key"] !== STATS_KEY) return sendJson(res, 404, { error: "not found" });
+        rollDay();
+        return sendJson(res, 200, { day, ...snapshot() });
+     }
+
+   const u = req.url.startsWith("/api/") ? who(req) : null;
 
      if (req.url === "/api/check" && req.method === "GET") {
-        const left = remaining(ip);
+        const left = remaining(u);
         return sendJson(res, 200, { ok: left > 0, remaining: left, limit: DAILY_LIMIT });
      }
 
      if (req.url === "/api/consume" && req.method === "POST") {
-        const allowed = remaining(ip) > 0;   // decide before counting, so the last use is allowed
-        if (allowed) consume(ip);
-        return sendJson(res, 200, { ok: allowed, remaining: remaining(ip), limit: DAILY_LIMIT });
+        const allowed = remaining(u) > 0;   // decide before counting, so the last use is allowed
+        if (allowed) consume(u); else limitHit(u);
+        return sendJson(res, 200, { ok: allowed, remaining: remaining(u), limit: DAILY_LIMIT });
      }
 
    if (req.url === "/api/compress" && req.method === "POST") {
-       if (remaining(ip) <= 0) {
+       if (remaining(u) <= 0) {
+          limitHit(u);
           return sendJson(res, 429, { error: "daily limit reached", limit: DAILY_LIMIT });
        }
        if (parseInt(req.headers["content-length"] || "0", 10) > MAX_UPLOAD) {
@@ -116,7 +172,7 @@ async function handle(req, res) {
        const jpg = req.headers["x-jpg"] ? parseInt(req.headers["x-jpg"], 10) : undefined;
 
        const slot = acquireGs();   // before reading the body, so waiting requests hold no memory
-       if (!slot) return sendJson(res, 503, { error: "server busy — try Browser mode", remaining: remaining(ip), limit: DAILY_LIMIT });
+       if (!slot) return sendJson(res, 503, { error: "server busy — try Browser mode", remaining: remaining(u), limit: DAILY_LIMIT });
        await slot;
        try {
           const chunks = [];
@@ -128,7 +184,7 @@ async function handle(req, res) {
           }
           const inBuf = Buffer.concat(chunks);
           if (inBuf.length < 200) return sendJson(res, 400, { error: "empty file" });
-          consume(ip);
+          consume(u);
 
           const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
           const tmpOut = tmpIn + "_out.pdf";
@@ -144,13 +200,13 @@ async function handle(req, res) {
                    inBytes: inBuf.length,
                    outBytes: outBuf.length,
                    savedPct: ((1 - outBuf.length / inBuf.length) * 100).toFixed(1),
-                   remaining: remaining(ip),
+                   remaining: remaining(u),
                    limit: DAILY_LIMIT,
                    pdf: outBuf.toString("base64"),
                 }
              );
            } catch (e) {
-             sendJson(res, 500, { error: e.message, inBytes: inBuf.length, outBytes: 0, remaining: remaining(ip), limit: DAILY_LIMIT });
+             sendJson(res, 500, { error: e.message, inBytes: inBuf.length, outBytes: 0, remaining: remaining(u), limit: DAILY_LIMIT });
            } finally {
              fs.unlink(tmpIn, () => {});
              fs.unlink(tmpOut, () => {});

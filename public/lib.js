@@ -67,9 +67,29 @@ const SlimIO = (() => {
       el.scrollTop = el.scrollHeight;
    }
 
-   // per-IP daily limit, reused from the rate-limit backend
+   // Free daily uses are counted per browser: a random ID kept in localStorage and sent with
+   // every API call (the server also caps uses per IP). No ID if storage is off — the server
+   // then counts by IP.
+   function deviceId() {
+      try {
+         let d = localStorage.getItem("slimio.device");
+         if (!/^[a-z0-9]{16,40}$/i.test(d || "")) {
+            d = window.crypto && crypto.randomUUID ? crypto.randomUUID().replace(/-/g, "")
+               : Math.random().toString(36).slice(2) + Date.now().toString(36) + Math.random().toString(36).slice(2);
+            localStorage.setItem("slimio.device", d);
+         }
+         return d;
+      } catch (e) {
+         return "";
+      }
+   }
+   function apiHeaders(extra) {
+      const d = deviceId();
+      return Object.assign(d ? { "X-Device": d } : {}, extra);
+   }
+
    function refreshStatus() {
-      fetch(`${API_BASE}/api/check`)
+      fetch(`${API_BASE}/api/check`, { headers: apiHeaders() })
          .then((r) => r.json())
          .then((c) => updateLimit(c.remaining, c.limit))
          .catch(() => {
@@ -122,7 +142,7 @@ const SlimIO = (() => {
    async function consume() {
       track();
       try {
-         const c = await fetch(`${API_BASE}/api/consume`, { method: "POST" }).then((r) => r.json());
+         const c = await fetch(`${API_BASE}/api/consume`, { method: "POST", headers: apiHeaders() }).then((r) => r.json());
          updateLimit(c.remaining, c.limit);
          return c;
       } catch (e) {
@@ -166,7 +186,7 @@ const SlimIO = (() => {
    return {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, inputAdded, page2user,
+      refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, inputAdded, apiHeaders, page2user,
    };
 })();
 

@@ -4,6 +4,8 @@
 
 ---
 
+> **작업 위치 변경 (2026-10-02):** 예전 `workspaces/mymy/trout` 폴더는 Orca 정리 중 삭제됨. 이제 **`~/orca/projects/slimio`** (GitHub `showboyz/slimio`, `trout` 브랜치)에서 작업. 배포는 여기서 `fly deploy --ha=false`.
+
 ## 👉 다음 세션에서 바로 할 것 (순서대로)
 1. **AdSense 승인 대기** (2026-09-29 심사 요청, 보통 며칠~2주, 최대 4주. 결과는 Gmail로 옴)
    - 끝난 것: 계정(결제국가 한국) · 결제 정보 입력(사용자) · 메타 태그로 소유권 확인 · 심사 요청 · **EU 동의 메시지 = Google CMP 3선택지**(동의/동의 안 함/옵션 관리, Privacy & messaging에서 변경 가능)
@@ -93,6 +95,8 @@
 - **생성 순서(전체):** `cd public && python3 ../tools/gen_size_pages.py . x x x && cd ..` → `python3 tools/gen_image_pages.py` → `python3 tools/gen_ko.py`(gen_related 포함) → `python3 tools/check_i18n.py` → `python3 tools/bump_versions.py`
 - 2026-10-01: **미국 비자 사진** `us-visa-photo.html` (+`/ko/`, 홈 카드, gen_related TOOLS·PHOTO_TOOLS). 공식 기준(travel.state.gov 확인): 정사각형 600×600~1200×1200, JPEG 240kB 이하, 머리 50~69%, 흰/미색 배경, 6개월 이내, 안경·보정 불가. 사진 도구에 `us-visa` 프리셋(600×600) 추가 + 전용 가이드(`GUIDES`: 머리 타원 + 눈 높이 허용 구간 31~44% 점선). 생성기는 공용 목록에 없는 목표 용량(240KB)을 그 페이지에만 추가. 예시는 도구로 만든 600×600(머리 63%, 눈 38%)
 - gen_ko `ALLOWED_EN`에 DS, JPEG, mm, cm, px 추가(한국어 페이지에서 허용하는 영문 표기)
+- 2026-10-02: **하루 한도를 기기별로** — 브라우저가 localStorage의 무작위 ID(`slimio.device`)를 `X-Device` 헤더로 보냄(`SlimIO.apiHeaders()`), 서버는 **기기당 20회 + IP당 200회 상한**(`DAILY_LIMIT`, `IP_DAILY_LIMIT` 환경변수). 기기 ID 없으면(예전 캐시 페이지) IP당 20회. 인도 통신사 CGNAT(여러 사람이 IP 공유) 때문에 바꿈. IP는 `CF-Connecting-IP` 우선(조작 불가). 개인정보처리방침 영·한 반영
+- **사용 현황 보기:** `curl -s https://pdfslimio.com/api/stats -H "X-Stats-Key: $(cat .dev/stats_key)"` → 오늘 사용 수, 기기 수, IP 수, 여러 기기가 같이 쓰는 IP 수(`ipsWithSeveralDevices`, `maxDevicesOnOneIp`), 한도에 걸린 횟수. 키는 `.dev/stats_key`(git 제외)와 Fly secret `STATS_KEY`. 한도 초과는 `fly logs`에 `limit-hit … ip#해시`(매일 바뀌는 솔트), 날 바뀔 때 `usage-summary`
 - 홈 도구 카드 14개(증명사진·미국 비자·서명 이미지 포함) — 4열이라 마지막 줄 2개
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 

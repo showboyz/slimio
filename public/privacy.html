@@ -40,7 +40,7 @@
       </ul>
 
       <h3>Usage limits</h3>
-      <p>To enforce the free daily limit, our server counts operations per IP address. The count is kept only in memory, is not written to a database, and is cleared daily.</p>
+      <p>To enforce the free daily limit, our server counts operations per browser — using a random ID that the page keeps in your browser's local storage — and per IP address as an overall cap. These counts are kept only in memory, are not written to a database, and are cleared daily. When a limit is reached we log the event with a one-way hash of the IP address that changes every day, never the address itself.</p>
 
       <h3>Analytics</h3>
       <p>We use <b>Umami</b> and <b>Cloudflare Web Analytics</b> to understand which pages and tools are used. Both are cookie-free and report aggregated statistics such as page views, referring sites, country and device type; they do not identify you personally. We also record when a tool is used (for example "merge"), without any file content.</p>
