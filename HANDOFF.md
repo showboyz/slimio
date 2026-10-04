@@ -14,11 +14,12 @@
    - **거절되면:** 사유(콘텐츠 부족/탐색 문제 등)에 맞춰 보완 후 재신청
 2. **모니터링 (1~2주):** Umami(Events → tool-used→downloaded 전환율, target-result의 fits=false 비율, 참조자). 첫 실사용자 2026-09-29: 인도(하이데라바드), google.com → /compress-pdf-to-500kb, Cloudflare Web Analytics, GSC(색인 수·검색어), 네이버 서치어드바이저
 3. **사용자 확인할 것:** 다른 계정(네이버 메일 등)에서 `contact@pdfslimio.com`으로 테스트 메일 → Gmail 수신 확인 / 폰에서 `pdfslimio.com/?notrack` 한 번 열기
-4. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
-5. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
+4. **티스토리 블로그 (2026-10-04~):** `ddoua.tistory.com` — 블로그 이름 "문서·사진 생활 꿀팁"(원래 여행 블로그 이름에서 변경). 글 #1 증명사진 용량 줄이기 → https://ddoua.tistory.com/7 (초안 `marketing/tistory/01-id-photo.html`, 이미지는 사이트 `public/img/blog/`에서 불러옴, 대표이미지는 티스토리에 직접 업로드). 네이버 서치어드바이저에 블로그 등록(메타 태그는 티스토리 '메타 태그 등록' 플러그인), 사이트맵·글 수집 요청 완료. 다음 글 후보: PDF 정해진 용량, 서명 투명 PNG, 미국 비자 사진. 비공개 임시저장(망가진 첫 시도) 1개 남음 — 삭제는 마우스 올려 ✕
+5. **홍보:** `marketing/PROMO.md` 순서대로 (AlternativeTo·SaaSHub 등록 → Show HN → GeekNews/디스콰이엇 → r/SideProject → X). 올린 날짜를 표에 기록
+6. **페이지 추가·수정 후 배포하면** `tools/indexnow.sh` 실행 + GSC·네이버에서 새 URL 색인 요청
    - 2026-09-29: 증명사진·50KB·20KB 6개 GSC 색인 요청 + GSC 사이트맵 재제출, 네이버 `/ko/` 3개 수집 요청 완료 (Claude가 `orca computer`로 Chrome 조작 — 사용자 로그인 세션 사용)
    - 참고: 그날 GSC 개요는 '색인 0 / 미색인 1'로 표시(리포트 지연 가능). 1~2주 뒤 Pages 리포트 확인
-6. 다음 개발 후보: 규격별 페이지(인도 시험 사진+서명, 큐넷·정부24, 쉥겐 비자 35×45mm 등), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
+7. 다음 개발 후보: 규격별 페이지(인도 시험 사진+서명, 큐넷·정부24, 쉥겐 비자 35×45mm 등), PDF 암호 걸기/해제(qpdf), 가이드 글(Mac/iPhone에서 PDF 줄이기 등), JPG 크기 줄이기 롱테일 (이미지 50KB/20KB·증명사진 페이지·픽셀 직접 입력은 2026-09-29 완료)
 
 ---
 
