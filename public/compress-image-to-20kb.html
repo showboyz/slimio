@@ -160,6 +160,7 @@
                    <select id="target">
                        <option value="">No limit — just optimize</option>
                        <option value="20KB" selected>Under 20KB</option>
+                       <option value="20-50KB">20–50KB</option>
                        <option value="50KB">Under 50KB</option>
                        <option value="100KB">Under 100KB</option>
                        <option value="200KB">Under 200KB</option>
@@ -181,6 +182,7 @@
                        <option value="id-3x4">ID photo 3×4 cm (354×472px)</option>
                        <option value="passport">Passport photo 3.5×4.5 cm (413×531px)</option>
                        <option value="us-visa">US visa 600×600 px (square)</option>
+                       <option value="bank-photo">Bank exam photo 200×230 px (IBPS / SBI)</option>
                        <option value="custom">Custom size in pixels…</option>
                    </select>
                    <div class="px-row" id="custom" hidden>
@@ -325,6 +327,7 @@
           <a class="tcard" href="/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>ID Photo</b><small>Passport & ID sizes, under the KB limit</small></span></a>
           <a class="tcard" href="/us-visa-photo.html"><span class="ico">🇺🇸</span><span class="tx"><b>US Visa Photo</b><small>600×600 for the DS-160, under 240KB</small></span></a>
           <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
+          <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>Bank Exam Documents</b><small>IBPS / SBI photo, signature, thumb, declaration</small></span></a>
       </div>
 </section>
 <!-- more-tools:end -->
@@ -342,6 +345,6 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress-image.js?v=003448f4"></script>
+<script type="module" src="/js/compress-image.js?v=d5d180fd"></script>
 </body>
 </html>

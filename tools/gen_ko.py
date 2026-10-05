@@ -29,6 +29,9 @@ PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.
          "us-visa-photo.html", "signature-image.html"] + SIZE_PAGES
 
 
+# English-only pages (no Korean version): listed in the sitemap, no hreflang.
+EN_ONLY = ["bank-exam-photo-signature.html"]
+
 # Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
 INFO_PAGES = ["about.html", "terms.html", "privacy.html", "contact.html"]
 
@@ -628,6 +631,8 @@ KO["compress-image.html"] = dict(
         (">ID photo 3×4 cm (354×472px)<", ">증명사진 3×4cm (354×472px)<"),
         (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
         (">US visa 600×600 px (square)<", ">미국 비자 600×600px (정사각형)<"),
+        (">Bank exam photo 200×230 px (IBPS / SBI)<", ">인도 은행 시험 사진 200×230px (IBPS / SBI)<"),
+        ('<option value="20-50KB">20–50KB</option>', '<option value="20-50KB">20~50KB</option>'),
         (">Custom size in pixels…<", ">픽셀 직접 입력…<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("ID, passport and custom sizes are cropped to the right shape — you can move the frame.", "증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요."),
@@ -799,6 +804,11 @@ KO["signature-image.html"] = dict(
         ("<label>Size</label>", "<label>크기</label>"),
         (">Trim to the signature<", ">서명에 맞게 자르기<"),
         (">Exact size in pixels…<", ">픽셀 직접 입력…<"),
+        ('<optgroup label="Bank exams (IBPS / SBI)">', '<optgroup label="인도 은행 시험 (IBPS / SBI)">'),
+        (">Signature — 140×60 px, 10–20KB<", ">서명 — 140×60px, 10~20KB<"),
+        (">Left thumb impression — 240×240 px, 20–50KB<", ">왼손 엄지 지문 — 240×240px, 20~50KB<"),
+        (">Handwritten declaration — 800×400 px, 50–100KB<", ">손글씨 서약문 — 800×400px, 50~100KB<"),
+        (">20–50KB<", ">20~50KB<"), (">50–100KB<", ">50~100KB<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("<label>File size</label>", "<label>파일 용량</label>"),
         ('<option value="">No limit</option>', '<option value="" selected>제한 없음</option>'),
@@ -1445,7 +1455,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "DS", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "DS", "IBPS", "SBI", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
 
 
@@ -1498,7 +1508,7 @@ def build(page):
 
 
 def write_sitemap():
-    urls = [en_path(p) for p in PAGES + INFO_PAGES] + [ko_path(p) for p in PAGES + INFO_PAGES]
+    urls = [en_path(p) for p in PAGES + INFO_PAGES + EN_ONLY] + [ko_path(p) for p in PAGES + INFO_PAGES]
     body = "".join(f"""       <url>
            <loc>{SITE}{u}</loc>
            <lastmod>{TODAY}</lastmod>

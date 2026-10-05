@@ -161,6 +161,7 @@
                    <select id="target">
                        <option value="">제한 없음 — 알맞게 최적화</option>
                        <option value="20KB" selected>20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
                        <option value="50KB">50KB 이하</option>
                        <option value="100KB">100KB 이하</option>
                        <option value="200KB">200KB 이하</option>
@@ -182,6 +183,7 @@
                        <option value="id-3x4">증명사진 3×4cm (354×472px)</option>
                        <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
                        <option value="us-visa">미국 비자 600×600px (정사각형)</option>
+                       <option value="bank-photo">인도 은행 시험 사진 200×230px (IBPS / SBI)</option>
                        <option value="custom">픽셀 직접 입력…</option>
                    </select>
                    <div class="px-row" id="custom" hidden>
@@ -326,6 +328,7 @@
           <a class="tcard" href="/ko/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>증명사진</b><small>여권·반명함 규격 + 용량 맞추기</small></span></a>
           <a class="tcard" href="/ko/us-visa-photo.html"><span class="ico">🇺🇸</span><span class="tx"><b>미국 비자 사진</b><small>DS-160용 600×600 · 240KB</small></span></a>
           <a class="tcard" href="/ko/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>서명 이미지</b><small>깨끗한 JPG · 투명 PNG</small></span></a>
+          <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>인도 은행 시험 서류</b><small>IBPS / SBI 사진·서명·지문·서약문</small></span></a>
       </div>
 </section>
 <!-- more-tools:end -->
@@ -342,8 +345,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=62ae4873"></script>
+<script defer src="/i18n/ko.js?v=b7c37971"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress-image.js?v=003448f4"></script>
+<script type="module" src="/js/compress-image.js?v=d5d180fd"></script>
 </body>
 </html>

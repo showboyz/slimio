@@ -98,6 +98,7 @@
 - gen_ko `ALLOWED_EN`에 DS, JPEG, mm, cm, px 추가(한국어 페이지에서 허용하는 영문 표기)
 - 2026-10-02: **하루 한도를 기기별로** — 브라우저가 localStorage의 무작위 ID(`slimio.device`)를 `X-Device` 헤더로 보냄(`SlimIO.apiHeaders()`), 서버는 **기기당 20회 + IP당 200회 상한**(`DAILY_LIMIT`, `IP_DAILY_LIMIT` 환경변수). 기기 ID 없으면(예전 캐시 페이지) IP당 20회. 인도 통신사 CGNAT(여러 사람이 IP 공유) 때문에 바꿈. IP는 `CF-Connecting-IP` 우선(조작 불가). 개인정보처리방침 영·한 반영
 - **사용 현황 보기:** `curl -s https://pdfslimio.com/api/stats -H "X-Stats-Key: $(cat .dev/stats_key)"` → 오늘 사용 수, 기기 수, IP 수, 여러 기기가 같이 쓰는 IP 수(`ipsWithSeveralDevices`, `maxDevicesOnOneIp`), 한도에 걸린 횟수. 키는 `.dev/stats_key`(git 제외)와 Fly secret `STATS_KEY`. 한도 초과는 `fly logs`에 `limit-hit … ip#해시`(매일 바뀌는 솔트), 날 바뀔 때 `usage-summary`
+- 2026-10-05: **인도 은행 시험 서류 세트** — `bank-exam-photo-signature.html`(영어 전용, gen_ko `EN_ONLY`로 사이트맵만, gen_related TOOLS `bank-exam`). 규격은 IBPS 공식 가이드(SBI 2026 공고 첨부 PDF)에서 확인: 사진 200×230 20~50KB / 서명 140×60 10~20KB / 왼손 엄지 지문 240×240 20~50KB / 손글씨 서약문 800×400 50~100KB, 서명·서약문 대문자 불가. SSC는 공식 PDF에 수치가 없어 제외. 서명 도구 `?preset=bank-sign|bank-thumb|bank-decl`, 사진 도구 `?resize=bank-photo&target=20-50KB`(+`20-50KB` 옵션). **최소 용량은 1024 기준, 최대는 1000 기준**(양쪽 해석 모두 통과), 최소 미달 JPEG는 COM 세그먼트로 패딩. 잉크 정리: 글씨 영역 안의 작은 점(i 점·마침표)은 유지
 - 홈 도구 카드 14개(증명사진·미국 비자·서명 이미지 포함) — 4열이라 마지막 줄 2개
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 

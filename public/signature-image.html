@@ -193,7 +193,13 @@
                    <select id="size">
                        <option value="auto" selected>Trim to the signature</option>
                        <option value="custom">Exact size in pixels…</option>
+                       <optgroup label="Bank exams (IBPS / SBI)">
+                           <option value="bank-sign">Signature — 140×60 px, 10–20KB</option>
+                           <option value="bank-thumb">Left thumb impression — 240×240 px, 20–50KB</option>
+                           <option value="bank-decl">Handwritten declaration — 800×400 px, 50–100KB</option>
+                       </optgroup>
                    </select>
+                   <div class="hint" id="presethint" hidden></div>
                    <div class="px-row" id="custom" hidden>
                        <label for="cw">Width</label>
                        <input type="number" id="cw" min="16" max="4000" value="140" inputmode="numeric" />
@@ -208,6 +214,8 @@
                    <select id="target">
                        <option value="">No limit</option>
                        <option value="10-20" selected>10–20KB</option>
+                       <option value="20-50">20–50KB</option>
+                       <option value="50-100">50–100KB</option>
                        <option value="20">Under 20KB</option>
                        <option value="50">Under 50KB</option>
                        <option value="100">Under 100KB</option>
@@ -327,6 +335,7 @@
       <div class="tcards">
           <a class="tcard" href="/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>ID Photo</b><small>Passport & ID sizes, under the KB limit</small></span></a>
           <a class="tcard" href="/us-visa-photo.html"><span class="ico">🇺🇸</span><span class="tx"><b>US Visa Photo</b><small>600×600 for the DS-160, under 240KB</small></span></a>
+          <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>Bank Exam Documents</b><small>IBPS / SBI photo, signature, thumb, declaration</small></span></a>
           <a class="tcard" href="/compress-image.html"><span class="ico">📸</span><span class="tx"><b>Compress Image</b><small>Shrink photos to any KB</small></span></a>
       </div>
 </section>
@@ -344,6 +353,6 @@
 </div>
 
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/signature-image.js?v=899c3c62"></script>
+<script type="module" src="/js/signature-image.js?v=7282a42d"></script>
 </body>
 </html>

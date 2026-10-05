@@ -194,7 +194,13 @@
                    <select id="size">
                        <option value="auto" selected>서명에 맞게 자르기</option>
                        <option value="custom">픽셀 직접 입력…</option>
+                       <optgroup label="인도 은행 시험 (IBPS / SBI)">
+                           <option value="bank-sign">서명 — 140×60px, 10~20KB</option>
+                           <option value="bank-thumb">왼손 엄지 지문 — 240×240px, 20~50KB</option>
+                           <option value="bank-decl">손글씨 서약문 — 800×400px, 50~100KB</option>
+                       </optgroup>
                    </select>
+                   <div class="hint" id="presethint" hidden></div>
                    <div class="px-row" id="custom" hidden>
                        <label for="cw">가로</label>
                        <input type="number" id="cw" min="16" max="4000" value="140" inputmode="numeric" />
@@ -209,6 +215,8 @@
                    <select id="target">
                        <option value="" selected>제한 없음</option>
                        <option value="10-20">10~20KB</option>
+                       <option value="20-50">20~50KB</option>
+                       <option value="50-100">50~100KB</option>
                        <option value="20">20KB 이하</option>
                        <option value="50">50KB 이하</option>
                        <option value="100">100KB 이하</option>
@@ -328,6 +336,7 @@
       <div class="tcards">
           <a class="tcard" href="/ko/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>증명사진</b><small>여권·반명함 규격 + 용량 맞추기</small></span></a>
           <a class="tcard" href="/ko/us-visa-photo.html"><span class="ico">🇺🇸</span><span class="tx"><b>미국 비자 사진</b><small>DS-160용 600×600 · 240KB</small></span></a>
+          <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>인도 은행 시험 서류</b><small>IBPS / SBI 사진·서명·지문·서약문</small></span></a>
           <a class="tcard" href="/ko/compress-image.html"><span class="ico">📸</span><span class="tx"><b>사진 용량 줄이기</b><small>사진을 원하는 KB로</small></span></a>
       </div>
 </section>
@@ -344,8 +353,8 @@
       </footer>
 </div>
 
-<script defer src="/i18n/ko.js?v=62ae4873"></script>
+<script defer src="/i18n/ko.js?v=b7c37971"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/signature-image.js?v=899c3c62"></script>
+<script type="module" src="/js/signature-image.js?v=7282a42d"></script>
 </body>
 </html>

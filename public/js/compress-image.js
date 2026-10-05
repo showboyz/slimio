@@ -7,7 +7,7 @@ const dlzip = $("dlzip");
 const prog = SlimIO.bindProgress("prog");
 
 // ID photo presets: crop to this shape from the center, then scale to these pixels
-const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600] };
+const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600], "bank-photo": [200, 230] };
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {
@@ -18,9 +18,32 @@ const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
 // "200KB" -> bytes. Decimal (1KB = 1000 bytes) so the file passes whichever
 // definition an upload form checks against.
+// Also "20-50KB": a range, for forms with a minimum. parseSize gives the maximum.
 function parseSize(s) {
-     const m = String(s).match(/^(\d+(?:\.\d+)?)\s*(kb|mb)$/i);
+     const m = String(s).match(/^(?:\d+-)?(\d+(?:\.\d+)?)\s*(kb|mb)$/i);
      return m ? Math.round(parseFloat(m[1]) * (m[2].toLowerCase() === "mb" ? 1e6 : 1e3)) : 0;
+}
+// Minimums use 1KB = 1024 bytes (the larger reading), maximums 1000: the file passes either way.
+function parseMin(s) {
+     const m = String(s).match(/^(\d+)-\d+\s*kb$/i);
+     return m ? parseInt(m[1], 10) * 1024 : 0;
+}
+
+// A file under a form's minimum can't honestly get bigger as a picture, so we add inert
+// padding: a JPEG comment segment right after SOI. Viewers ignore it; the image is unchanged.
+async function padJpeg(blob, min) {
+     const bytes = new Uint8Array(await blob.arrayBuffer());
+     const need = min - bytes.length + 256;
+     if (need <= 256) return blob;
+     const segs = [];
+     for (let left = need; left > 0;) {
+             const n = Math.min(left, 65000);
+             const seg = new Uint8Array(4 + n).fill(0x20);
+             seg[0] = 0xff; seg[1] = 0xfe; seg[2] = ((n + 2) >> 8) & 0xff; seg[3] = (n + 2) & 0xff;
+             segs.push(seg);
+             left -= n;
+     }
+     return new Blob([bytes.subarray(0, 2), ...segs, bytes.subarray(2)], { type: "image/jpeg" });
 }
 
 let files = [];
@@ -97,6 +120,15 @@ tiles.forEach((t) => t.addEventListener("click", () => {
      $("resize").dispatchEvent(new Event("change"));
 }));
 $("resize").addEventListener("change", syncTiles);
+
+// ?resize=bank-photo&target=50KB preselects options (links from guide pages)
+{
+     const q = new URLSearchParams(location.search);
+     for (const [param, id] of [["resize", "resize"], ["target", "target"]]) {
+             const v = q.get(param), sel = $(id);
+             if (v && [...sel.options].some((o) => o.value === v)) { sel.value = v; sel.dispatchEvent(new Event("change")); }
+     }
+}
 syncTiles();
 syncCustom();   // the browser may restore "custom" on back/refresh
 
@@ -346,7 +378,7 @@ async function run() {
      urls.forEach((u) => URL.revokeObjectURL(u));
      urls = [];
      const label = $("target").value;
-     const opts = { target: parseSize(label), resize, format: $("format").value };
+     const opts = { target: parseSize(label), min: parseMin(label), resize, format: $("format").value };
      try {
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
@@ -356,6 +388,10 @@ async function run() {
                      const file = files[i];
                      try {
                              const r = await compressOne(file, opts, i === 0 ? cropState() : null);   // the frame is set on the first photo
+                             if (opts.min && opts.format === "jpeg" && r.blob.size < opts.min) {
+                                     r.blob = await padJpeg(r.blob, opts.min);
+                                     r.padded = true;
+                             }
                              done.push({ file, ...r, name: file.name.replace(/\.[^.]+$/, "") + "_slimio." + EXT[opts.format] });
                      } catch (e) {
                              done.push({ file, error: e.message });
@@ -397,6 +433,7 @@ function showResult(done, label) {
                      li.appendChild(thumb);
                      meta.textContent = `${SlimIO.formatSize(d.file.size)} → ${SlimIO.formatSize(d.blob.size)} · ${d.w}×${d.h}`;
                      if (d.kept) meta.append(" · " + SlimIO.t("already optimized, kept as is"));
+                     if (d.padded) meta.append(" · " + SlimIO.t("padded to the minimum size; the image is unchanged"));
                      if (label && !d.fits) {
                              const warn = document.createElement("span");
                              warn.className = "warn";

@@ -172,12 +172,12 @@ function inkBlobs(alpha, px, W, H) {
      for (let s = 0; s < N; s++) {
              if (seen[s] || alpha[s] <= 100) continue;
              const start = top;
-             let edge = false, r = 0, g = 0, b = 0;
+             let edge = false, r = 0, g = 0, b = 0, sx = 0, sy = 0;
              seen[s] = 1;
              order[top++] = s;
              for (let q = start; q < top; q++) {
                      const j = order[q], x = j % W, y = (j - x) / W;
-                     r += px[j * 4]; g += px[j * 4 + 1]; b += px[j * 4 + 2];
+                     r += px[j * 4]; g += px[j * 4 + 1]; b += px[j * 4 + 2]; sx += x; sy += y;
                      if (x === 0 || y === 0 || x === W - 1 || y === H - 1) edge = true;
                      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
                              const nx = x + dx, ny = y + dy;
@@ -189,7 +189,7 @@ function inkBlobs(alpha, px, W, H) {
              const n = top - start;
              r /= n; g /= n; b /= n;
              const brown = r - b > 25 && g - b > 10 && r - g < 60;
-             blobs.push({ start, end: top, edge, brown });
+             blobs.push({ start, end: top, edge, brown, cx: sx / n, cy: sy / n });
      }
      const minSize = Math.max(6, Math.round(N * 0.00002));
      const big = blobs.filter((b) => b.end - b.start >= minSize);
@@ -197,6 +197,16 @@ function inkBlobs(alpha, px, W, H) {
      if (!kept.length) kept = big.filter((b) => !b.brown);
      if (!kept.length) kept = big;
      if (!kept.length) return null;
+     // Small marks inside the writing area are part of it — dots on i, periods, commas.
+     // Only specks outside it (dust, paper texture) are dropped.
+     let bx0 = W, by0 = H, bx1 = -1, by1 = -1;
+     for (const b of kept) for (let q = b.start; q < b.end; q++) {
+             const j = order[q], x = j % W, y = (j - x) / W;
+             if (x < bx0) bx0 = x; if (x > bx1) bx1 = x; if (y < by0) by0 = y; if (y > by1) by1 = y;
+     }
+     const pad = Math.round(Math.max(W, H) * 0.01);
+     kept = kept.concat(blobs.filter((b) => b.end - b.start < minSize && b.end - b.start >= 2 && !b.edge && !b.brown &&
+             b.cx >= bx0 - pad && b.cx <= bx1 + pad && b.cy >= by0 - pad && b.cy <= by1 + pad));
      const mask = new Uint8Array(N);
      let x0 = W, y0 = H, x1 = -1, y1 = -1;
      for (const b of kept) for (let q = b.start; q < b.end; q++) {
@@ -241,8 +251,31 @@ document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () 
 
 // ---------------------------------------------------------------- output
 
-$("size").addEventListener("change", () => { $("custom").hidden = $("size").value !== "custom"; });
-$("custom").hidden = $("size").value !== "custom";   // the browser may restore "custom"
+// Exam document presets (IBPS / SBI guidelines): pixel size, KB range, JPG.
+const PRESETS = {
+     "bank-sign": { box: [140, 60], target: "10-20",
+             hint: "Sign on white paper with a black pen. Signatures in CAPITAL LETTERS are not accepted." },
+     "bank-thumb": { box: [240, 240], target: "20-50",
+             hint: "Press your left thumb on white paper with black or blue ink, then photograph it." },
+     "bank-decl": { box: [800, 400], target: "50-100",
+             hint: "Write the declaration text from the notice in English, in black ink, not in capital letters." },
+};
+function syncSize() {
+     const v = $("size").value, p = PRESETS[v];
+     $("custom").hidden = v !== "custom";
+     $("presethint").hidden = !p;
+     if (p) {
+             $("presethint").textContent = SlimIO.t(p.hint) + " " + SlimIO.t("Always check the exact numbers in your exam notice.");
+             $("target").value = p.target;
+             $("format").value = "jpeg";
+             if (v !== "bank-sign") document.querySelector('.tab[data-mode="upload"]').click();   // ink on paper: photo it
+     }
+}
+$("size").addEventListener("change", syncSize);
+// ?preset=bank-thumb etc. (linked from the exam documents page)
+const wanted = new URLSearchParams(location.search).get("preset");
+if (wanted && PRESETS[wanted]) $("size").value = wanted;
+syncSize();   // the browser may also restore a choice on back/refresh
 
 // Signature on a canvas of the output size: fitted with a small margin (custom size)
 // or trimmed with a margin (auto). JPG gets a white background.
@@ -272,11 +305,12 @@ function encode(canvas, format, quality) {
              canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("encode failed"))), "image/" + format, quality));
 }
 
-// "10-20" -> {min: 10000, max: 20000}; "20" -> {max: 20000}. Decimal KB, like the other size tools.
+// "10-20" -> {min: 10240, max: 20000}; "20" -> {max: 20000}. The maximum uses 1KB = 1000 bytes
+// and the minimum 1024, so the file passes whichever definition the form checks.
 function parseTarget(v) {
      if (!v) return {};
      const [a, b] = v.split("-").map(Number);
-     return b ? { min: a * 1000, max: b * 1000 } : { max: a * 1000 };
+     return b ? { min: a * 1024, max: b * 1000 } : { max: a * 1000 };
 }
 
 // Best-looking file under `max`: JPG quality first, then (auto size only) scale down 20% at a time.
@@ -359,6 +393,7 @@ function padTo(bytes, format, min) {
 }
 
 function sizeChoice() {
+     if (PRESETS[$("size").value]) return PRESETS[$("size").value].box;
      if ($("size").value !== "custom") return null;
      const w = Math.round(Number($("cw").value)), h = Math.round(Number($("ch").value));
      if (!(w >= 16 && w <= 4000 && h >= 16 && h <= 4000)) throw new Error(SlimIO.t("Enter a width and height between 16 and 4000 pixels."));
@@ -415,7 +450,7 @@ function showResult(bytes, r, format, t) {
      if (!r.fits) note = format === "png"
              ? SlimIO.t("Still over the limit — choose JPG, which is much smaller.")
              : SlimIO.t("Still over the limit at this pixel size. Try a smaller size.");
-     else if (t.padded) note = SlimIO.t("Padded to meet the {kb}KB minimum; the image itself is unchanged.", { kb: t.min / 1000 });
+     else if (t.padded) note = SlimIO.t("Padded to meet the {kb}KB minimum; the image itself is unchanged.", { kb: Math.round(t.min / 1024) });
      if (note) meta.append(document.createElement("br"), note);
      $("result").style.display = "block";
      const ext = format === "jpeg" ? "jpg" : "png";
