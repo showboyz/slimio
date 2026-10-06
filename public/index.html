@@ -270,12 +270,14 @@
 
                 <div id="opt-browser" style="display:none;">
                     <div class="field">
-                        <label>Quality <span id="qval">80%</span></label>
-                        <input type="range" id="quality" min="30" max="95" value="80" step="5" />
-                    </div>
-                    <div class="field">
-                        <label>Resolution <span id="sval">1.0x</span></label>
-                        <input type="range" id="scale" min="50" max="150" value="100" step="10" />
+                        <label>Level</label>
+                        <select id="blevel">
+                            <option value="small">Smallest — images at 100 dpi</option>
+                            <option value="balanced" selected>Balanced (recommended) — images at 150 dpi</option>
+                            <option value="high">High quality — images at 200 dpi</option>
+                            <option value="pages">Pages as images — smallest for text-heavy PDFs, text not selectable</option>
+                        </select>
+                        <div class="hint">Photos and scans inside the PDF are shrunk; text stays sharp and selectable.</div>
                     </div>
                 </div>
 
@@ -302,6 +304,7 @@
                 <div class="row"><span>Original size</span><span id="orig" class="v">—</span></div>
                 <div class="row"><span>After compression</span><span id="after" class="v">—</span></div>
                 <div class="row"><span>Saved</span><span id="gain" class="gain">—</span></div>
+                <div class="hint" id="note" style="margin:6px 0 4px"></div>
                 <a id="dl" class="dl">↓ Download compressed PDF</a>
             </div>
 
@@ -448,7 +451,8 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script defer src="/js/pdf-images.js?v=7a2dd178"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress.js?v=34a80018"></script>
+<script type="module" src="/js/compress.js?v=fd0a1b99"></script>
  </body>
 </html>

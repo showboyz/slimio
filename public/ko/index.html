@@ -335,12 +335,14 @@
 
                 <div id="opt-browser" style="display:none;">
                     <div class="field">
-                        <label>화질 <span id="qval">80%</span></label>
-                        <input type="range" id="quality" min="30" max="95" value="80" step="5" />
-                    </div>
-                    <div class="field">
-                        <label>해상도 <span id="sval">1.0x</span></label>
-                        <input type="range" id="scale" min="50" max="150" value="100" step="10" />
+                        <label>압축 정도</label>
+                        <select id="blevel">
+                            <option value="small">가장 작게 — 이미지 100dpi</option>
+                            <option value="balanced" selected>균형 (추천) — 이미지 150dpi</option>
+                            <option value="high">고화질 — 이미지 200dpi</option>
+                            <option value="pages">페이지를 이미지로 — 글자 많은 PDF를 가장 작게, 글자 선택 불가</option>
+                        </select>
+                        <div class="hint">PDF 안의 사진·스캔만 줄여요. 글자는 선명하고 선택도 돼요.</div>
                     </div>
                 </div>
 
@@ -367,6 +369,7 @@
                 <div class="row"><span>원래 크기</span><span id="orig" class="v">—</span></div>
                 <div class="row"><span>압축 후</span><span id="after" class="v">—</span></div>
                 <div class="row"><span>줄어든 비율</span><span id="gain" class="gain">—</span></div>
+                <div class="hint" id="note" style="margin:6px 0 4px"></div>
                 <a id="dl" class="dl">↓ 압축된 PDF 다운로드</a>
             </div>
 
@@ -552,8 +555,9 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/i18n/ko.js?v=0"></script>
+<script defer src="/js/pdf-images.js?v=7a2dd178"></script>
+<script defer src="/i18n/ko.js?v=0e5dd972"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress.js?v=34a80018"></script>
+<script type="module" src="/js/compress.js?v=fd0a1b99"></script>
  </body>
 </html>

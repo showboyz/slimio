@@ -34,9 +34,12 @@ window.SLIMIO_KO = {
    "0% (already optimized)": "0% (이미 최적화된 파일)",
    "Your file runs locally in your browser — nothing is uploaded.": "파일은 브라우저 안에서만 처리돼요. 서버로 올라가지 않아요.",
    "Text stays sharp and selectable. Files are deleted right after compressing.": "글자가 선명하고 복사도 그대로 돼요. 파일은 압축 직후 삭제돼요.",
+   "Nothing is uploaded. Photos and scans inside the PDF are shrunk on your device.": "파일은 업로드되지 않아요. PDF 안의 사진·스캔만 내 기기에서 줄여요.",
+   "This PDF is mostly text and graphics, which stay as they are. For a much smaller file, choose Level → Pages as images.": "글자와 도형이 대부분인 PDF라 그대로 두었어요. 훨씬 작게 만들려면 압축 정도에서 '페이지를 이미지로'를 고르세요.",
+   "This PDF is mostly text and graphics, which stay as they are. Sharp mode shrinks fonts too and usually makes it much smaller.": "글자와 도형이 대부분인 PDF라 그대로 두었어요. '선명하게' 모드는 폰트까지 줄여서 보통 훨씬 작아져요.",
    "Best for most PDFs. Files up to 50MB; larger files are compressed in your browser.": "대부분의 PDF에 가장 좋아요. 50MB까지 가능하고, 더 큰 파일은 브라우저에서 압축해요.",
    "Pages are redrawn as images, so text can't be selected afterwards.": "페이지를 이미지로 다시 만들어서, 압축 후에는 글자를 선택할 수 없어요.",
-   "This file is over 50MB, so it will be compressed in your browser (pages become images).": "50MB가 넘는 파일이라 브라우저에서 압축해요 (페이지가 이미지로 바뀌어요).",
+   "This file is over 50MB, so it will be compressed in your browser.": "50MB가 넘는 파일이라 브라우저에서 압축해요.",
    "The server couldn't take this file right now, so it was compressed in your browser instead.": "지금은 서버에서 처리할 수 없어서 브라우저에서 대신 압축했어요.",
    "Your file is sent to the Ghostscript server to keep text perfectly sharp.": "글자를 선명하게 유지하려고 파일을 Ghostscript 서버로 보내요. 처리 직후 삭제돼요.",
 

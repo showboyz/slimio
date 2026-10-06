@@ -13,10 +13,7 @@ const mode = $("mode");
 const optBrowser = $("opt-browser");
 const optServer = $("opt-server");
 const gslevel = $("gslevel");
-const quality = $("quality");
-const scale = $("scale");
-const qval = $("qval");
-const sval = $("sval");
+const blevel = $("blevel");
 const goBtn = $("go");
 const prog = $("prog");
 const result = $("result");
@@ -29,8 +26,6 @@ const logEl = $("log");
 let file = null;
 dl.addEventListener("click", () => SlimIO.trackDownload());
 
-quality.oninput = () => (qval.textContent = quality.value + "%");
-scale.oninput = () => (sval.textContent = (scale.value / 100).toFixed(1) + "x");
 
 // Server (Ghostscript) is the default: text stays real text. Over SERVER_MAX we can't
 // upload (our limit is 50MB; Cloudflare rejects bodies over 100MB with an HTML page),
@@ -45,7 +40,7 @@ function syncMode() {
         : SlimIO.t("Your file runs locally in your browser — nothing is uploaded.");
     $("modehint").textContent = server
         ? SlimIO.t("Best for most PDFs. Files up to 50MB; larger files are compressed in your browser.")
-        : SlimIO.t("Pages are redrawn as images, so text can't be selected afterwards.");
+        : SlimIO.t("Nothing is uploaded. Photos and scans inside the PDF are shrunk on your device.");
 }
 mode.onchange = () => { syncMode(); refreshStatus(); };
 syncMode();   // the browser may restore the other option on back/refresh
@@ -67,7 +62,7 @@ function setFile(f) {
     goBtn.disabled = false;
     controls.classList.remove("hidden");
     if (f.size > SERVER_MAX && mode.value === "server")
-        useBrowserMode(SlimIO.t("This file is over 50MB, so it will be compressed in your browser (pages become images)."));
+        useBrowserMode(SlimIO.t("This file is over 50MB, so it will be compressed in your browser."));
     refreshStatus();
 }
 
@@ -94,7 +89,7 @@ async function compress() {
 
     try {
         if (mode.value === "server" && file.size > SERVER_MAX) {
-            useBrowserMode(SlimIO.t("This file is over 50MB, so it will be compressed in your browser (pages become images)."));
+            useBrowserMode(SlimIO.t("This file is over 50MB, so it will be compressed in your browser."));
             await compressInBrowser();
         } else if (mode.value === "server") {
             const done = await compressOnServer();
@@ -147,6 +142,10 @@ async function compressOnServer() {
     updateLimit(j.remaining, j.limit);
 }
 
+// In-browser levels: shrink the images inside the PDF (text untouched), or redraw whole
+// pages as images ("pages") — smaller for text-heavy PDFs but text is no longer selectable.
+const BROWSER_LEVELS = { small: { dpi: 100, quality: 0.6 }, balanced: { dpi: 150, quality: 0.72 }, high: { dpi: 200, quality: 0.85 } };
+
 async function compressInBrowser() {
     const check = await fetch(`${API_BASE}/api/check`, { headers: SlimIO.apiHeaders() }).then((r) => r.json());
     if (!check.ok) {
@@ -154,9 +153,28 @@ async function compressInBrowser() {
         refreshStatus();
         return;
     }
+    if (blevel.value === "pages") return compressPagesAsImages();
+    const lv = BROWSER_LEVELS[blevel.value] || BROWSER_LEVELS.balanced;
+    let r;
+    try {
+        r = await SlimImages.compress(await file.arrayBuffer(), { ...lv, onProgress: (p) => (prog.style.width = Math.round(p * 100) + "%") });
+    } catch (e) {
+        log("image mode failed: " + e.message);   // e.g. a PDF pdf-lib can't parse: redraw the pages instead
+        return compressPagesAsImages();
+    }
+    log(`images=${r.images} replaced=${r.replaced} skipped=${r.skipped}`);
+    const consume = await fetch(`${API_BASE}/api/consume`, { method: "POST", headers: SlimIO.apiHeaders() }).then((r) => r.json());
+    const small = r.bytes.length > file.size * 0.9;   // under 10% saved: mostly text, fonts and vector graphics
+    showResult(file.size, r.bytes.length, r.bytes, small
+        ? (file.size > SERVER_MAX
+            ? SlimIO.t("This PDF is mostly text and graphics, which stay as they are. For a much smaller file, choose Level → Pages as images.")
+            : SlimIO.t("This PDF is mostly text and graphics, which stay as they are. Sharp mode shrinks fonts too and usually makes it much smaller."))
+        : "");
+    updateLimit(consume.remaining, consume.limit);
+}
 
-    const q = parseInt(quality.value, 10) / 100;
-    const s = parseInt(scale.value, 10) / 100;
+async function compressPagesAsImages() {
+    const q = 0.75, s = 1;
     const data = await file.arrayBuffer();
 
     const src = await pdfjsLib.getDocument(data).promise;
@@ -207,7 +225,8 @@ function base64ToBytes(b64) {
 }
 
 // ---- UI helpers ----
-function showResult(orig, after, bytes) {
+function showResult(orig, after, bytes, note) {
+    $("note").textContent = note || "";
     SlimIO.track(SlimIO.lang === "ko" ? "ko/compress" : "compress");
     // Never hand back a bigger file: if compression didn't help, the original is the best result.
     const keep = after >= orig && file;
