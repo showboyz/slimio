@@ -320,19 +320,20 @@
                 <input type="file" id="pdf" accept="application/pdf" hidden />
                 <div class="drop-title">PDF 파일을 여기에 끌어다 놓으세요</div>
                 <div class="drop-or">또는 클릭해서 파일 선택</div>
-                <div class="drop-sub" id="sub">파일은 브라우저 안에서만 처리돼요. 서버로 올라가지 않아요.</div>
+                <div class="drop-sub" id="sub">글자가 선명하고 복사도 그대로 돼요. 파일은 압축 직후 삭제돼요.</div>
             </div>
 
             <div class="controls hidden" id="controls">
                 <div class="field">
                     <label>압축 방식</label>
                     <select id="mode">
-                       <option value="browser">브라우저 — 가장 빠름, 글자가 약간 부드러워짐</option>
-                       <option value="server">서버 (Ghostscript) — 글자가 선명하게 유지됨</option>
+                       <option value="server" selected>선명하게 (추천) — 글자 선명, 복사 가능</option>
+                       <option value="browser">기기 안에서만 — 파일 업로드 없음, 페이지가 이미지로 바뀜</option>
                     </select>
+                    <div class="hint" id="modehint">대부분의 PDF에 가장 좋아요. 50MB까지 가능하고, 더 큰 파일은 브라우저에서 압축해요.</div>
                 </div>
 
-                <div id="opt-browser">
+                <div id="opt-browser" style="display:none;">
                     <div class="field">
                         <label>화질 <span id="qval">80%</span></label>
                         <input type="range" id="quality" min="30" max="95" value="80" step="5" />
@@ -343,16 +344,16 @@
                     </div>
                 </div>
 
-                <div id="opt-server" style="display:none;">
+                <div id="opt-server">
                     <div class="field">
-                        <label>Ghostscript 설정</label>
+                        <label>압축 정도</label>
                         <select id="gslevel">
-                            <option value="screen">화면용 — 가장 작은 파일 (72dpi)</option>
-                            <option value="ebook" selected>전자책용 — 균형 (150dpi)</option>
-                            <option value="printer">인쇄용 — 고화질 (300dpi)</option>
-                            <option value="prepress">출판용 — 색상 정보 유지 (300dpi)</option>
+                            <option value="screen">가장 작게 — 이미지 72dpi</option>
+                            <option value="ebook" selected>균형 (추천) — 이미지 150dpi</option>
+                            <option value="printer">고화질 — 이미지 300dpi</option>
+                            <option value="prepress">인쇄소용 — 300dpi, 색 정보 유지</option>
                         </select>
-                        <div class="hint">높은 설정일수록 선명하지만 파일이 커져요.</div>
+                        <div class="hint">줄어드는 건 이미지뿐이에요. 글자와 도형은 어느 단계에서나 선명해요.</div>
                     </div>
                 </div>
 
@@ -551,8 +552,8 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/i18n/ko.js?v=b7c37971"></script>
+<script defer src="/i18n/ko.js?v=0"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress.js?v=e0264e10"></script>
+<script type="module" src="/js/compress.js?v=34a80018"></script>
  </body>
 </html>

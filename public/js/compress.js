@@ -32,15 +32,28 @@ dl.addEventListener("click", () => SlimIO.trackDownload());
 quality.oninput = () => (qval.textContent = quality.value + "%");
 scale.oninput = () => (sval.textContent = (scale.value / 100).toFixed(1) + "x");
 
-mode.onchange = () => {
+// Server (Ghostscript) is the default: text stays real text. Over SERVER_MAX we can't
+// upload (our limit is 50MB; Cloudflare rejects bodies over 100MB with an HTML page),
+// so those files go to the in-browser mode automatically.
+const SERVER_MAX = 50 * 1024 * 1024;
+function syncMode() {
     const server = mode.value === "server";
     optBrowser.style.display = server ? "none" : "block";
     optServer.style.display = server ? "block" : "none";
     sub.textContent = server
-        ? SlimIO.t("Your file is sent to the Ghostscript server to keep text perfectly sharp.")
+        ? SlimIO.t("Text stays sharp and selectable. Files are deleted right after compressing.")
         : SlimIO.t("Your file runs locally in your browser — nothing is uploaded.");
-    refreshStatus();
-};
+    $("modehint").textContent = server
+        ? SlimIO.t("Best for most PDFs. Files up to 50MB; larger files are compressed in your browser.")
+        : SlimIO.t("Pages are redrawn as images, so text can't be selected afterwards.");
+}
+mode.onchange = () => { syncMode(); refreshStatus(); };
+syncMode();   // the browser may restore the other option on back/refresh
+function useBrowserMode(reason) {
+    mode.value = "browser";
+    syncMode();
+    $("modehint").textContent = reason;
+}
 
 // ---- file selection ----
 function setFile(f) {
@@ -53,6 +66,8 @@ function setFile(f) {
     drop.querySelector(".drop-or").textContent = formatSize(f.size);
     goBtn.disabled = false;
     controls.classList.remove("hidden");
+    if (f.size > SERVER_MAX && mode.value === "server")
+        useBrowserMode(SlimIO.t("This file is over 50MB, so it will be compressed in your browser (pages become images)."));
     refreshStatus();
 }
 
@@ -78,8 +93,15 @@ async function compress() {
     result.style.display = "none";
 
     try {
-        if (mode.value === "server") {
-            await compressOnServer();
+        if (mode.value === "server" && file.size > SERVER_MAX) {
+            useBrowserMode(SlimIO.t("This file is over 50MB, so it will be compressed in your browser (pages become images)."));
+            await compressInBrowser();
+        } else if (mode.value === "server") {
+            const done = await compressOnServer();
+            if (done === "fallback") {
+                useBrowserMode(SlimIO.t("The server couldn't take this file right now, so it was compressed in your browser instead."));
+                await compressInBrowser();
+            }
         } else {
             await compressInBrowser();
         }
@@ -95,12 +117,20 @@ async function compress() {
 
 async function compressOnServer() {
     prog.style.width = "60%";
-    const resp = await fetch(`${SERVER_BASE}/api/compress`, {
-        method: "POST",
-        headers: SlimIO.apiHeaders({ "X-Level": gslevel.value }),
-        body: await file.arrayBuffer(),
-    });
-    const j = await resp.json();
+    let resp;
+    try {
+        resp = await fetch(`${SERVER_BASE}/api/compress`, {
+            method: "POST",
+            headers: SlimIO.apiHeaders({ "X-Level": gslevel.value }),
+            body: await file.arrayBuffer(),
+        });
+    } catch (e) {
+        return "fallback";   // connection dropped (e.g. upload refused mid-way)
+    }
+    // Anything that isn't our JSON (proxy error page, 413/502/503/504) -> compress in the browser.
+    let j;
+    try { j = await resp.json(); } catch (e) { return "fallback"; }
+    if (resp.status === 413 || resp.status === 503 || resp.status >= 500 && !j.ok) return "fallback";
     if (resp.status === 429) {
         showError(SlimIO.t("Daily limit reached. {limit} per day. Come back tomorrow.", { limit: j.limit || "?" }));
         refreshStatus();

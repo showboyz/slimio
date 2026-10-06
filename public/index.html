@@ -255,19 +255,20 @@
                 <input type="file" id="pdf" accept="application/pdf" hidden />
                 <div class="drop-title">Drop your PDF here</div>
                 <div class="drop-or">or click to browse</div>
-                <div class="drop-sub" id="sub">Your file runs locally in your browser — nothing is uploaded.</div>
+                <div class="drop-sub" id="sub">Text stays sharp and selectable. Files are deleted right after compressing.</div>
             </div>
 
             <div class="controls hidden" id="controls">
                 <div class="field">
-                    <label>Mode</label>
+                    <label>Compression</label>
                     <select id="mode">
-                       <option value="browser">Browser — fastest, text slightly smoothed</option>
-                       <option value="server">Server (Ghostscript) — text stays perfectly sharp</option>
+                       <option value="server" selected>Sharp (recommended) — text stays crisp and selectable</option>
+                       <option value="browser">Private — never leaves your browser, pages become images</option>
                     </select>
+                    <div class="hint" id="modehint">Best for most PDFs. Files up to 50MB; larger files are compressed in your browser.</div>
                 </div>
 
-                <div id="opt-browser">
+                <div id="opt-browser" style="display:none;">
                     <div class="field">
                         <label>Quality <span id="qval">80%</span></label>
                         <input type="range" id="quality" min="30" max="95" value="80" step="5" />
@@ -278,16 +279,16 @@
                     </div>
                 </div>
 
-                <div id="opt-server" style="display:none;">
+                <div id="opt-server">
                     <div class="field">
-                        <label>Ghostscript preset</label>
+                        <label>Level</label>
                         <select id="gslevel">
-                            <option value="screen">Screen — smallest file (72 dpi)</option>
-                            <option value="ebook" selected>E-book — balanced (150 dpi)</option>
-                            <option value="printer">Printer — high quality (300 dpi)</option>
-                            <option value="prepress">Prepress — print shop, keeps color (300 dpi)</option>
+                            <option value="screen">Smallest file — images at 72 dpi</option>
+                            <option value="ebook" selected>Balanced (recommended) — images at 150 dpi</option>
+                            <option value="printer">High quality — images at 300 dpi</option>
+                            <option value="prepress">Print shop — 300 dpi, keeps colour profiles</option>
                         </select>
-                        <div class="hint">Higher preset keeps text crisper but yields a larger file.</div>
+                        <div class="hint">Only images are resampled; text and vector graphics stay sharp at every level.</div>
                     </div>
                 </div>
 
@@ -448,6 +449,6 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress.js?v=e0264e10"></script>
+<script type="module" src="/js/compress.js?v=34a80018"></script>
  </body>
 </html>

@@ -33,6 +33,11 @@ window.SLIMIO_KO = {
    "Compression failed: {msg}": "압축하지 못했어요: {msg}",
    "0% (already optimized)": "0% (이미 최적화된 파일)",
    "Your file runs locally in your browser — nothing is uploaded.": "파일은 브라우저 안에서만 처리돼요. 서버로 올라가지 않아요.",
+   "Text stays sharp and selectable. Files are deleted right after compressing.": "글자가 선명하고 복사도 그대로 돼요. 파일은 압축 직후 삭제돼요.",
+   "Best for most PDFs. Files up to 50MB; larger files are compressed in your browser.": "대부분의 PDF에 가장 좋아요. 50MB까지 가능하고, 더 큰 파일은 브라우저에서 압축해요.",
+   "Pages are redrawn as images, so text can't be selected afterwards.": "페이지를 이미지로 다시 만들어서, 압축 후에는 글자를 선택할 수 없어요.",
+   "This file is over 50MB, so it will be compressed in your browser (pages become images).": "50MB가 넘는 파일이라 브라우저에서 압축해요 (페이지가 이미지로 바뀌어요).",
+   "The server couldn't take this file right now, so it was compressed in your browser instead.": "지금은 서버에서 처리할 수 없어서 브라우저에서 대신 압축했어요.",
    "Your file is sent to the Ghostscript server to keep text perfectly sharp.": "글자를 선명하게 유지하려고 파일을 Ghostscript 서버로 보내요. 처리 직후 삭제돼요.",
 
    // compress to size
