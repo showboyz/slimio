@@ -101,7 +101,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=d9199f5f" />
+<link rel="stylesheet" href="/style.css?v=11341609" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -156,6 +156,11 @@
            </div>
 
            <div class="controls hidden" id="controls">
+               <div class="specs">
+                   <label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>
+                   <textarea id="specs" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+                   <div class="specs-out" id="specsout" hidden></div>
+               </div>
                <div class="field">
                    <label>목표 용량</label>
                    <select id="target">
@@ -169,7 +174,16 @@
                        <option value="500KB">500KB 이하</option>
                        <option value="1MB">1MB 이하</option>
                        <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
                    </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
                    <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
                </div>
 
@@ -341,8 +355,9 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=0e5dd972"></script>
+<script defer src="/i18n/ko.js?v=0"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/compress-image.js?v=d5d180fd"></script>
+<script defer src="/js/specs.js?v=168fa21a"></script>
+<script type="module" src="/js/compress-image.js?v=17ad5f6b"></script>
 </body>
 </html>

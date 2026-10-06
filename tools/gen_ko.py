@@ -637,6 +637,10 @@ KO["compress-image.html"] = dict(
         (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
         (">US visa 600×600 px (square)<", ">미국 비자 600×600px (정사각형)<"),
         (">Bank exam photo 200×230 px (IBPS / SBI)<", ">인도 은행 시험 사진 200×230px (IBPS / SBI)<"),
+        ("📋 Paste your form's photo requirements <small>(optional)</small>", "📋 원서의 사진 규격 붙여넣기 <small>(선택)</small>"),
+        ('placeholder="e.g. Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG"', 'placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"'),
+        ('<option value="custom">Custom range…</option>', '<option value="custom">직접 입력…</option>'),
+        ('<label for="kmin">From</label>', '<label for="kmin">최소</label>'), ('<label for="kmax">to</label>', '<label for="kmax">최대</label>'),
         ('<option value="20-50KB">20–50KB</option>', '<option value="20-50KB">20~50KB</option>'),
         (">Custom size in pixels…<", ">픽셀 직접 입력…<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
@@ -800,6 +804,10 @@ KO["signature-image.html"] = dict(
         ("Upload forms usually accept only JPG. For putting on documents, a transparent PNG looks cleaner.", "원서 사이트는 대부분 JPG만 받아요. 문서에 넣을 서명은 투명한 PNG가 깔끔해요."),
         (">✍️ Use this signature to sign a PDF →<", ">✍️ 이 서명으로 PDF에 서명하기 →<"),
         ('aria-label="Signature pad"', 'aria-label="서명 입력판"'),
+        ("📋 Paste your form's requirements <small>(optional)</small>", "📋 원서 안내문 붙여넣기 <small>(선택)</small>"),
+        ('placeholder="e.g. Signature 140 x 60 pixels, file size between 10 KB and 20 KB, JPG format"', 'placeholder="예: 서명 140 x 60 픽셀, 파일 크기 10KB~20KB, JPG"'),
+        (">Custom range…<", ">직접 입력…<"),
+        ('<label for="kmin">From</label>', '<label for="kmin">최소</label>'), ('<label for="kmax">to</label>', '<label for="kmax">최대</label>'),
         ("✍️ Tap here to sign", "✍️ 여기를 눌러 서명하기"),
         ('title="Black ink"', 'title="검은색"'),
         ('title="Blue ink"', 'title="파란색"'),
@@ -1472,7 +1480,8 @@ def leftover_english(s):
             if w not in ALLOWED_EN:
                 found.append((w, m.group(1).strip()[:60]))
     for m in re.finditer(r'(?:title|placeholder|alt|aria-label)="([^"]*[A-Za-z]{3,}[^"]*)"', body):
-        found.append(("attr", m.group(1)))
+        if any(w not in ALLOWED_EN for w in re.findall(r"[A-Za-z]{3,}", m.group(1))):
+            found.append(("attr", m.group(1)))
     return found
 
 

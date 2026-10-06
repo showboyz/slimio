@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Signature Image Maker — Resize Signature to 20KB, JPG or PNG | SlimIO</title>
-<meta name="description" content="Draw your signature or upload a photo of it, clean the background and save a JPG or transparent PNG at the exact size and KB your form needs (e.g. under 20KB). Free, runs in your browser." />
-<meta name="keywords" content="signature resize 20kb, signature image maker, signature to png, transparent signature png, resize signature for online form, signature 10kb to 20kb, scan signature" />
+<title>Signature Resize to 10–20KB, 140×60 — Paste Your Form’s Rules | SlimIO</title>
+<meta name="description" content="Paste the signature rules from your application form (e.g. 140×60 pixels, 10–20KB, 6×2 cm at 300 dpi) and get a clean JPG that fits. Draw it or photograph it on paper. Free, in your browser." />
+<meta name="keywords" content="signature resize 10 to 20 kb, signature resize 20kb, signature 140x60, signature size 10kb to 20kb, signature resize 20kb, signature image maker, signature to png, transparent signature png, resize signature for online form, signature 10kb to 20kb, scan signature" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0b0d12" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -16,15 +16,15 @@
 
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SlimIO" />
-<meta property="og:title" content="Signature Image Maker — Resize Signature to 20KB, JPG or PNG | SlimIO" />
-<meta property="og:description" content="Draw your signature or upload a photo of it, clean the background and save a JPG or transparent PNG at the exact size and KB your form needs (e.g. under 20KB). Free, runs in your browser." />
+<meta property="og:title" content="Signature Resize to 10–20KB, 140×60 — Paste Your Form’s Rules | SlimIO" />
+<meta property="og:description" content="Paste the signature rules from your application form (e.g. 140×60 pixels, 10–20KB, 6×2 cm at 300 dpi) and get a clean JPG that fits. Draw it or photograph it on paper. Free, in your browser." />
 <meta property="og:url" content="https://pdfslimio.com/signature-image.html" />
 <meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Signature Image Maker | SlimIO" />
-<meta name="twitter:description" content="Draw your signature or upload a photo of it, clean the background and save a JPG or transparent PNG at the exact size and KB your form needs (e.g. under 20KB). Free, runs in your browser." />
+<meta name="twitter:description" content="Paste the signature rules from your application form (e.g. 140×60 pixels, 10–20KB, 6×2 cm at 300 dpi) and get a clean JPG that fits. Draw it or photograph it on paper. Free, in your browser." />
 <meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
 
 <script type="application/ld+json">
@@ -57,6 +57,14 @@
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "My form gives exact rules like “140 × 60 pixels, 30–49 KB” or “6 cm × 2 cm at 300 dpi”. How do I match them?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Copy the instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you, and shows what it set. Then add your signature and click Make signature image."
+                  }
+            },
             {
                   "@type": "Question",
                   "name": "How do I resize my signature to 20KB?",
@@ -100,7 +108,7 @@
       ]
 }
 </script>
-<link rel="stylesheet" href="/style.css?v=d9199f5f" />
+<link rel="stylesheet" href="/style.css?v=11341609" />
 <style>
 .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
@@ -167,6 +175,11 @@
 
       <div class="tool">
            <div class="alt-tool">Want to sign a PDF document instead? <a href="/sign-pdf.html">Sign PDF →</a></div>
+           <div class="specs">
+               <label for="specs">📋 Paste your form's requirements <small>(optional)</small></label>
+               <textarea id="specs" rows="3" placeholder="e.g. Signature 140 x 60 pixels, file size between 10 KB and 20 KB, JPG format"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </div>
            <div class="tabs" id="tabs">
                <button type="button" class="tab on" data-mode="draw">✍️ Draw</button>
                <button type="button" class="tab" data-mode="upload">📷 Paper signature photo</button>
@@ -219,7 +232,16 @@
                        <option value="20">Under 20KB</option>
                        <option value="50">Under 50KB</option>
                        <option value="100">Under 100KB</option>
+                       <option value="custom">Custom range…</option>
                    </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">From</label>
+                       <input type="number" id="kmin" min="0" max="5000" value="10" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">to</label>
+                       <input type="number" id="kmax" min="1" max="5000" value="20" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
                    <div class="hint">Check the form's instructions — many ask for a signature between 10KB and 20KB.</div>
                </div>
                <div class="field">
@@ -264,6 +286,7 @@
 <div class="content">
       <h2>How to make a signature image</h2>
       <ul>
+          <li><b>0. Paste the rules (optional).</b> Copy the size rules from your form into the box at the top — the pixel size, KB range and format are set for you.</li>
           <li><b>1. Draw or upload.</b> Sign with your finger or mouse, or upload a photo of your signature on white paper (Paper signature photo).</li>
           <li><b>2. Pick the size.</b> Keep it trimmed to the signature, or enter the exact pixels the form asks for, such as 140×60.</li>
           <li><b>3. Pick the file size and format.</b> 10–20KB is selected by default; choose PNG if you need a transparent background.</li>
@@ -288,6 +311,10 @@
 
 <section class="faq">
       <h2>Signature Image Maker — FAQ</h2>
+      <details open>
+          <summary>My form gives exact rules like “140 × 60 pixels, 30–49 KB” or “6 cm × 2 cm at 300 dpi”. How do I match them?</summary>
+          <p>Copy the instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you, and shows what it set. Then add your signature and click Make signature image.</p>
+      </details>
       <details open>
           <summary>How do I resize my signature to 20KB?</summary>
           <p>Draw your signature or upload a photo of it, choose Under 20KB (or 10–20KB) as the file size and click Make signature image. SlimIO trims the empty space and keeps the sharpest version that fits.</p>
@@ -353,6 +380,7 @@
 </div>
 
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/signature-image.js?v=7282a42d"></script>
+<script defer src="/js/specs.js?v=168fa21a"></script>
+<script type="module" src="/js/signature-image.js?v=b46b3fab"></script>
 </body>
 </html>

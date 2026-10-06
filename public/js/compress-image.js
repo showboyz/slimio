@@ -120,6 +120,34 @@ tiles.forEach((t) => t.addEventListener("click", () => {
      $("resize").dispatchEvent(new Event("change"));
 }));
 $("resize").addEventListener("change", syncTiles);
+$("target").addEventListener("change", () => { $("krange").hidden = $("target").value !== "custom"; });
+$("krange").hidden = $("target").value !== "custom";
+
+// Pasted form requirements -> exact pixel size, KB range and format (js/specs.js).
+function applySpecs() {
+     const out = $("specsout");
+     const r = SlimSpecs.parse($("specs").value);
+     if (!r) { out.hidden = true; return; }
+     const found = [];
+     if (r.w && r.h) {
+             $("resize").value = "custom"; $("cw").value = r.w; $("ch").value = r.h;
+             $("resize").dispatchEvent(new Event("change"));
+             found.push(`${r.w}×${r.h} px`);
+     }
+     if (r.minKB || r.maxKB) {
+             $("target").value = "custom"; $("krange").hidden = false;
+             $("kmin").value = r.minKB || ""; $("kmax").value = r.maxKB || "";
+             found.push(r.minKB && r.maxKB ? `${r.minKB}–${r.maxKB} KB` : r.maxKB ? SlimIO.t("under {kb} KB", { kb: r.maxKB }) : SlimIO.t("at least {kb} KB", { kb: r.minKB }));
+     }
+     if (r.format) { $("format").value = r.format; found.push(r.format === "png" ? "PNG" : "JPG"); }
+     out.hidden = false;
+     out.className = "specs-out" + (found.length ? "" : " none");
+     out.textContent = found.length
+             ? "✓ " + SlimIO.t("Set to") + " " + found.join(" · ") + (r.notes.includes("no-dpi") ? " — " + SlimIO.t("cm/mm converted at 200 dpi; check the result") : "")
+             : SlimIO.t("Couldn't find sizes in that text — set them below.");
+}
+let specsTimer = null;
+$("specs").addEventListener("input", () => { clearTimeout(specsTimer); specsTimer = setTimeout(applySpecs, 300); });
 
 // ?resize=bank-photo&target=50KB preselects options (links from guide pages)
 {
@@ -378,7 +406,11 @@ async function run() {
      urls.forEach((u) => URL.revokeObjectURL(u));
      urls = [];
      const label = $("target").value;
-     const opts = { target: parseSize(label), min: parseMin(label), resize, format: $("format").value };
+     const custom = label === "custom";
+     const opts = custom
+             ? { target: Number($("kmax").value) > 0 ? Number($("kmax").value) * 1000 : 0,
+                 min: Number($("kmin").value) > 0 ? Number($("kmin").value) * 1024 : 0, resize, format: $("format").value }
+             : { target: parseSize(label), min: parseMin(label), resize, format: $("format").value };
      try {
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
@@ -398,7 +430,7 @@ async function run() {
                      }
                      prog.set(((i + 1) / files.length) * 100);
              }
-             showResult(done, label);
+             showResult(done, label === "custom" ? ($("kmax").value ? $("kmax").value + "KB" : "") : label);
      } catch (e) {
              SlimIO.showError(SlimIO.t("Compression failed: {msg}", { msg: e.message }));
      } finally {

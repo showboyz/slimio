@@ -272,6 +272,33 @@ function syncSize() {
      }
 }
 $("size").addEventListener("change", syncSize);
+$("target").addEventListener("change", () => { $("krange").hidden = $("target").value !== "custom"; });
+$("krange").hidden = $("target").value !== "custom";
+
+// Pasted form requirements -> size, KB range and format (js/specs.js).
+function applySpecs() {
+     const out = $("specsout");
+     const r = SlimSpecs.parse($("specs").value);
+     if (!r) { out.hidden = true; return; }
+     const found = [];
+     if (r.w && r.h) {
+             $("size").value = "custom"; $("cw").value = r.w; $("ch").value = r.h; syncSize();
+             found.push(`${r.w}×${r.h} px`);
+     }
+     if (r.minKB || r.maxKB) {
+             $("target").value = "custom"; $("krange").hidden = false;
+             $("kmin").value = r.minKB || ""; $("kmax").value = r.maxKB || "";
+             found.push(r.minKB && r.maxKB ? `${r.minKB}–${r.maxKB} KB` : r.maxKB ? SlimIO.t("under {kb} KB", { kb: r.maxKB }) : SlimIO.t("at least {kb} KB", { kb: r.minKB }));
+     }
+     if (r.format) { $("format").value = r.format; found.push(r.format === "png" ? "PNG" : "JPG"); }
+     out.hidden = false;
+     out.className = "specs-out" + (found.length ? "" : " none");
+     out.textContent = found.length
+             ? "✓ " + SlimIO.t("Set to") + " " + found.join(" · ") + (r.notes.includes("no-dpi") ? " — " + SlimIO.t("cm/mm converted at 200 dpi; check the result") : "")
+             : SlimIO.t("Couldn't find sizes in that text — set them below.");
+}
+let specsTimer = null;
+$("specs").addEventListener("input", () => { clearTimeout(specsTimer); specsTimer = setTimeout(applySpecs, 300); });
 // ?preset=bank-thumb etc. (linked from the exam documents page)
 const wanted = new URLSearchParams(location.search).get("preset");
 if (wanted && PRESETS[wanted]) $("size").value = wanted;
@@ -309,6 +336,10 @@ function encode(canvas, format, quality) {
 // and the minimum 1024, so the file passes whichever definition the form checks.
 function parseTarget(v) {
      if (!v) return {};
+     if (v === "custom") {
+             const lo = Number($("kmin").value), hi = Number($("kmax").value);
+             return { min: lo > 0 ? lo * 1024 : undefined, max: hi > 0 ? hi * 1000 : undefined };
+     }
      const [a, b] = v.split("-").map(Number);
      return b ? { min: a * 1024, max: b * 1000 } : { max: a * 1000 };
 }

@@ -101,7 +101,7 @@
       ]
 }
 </script>
-<link rel="stylesheet" href="/style.css?v=d9199f5f" />
+<link rel="stylesheet" href="/style.css?v=11341609" />
 <style>
 .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
@@ -168,6 +168,11 @@
 
       <div class="tool">
            <div class="alt-tool">PDF 문서에 바로 서명하려면 <a href="/ko/sign-pdf.html">PDF 서명 →</a></div>
+           <div class="specs">
+               <label for="specs">📋 원서 안내문 붙여넣기 <small>(선택)</small></label>
+               <textarea id="specs" rows="3" placeholder="예: 서명 140 x 60 픽셀, 파일 크기 10KB~20KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </div>
            <div class="tabs" id="tabs">
                <button type="button" class="tab on" data-mode="draw">✍️ 직접 그리기</button>
                <button type="button" class="tab" data-mode="upload">📷 종이 서명 사진</button>
@@ -220,7 +225,16 @@
                        <option value="20">20KB 이하</option>
                        <option value="50">50KB 이하</option>
                        <option value="100">100KB 이하</option>
+                       <option value="custom">직접 입력…</option>
                    </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="5000" value="10" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="5000" value="20" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
                    <div class="hint">원서 안내를 확인하세요. 서명은 10~20KB를 요구하는 경우가 많아요.</div>
                </div>
                <div class="field">
@@ -353,8 +367,9 @@
       </footer>
 </div>
 
-<script defer src="/i18n/ko.js?v=0e5dd972"></script>
+<script defer src="/i18n/ko.js?v=0"></script>
 <script defer src="/lib.js?v=154c316c"></script>
-<script type="module" src="/js/signature-image.js?v=7282a42d"></script>
+<script defer src="/js/specs.js?v=168fa21a"></script>
+<script type="module" src="/js/signature-image.js?v=b46b3fab"></script>
 </body>
 </html>

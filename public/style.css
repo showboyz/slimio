@@ -125,6 +125,19 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
    }
 }
 
+/* pasted form requirements (signature & photo tools, js/specs.js) */
+.specs { margin-bottom: 14px; }
+.specs label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.specs label small { color: var(--muted); font-weight: 400; }
+.specs textarea {
+   width: 100%; padding: 10px 12px; border-radius: 10px; resize: vertical; font: inherit; font-size: 14px;
+   background: #0e1117; border: 1px solid var(--line); color: var(--text);
+}
+.specs textarea:focus { outline: none; border-color: var(--accent); }
+.specs-out { margin-top: 8px; padding: 8px 12px; border-radius: 8px; font-size: 13px; background: #10231c; border: 1px solid #24503f; color: var(--accent); }
+.specs-out[hidden] { display: none; }
+.specs-out.none { background: #1d1a10; border-color: #4d4220; color: #ffd479; }
+
 /* crop preview (image tools) */
 .crop { margin: -4px 0 14px; }
 .crop[hidden] { display: none; }
