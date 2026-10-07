@@ -4,11 +4,14 @@
 // Returns { w, h, minKB, maxKB, format, notes[] } with whatever it found (fields may be missing).
 window.SlimSpecs = (() => {
      const NUM = "(\\d+(?:\\.\\d+)?)";
-     const KB = "\\s*(kb|k\\.b\\.|kilobytes?|mb)";
+     const KB = "\\s*(kbytes?|kb|k\\.b\\.|kilobytes?|mb)";
      const toKB = (n, unit) => (/^mb/i.test(unit) ? parseFloat(n) * 1000 : parseFloat(n));
+     // Korean notices: "200KB 이하", "가로 3.5㎝", "300 X 400 픽셀"
+     const norm = (text) => text.toLowerCase().replace(/\s+/g, " ").replace(/㎝/g, "cm").replace(/㎜/g, "mm")
+             .replace(/㎅/g, "kb").replace(/㎆/g, "mb").replace(/픽셀/g, "px");
 
      function sizes(text) {
-             const t = text.toLowerCase().replace(/\s+/g, " ");
+             const t = norm(text);
              let minKB = null, maxKB = null, m;
              // ranges: "between 10 kb and 20 kb", "10kb to 20kb", "10-20 kb", "10 to 20 kb", "from 20 to 50kb"
              const range = new RegExp(NUM + "(?:" + KB + ")?\\s*(?:-|–|~|to|and)\\s*" + NUM + KB);
@@ -18,18 +21,18 @@ window.SlimSpecs = (() => {
              }
              if (maxKB === null) {
                      const max = new RegExp("(?:not exceed(?:ing)?|not more than|no more than|less than|under|below|upto|up to|maximum(?: of)?|max\\.?|within|<=?)\\s*(?:size )?(?:of )?" + NUM + KB);
-                     if ((m = t.match(max))) maxKB = toKB(m[1], m[2]);
+                     if ((m = t.match(max)) || (m = t.match(new RegExp(NUM + KB + "\\s*(?:이하|미만|이내|까지)")))) maxKB = toKB(m[1], m[2]);
              }
              if (minKB === null) {
                      const min = new RegExp("(?:at least|not less than|minimum(?: of)?|min\\.?|more than|above)\\s*(?:size )?(?:of )?" + NUM + KB);
-                     if ((m = t.match(min))) minKB = toKB(m[1], m[2]);
+                     if ((m = t.match(min)) || (m = t.match(new RegExp(NUM + KB + "\\s*(?:이상|초과)")))) minKB = toKB(m[1], m[2]);
              }
              if (maxKB === null && minKB === null && (m = t.match(new RegExp("\\b" + NUM + KB)))) maxKB = toKB(m[1], m[2]);   // "make it 20 kb"
              return { minKB, maxKB };
      }
 
      function dims(text) {
-             const t = text.toLowerCase().replace(/\s+/g, " ").replace(/\((?:width|w|height|h)\)/g, "");
+             const t = norm(text).replace(/\((?:width|w|height|h|가로|세로)\)/g, "");
              const notes = [];
              const dpiM = t.match(/(\d{2,4})\s*(?:dpi|ppi|pixels? per inch)/);
              const dpi = dpiM ? parseInt(dpiM[1], 10) : null;
@@ -44,8 +47,8 @@ window.SlimSpecs = (() => {
                              role: /max/.test(before) ? "max" : /min/.test(before) ? "min" : "" });
              }
              // "width 140px, height 110px" / "width: 140 pixels and height: 110 pixels"
-             const w1 = t.match(/width\s*(?:of|:|=|-)?\s*(\d+(?:\.\d+)?)\s*(px|pixels?|cm|mm)?/);
-             const h1 = t.match(/height\s*(?:of|:|=|-)?\s*(\d+(?:\.\d+)?)\s*(px|pixels?|cm|mm)?/);
+             const w1 = t.match(/(?:width|가로)\s*(?:of|:|=|-)?\s*(\d+(?:\.\d+)?)\s*(px|pixels?|cm|mm)?/);
+             const h1 = t.match(/(?:height|세로)\s*(?:of|:|=|-)?\s*(\d+(?:\.\d+)?)\s*(px|pixels?|cm|mm)?/);
              if (w1 && h1) pairs.push({ a: parseFloat(w1[1]), b: parseFloat(h1[1]), unit: (w1[2] || h1[2] || "px").replace(/s$/, ""), role: "" });
 
              const toPx = (v, unit) => {

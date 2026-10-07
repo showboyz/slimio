@@ -94,6 +94,9 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
 .preset span { font-size: 11px; }
 .preset:hover { border-color: var(--accent); }
 .preset.on { border-color: var(--accent); background: #10231c; color: var(--accent); }
+.exams { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: -6px 0 16px; font-size: 12px; color: var(--muted); }
+.exams .preset { flex-direction: row; gap: 5px; padding: 7px 11px; border-radius: 999px; }
+.exams .preset b { font-size: 12.5px; }
 
 /* before/after demo (compress-id-photo) */
 .demo { margin: 22px 0 8px; padding: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
