@@ -369,18 +369,55 @@ function uploadCanvas() {
      const ctx = c.getContext("2d");
      ctx.drawImage(uploaded, 0, 0, c.width, c.height);
      if (!$("knockout").checked) return c;
-     const data = ctx.getImageData(0, 0, c.width, c.height);
+     const W = c.width, H = c.height;
+     const data = ctx.getImageData(0, 0, W, H);
      const p = data.data;
-     let x0 = c.width, y0 = c.height, x1 = -1, y1 = -1;
-     for (let i = 0; i < p.length; i += 4) {
-             const lum = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2];
-             const a = lum >= 225 ? 0 : lum <= 170 ? 255 : Math.round(((225 - lum) / 55) * 255);
-             p[i + 3] = Math.min(p[i + 3], a);
-             if (p[i + 3] > 24) {
-                     const px = (i / 4) % c.width, py = Math.floor(i / 4 / c.width);
-                     if (px < x0) x0 = px; if (px > x1) x1 = px; if (py < y0) y0 = py; if (py > y1) y1 = py;
-             }
+     const lum = new Float32Array(W * H);
+     for (let i = 0, j = 0; j < lum.length; i += 4, j++) lum[j] = 0.299 * p[i] + 0.587 * p[i + 1] + 0.114 * p[i + 2];
+     // Phone photos of paper are never evenly white (shadows, vignetting), so judge each pixel
+     // against the paper around it: the bright end of each block, spread one block outward.
+     const B = Math.max(16, Math.round(Math.max(W, H) / 24)), gw = Math.ceil(W / B), gh = Math.ceil(H / B);
+     const paper = new Float32Array(gw * gh);
+     const hist = new Uint32Array(256);
+     for (let by = 0; by < gh; by++) for (let bx = 0; bx < gw; bx++) {
+             hist.fill(0); let n = 0;
+             for (let y = by * B; y < Math.min(H, by * B + B); y++) for (let x = bx * B; x < Math.min(W, bx * B + B); x++) { hist[lum[y * W + x] | 0]++; n++; }
+             let k = 255, seen = 0;
+             while (k > 0 && (seen += hist[k]) < n * 0.1) k--;   // 90th percentile
+             paper[by * gw + bx] = k;
      }
+     const bg = new Float32Array(gw * gh);
+     for (let by = 0; by < gh; by++) for (let bx = 0; bx < gw; bx++) {
+             let m = 0;
+             for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+                     const yy = by + dy, xx = bx + dx;
+                     if (yy >= 0 && yy < gh && xx >= 0 && xx < gw) m = Math.max(m, paper[yy * gw + xx]);
+             }
+             bg[by * gw + bx] = Math.max(m, 60);
+     }
+     const paperAt = (x, y) => {   // bilinear between block centres
+             const fx = Math.min(Math.max(x / B - 0.5, 0), gw - 1), fy = Math.min(Math.max(y / B - 0.5, 0), gh - 1);
+             const x0 = fx | 0, y0 = fy | 0, x1 = Math.min(x0 + 1, gw - 1), y1 = Math.min(y0 + 1, gh - 1), tx = fx - x0, ty = fy - y0;
+             return (bg[y0 * gw + x0] * (1 - tx) + bg[y0 * gw + x1] * tx) * (1 - ty) + (bg[y1 * gw + x0] * (1 - tx) + bg[y1 * gw + x1] * tx) * ty;
+     };
+     const rows = new Uint32Array(H), cols = new Uint32Array(W);
+     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+             const j = y * W + x, i = j * 4;
+             const r = lum[j] / paperAt(x, y);
+             let a = r >= 0.88 ? 0 : r <= 0.66 ? 255 : Math.round(((0.88 - r) / 0.22) * 255);
+             // coloured ink (a red seal, including solid red ones) stays even where it fills a block
+             const chroma = Math.max(p[i], p[i + 1], p[i + 2]) - Math.min(p[i], p[i + 1], p[i + 2]);
+             if (chroma >= 70 && lum[j] < 200) a = 255;
+             p[i + 3] = Math.min(p[i + 3], a);
+             if (p[i + 3] > 24) { rows[y]++; cols[x]++; }
+     }
+     // crop to the ink; a stray speck or two doesn't count
+     let x0 = 0, x1 = W - 1, y0 = 0, y1 = H - 1;
+     while (x0 < W && cols[x0] < 2) x0++;
+     while (x1 >= 0 && cols[x1] < 2) x1--;
+     while (y0 < H && rows[y0] < 2) y0++;
+     while (y1 >= 0 && rows[y1] < 2) y1--;
+     if (x1 < x0 || y1 < y0) x1 = -1;
      ctx.putImageData(data, 0, 0);
      if (x1 < 0) return c;
      const out = document.createElement("canvas");
@@ -403,9 +440,24 @@ $("sigfile").addEventListener("change", async () => {
 });
 $("knockout").addEventListener("change", showUpload);
 
+// A roughly square, mostly red image is a seal (직인), not a signature: place it seal-sized.
+function looksLikeStamp(c) {
+     const ratio = c.width / c.height;
+     if (ratio < 0.7 || ratio > 1.4) return false;
+     const d = c.getContext("2d").getImageData(0, 0, c.width, c.height).data;
+     let ink = 0, red = 0;
+     for (let i = 0; i < d.length; i += 16) {
+             if (d[i + 3] < 128) continue;
+             ink++;
+             if (d[i] > d[i + 1] + 50 && d[i] > d[i + 2] + 50) red++;
+     }
+     return ink > 0 && red / ink > 0.6;
+}
+
 function uploadedSignature() {
      if (!uploaded) throw new Error(SlimIO.t("Choose a signature image first."));
-     return { canvas: uploadCanvas(), kind: "signature" };
+     const canvas = uploadCanvas();
+     return { canvas, kind: looksLikeStamp(canvas) ? "stamp" : "signature" };
 }
 
 // ---------------------------------------------------------------- tabs & adding
@@ -432,8 +484,8 @@ $("add").addEventListener("click", async () => {
              const sig = mode === "draw" ? drawnSignature() : mode === "type" ? await typedSignature() : uploadedSignature();
              const png = await toPng(sig.canvas);
              const img = { png, url: URL.createObjectURL(new Blob([png], { type: "image/png" })), w: sig.canvas.width, h: sig.canvas.height };
-             // a seal is about 2 cm across; a signature about a third of the page wide
-             const w = sig.kind === "seal" ? 56 : Math.min(pageSize.w * 0.32, 190);
+             // a name seal is about 1.5 cm across, a company seal about 2.3 cm; a signature about a third of the page wide
+             const w = sig.kind === "seal" ? 42 : sig.kind === "stamp" ? 64 : Math.min(pageSize.w * 0.32, 190);
              const h = (w * img.h) / img.w;
              // Drop it in the middle of the part of the page that's on screen (on a phone the
              // bottom of the page is often below the fold or under the browser bar).
