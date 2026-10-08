@@ -77,8 +77,27 @@ PAGES = {
     "us-visa-photo.html": ("us-visa-photo", "sig", ["signature-image", "compress-id-photo", "jpg-to-pdf"]),
 }
 
-EN_TEXT = {"next": "Next, you might want to…", "more": "More free tools", "pdf": "PDF tools", "photo": "Photo &amp; signature tools"}
-KO_TEXT = {"next": "이어서 이런 것도 해 보세요", "more": "다른 무료 도구", "pdf": "PDF 도구", "photo": "사진 · 서명 도구"}
+EN_TEXT = {"next": "Next, you might want to…", "more": "More free tools", "pdf": "PDF tools", "photo": "Photo &amp; signature tools",
+           "pdfsize": "Compress a PDF to a set size", "imgsize": "Compress a photo to a set size"}
+KO_TEXT = {"next": "이어서 이런 것도 해 보세요", "more": "다른 무료 도구", "pdf": "PDF 도구", "photo": "사진 · 서명 도구",
+           "pdfsize": "PDF 용량 맞추기", "imgsize": "사진 용량 맞추기"}
+
+# Size pages as a row of links on every page: they rank far lower than the tools, and a link
+# from each page (the signature page ranks in the top 3) helps search engines value them.
+SIZE_LINKS_PDF = [("/compress-pdf-to-50kb.html", "50KB"), ("/compress-pdf-to-100kb.html", "100KB"), ("/compress-pdf-to-200kb.html", "200KB"),
+                  ("/compress-pdf-to-300kb.html", "300KB"), ("/compress-pdf-to-500kb.html", "500KB"), ("/compress-pdf-to-1mb.html", "1MB"),
+                  ("/compress-pdf-to-2mb.html", "2MB"), ("/compress-pdf-for-email.html", ("For email", "메일 첨부용"))]
+SIZE_LINKS_IMG = [("/compress-image-to-20kb.html", "20KB"), ("/compress-image-to-50kb.html", "50KB"),
+                  ("/compress-image-to-100kb.html", "100KB"), ("/compress-image-to-200kb.html", "200KB")]
+
+
+def size_row(links, kind):
+    def label(l): return l if isinstance(l, str) else l[0]
+    noun = "PDF" if kind == "pdf" else "photo"
+    items = "".join(f'<a href="{h}" title="Compress {noun} to {label(l)}">{label(l)}</a>' if label(l)[0].isdigit()
+                    else f'<a href="{h}">{label(l)}</a>' for h, l in links)
+    return f'<div class="sizes">{items}</div>'
+
 
 
 def card(key):
@@ -113,7 +132,9 @@ def more_block(this, feat):
             f'      {feature(feat)}\n'
             f'      <h2 class="more-h">{EN_TEXT["more"]}</h2>\n'
             f'      <p class="more-sub">{EN_TEXT["pdf"]}</p>\n      {cards(pdf)}\n'
+            f'      <p class="more-sub">{EN_TEXT["pdfsize"]}</p>\n      {size_row(SIZE_LINKS_PDF, "pdf")}\n'
             f'      <p class="more-sub">{EN_TEXT["photo"]}</p>\n      {cards(photo)}\n'
+            f'      <p class="more-sub">{EN_TEXT["imgsize"]}</p>\n      {size_row(SIZE_LINKS_IMG, "img")}\n'
             '</section>\n<!-- more-tools:end -->\n')
 
 
@@ -150,6 +171,12 @@ def ko_pairs():
     for f in FEATURES.values():
         for wrap, en, ko in zip(wraps, f["en"], f["ko"]):
             pairs.append((wrap.format(en), wrap.format(ko)))
+    for links, noun, kn in ((SIZE_LINKS_PDF, "PDF", "PDF"), (SIZE_LINKS_IMG, "photo", "사진")):
+        for _, l in links:
+            if isinstance(l, str):
+                pairs.append((f'title="Compress {noun} to {l}"', f'title="{kn} {l}로 줄이기"'))
+            else:
+                pairs.append((f'">{l[0]}</a>', f'">{l[1]}</a>'))
     for k in EN_TEXT:
         tag = {"next": '<b class="nh">{}</b>', "more": '<h2 class="more-h">{}</h2>'}.get(k, '<p class="more-sub">{}</p>')
         pairs.append((tag.format(EN_TEXT[k]), tag.format(KO_TEXT[k])))

@@ -306,6 +306,9 @@ footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 30px 0 40
 .feature .cta { margin-top: 4px; color: var(--accent); font-weight: 700; font-size: 15px; }
 .more-h { text-align: center; font-size: 22px; margin: 44px 0 0; }
 .more-sub { color: var(--muted); font-size: 13px; font-weight: 600; margin: 18px 0 10px; }
+.sizes { display: flex; flex-wrap: wrap; gap: 8px; }
+.sizes a { padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; background: #10141b; color: var(--text); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+.sizes a:hover { border-color: var(--accent); color: var(--accent); }
 
 @media (max-width: 760px) {
    .tcards { grid-template-columns: repeat(2, 1fr); }

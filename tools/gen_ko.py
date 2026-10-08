@@ -876,7 +876,9 @@ KO["signature-image.html"] = dict(
           <li>서명이 사진의 대부분을 차지하게 찍으면 좋아요. 나머지는 자동으로 잘라요.</li>
       </ul>
       <h3>사진도 같이 내야 한다면</h3>
-      <p>원서는 서명과 함께 증명사진도 요구하는 경우가 많아요. <a href="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>로 3×4·3.5×4.5cm 규격과 용량을 맞추거나, <a href="/ko/sign-pdf.html">PDF 서명</a>으로 문서에 바로 서명을 넣을 수 있어요.</p>""",
+      <p>원서는 서명과 함께 증명사진도 요구하는 경우가 많아요. <a href="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>로 3×4·3.5×4.5cm 규격과 용량을 맞추거나, <a href="/ko/sign-pdf.html">PDF 서명</a>으로 문서에 바로 서명을 넣을 수 있어요.</p>
+      <h3>증명서·서류도 PDF로 올려야 한다면</h3>
+      <p>원서 사이트는 졸업증명서, 자격증 사본 같은 서류에도 용량 제한을 두는 경우가 많아요. <a href="/ko/compress-pdf-to-100kb.html">PDF 100KB 이하로 줄이기</a>, <a href="/ko/compress-pdf-to-200kb.html">200KB</a>, <a href="/ko/compress-pdf-to-500kb.html">500KB</a>, <a href="/ko/compress-pdf-to-1mb.html">1MB</a>로 정확히 맞출 수 있고, 글자는 읽을 수 있게 유지돼요.</p>""",
     faq_title="서명 이미지 만들기",
     faq=[
         ("서명을 20KB 이하로 줄이려면 어떻게 하나요?", "서명을 그리거나 사진으로 올리고, 파일 용량에서 20KB 이하(또는 10~20KB)를 고른 뒤 서명 이미지 만들기를 누르세요. 빈 공간을 잘라 내고 그 용량 안에서 가장 선명하게 만들어요."),
