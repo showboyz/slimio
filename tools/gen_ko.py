@@ -139,7 +139,7 @@ KO["index.html"] = dict(
         (">Text stays sharp and selectable. Files are deleted right after compressing.<", ">글자가 선명하고 복사도 그대로 돼요. 파일은 압축 직후 삭제돼요.<"),
         ("<label>Compression</label>", "<label>압축 방식</label>"),
         (">Sharp (recommended) — text stays crisp and selectable<", ">선명하게 (추천) — 글자 선명, 복사 가능<"),
-        (">Private — never leaves your browser, pages become images<", ">기기 안에서만 — 파일 업로드 없음, 페이지가 이미지로 바뀜<"),
+        (">Private — never leaves your device, shrinks the photos inside<", ">기기 안에서만 — 업로드 없음, PDF 속 사진만 줄여요<"),
         ("Best for most PDFs. Files up to 50MB; larger files are compressed in your browser.", "대부분의 PDF에 가장 좋아요. 50MB까지 가능하고, 더 큰 파일은 브라우저에서 압축해요."),
         ("<label>Level</label>", "<label>압축 정도</label>"),
         (">Smallest file — images at 72 dpi<", ">가장 작게 — 이미지 72dpi<"),

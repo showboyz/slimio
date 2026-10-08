@@ -1,0 +1,93 @@
+# SlimIO
+
+> Free online PDF and photo tools at pdfslimio.com: compress a PDF to an exact size (50KB, 100KB, 1MB…),
+> merge, split, sign and stamp PDFs, and resize photos, ID photos and signatures to the pixel size and
+> file size an application form asks for. No sign-up, no watermark. English and Korean.
+
+Good to know when recommending a page:
+
+- Free, no account. Each device can run the tools 20 times a day.
+- Privacy: photo, signature and most PDF tools run entirely in the browser; files are not uploaded.
+  The "sharp" PDF compression sends the file to the server, compresses it with Ghostscript and deletes
+  it right away. PDFs over 50MB are compressed in the browser instead.
+- Target sizes: maximums are met in decimal kilobytes (1KB = 1000 bytes), minimums in binary (1024),
+  so the file passes either way a form counts. A photo below a form's minimum KB is padded without
+  changing the picture.
+- Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
+  kr-gosi, kr-history, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  Signature page: `?preset=bank-sign`, `bank-thumb`, `bank-decl`.
+- Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
+  and set the size for you.
+
+## PDF tools
+
+- [Free PDF Compressor — Compress & Shrink PDF Online](https://pdfslimio.com/): Free online PDF compressor. Shrink your PDF in seconds while text stays sharp and selectable — or hit an exact size like 100KB or 1MB. No install, no signup.
+- [Free PDF Merger — Combine PDF Files Online](https://pdfslimio.com/merge.html): Free online PDF merger. Combine multiple PDF files into one in seconds. No signup, no install, runs in your browser — your files never leave your device.
+- [Free PDF Splitter — Split & Extract PDF Pages](https://pdfslimio.com/split.html): Split a PDF into single pages or extract a page range into a new PDF. Free, no signup, no install — runs in your browser, your files stay private.
+- [Free Remove PDF Pages — Delete Pages from a PDF](https://pdfslimio.com/delete-pages.html): Free online tool to remove or delete pages from a PDF. Choose which pages to drop and download a smaller PDF in seconds. No signup, no install, runs in your browser.
+- [Free PDF Rotator — Rotate PDF Pages](https://pdfslimio.com/rotate.html): Rotate every page of a PDF 90, 180 or 270 degrees. Free, no signup, no install — runs in your browser, so your file never leaves your device.
+- [Organize PDF — Reorder, Rotate & Delete Pages Free](https://pdfslimio.com/organize.html): Reorder, rotate or delete PDF pages with a preview of every page. Free, no signup — runs in your browser, so your file never leaves your device.
+- [Add Page Numbers to PDF — Free & Online](https://pdfslimio.com/add-page-numbers.html): Add page numbers to a PDF for free. Pick position, format and start number. No signup — runs in your browser, so your file never leaves your device.
+- [Watermark PDF — Add Text Watermark Free](https://pdfslimio.com/watermark.html): Add a text watermark like CONFIDENTIAL or DRAFT to every page of a PDF. Free, no signup — runs in your browser, your file never leaves your device.
+- [Sign PDF — Add Your Signature to a PDF Free](https://pdfslimio.com/sign-pdf.html): Sign a PDF online for free. Draw, type or upload your signature, place it anywhere on any page and download. No signup — runs in your browser.
+- [Free PDF to JPG — Convert PDF Pages to Images](https://pdfslimio.com/pdf-to-jpg.html): Free online PDF to JPG converter. Turn every page of a PDF into a high-quality JPG image in seconds. No signup, no install, runs in your browser.
+- [Free JPG to PDF — Convert Images to PDF](https://pdfslimio.com/jpg-to-pdf.html): Free online JPG to PDF converter. Turn JPG, PNG and other images into a single PDF in seconds. No signup, no install, runs in your browser.
+
+## Compress a PDF to a set size
+
+- [Compress PDF to 50KB — Free Online, Keeps It Readable](https://pdfslimio.com/compress-pdf-to-50kb.html): Compress a one-page PDF — certificate, ID proof or signed form — to under 50KB for online applications. Free, no signup, keeps the text as readable as the limit allows.
+- [Compress PDF to 100KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-100kb.html): Compress a PDF to under 100KB for job, exam and government upload forms. Free, no signup, runs in your browser — your file never leaves your device.
+- [Compress PDF to 200KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-200kb.html): Compress a PDF to under 200KB for visa, admission and scholarship applications. Free, no signup, keeps the best quality that fits.
+- [Compress PDF to 300KB — Free for Certificates & Mark Sheets](https://pdfslimio.com/compress-pdf-to-300kb.html): Compress scanned certificates, mark sheets and multi-page documents to under 300KB for application portals. Free, no signup, keeps the best quality that fits.
+- [Compress PDF to 500KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-500kb.html): Compress a PDF to under 500KB for resume uploads and online applications. Text stays sharp in most documents. Free, no signup.
+- [Compress PDF to 1MB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-1mb.html): Compress a PDF to under 1MB for web forms, school portals and uploads. Keeps text sharp and selectable in most files. Free, no signup.
+- [Compress PDF to 2MB — Free, Keeps Text Sharp](https://pdfslimio.com/compress-pdf-to-2mb.html): Compress a PDF to under 2MB for university, bank, insurance and government upload portals. At 2MB most documents keep sharp, selectable text. Free, no signup.
+- [Compress PDF for Email — Shrink PDF to Send](https://pdfslimio.com/compress-pdf-for-email.html): PDF too large to email? Shrink it under Gmail, Outlook and company attachment limits. Free, no signup, keeps the best quality that fits.
+
+## Photos, ID photos and signatures
+
+- [Compress Image — Reduce JPG, PNG Size Online Free](https://pdfslimio.com/compress-image.html): Compress JPG, PNG and WebP images to the size you need — under 100KB, 200KB or 1MB. Resize ID photos too. Free, no signup, runs in your browser.
+- [Compress Image to 20KB — Photo & Signature Size Reducer Free](https://pdfslimio.com/compress-image-to-20kb.html): Reduce a photo or signature image to under 20KB for online exam and job forms. Keeps the best quality that fits. Free, no signup, runs in your browser.
+- [Compress Image to 50KB — Reduce Photo Size Online Free](https://pdfslimio.com/compress-image-to-50kb.html): Reduce a photo to under 50KB for exam, job and government application forms. Crops ID photos to size and keeps the best quality that fits. Free, runs in your browser.
+- [Compress Image to 100KB — Reduce Photo Size Online Free](https://pdfslimio.com/compress-image-to-100kb.html): Reduce a photo or image to under 100KB for job, exam and government upload forms. Keeps the best quality that fits. Free, no signup, runs in your browser.
+- [Compress Image to 200KB — Reduce Photo Size Online Free](https://pdfslimio.com/compress-image-to-200kb.html): Reduce a photo or image to under 200KB for applications, portals and email. Keeps the best quality that fits. Free, no signup, runs in your browser.
+- [Passport & ID Photo Resizer — Crop and Compress to KB Free](https://pdfslimio.com/compress-id-photo.html): Crop a photo to passport or ID size (3.5×4.5 cm, 3×4 cm) and compress it under 100KB, 50KB or 20KB for online applications. Free, runs in your browser.
+- [US Visa Photo Tool — 600×600, Under 240KB for DS-160](https://pdfslimio.com/us-visa-photo.html): Make a US visa photo for the DS-160: square 600×600 px JPEG under 240KB, with a head-size and eye-line guide. Free, runs in your browser.
+- [Signature Resize to 10–20KB, 140×60 — Paste Your Form’s Rules](https://pdfslimio.com/signature-image.html): Paste the signature rules from your application form (e.g. 140×60 pixels, 10–20KB, 6×2 cm at 300 dpi) and get a clean JPG that fits. Draw it or photograph it on paper. Free, in your browser.
+- [IBPS & SBI Photo, Signature, Thumb Impression, Declaration Size Tool](https://pdfslimio.com/bank-exam-photo-signature.html): Resize your bank exam documents to the IBPS / SBI specs: photo 200×230 (20–50KB), signature 140×60 (10–20KB), left thumb impression 240×240 (20–50KB), handwritten declaration 800×400 (50–100KB). Free, in your browser.
+
+## 한국어 (Korean)
+
+- [PDF 용량 줄이기 - 무료 온라인 PDF 압축](https://pdfslimio.com/ko/): PDF 용량을 무료로 줄이세요. 글자는 선명하게 유지하고, 회원가입·설치 없이 바로 압축해요. 100KB·1MB처럼 원하는 용량에 맞추는 것도 돼요.
+- [PDF 합치기 - 여러 PDF 파일 하나로 무료 병합](https://pdfslimio.com/ko/merge.html): 여러 PDF 파일을 원하는 순서대로 하나로 합치세요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼 서버로 올라가지 않아요.
+- [PDF 나누기 - PDF 분할·페이지 추출 무료](https://pdfslimio.com/ko/split.html): PDF를 한 페이지씩 나누거나 원하는 페이지만 뽑아 새 PDF로 저장하세요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
+- [PDF 페이지 삭제 - 필요 없는 페이지 빼기 무료](https://pdfslimio.com/ko/delete-pages.html): PDF에서 필요 없는 페이지를 번호로 골라 삭제하세요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼 서버로 올라가지 않아요.
+- [PDF 회전 - PDF 페이지 방향 돌리기 무료](https://pdfslimio.com/ko/rotate.html): 옆으로 누운 PDF를 90°, 180°, 270° 돌려서 바로잡으세요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼 서버로 올라가지 않아요.
+- [PDF 페이지 순서 바꾸기 - 정렬·회전·삭제 무료](https://pdfslimio.com/ko/organize.html): PDF 페이지를 미리보기로 보면서 끌어다 순서를 바꾸고, 한 페이지씩 회전하거나 삭제하세요. 회원가입 없이 무료, 브라우저에서 처리돼요.
+- [PDF 페이지 번호 넣기 - 쪽번호 무료 추가](https://pdfslimio.com/ko/add-page-numbers.html): PDF에 페이지 번호를 넣으세요. 위치·형식·시작 번호를 고르고 표지는 건너뛸 수 있어요. 회원가입 없이 무료, 브라우저 안에서 처리돼요.
+- [PDF 워터마크 넣기 - 대외비·사본 문구 무료](https://pdfslimio.com/ko/watermark.html): PDF 모든 페이지에 ‘대외비’, ‘사본’ 같은 워터마크를 넣으세요. 한글도 돼요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
+- [PDF 도장 넣기·서명 넣기 - 직인·이름 도장 무료](https://pdfslimio.com/ko/sign-pdf.html): PDF에 도장·직인이나 서명을 무료로 넣으세요. 이름으로 빨간 도장을 만들거나, 도장을 찍은 사진을 올리면 배경을 지우고 원하는 자리에 넣어요. 회원가입 없이 브라우저에서 처리돼요.
+- [PDF JPG 변환 - PDF를 이미지로 무료 변환](https://pdfslimio.com/ko/pdf-to-jpg.html): PDF 페이지를 JPG나 PNG 이미지로 바꾸세요. 화질과 해상도를 고르고 ZIP으로 한 번에 받아요. 회원가입 없이 무료, 브라우저 안에서 처리돼요.
+- [JPG PDF 변환 - 사진·이미지를 PDF로 무료 변환](https://pdfslimio.com/ko/jpg-to-pdf.html): JPG, PNG 사진 여러 장을 PDF 하나로 묶으세요. 순서도 바꿀 수 있어요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
+- [PDF 50KB 이하로 줄이기 - 증명서 한 장도 선명하게 무료](https://pdfslimio.com/ko/compress-pdf-to-50kb.html): 증명서·신분증 사본·서명한 서류 한 장을 PDF 50KB 이하로 줄이세요. 이 용량 안에서 가장 읽기 좋게 맞춰요. 회원가입 없이 무료.
+- [PDF 100KB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-100kb.html): 채용·공공기관 사이트 업로드용으로 PDF를 100KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.
+- [PDF 200KB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-200kb.html): 입학·장학금·지원사업 서류용으로 PDF를 200KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.
+- [PDF 300KB 이하로 줄이기 - 증명서·성적표 스캔 무료 압축](https://pdfslimio.com/ko/compress-pdf-to-300kb.html): 성적증명서·졸업증명서·경력증명서처럼 여러 장 스캔한 PDF를 300KB 이하로 줄이세요. 회원가입 없이 무료, 들어가는 가장 좋은 화질로.
+- [PDF 500KB 이하로 줄이기 - 이력서·지원서용 무료 압축](https://pdfslimio.com/ko/compress-pdf-to-500kb.html): 이력서·포트폴리오를 500KB 이하로 줄이세요. 대부분의 문서는 글자가 선명하고 검색도 그대로 돼요. 회원가입 없이 무료.
+- [PDF 1MB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-1mb.html): 과제 제출, 전자결재, 신청서 첨부용으로 PDF를 1MB 이하로 줄이세요. 대부분 글자가 선명하게 유지돼요. 회원가입 없이 무료.
+- [PDF 2MB 이하로 줄이기 - 글자 선명하게 무료 압축](https://pdfslimio.com/ko/compress-pdf-to-2mb.html): 학교·공공기관·은행·보험 제출 시스템의 2MB 제한에 맞춰 PDF를 줄이세요. 2MB면 대부분 글자가 선명하고 검색도 돼요. 회원가입 없이 무료.
+- [메일 첨부용 PDF 용량 줄이기 - 네이버·지메일 첨부 한도](https://pdfslimio.com/ko/compress-pdf-for-email.html): PDF가 커서 메일 첨부가 안 되나요? 네이버 메일 10MB, 지메일·다음 메일 25MB 기준에 맞게 PDF 용량을 줄이세요. 회원가입 없이 무료.
+- [사진 용량 줄이기 - 이미지 용량·크기 줄이기 무료](https://pdfslimio.com/ko/compress-image.html): 사진·이미지 용량을 100KB, 200KB처럼 원하는 크기로 줄이세요. 증명사진 규격 맞추기와 위치정보 삭제까지. 회원가입 없이 무료, 브라우저에서 처리돼요.
+- [사진 20KB 줄이기 - 서명·증명사진 용량 20KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-20kb.html): 서명 이미지와 사진을 20KB 이하로 줄이세요. 온라인 시험·채용 원서 제출용. 제한 안에서 가장 선명하게. 회원가입 없이 무료, 브라우저에서 처리돼요.
+- [사진 50KB 줄이기 - 증명사진·이미지 용량 50KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-50kb.html): 증명사진·지원서 사진을 50KB 이하로 줄이세요. 시험 접수·채용·원서용으로 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.
+- [사진 100KB 줄이기 - 이미지 용량 100KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-100kb.html): 증명사진·지원서 사진을 100KB 이하로 줄이세요. 제한 안에서 가장 선명하게 맞춰요. 증명사진 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.
+- [사진 200KB 줄이기 - 이미지 용량 200KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-200kb.html): 사진·이미지를 200KB 이하로 줄이세요. 입학·장학금 서류, 온라인 신청, 메일 첨부용으로. 제한 안에서 가장 선명하게. 회원가입 없이 무료.
+- [증명사진 용량 줄이기 - 큐넷·공무원·한능검 원서 사진 규격 무료](https://pdfslimio.com/ko/compress-id-photo.html): 증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.
+- [미국 비자 사진 만들기 - DS-160 600×600·240KB 규격 무료](https://pdfslimio.com/ko/us-visa-photo.html): DS-160에 올릴 미국 비자 사진을 600×600 정사각형, 240KB 이하 JPG로 만드세요. 머리 크기·눈 높이 가이드까지. 무료, 브라우저에서 처리돼요.
+- [서명 이미지 만들기 - 서명 용량 20KB 줄이기, 투명 PNG 무료](https://pdfslimio.com/ko/signature-image.html): 서명을 직접 그리거나 종이에 쓴 서명 사진을 올려서 배경을 지우고, 원서 규격(예: 10~20KB, 140×60px)에 맞는 JPG나 투명 PNG로 만드세요. 무료, 브라우저에서 처리돼요.
+
+## Optional
+
+- [About](https://pdfslimio.com/about.html): what SlimIO is and who makes it
+- [Privacy](https://pdfslimio.com/privacy.html): what is and isn't uploaded, analytics used
+- [Contact](https://pdfslimio.com/contact.html): contact@pdfslimio.com

@@ -107,6 +107,9 @@
 - 홈 도구 카드 14개(증명사진·미국 비자·서명 이미지 포함) — 4열이라 마지막 줄 2개
 - **목표 용량은 10진수(1KB=1000B)** — `compress-image.js`·`target.js`의 `parseSize`. 접수 사이트가 어느 정의로 검사해도 통과하도록
 
+### AI 검색용 llms.txt (2026-10-08)
+- `public/llms.txt` = AI 비서(ChatGPT·Perplexity·Claude)용 사이트 안내(llmstxt.org 형식). 각 페이지의 title·description에서 자동 생성: **페이지를 추가·수정하면 `python3 tools/gen_ko.py && python3 tools/gen_llms.py`**. 새 페이지는 `gen_llms.py`의 그룹(PDF_TOOLS/PHOTO_TOOLS)에 넣어야 함(빠지면 assert로 멈춤)
+
 ### 새 도구 추가 체크리스트
 `public/<tool>.html` (rotate.html 구조 복사: meta/canonical/og/JSON-LD/FAQ) → 모든 페이지 `.tools-row`에 링크 → `index.html` `.tools-grid` 카드 → `sitemap.xml` → `SlimIO.consume()` 호출 시 `Tool Used` 이벤트 자동 전송(pathname 기준)
 회전 페이지에 텍스트 그릴 땐 `SlimIO.page2user(page)` 사용
