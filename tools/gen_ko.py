@@ -11,7 +11,7 @@ to both versions and rewrites sitemap.xml.
 Re-run it after changing an English page. If a UI string it expects is gone,
 it stops and tells you which one, so the Korean page never silently drifts.
 """
-import html, json, os, re, sys, datetime
+import glob, html, json, os, re, sys, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_related   # cross-link blocks: written into the English pages first, translated with COMMON
 
@@ -48,6 +48,7 @@ COMMON = [
     (">or click to browse (select more than one)<", ">또는 클릭해서 여러 파일 선택<"),
     (">or click to browse (JPG, PNG, WebP…)<", ">또는 클릭해서 선택 (JPG, PNG, WebP 등)<"),
     (">or click to browse<", ">또는 클릭해서 파일 선택<"),
+    ('<a href="/guides/">Guides</a>', '<a href="/ko/guides/">가이드</a>'),
     ("<span>⚡ Instant</span>", "<span>⚡ 빠름</span>"),
     ("<span>🔒 Private</span>", "<span>🔒 안전</span>"),
     ("<span>🆓 Free</span>", "<span>🆓 무료</span>"),
@@ -221,7 +222,8 @@ KO["index.html"] = dict(
       <h3>브라우저 모드와 서버 모드</h3>
       <p><b>브라우저 모드</b>는 파일이 내 기기 밖으로 나가지 않아요. 대신 페이지를 이미지로 다시 만들기 때문에 글자가 약간 부드러워질 수 있어요. <b>서버 모드</b>는 Ghostscript로 압축해서 글자가 선명하고 복사도 그대로 돼요. 서버로 보낸 파일은 결과를 돌려준 직후 삭제해요.</p>
       <h3>정해진 용량에 맞춰야 한다면</h3>
-      <p>채용·공공기관 사이트처럼 “100KB 이하”, “1MB 이하” 제한이 있다면 <a href="/ko/compress-pdf-to-100kb.html">PDF 100KB로 줄이기</a>나 <a href="/ko/compress-pdf-to-1mb.html">1MB로 줄이기</a>를 쓰세요. 목표 용량 안에 들어가는 가장 좋은 화질을 자동으로 찾아 줘요. 메일로 보낼 PDF라면 <a href="/ko/compress-pdf-for-email.html">메일 첨부용으로 줄이기</a>가 편해요.</p>""",
+      <p>채용·공공기관 사이트처럼 “100KB 이하”, “1MB 이하” 제한이 있다면 <a href="/ko/compress-pdf-to-100kb.html">PDF 100KB로 줄이기</a>나 <a href="/ko/compress-pdf-to-1mb.html">1MB로 줄이기</a>를 쓰세요. 목표 용량 안에 들어가는 가장 좋은 화질을 자동으로 찾아 줘요. 메일로 보낼 PDF라면 <a href="/ko/compress-pdf-for-email.html">메일 첨부용으로 줄이기</a>가 편해요.</p>
+      <p>압축하면 무엇이 바뀌고 무엇이 그대로인지, 정해진 용량에 맞추는 순서는 <a href="/ko/guides/pdf-compression-explained.html">PDF 용량 줄이기 원리</a>에 자세히 정리했어요.</p>""",
     faq_title="PDF 용량 줄이기",
     faq=[
         ("PDF 용량 줄이기는 정말 무료인가요?", "네. 회원가입 없이 하루 20회까지 무료로 쓸 수 있어요. 결과 파일에 워터마크도 붙지 않아요."),
@@ -640,6 +642,7 @@ KO["compress-image.html"] = dict(
         (">Korea Q-Net exam photo 300×400 px<", ">큐넷 자격시험 300×400px<"),
         (">Korea civil service exam 137×177 px<", ">공무원 시험 원서 137×177px<"),
         (">Korean History Exam 120×160 px<", ">한국사능력검정 120×160px<"),
+        (">UPSC photo 450×600 px (20–300KB)<", ">인도 UPSC 사진 450×600px (20~300KB)<"),
         ("📋 Paste your form's photo requirements <small>(optional)</small>", "📋 원서의 사진 규격 붙여넣기 <small>(선택)</small>"),
         ('placeholder="e.g. Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG"', 'placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"'),
         ('<option value="custom">Custom range…</option>', '<option value="custom">직접 입력…</option>'),
@@ -782,11 +785,11 @@ KO["compress-id-photo.html"] = dict(
       <p>위의 <b>시험 원서</b> 버튼을 누르면 픽셀 크기와 용량이 한 번에 맞춰져요. 링크로 바로 열 수도 있어요.</p>
       <ul>
           <li><b>큐넷 (국가기술자격·전문자격)</b> → 300×400px 이상, JPG, 200KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-qnet">큐넷 규격으로 열기</a></li>
-          <li><b>국가직 공무원 원서</b> → 3.5×4.5cm(137×177px), JPG. 용량은 공고마다 달라요(100KB 미만 등). <a href="/ko/compress-id-photo.html?resize=kr-gosi">공무원 규격으로 열기</a></li>
+          <li><b>국가직 공무원 원서</b> → 3.5×4.5cm(137×177px), JPG·PNG, 350KB 미만(국가공무원 채용시스템 안내). <a href="/ko/compress-id-photo.html?resize=kr-gosi">공무원 규격으로 열기</a></li>
           <li><b>한국사능력검정시험</b> → 약 3×4cm(120×160px), JPG. <a href="/ko/compress-id-photo.html?resize=kr-history">한능검 규격으로 열기</a></li>
           <li><b>토익</b> → 픽셀 제한 없이 JPG 6MB 이하. 반명함 3×4cm로 저장하면 돼요.</li>
       </ul>
-      <p>2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 공고문의 문장을 위 <b>원서의 사진 규격 붙여넣기</b> 칸에 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
+      <p>여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 공고문의 문장을 위 <b>원서의 사진 규격 붙여넣기</b> 칸에 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
       <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
       <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 틀을 얼굴에 맞춰 옮기면 그 비율로 잘라서 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
@@ -840,6 +843,11 @@ KO["signature-image.html"] = dict(
         (">Signature — 140×60 px, 10–20KB<", ">서명 — 140×60px, 10~20KB<"),
         (">Left thumb impression — 240×240 px, 20–50KB<", ">왼손 엄지 지문 — 240×240px, 20~50KB<"),
         (">Handwritten declaration — 800×400 px, 50–100KB<", ">손글씨 서약문 — 800×400px, 50~100KB<"),
+        ('<optgroup label="Other Indian exams">', '<optgroup label="인도 기타 시험">'),
+        (">RRB signature — 30–49KB, at least 140×60 px<", ">RRB 서명 — 30~49KB, 최소 140×60px<"),
+        (">SSC signature — 10–20KB, about 6×2 cm<", ">SSC 서명 — 10~20KB, 약 6×2cm<"),
+        (">UPSC signature — 20–300KB, 350–1000 px<", ">UPSC 서명 — 20~300KB, 350~1000px<"),
+        (">NEET signature — 10–100KB<", ">NEET 서명 — 10~100KB<"),
         (">20–50KB<", ">20~50KB<"), (">50–100KB<", ">50~100KB<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("<label>File size</label>", "<label>파일 용량</label>"),
@@ -1490,7 +1498,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "DS", "IBPS", "SBI", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "DS", "IBPS", "SBI", "UPSC", "SSC", "RRB", "NEET", "NTA", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
 
 
@@ -1543,8 +1551,18 @@ def build(page):
     open(os.path.join(ROOT, "ko", page), "w").write(s)
 
 
+def guide_urls():
+    """Guides built by gen_guides.py (one language each; the hubs are /guides/ and /ko/guides/)."""
+    out = []
+    for d, base in (("guides", "/guides/"), ("ko/guides", "/ko/guides/")):
+        for f in sorted(glob.glob(os.path.join(ROOT, d, "*.html"))):
+            name = os.path.basename(f)
+            out.append(base if name == "index.html" else base + name)
+    return out
+
+
 def write_sitemap():
-    urls = [en_path(p) for p in PAGES + INFO_PAGES + EN_ONLY] + [ko_path(p) for p in PAGES + INFO_PAGES]
+    urls = [en_path(p) for p in PAGES + INFO_PAGES + EN_ONLY] + [ko_path(p) for p in PAGES + INFO_PAGES] + guide_urls()
     body = "".join(f"""       <url>
            <loc>{SITE}{u}</loc>
            <lastmod>{TODAY}</lastmod>
@@ -1574,4 +1592,4 @@ if __name__ == "__main__":
             html_ = lang_links(open(path).read(), p, lang)
             open(path, "w").write(html_)
     write_sitemap()
-    print(f"sitemap: {2 * len(PAGES + INFO_PAGES)} URLs")
+    print(f"sitemap: {open(os.path.join(ROOT, 'sitemap.xml')).read().count('<loc>')} URLs")

@@ -86,6 +86,15 @@ Good to know when recommending a page:
 - [미국 비자 사진 만들기 - DS-160 600×600·240KB 규격 무료](https://pdfslimio.com/ko/us-visa-photo.html): DS-160에 올릴 미국 비자 사진을 600×600 정사각형, 240KB 이하 JPG로 만드세요. 머리 크기·눈 높이 가이드까지. 무료, 브라우저에서 처리돼요.
 - [서명 이미지 만들기 - 서명 용량 20KB 줄이기, 투명 PNG 무료](https://pdfslimio.com/ko/signature-image.html): 서명을 직접 그리거나 종이에 쓴 서명 사진을 올려서 배경을 지우고, 원서 규격(예: 10~20KB, 140×60px)에 맞는 JPG나 투명 PNG로 만드세요. 무료, 브라우저에서 처리돼요.
 
+## Guides
+
+- [How to compress a PDF without losing quality (and hit an exact size like 100KB)](https://pdfslimio.com/guides/compress-pdf-without-losing-quality.html): Why PDFs get big, what compression actually changes, which settings keep text sharp, and how to get a PDF under a fixed limit like 100KB, 200KB or 1MB without making it unreadable.
+- [Photo and signature size for Indian exams: RRB, SSC, UPSC, NEET and IBPS (2026)](https://pdfslimio.com/guides/india-exam-photo-signature-size.html): The official photo and signature upload rules for RRB NTPC, SSC, UPSC, NEET and IBPS/SBI in one table — KB range, pixels and the mistakes that get forms rejected — with a free tool preset for each.
+- [KB, pixels, cm and DPI: photo size rules on application forms, explained](https://pdfslimio.com/guides/kb-pixels-cm-dpi-explained.html): What "3.5 × 4.5 cm", "200 × 230 pixels", "200 DPI" and "20–50KB" each mean on an application form, how to convert between them, and why a photo can be the right size in pixels but the wrong size in KB.
+- [How to make a clean signature image for online forms (JPG 10–20KB or transparent PNG)](https://pdfslimio.com/guides/signature-image-for-online-forms.html): Turn a signature on paper into a clean JPG that passes exam and job portals (10–20KB, 140 × 60 px and similar) or a transparent PNG for signing documents — how to photograph it, clean it and size it.
+- [원서·시험 사진 규격 총정리: 큐넷·공무원·한능검·토익·여권 (2026)](https://pdfslimio.com/ko/guides/exam-application-photo-size.html): 큐넷, 국가직 공무원, 한국사능력검정시험, 토익, 여권 온라인 신청의 사진 규격(cm·픽셀·용량·형식)을 공식 안내 기준으로 한 표에 정리하고, 픽셀 계산법과 반려되는 사진 유형까지 설명해요.
+- [PDF 용량 줄이기 원리: 글자는 선명하게, 용량만 줄이는 법](https://pdfslimio.com/ko/guides/pdf-compression-explained.html): PDF가 왜 무거운지, 압축하면 무엇이 바뀌고 무엇이 그대로인지, 글자를 선명하게 두면서 100KB·500KB·1MB 같은 정해진 용량에 맞추는 방법을 원리부터 정리했어요.
+
 ## Optional
 
 - [About](https://pdfslimio.com/about.html): what SlimIO is and who makes it

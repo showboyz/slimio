@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Compress a PDF Without Losing Quality — and to an Exact Size | SlimIO</title>
+<meta name="description" content="Why PDFs get big, what compression actually changes, which settings keep text sharp, and how to get a PDF under a fixed limit like 100KB, 200KB or 1MB without making it unreadable." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/guides/compress-pdf-without-losing-quality.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Compress a PDF Without Losing Quality — and to an Exact Size | SlimIO" />
+<meta property="og:description" content="Why PDFs get big, what compression actually changes, which settings keep text sharp, and how to get a PDF under a fixed limit like 100KB, 200KB or 1MB without making it unreadable." />
+<meta property="og:url" content="https://pdfslimio.com/guides/compress-pdf-without-losing-quality.html" />
+<link rel="stylesheet" href="/style.css?v=07da5afc" />
+<script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
+<meta name="google-adsense-account" content="ca-pub-5339352429300786" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to compress a PDF without losing quality (and hit an exact size like 100KB)",
+  "description": "Why PDFs get big, what compression actually changes, which settings keep text sharp, and how to get a PDF under a fixed limit like 100KB, 200KB or 1MB without making it unreadable.",
+  "datePublished": "2026-10-09",
+  "dateModified": "2026-10-09",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Organization",
+    "name": "SlimIO",
+    "url": "https://pdfslimio.com/about.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "SlimIO",
+    "url": "https://pdfslimio.com/"
+  },
+  "mainEntityOfPage": "https://pdfslimio.com/guides/compress-pdf-without-losing-quality.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "SlimIO",
+      "item": "https://pdfslimio.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Guides",
+      "item": "https://pdfslimio.com/guides/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "How to compress a PDF without losing quality (and hit an exact size like 100KB)",
+      "item": "https://pdfslimio.com/guides/compress-pdf-without-losing-quality.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Does compressing a PDF reduce the quality of the text?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not with image-only compression. Text in a normal PDF is stored as characters and font outlines, which stay exactly as they are; only the photos and scans inside are resampled. Text becomes blurry only when whole pages are turned into pictures, which is a last resort for very small targets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my scanned PDF barely shrink?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It usually does shrink a lot, because every page of a scan is a picture. If it doesn't, the scan may already be low resolution or stored in black-and-white formats that are compact already. Removing blank pages or rescanning in grayscale at 150 dpi helps more than any setting."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why can't a long PDF fit into 100KB?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each page of a scan needs a certain number of pixels to stay readable. Ten scanned pages under 100KB leaves about 10KB per page, which is less than a readable page needs. Split the document, upload only the pages that are asked for, or ask whether a larger limit is allowed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it safe to compress a confidential PDF online?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SlimIO's sharp mode sends the file to its server, compresses it with Ghostscript and deletes it immediately. If the file must not leave your device at all, choose the private mode, which compresses the images inside the PDF in your browser."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <a class="brand" href="/"><span class="logo">📄</span> SlimIO</a>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/guides/">Guides</a>
+               <a href="/ko/guides/" class="lang-switch"><img src="/img/flag-kr.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />한국어 가이드</a>
+           </div>
+      </nav>
+</div>
+
+<main class="content article">
+      <p class="crumbs"><a href="/">SlimIO</a> › <a href="/guides/">Guides</a></p>
+      <h1>How to compress a PDF without losing quality (and hit an exact size like 100KB)</h1>
+      <p class="byline">By SlimIO · Updated <time datetime="2026-10-09">October 9, 2026</time> · 4 min read</p>
+<p>"File must be under 2MB." "Maximum upload size: 100KB." "Attachment too large." Most people meet PDF compression at that moment and grab the first tool they find — and then discover that the result is readable only if you squint. It doesn't have to be. This guide explains what makes a PDF big, what a good compressor changes and what it leaves alone, and how to reach a fixed size without wrecking the document.</p>
+
+      <h2>What takes up space inside a PDF</h2>
+      <p>A PDF is a container. The pieces inside it are very different in size:</p>
+      <ul>
+          <li><b>Text</b> is stored as characters plus the shapes of the fonts used. A full page of text costs only a few kilobytes.</li>
+          <li><b>Fonts</b> can be big if a document embeds whole font files. A good compressor keeps only the letters that are actually used (font subsetting).</li>
+          <li><b>Vector graphics</b> — tables, lines, charts drawn in a design app — are drawing instructions, also small.</li>
+          <li><b>Images</b> — photos, logos, and every page of a scan — are usually 80–99% of the file. A single phone photo can be 3–5MB on its own.</li>
+      </ul>
+      <p>So compressing a PDF well is mostly about one thing: <b>making the images inside it as small as they can be without looking worse at the size they are shown</b>, and leaving the text alone.</p>
+
+      <h2>Two ways to compress, and why one of them blurs your text</h2>
+      <div class="table-wrap"><table>
+          <tr><th></th><th>Image-only compression</th><th>Turning pages into pictures</th></tr>
+          <tr><td><b>What happens</b></td><td>Each image inside the PDF is resampled to a sensible resolution and re-saved as JPEG. Text, fonts and vector graphics are copied unchanged.</td><td>Every page is rendered to a single picture and the PDF is rebuilt from those pictures.</td></tr>
+          <tr><td><b>Text</b></td><td>Stays sharp at any zoom, can be selected, copied and searched</td><td>Becomes part of the picture: soft edges, no copy or search</td></tr>
+          <tr><td><b>Size</b></td><td>Big savings on photo- and scan-heavy files; small on text-only files</td><td>Can reach very small targets, at the cost of readability</td></tr>
+          <tr><td><b>Use it for</b></td><td>Almost everything</td><td>Only when nothing else fits the limit</td></tr>
+      </table></div>
+      <p>Many quick online compressors use the second method because it is simple and always produces a small file. That is why "compressed" PDFs often come back fuzzy. SlimIO uses image-only compression by default and only falls back to rendering pages when a target size cannot be reached any other way — and it tells you when that happened.</p>
+
+      <h2>Choosing a resolution for the images</h2>
+      <p>Image resolution in a PDF is measured in dots per inch (dpi) at the size the image is printed on the page. Choosing it is the main quality decision:</p>
+      <div class="table-wrap"><table>
+          <tr><th>Setting</th><th>Image resolution</th><th>Good for</th></tr>
+          <tr><td><b>Smallest</b></td><td>72 dpi</td><td>Upload forms with tight limits, documents read only on screen</td></tr>
+          <tr><td><b>Balanced</b></td><td>150 dpi</td><td>Email, sharing, most uploads — photos still look good on a laptop or phone</td></tr>
+          <tr><td><b>High quality</b></td><td>300 dpi</td><td>Documents that will be printed</td></tr>
+      </table></div>
+      <p>Because text is untouched, even the smallest setting keeps typed text perfectly readable; only photos and scanned pages lose detail. For a scanned page, 150 dpi is usually the lowest resolution at which small print stays comfortable to read.</p>
+
+      <h2>Hitting an exact limit: 100KB, 200KB, 1MB</h2>
+      <p>When a form gives a hard limit, the goal changes from "smaller" to "the best quality that still fits". The method that works:</p>
+      <ol>
+          <li><b>Check whether it already fits.</b> Many PDFs exported from Word or HWP are already under 100KB. Don't touch them.</li>
+          <li><b>Compress the images only</b>, starting with the lighter setting. If the result fits, stop — text is still crisp.</li>
+          <li><b>Only if it still doesn't fit</b>, render the pages as images, trying the sharpest resolution first and stepping down until the file fits.</li>
+      </ol>
+      <p>This is exactly what the <a href="/compress-pdf-to-100kb.html">100KB</a>, <a href="/compress-pdf-to-200kb.html">200KB</a>, <a href="/compress-pdf-to-500kb.html">500KB</a> and <a href="/compress-pdf-to-1mb.html">1MB</a> pages do, so you don't have to guess settings. As a rough guide to what is realistic:</p>
+      <div class="table-wrap"><table>
+          <tr><th>Document</th><th>100KB</th><th>500KB</th><th>2MB</th></tr>
+          <tr><td>Typed document exported from Word/HWP, any length</td><td>Usually fits as is</td><td>Fits</td><td>Fits</td></tr>
+          <tr><td>One scanned page (certificate, ID)</td><td>Fits, readable</td><td>Fits easily</td><td>Fits</td></tr>
+          <tr><td>5-page scan</td><td>Tight — small print may suffer</td><td>Fits, readable</td><td>Fits</td></tr>
+          <tr><td>Report with 20 photos</td><td>Not realistic</td><td>Possible, photos soften</td><td>Fits, photos look fine</td></tr>
+      </table></div>
+      <p>These are typical results, not promises — a page full of fine print needs more bytes than a page with a large stamp and two lines of text.</p>
+
+      <h2>Five things that shrink a PDF more than any setting</h2>
+      <ol>
+          <li><b>Upload only the pages asked for.</b> A form that wants "proof of address" doesn't need the 12-page agreement. Use <a href="/delete-pages.html">Remove pages</a> or <a href="/split.html">Split</a> first.</li>
+          <li><b>Scan at 150 dpi, in grayscale.</b> A 600 dpi colour scan of a black-and-white letter is mostly wasted data.</li>
+          <li><b>Shrink photos before putting them in a document.</b> A 4000-pixel phone photo shown 8 cm wide on a page is far bigger than it needs to be.</li>
+          <li><b>Export, don't print-to-PDF from a photo.</b> A PDF exported from a word processor keeps text as text; a photo of a printed page turns it into an image.</li>
+          <li><b>Split long documents</b> into two or three files if each upload slot has its own limit.</li>
+      </ol>
+
+      <h2>Privacy: where does the file go?</h2>
+      <p>Some compression has to happen on a server — font subsetting and the most efficient image re-encoding use Ghostscript, which doesn't run in a browser. SlimIO's <b>sharp</b> mode sends the file over HTTPS, compresses it and deletes it right away; nothing is stored. The <b>private</b> mode does the image compression inside your browser instead, so the file never leaves your device; it can't subset fonts, so text-only PDFs shrink a little less. Files over 50MB always use the private mode.</p>
+
+      <h2>Quick answers</h2>
+      <ul>
+          <li><b>"Under 2MB" for email or a portal:</b> the <a href="/">compressor</a> with the balanced setting is almost always enough.</li>
+          <li><b>"Under 100KB" for a job or exam form:</b> use the <a href="/compress-pdf-to-100kb.html">100KB page</a> and upload only the pages required.</li>
+          <li><b>A PDF that won't go below the limit:</b> look at what's inside. If it's a long scan, split it; if it's photos, shrink them at the source.</li>
+      </ul>
+      <div class="cta-box">
+          <div><b>Try it free</b><p>Images are resampled, text and fonts stay sharp. Free, no signup; files are deleted right after compression.</p></div>
+          <a class="cta-btn" href="/">Compress a PDF →</a>
+      </div>
+</main>
+
+<section class="faq">
+      <h2>Questions</h2>
+      <details>
+          <summary>Does compressing a PDF reduce the quality of the text?</summary>
+          <p>Not with image-only compression. Text in a normal PDF is stored as characters and font outlines, which stay exactly as they are; only the photos and scans inside are resampled. Text becomes blurry only when whole pages are turned into pictures, which is a last resort for very small targets.</p>
+      </details>
+      <details>
+          <summary>Why does my scanned PDF barely shrink?</summary>
+          <p>It usually does shrink a lot, because every page of a scan is a picture. If it doesn't, the scan may already be low resolution or stored in black-and-white formats that are compact already. Removing blank pages or rescanning in grayscale at 150 dpi helps more than any setting.</p>
+      </details>
+      <details>
+          <summary>Why can't a long PDF fit into 100KB?</summary>
+          <p>Each page of a scan needs a certain number of pixels to stay readable. Ten scanned pages under 100KB leaves about 10KB per page, which is less than a readable page needs. Split the document, upload only the pages that are asked for, or ask whether a larger limit is allowed.</p>
+      </details>
+      <details>
+          <summary>Is it safe to compress a confidential PDF online?</summary>
+          <p>SlimIO's sharp mode sends the file to its server, compresses it with Ghostscript and deletes it immediately. If the file must not leave your device at all, choose the private mode, which compresses the images inside the PDF in your browser.</p>
+      </details>
+</section>
+
+<section class="content">
+      <h2>More guides</h2>
+      <div class="guide-list">
+          <a class="guide-card" href="/guides/india-exam-photo-signature-size.html"><b>Photo and signature size for Indian exams: RRB, SSC, UPSC, NEET and IBPS (2026)</b><small>The official photo and signature upload rules for RRB NTPC, SSC, UPSC, NEET and IBPS/SBI in one table — KB range, pixels and the mistakes that get forms rejected — with a free tool preset for each.</small></a>
+          <a class="guide-card" href="/guides/kb-pixels-cm-dpi-explained.html"><b>KB, pixels, cm and DPI: photo size rules on application forms, explained</b><small>What "3.5 × 4.5 cm", "200 × 230 pixels", "200 DPI" and "20–50KB" each mean on an application form, how to convert between them, and why a photo can be the right size in pixels but the wrong size in KB.</small></a>
+          <a class="guide-card" href="/guides/signature-image-for-online-forms.html"><b>How to make a clean signature image for online forms (JPG 10–20KB or transparent PNG)</b><small>Turn a signature on paper into a clean JPG that passes exam and job portals (10–20KB, 140 × 60 px and similar) or a transparent PNG for signing documents — how to photograph it, clean it and size it.</small></a>
+      </div>
+</section>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div class="foot-links"><a href="/guides/">Guides</a> · <a href="/about.html">About</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a></div>
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+          </div>
+      </footer>
+</div>
+</body>
+</html>

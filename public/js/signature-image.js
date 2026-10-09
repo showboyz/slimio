@@ -255,10 +255,19 @@ document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () 
 const PRESETS = {
      "bank-sign": { box: [140, 60], target: "10-20",
              hint: "Sign on white paper with a black pen. Signatures in CAPITAL LETTERS are not accepted." },
-     "bank-thumb": { box: [240, 240], target: "20-50",
+     "bank-thumb": { box: [240, 240], target: "20-50", paper: true,
              hint: "Press your left thumb on white paper with black or blue ink, then photograph it." },
-     "bank-decl": { box: [800, 400], target: "50-100",
+     "bank-decl": { box: [800, 400], target: "50-100", paper: true,
              hint: "Write the declaration text from the notice in English, in black ink, not in capital letters." },
+     // Other Indian exams (see /guides/india-exam-photo-signature-size.html for the sources)
+     "rrb-sign": { box: [280, 160], target: "30-49",
+             hint: "RRB: sign in running (joined) handwriting with a black pen on white paper, not in capital letters. At least 140×60 px." },
+     "ssc-sign": { box: [300, 100], target: "10-20",
+             hint: "SSC: sign with a black pen on white paper; the notice asks for about 6.0 × 2.0 cm. Blurred or tiny signatures are rejected." },
+     "upsc-sign": { box: [700, 350], target: "20-300",
+             hint: "UPSC: JPG between 20KB and 300KB, each side between 350 and 1000 px. Sign with a black pen on white paper." },
+     "neet-sign": { box: [400, 160], target: "10-100",
+             hint: "NEET (NTA): JPG between 10KB and 100KB. Sign with a black pen on white paper." },
 };
 function syncSize() {
      const v = $("size").value, p = PRESETS[v];
@@ -266,9 +275,14 @@ function syncSize() {
      $("presethint").hidden = !p;
      if (p) {
              $("presethint").textContent = SlimIO.t(p.hint) + " " + SlimIO.t("Always check the exact numbers in your exam notice.");
-             $("target").value = p.target;
+             if ([...$("target").options].some((o) => o.value === p.target)) $("target").value = p.target;
+             else {   // a range the menu doesn't list (RRB's 30–49KB): use the custom fields
+                     const [lo, hi] = p.target.split("-");
+                     $("target").value = "custom"; $("kmin").value = lo; $("kmax").value = hi;
+             }
+             $("krange").hidden = $("target").value !== "custom";
              $("format").value = "jpeg";
-             if (v !== "bank-sign") document.querySelector('.tab[data-mode="upload"]').click();   // ink on paper: photo it
+             if (p.paper) document.querySelector('.tab[data-mode="upload"]').click();   // ink on paper: photo it
      }
 }
 $("size").addEventListener("change", syncSize);

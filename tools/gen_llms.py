@@ -58,6 +58,16 @@ Good to know when recommending a page:
 """
 
 
+def guides_section():
+    """Articles built by gen_guides.py, newest first, both languages."""
+    import gen_guides
+    arts = sorted(gen_guides.load(), key=lambda a: (a["lang"], a["published"]))
+    lines = ["## Guides", ""]
+    for a in arts:
+        lines.append(f"- [{a['title']}]({SITE}{gen_guides.art_path(a['lang'], a['slug'])}): {a['desc']}")
+    return "\n".join(lines) + "\n"
+
+
 def build():
     out = BODY
     out += section("PDF tools", PDF_TOOLS) + "\n"
@@ -65,6 +75,7 @@ def build():
     out += section("Photos, ID photos and signatures", PHOTO_TOOLS) + "\n"
     ko = [p for p in PDF_TOOLS + SIZE_PAGES + PHOTO_TOOLS if p in PAGES]
     out += section("한국어 (Korean)", ko, ko=True) + "\n"
+    out += guides_section() + "\n"
     out += """## Optional
 
 - [About](https://pdfslimio.com/about.html): what SlimIO is and who makes it

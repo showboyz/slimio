@@ -96,7 +96,7 @@ PAGES = [
       <h3>Getting a good crop</h3>
       <p>Take the photo straight on against a plain, light background — it doesn't matter where you are in the frame, because you place the crop yourself. Most rules want the head (top of the hair to the chin) to fill roughly 70% of the photo's height, with a little space above; the dashed oval shows about that size.</p>
       <h3>Safe to submit</h3>
-      <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>""",
+      <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>      <p>How cm, pixels, DPI and KB relate, with a conversion table: <a href="/guides/kb-pixels-cm-dpi-explained.html">photo size rules explained</a>. Exam-specific numbers: <a href="/guides/india-exam-photo-signature-size.html">RRB, SSC, UPSC, NEET and IBPS</a>.</p>""",
  "faq": [
   ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."),
   ("What size in KB should a passport or ID photo be?", "It depends on the form — common limits are 20–50KB, 100KB or 200KB. Select the limit from the target list; SlimIO keeps the best quality that fits."),

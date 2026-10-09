@@ -8,10 +8,10 @@ const prog = SlimIO.bindProgress("prog");
 
 // ID photo presets: crop to this shape from the center, then scale to these pixels
 const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600], "bank-photo": [200, 230],
-     "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160] };
+     "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160], "upsc-photo": [450, 600] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated).
-const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB" };
+const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "300KB" };
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {
