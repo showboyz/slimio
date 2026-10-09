@@ -759,7 +759,7 @@ KO["us-visa-photo.html"] = dict(
           <li><b>배경:</b> 흰색 또는 미색의 단색</li>
           <li><b>최근·무보정:</b> 6개월 이내 촬영, 안경 불가, 얼굴을 바꾸는 디지털 보정 불가</li>
       </ul>
-      <p>출처: 미국 국무부 <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html" rel="noopener">사진 규정(영문)</a>. 기준은 바뀔 수 있으니 신청 전에 공식 페이지를 확인하세요.</p>
+      <p>출처: 미국 국무부 <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html" rel="noopener">사진 규정(영문)</a>. 기준은 바뀔 수 있으니 신청 전에 공식 페이지를 확인하세요. 머리 크기·눈 높이를 픽셀로 계산한 표, 압축률 20:1 규정, 업로드가 안 될 때 해결법은 <a href="/ko/guides/us-visa-photo-size.html">미국 비자 사진 규격 총정리</a>에 정리했어요.</p>
       <h3>SlimIO가 하는 일과 하지 않는 일</h3>
       <p>자르기, 크기 맞추기, 용량 줄이기만 해요. 얼굴 보정이나 배경 바꾸기는 하지 않아요. 규정상 어차피 허용되지 않아요. 흰 벽 앞에서 정면을 보고, 그림자 없이 고르게 밝은 곳에서 찍으세요.</p>
       <h3>2×2인치로 인쇄해야 한다면</h3>

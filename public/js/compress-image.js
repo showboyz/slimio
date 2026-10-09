@@ -239,6 +239,18 @@ async function compressOne(file, opts, crop) {
      }
 }
 
+// US visa photos must not be compressed more than 20:1 (at least 54KB for 600×600), so a
+// very smooth photo that fits easily is saved at a higher quality instead.
+async function atLeast(c, opts, b) {
+     for (const q of [0.96, 0.99, 1]) {
+             if (!opts.floor || b.size >= opts.floor) break;
+             const n = await encode(c, opts.format, q);
+             if (n.size > opts.target) break;
+             b = n;
+     }
+     return b;
+}
+
 async function shrink(img, opts, crop) {
      const g = geometry(img.width, img.height, opts.resize, crop);
      const lossy = opts.format !== "png";
@@ -257,7 +269,7 @@ async function shrink(img, opts, crop) {
              } else {
                      let hi = 0.92, lo = 0.3;
                      const top = await encode(c, opts.format, hi);
-                     if (top.size <= opts.target) return { ...out(top), fits: true };
+                     if (top.size <= opts.target) return { ...out(await atLeast(c, opts, top)), fits: true };
                      let fit = await encode(c, opts.format, lo);
                      if (fit.size <= opts.target) {
                              for (let i = 0; i < 6; i++) {
@@ -419,6 +431,7 @@ async function run() {
              ? { target: Number($("kmax").value) > 0 ? Number($("kmax").value) * 1000 : 0,
                  min: Number($("kmin").value) > 0 ? Number($("kmin").value) * 1024 : 0, resize, format: $("format").value }
              : { target: parseSize(label), min: parseMin(label), resize, format: $("format").value };
+     if (resize === "us-visa" && opts.format === "jpeg") opts.floor = 600 * 600 * 3 / 20;
      try {
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }

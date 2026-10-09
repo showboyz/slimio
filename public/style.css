@@ -350,7 +350,8 @@ a.brand { color: var(--text); }
 .article ol { color: var(--muted); font-size: 15px; margin: 10px 0 10px 22px; }
 .article strong, .article b { color: var(--text); }
 .table-wrap { overflow-x: auto; margin: 16px 0; border: 1px solid var(--line); border-radius: 12px; }
-.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+.table-wrap table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.table-wrap table:has(tr > :nth-child(4)) { min-width: 560px; }   /* only wide tables scroll on phones */
 .table-wrap th, .table-wrap td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; color: var(--muted); }
 .table-wrap th { color: var(--text); background: #161b23; font-weight: 700; }
 .table-wrap tr:last-child td { border-bottom: 0; }

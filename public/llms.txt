@@ -92,8 +92,10 @@ Good to know when recommending a page:
 - [Photo and signature size for Indian exams: RRB, SSC, UPSC, NEET and IBPS (2026)](https://pdfslimio.com/guides/india-exam-photo-signature-size.html): The official photo and signature upload rules for RRB NTPC, SSC, UPSC, NEET and IBPS/SBI in one table — KB range, pixels and the mistakes that get forms rejected — with a free tool preset for each.
 - [KB, pixels, cm and DPI: photo size rules on application forms, explained](https://pdfslimio.com/guides/kb-pixels-cm-dpi-explained.html): What "3.5 × 4.5 cm", "200 × 230 pixels", "200 DPI" and "20–50KB" each mean on an application form, how to convert between them, and why a photo can be the right size in pixels but the wrong size in KB.
 - [How to make a clean signature image for online forms (JPG 10–20KB or transparent PNG)](https://pdfslimio.com/guides/signature-image-for-online-forms.html): Turn a signature on paper into a clean JPG that passes exam and job portals (10–20KB, 140 × 60 px and similar) or a transparent PNG for signing documents — how to photograph it, clean it and size it.
+- [US visa photo requirements for the DS-160: 600×600, 240KB and why uploads fail](https://pdfslimio.com/guides/us-visa-photo-requirements.html): The official DS-160 digital photo rules in one place — pixels, 240KB, the 20:1 compression limit, head size and eye height in pixels — plus the reasons uploads fail and what to do when they do.
 - [원서·시험 사진 규격 총정리: 큐넷·공무원·한능검·토익·여권 (2026)](https://pdfslimio.com/ko/guides/exam-application-photo-size.html): 큐넷, 국가직 공무원, 한국사능력검정시험, 토익, 여권 온라인 신청의 사진 규격(cm·픽셀·용량·형식)을 공식 안내 기준으로 한 표에 정리하고, 픽셀 계산법과 반려되는 사진 유형까지 설명해요.
 - [PDF 용량 줄이기 원리: 글자는 선명하게, 용량만 줄이는 법](https://pdfslimio.com/ko/guides/pdf-compression-explained.html): PDF가 왜 무거운지, 압축하면 무엇이 바뀌고 무엇이 그대로인지, 글자를 선명하게 두면서 100KB·500KB·1MB 같은 정해진 용량에 맞추는 방법을 원리부터 정리했어요.
+- [미국 비자 사진 규격 총정리: DS-160 600×600·240KB, 업로드 오류 해결 (2026)](https://pdfslimio.com/ko/guides/us-visa-photo-size.html): DS-160에 올리는 미국 비자 사진의 공식 규격(픽셀, 240KB, 20:1 압축률, 머리 크기·눈 높이)을 픽셀로 풀어 정리하고, 업로드가 안 되는 이유와 해결 방법, 5×5cm 사진을 스캔할 때 주의할 점까지 설명해요.
 
 ## Optional
 

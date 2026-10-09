@@ -45,7 +45,7 @@ PAGES = [
           <li><b>Background:</b> plain white or off-white.</li>
           <li><b>Recent and unedited:</b> taken in the last 6 months, with no glasses and no digital changes to your appearance.</li>
       </ul>
-      <p>Source: the U.S. Department of State's <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html" rel="noopener">photo requirements</a>. Rules can change, so check the official page before you apply.</p>
+      <p>Source: the U.S. Department of State's <a href="https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/photos.html" rel="noopener">photo requirements</a>. Rules can change, so check the official page before you apply. Head size and eye height in pixels, the 20:1 compression rule and what to do when the upload fails are explained in <a href="/guides/us-visa-photo-requirements.html">US visa photo requirements for the DS-160</a>.</p>
       <h3>What SlimIO does — and doesn't do</h3>
       <p>It crops, resizes and compresses. It doesn't retouch your face or change the background, which the rules don't allow anyway. So take the photo against a white wall, face the camera straight on, with even light and no shadows.</p>
       <h3>Printing a 2×2 inch photo?</h3>
