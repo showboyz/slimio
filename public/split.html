@@ -141,13 +141,6 @@
 <!-- next-steps:end -->
      <div class="ad" id="ad">
      SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
-        <!--
-         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
-          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
-          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
-          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
-          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
-        -->
      </div>
 </div>
 
@@ -161,6 +154,14 @@
      </ul>
      <h3>Split vs extract</h3>
      <p><b>Split</b> turns a 10-page PDF into ten one-page PDFs — handy when each page is a separate document. <b>Extract</b> (range mode) keeps only the pages you list, such as <code>1-3, 8, 10-12</code>, inside one PDF. To shrink the result afterward, try the <a href="/">PDF compressor</a>.</p>
+     <h3>When to split a PDF</h3>
+     <ul>
+         <li><b>Send only what's needed.</b> A form asks for the first page of a certificate, not all twelve — extract just that range.</li>
+         <li><b>Get under an upload limit.</b> A 40-page scan that is too big for one upload slot can go in as two or three smaller PDFs.</li>
+         <li><b>Separate a combined scan.</b> A scanner that saved several documents into one file can be split back into one PDF per page.</li>
+     </ul>
+     <h3>Writing page ranges</h3>
+     <p>Separate pages with commas and use a dash for a range: <code>1-3</code> takes pages 1, 2 and 3; <code>1, 4, 7-9</code> takes pages 1, 4, 7, 8 and 9. The pages keep their original order and quality — they are copied, not re-rendered, so text stays selectable. To drop a few pages and keep the rest, <a href="/delete-pages.html">Remove pages</a> is quicker.</p>
 </div>
 
 <section class="faq">

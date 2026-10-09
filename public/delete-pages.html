@@ -130,13 +130,6 @@
 <!-- next-steps:end -->
      <div class="ad" id="ad">
      SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
-        <!--
-         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
-          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
-          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
-          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
-          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
-        -->
      </div>
 </div>
 
@@ -150,6 +143,15 @@
      </ul>
      <h3>Remove vs split vs extract</h3>
      <p><b>Remove</b> deletes the pages you don't want. <a href="/split.html"><b>Extract</b></a> (Split → range mode) instead keeps the pages you name. And if you want the smallest possible file, run the <a href="/">PDF compressor</a> afterward.</p>
+     <h3>Writing which pages to remove</h3>
+     <p>Use commas between pages and a dash for a range: <code>2</code> removes page 2, <code>2, 5</code> removes pages 2 and 5, and <code>3-6</code> removes pages 3 to 6. The page count of your PDF is shown so you can check the numbers before you remove anything. The original file is untouched; you download a new copy.</p>
+     <h3>Why remove pages</h3>
+     <ul>
+         <li><b>Smaller uploads.</b> Blank pages, covers and appendices count against size limits. Removing them is often the quickest way under 1MB or 500KB.</li>
+         <li><b>Privacy.</b> Drop pages with information the recipient doesn't need, such as bank details on a later page.</li>
+         <li><b>Cleaner scans.</b> Remove the blank backs that a duplex scanner adds.</li>
+     </ul>
+     <p>The remaining pages are kept exactly as they were — nothing is re-rendered. To keep only a few pages instead, <a href="/split.html">Split PDF</a> can extract a range.</p>
 </div>
 
 <section class="faq">

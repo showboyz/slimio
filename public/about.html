@@ -30,17 +30,40 @@
 
 <div class="content">
       <h2>About SlimIO</h2>
-      <p>SlimIO is a set of free, fast PDF and image tools: compress PDFs (even to an exact size like 100KB), merge, split, remove pages, rotate, reorder, add page numbers, watermark, sign, convert between PDF and JPG, and compress photos.</p>
-      <h3>Why we built it</h3>
-      <p>Everyday tasks — a job portal that only accepts files under 100KB, an email that bounces because a PDF is too big, a form that needs one signature — shouldn't require an account, a watermark on your document, or uploading private files to someone's server.</p>
-      <h3>How it works</h3>
+      <p>SlimIO is a set of free tools for the files that application forms and inboxes keep rejecting: PDFs that are too big, photos that are the wrong size, signatures that need to be a JPG of exactly 10–20KB. You can compress a PDF (even to an exact size like 100KB), merge, split, remove, rotate and reorder pages, add page numbers or a watermark, sign a PDF or stamp it with a seal, convert between PDF and JPG, and resize photos, ID photos and signatures to the pixels and kilobytes a form asks for. The tools work in English and Korean.</p>
+
+      <h3>Why it exists</h3>
+      <p>Job portals that accept only files under 100KB, exam forms that want a 140 × 60 pixel signature between 10KB and 20KB, an email that bounces because the attachment is too large — these are everyday problems, and they shouldn't require an account, a watermark on your document, or sending personal papers to a service you know nothing about. SlimIO started as a way to make those small jobs quick and private, and grew one tool at a time as people ran into the next limit.</p>
+
+      <h3>Who makes it</h3>
+      <p>SlimIO is built and run by one independent developer. There is no company behind it and no investors; the site is kept free by a daily usage limit and small ads that may be shown on the pages. Feedback goes straight to the person who writes the code — <a href="/contact.html">write in</a> if something doesn't work or a tool is missing.</p>
+
+      <h3>How your files are handled</h3>
       <ul>
-          <li><b>Private by design.</b> Most tools run entirely in your browser, so your files never leave your device. Server compression deletes files right after processing.</li>
-          <li><b>No signup, no watermark.</b> Open a tool and use it.</li>
-          <li><b>English and Korean.</b> Every tool is available in both languages.</li>
+          <li><b>In your browser.</b> Merging, splitting, rotating, page numbers, watermarks, signing, PDF↔JPG, photo and signature resizing all run on your own device. The files are never uploaded.</li>
+          <li><b>On the server, briefly.</b> The default "sharp" PDF compression sends the file over HTTPS to our server, where Ghostscript compresses it; the file is deleted as soon as the result is sent back. Nothing is kept, and no one looks at it. If a file must not leave your device, choose the private mode.</li>
+          <li><b>No account, no watermark.</b> Open a page and use it. The daily limit is counted per device, not per person.</li>
       </ul>
-      <h3>How SlimIO stays free</h3>
-      <p>SlimIO is run by an independent developer. The free tier has a daily usage limit, and small ads may be shown to cover hosting costs.</p>
+      <p>Details are in the <a href="/privacy.html">privacy policy</a>.</p>
+
+      <h3>How we check the numbers</h3>
+      <p>Presets like "RRB signature 30–49KB" or "Q-Net photo 300 × 400" come from the official notice or website of the exam or agency, and the <a href="/guides/">guides</a> list those sources with the date they were checked. Rules change between notifications, so when a notice changes, the preset and the guide are updated. If you spot a number that is out of date, please tell us.</p>
+
+      <h3>Built with</h3>
+      <p>SlimIO stands on open-source work: <a href="https://pdf-lib.js.org/" rel="noopener">pdf-lib</a> for editing PDFs in the browser, Mozilla's <a href="https://mozilla.github.io/pdf.js/" rel="noopener">PDF.js</a> for rendering pages, <a href="https://stuk.github.io/jszip/" rel="noopener">JSZip</a> for downloads with many files, and <a href="https://www.ghostscript.com/" rel="noopener">Ghostscript</a> for server-side compression.</p>
+
+      <h3>What's new</h3>
+      <ul>
+          <li><b>October 9, 2026</b> — <a href="/guides/">Guides</a> section; signature presets for RRB (30–49KB), SSC, UPSC and NEET, and a UPSC photo preset.</li>
+          <li><b>October 7, 2026</b> — Paste a form's requirements and the photo and signature tools set the size for you. Exam presets for Korean applications. Sign PDF now cleans photos of seals and stamps taken in uneven light.</li>
+          <li><b>October 6, 2026</b> — Sharper PDF compression by default; the private mode now shrinks only the images inside the PDF, so text stays selectable.</li>
+          <li><b>October 5, 2026</b> — <a href="/bank-exam-photo-signature.html">Bank exam documents</a>: photo, signature, thumb impression and declaration for IBPS and SBI.</li>
+          <li><b>October 1, 2026</b> — <a href="/us-visa-photo.html">US visa photo</a> tool for the DS-160.</li>
+          <li><b>September 30, 2026</b> — <a href="/signature-image.html">Signature image</a> tool; a crop frame for ID photos; PDF to 50KB, 300KB and 2MB.</li>
+          <li><b>September 28–29, 2026</b> — Photo compression, <a href="/compress-id-photo.html">ID photos</a> and custom pixel sizes; <a href="/sign-pdf.html">Sign PDF</a>.</li>
+          <li><b>September 2026</b> — SlimIO launches with PDF compression, compress-to-size pages, merge, split, page tools and a Korean version.</li>
+      </ul>
+
       <p>Questions or ideas? <a href="/contact.html">Contact us</a>.</p>
 </div>
 

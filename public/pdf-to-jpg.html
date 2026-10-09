@@ -45,6 +45,54 @@
 <link rel="stylesheet" href="/style.css?v=07da5afc" />
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I convert a PDF to JPG for free?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Drop your PDF in, choose the quality and resolution, and click Convert to JPG. Every page becomes an image and they download together as one ZIP file. It's free with a daily limit and needs no account."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I get a sharper image?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Raise the resolution. 1.5x suits screens; 2x or 3x keeps small print and tables crisp, at the cost of bigger files."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I save as PNG instead of JPG?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Choose PNG under Output for lossless images — best for text-heavy pages. JPG gives much smaller files for pages with photos."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "I only need one page. What do I do?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Convert the PDF and take that page's image from the ZIP — files are numbered by page. Or first extract the page with Split PDF and convert just that."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my PDF uploaded?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The conversion runs in your browser, so the file never leaves your device."
+            }
+        }
+    ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -127,13 +175,6 @@
 <!-- next-steps:end -->
      <div class="ad" id="ad">
      SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
-        <!--
-         Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
-          1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
-          2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
-          <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
-          <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
-        -->
      </div>
 </div>
 
@@ -147,7 +188,42 @@
      </ul>
      <h3>JPG vs PNG</h3>
      <p>Choose <b>JPG</b> for a smaller file (default) or <b>PNG</b> for lossless quality. To make the images even smaller, first <a href="/">compress the PDF</a> then convert.</p>
+     <h3>Choosing the resolution</h3>
+     <p>The resolution slider sets how many pixels each page gets. At 1x a page is drawn at 72 pixels per inch, so an A4 page becomes about 595 × 842 pixels; the default 1.5x gives about 893 × 1263, 2x about 1191 × 1684 and 3x about 1786 × 2526. For reading on a phone or posting online, 1.5x is plenty. For small print, tables or anything you will zoom into, use 2x or 3x. Lower resolutions make smaller files.</p>
+     <h3>When to use it</h3>
+     <ul>
+         <li><b>Upload forms that only take images.</b> Some portals accept JPG but not PDF — convert the page you need, then pick it from the ZIP.</li>
+         <li><b>Sharing a page.</b> Messengers and social apps show images instantly, while a PDF has to be downloaded and opened.</li>
+         <li><b>Slides and documents.</b> Drop a page of a report into a presentation as a picture.</li>
+     </ul>
+     <h3>What you get</h3>
+     <p>Every page becomes one image, named after your file with the page number (<code>report_001.jpg</code>, <code>report_002.jpg</code> …), and all images arrive in one ZIP file. The original PDF is not changed. Text in the images can no longer be selected or searched — keep the PDF if you need that. To go the other way, use <a href="/jpg-to-pdf.html">JPG to PDF</a>.</p>
 </div>
+
+<section class="faq">
+    <h2>PDF to JPG — FAQ</h2>
+    <details open>
+        <summary>How do I convert a PDF to JPG for free?</summary>
+        <p>Drop your PDF in, choose the quality and resolution, and click Convert to JPG. Every page becomes an image and they download together as one ZIP file. It&#x27;s free with a daily limit and needs no account.</p>
+    </details>
+    <details>
+        <summary>How do I get a sharper image?</summary>
+        <p>Raise the resolution. 1.5x suits screens; 2x or 3x keeps small print and tables crisp, at the cost of bigger files.</p>
+    </details>
+    <details>
+        <summary>Can I save as PNG instead of JPG?</summary>
+        <p>Yes. Choose PNG under Output for lossless images — best for text-heavy pages. JPG gives much smaller files for pages with photos.</p>
+    </details>
+    <details>
+        <summary>I only need one page. What do I do?</summary>
+        <p>Convert the PDF and take that page&#x27;s image from the ZIP — files are numbered by page. Or first extract the page with Split PDF and convert just that.</p>
+    </details>
+    <details>
+        <summary>Is my PDF uploaded?</summary>
+        <p>No. The conversion runs in your browser, so the file never leaves your device.</p>
+    </details>
+</section>
+
 
 <!-- more-tools:start -->
 <section class="more">

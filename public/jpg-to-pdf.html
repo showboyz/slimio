@@ -45,6 +45,54 @@
 <link rel="stylesheet" href="/style.css?v=07da5afc" />
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How do I turn several photos into one PDF?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Add all the images at once, put them in order with the up and down arrows, and click Convert to PDF. Each image becomes one page of the PDF."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will the photos lose quality?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. JPG files are placed into the PDF without re-compression, and PNG keeps its quality too. Only WebP images are converted to high-quality JPG first."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why is my PDF so big?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The PDF is about as big as the images inside it. Shrink the photos first with Compress Image, or compress the finished PDF."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Which image types can I use?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "JPG, PNG and WebP. iPhone HEIC photos may not open in the browser — set the camera to Most Compatible or share the photos as JPG."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are my images uploaded?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Everything happens in your browser; your photos never leave your device."
+            }
+        }
+    ]
+}
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -111,13 +159,6 @@
 <!-- next-steps:end -->
       <div class="ad" id="ad">
      SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.
-         <!--
-          Ezoic (가입 후 대시보드 → "Install Ezoic"에서 받은값 2개대입):
-           1) 아래 script src의 URL을 Ezoic가 주는 로더 URL로 교체
-           2) data-ad-slot="EZOIC_SITE_ID" 을 Ezoic가 주는 사이트 슬롯 ID로 교체
-           <script async src="https://cdn.jsdelivr.net/npm/@ezoic/ezic@1.0.0/ezic.min.js"></script>
-           <data-ad-slot="EZOIC_SITE_ID"></data-ad-slot>
-         -->
       </div>
 </div>
 
@@ -131,7 +172,46 @@
       </ul>
       <h3>Need a smaller PDF?</h3>
       <p>You can also <a href="/">compress PDF</a>, <a href="/merge.html">merge PDF</a>, or <a href="/pdf-to-jpg.html">turn a PDF into JPG</a> — all free, all in your browser.</p>
+     <h3>How the pages are made</h3>
+     <p>Each image becomes one page of exactly the image's own size — nothing is cropped, stretched or framed with margins. JPG files are placed into the PDF as they are, without being re-compressed, so they keep their original quality; PNG files keep theirs too, and WebP images are converted to high-quality JPG first. That also means the PDF is about as big as the images you put in.</p>
+     <h3>Making a document from phone photos</h3>
+     <ol>
+         <li>Photograph each page from straight above in good light, filling the frame with the paper.</li>
+         <li>Crop away the desk in your phone's photo editor if needed.</li>
+         <li>Add the photos here, put them in order with the arrows, and convert.</li>
+         <li>If the PDF must be under a limit such as 2MB or 500KB, run it through <a href="/">Compress PDF</a> or a <a href="/compress-pdf-to-500kb.html">compress-to-size page</a> afterwards — or shrink the photos first with <a href="/compress-image.html">Compress Image</a>.</li>
+     </ol>
+     <h3>Tips</h3>
+     <ul>
+         <li>Photos straight from a modern phone are often 3–5MB each; ten of them make a 30–50MB PDF. Shrinking them first keeps the PDF light.</li>
+         <li>iPhone photos in HEIC format may not open in the browser. Choose "Most Compatible" under Settings → Camera → Formats, or share the photo as JPG.</li>
+     </ul>
 </div>
+
+<section class="faq">
+    <h2>JPG to PDF — FAQ</h2>
+    <details open>
+        <summary>How do I turn several photos into one PDF?</summary>
+        <p>Add all the images at once, put them in order with the up and down arrows, and click Convert to PDF. Each image becomes one page of the PDF.</p>
+    </details>
+    <details>
+        <summary>Will the photos lose quality?</summary>
+        <p>No. JPG files are placed into the PDF without re-compression, and PNG keeps its quality too. Only WebP images are converted to high-quality JPG first.</p>
+    </details>
+    <details>
+        <summary>Why is my PDF so big?</summary>
+        <p>The PDF is about as big as the images inside it. Shrink the photos first with Compress Image, or compress the finished PDF.</p>
+    </details>
+    <details>
+        <summary>Which image types can I use?</summary>
+        <p>JPG, PNG and WebP. iPhone HEIC photos may not open in the browser — set the camera to Most Compatible or share the photos as JPG.</p>
+    </details>
+    <details>
+        <summary>Are my images uploaded?</summary>
+        <p>No. Everything happens in your browser; your photos never leave your device.</p>
+    </details>
+</section>
+
 
 <!-- more-tools:start -->
 <section class="more">
