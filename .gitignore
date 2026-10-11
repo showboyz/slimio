@@ -2,3 +2,6 @@
 .wrangler/
 .dev/
 node_modules/
+
+# python bytecode
+__pycache__/

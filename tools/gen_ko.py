@@ -14,6 +14,7 @@ it stops and tells you which one, so the Korean page never silently drifts.
 import glob, html, json, os, re, sys, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import gen_related   # cross-link blocks: written into the English pages first, translated with COMMON
+import lastmod       # sitemap dates that change only when a page's own content does
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "public")
 SITE = "https://pdfslimio.com"
@@ -1603,9 +1604,10 @@ def guide_urls():
 
 def write_sitemap():
     urls = [en_path(p) for p in PAGES + INFO_PAGES + EN_ONLY] + [ko_path(p) for p in PAGES + INFO_PAGES] + guide_urls()
+    mod = lastmod.dates(urls, TODAY)
     body = "".join(f"""       <url>
            <loc>{SITE}{u}</loc>
-           <lastmod>{TODAY}</lastmod>
+           <lastmod>{mod[u]}</lastmod>
            <changefreq>weekly</changefreq>
            <priority>{'1.0' if u in ('/', '/ko/') else '0.8' if 'compress-pdf-' in u else '0.9'}</priority>
        </url>

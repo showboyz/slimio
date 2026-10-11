@@ -1,0 +1,294 @@
+{
+ "/": [
+  "9c7a3d1fd092eae7",
+  "2026-10-08"
+ ],
+ "/about.html": [
+  "2b4111a07e531b71",
+  "2026-10-09"
+ ],
+ "/add-page-numbers.html": [
+  "26e1b163de862106",
+  "2026-10-09"
+ ],
+ "/bank-exam-photo-signature.html": [
+  "eb686fc77717540b",
+  "2026-10-09"
+ ],
+ "/compress-id-photo.html": [
+  "5e18c624c1f83d6b",
+  "2026-10-09"
+ ],
+ "/compress-image-to-100kb.html": [
+  "657aa6779f46db96",
+  "2026-10-09"
+ ],
+ "/compress-image-to-200kb.html": [
+  "d224f51b1a21883e",
+  "2026-10-09"
+ ],
+ "/compress-image-to-20kb.html": [
+  "734aa7957f04d6f5",
+  "2026-10-09"
+ ],
+ "/compress-image-to-50kb.html": [
+  "72239660b8a780cf",
+  "2026-10-09"
+ ],
+ "/compress-image.html": [
+  "a3e7e0105b6f5e64",
+  "2026-10-09"
+ ],
+ "/compress-pdf-for-email.html": [
+  "f6f7bc35c4f0890f",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-100kb.html": [
+  "8ba09ec1eb888d98",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-1mb.html": [
+  "097d2656d1386e8f",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-200kb.html": [
+  "20c8342854485936",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-2mb.html": [
+  "eca4070ced113fb4",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-300kb.html": [
+  "511fb6423d35a432",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-500kb.html": [
+  "0cc52324debb8480",
+  "2026-10-01"
+ ],
+ "/compress-pdf-to-50kb.html": [
+  "6ee6cd46e5aa848d",
+  "2026-10-01"
+ ],
+ "/contact.html": [
+  "43a780c125c77399",
+  "2026-10-09"
+ ],
+ "/delete-pages.html": [
+  "d2352290773085b8",
+  "2026-10-09"
+ ],
+ "/guides/": [
+  "f670c4649776c468",
+  "2026-10-09"
+ ],
+ "/guides/compress-pdf-without-losing-quality.html": [
+  "116f71bd2eb195a8",
+  "2026-10-09"
+ ],
+ "/guides/india-exam-photo-signature-size.html": [
+  "0b77f3245857bc61",
+  "2026-10-09"
+ ],
+ "/guides/kb-pixels-cm-dpi-explained.html": [
+  "8aba796bf09fea96",
+  "2026-10-09"
+ ],
+ "/guides/signature-image-for-online-forms.html": [
+  "dfc83a8733f3cdc2",
+  "2026-10-09"
+ ],
+ "/guides/us-visa-photo-requirements.html": [
+  "e4f9c31c50904516",
+  "2026-10-09"
+ ],
+ "/jpg-to-pdf.html": [
+  "096fb89ec1f7bdc5",
+  "2026-10-09"
+ ],
+ "/ko/": [
+  "9544ab6e242e6d84",
+  "2026-10-09"
+ ],
+ "/ko/about.html": [
+  "a36aa185125fda8c",
+  "2026-10-09"
+ ],
+ "/ko/add-page-numbers.html": [
+  "33aebe3c3d88a9ce",
+  "2026-10-09"
+ ],
+ "/ko/compress-id-photo.html": [
+  "f8ef087bf67f092d",
+  "2026-10-09"
+ ],
+ "/ko/compress-image-to-100kb.html": [
+  "c9f0bae94aa92285",
+  "2026-10-09"
+ ],
+ "/ko/compress-image-to-200kb.html": [
+  "0e0ccfa8f223c90b",
+  "2026-10-09"
+ ],
+ "/ko/compress-image-to-20kb.html": [
+  "76a5b6a116b2224b",
+  "2026-10-09"
+ ],
+ "/ko/compress-image-to-50kb.html": [
+  "92d3b82a4d841328",
+  "2026-10-09"
+ ],
+ "/ko/compress-image.html": [
+  "065af75f6f065580",
+  "2026-10-09"
+ ],
+ "/ko/compress-pdf-for-email.html": [
+  "0434a0b5bd85e2f1",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-100kb.html": [
+  "009b6e1f7eeeca1f",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-1mb.html": [
+  "a284d1d82b17619d",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-200kb.html": [
+  "71718a85cecc5f80",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-2mb.html": [
+  "9d938e40502bf27a",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-300kb.html": [
+  "b9c1a351fbce342d",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-500kb.html": [
+  "6853395313f5037a",
+  "2026-10-01"
+ ],
+ "/ko/compress-pdf-to-50kb.html": [
+  "38ef637c273f8b06",
+  "2026-10-01"
+ ],
+ "/ko/contact.html": [
+  "d08040c004f8ad6d",
+  "2026-10-09"
+ ],
+ "/ko/delete-pages.html": [
+  "84651ef9cc3a9c45",
+  "2026-10-09"
+ ],
+ "/ko/guides/": [
+  "41f4f1af5f5e2d21",
+  "2026-10-09"
+ ],
+ "/ko/guides/exam-application-photo-size.html": [
+  "b461d444bfb697a5",
+  "2026-10-09"
+ ],
+ "/ko/guides/pdf-compression-explained.html": [
+  "ceab757b9af8b123",
+  "2026-10-09"
+ ],
+ "/ko/guides/us-visa-photo-size.html": [
+  "eae3380e06b2b1f2",
+  "2026-10-09"
+ ],
+ "/ko/jpg-to-pdf.html": [
+  "31a93ecb9903663a",
+  "2026-10-09"
+ ],
+ "/ko/merge.html": [
+  "cb8c4f20a501d442",
+  "2026-10-01"
+ ],
+ "/ko/organize.html": [
+  "2aee83c8c9d54b93",
+  "2026-10-09"
+ ],
+ "/ko/pdf-to-jpg.html": [
+  "6ac3009da3b0a20d",
+  "2026-10-09"
+ ],
+ "/ko/privacy.html": [
+  "f2437352e3703404",
+  "2026-10-09"
+ ],
+ "/ko/rotate.html": [
+  "e9b346f8988924ef",
+  "2026-10-09"
+ ],
+ "/ko/sign-pdf.html": [
+  "9fb9aea2a44feb8e",
+  "2026-10-07"
+ ],
+ "/ko/signature-image.html": [
+  "b2c7c8704d1c166a",
+  "2026-10-09"
+ ],
+ "/ko/split.html": [
+  "4971b820450f6cd5",
+  "2026-10-09"
+ ],
+ "/ko/terms.html": [
+  "1f4e1a12c7f333f8",
+  "2026-09-29"
+ ],
+ "/ko/us-visa-photo.html": [
+  "df45cae6896b857f",
+  "2026-10-09"
+ ],
+ "/ko/watermark.html": [
+  "7461ceba8c4a1404",
+  "2026-10-09"
+ ],
+ "/merge.html": [
+  "4968ae78c606c196",
+  "2026-10-01"
+ ],
+ "/organize.html": [
+  "ed70d24d3973816f",
+  "2026-10-09"
+ ],
+ "/pdf-to-jpg.html": [
+  "37bcb9e99522c4bf",
+  "2026-10-09"
+ ],
+ "/privacy.html": [
+  "02e1641baa185fb0",
+  "2026-10-09"
+ ],
+ "/rotate.html": [
+  "c4a8bf45e5a4a2ad",
+  "2026-10-09"
+ ],
+ "/sign-pdf.html": [
+  "fedbef8080e2f6bc",
+  "2026-10-01"
+ ],
+ "/signature-image.html": [
+  "df71c3b3b832cb72",
+  "2026-10-09"
+ ],
+ "/split.html": [
+  "a93393e1db6de631",
+  "2026-10-09"
+ ],
+ "/terms.html": [
+  "0a3a5a2b616ed1f0",
+  "2026-09-29"
+ ],
+ "/us-visa-photo.html": [
+  "b3bd4bd146952233",
+  "2026-10-09"
+ ],
+ "/watermark.html": [
+  "15ec6d2f20f0fc7d",
+  "2026-10-09"
+ ]
+}
