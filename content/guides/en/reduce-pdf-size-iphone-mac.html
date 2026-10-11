@@ -1,0 +1,85 @@
+<!--
+{"title": "How to reduce PDF size on iPhone and Mac: the built-in options, tested",
+ "seo_title": "Reduce PDF Size on iPhone and Mac — Preview and Shortcuts Tested",
+ "desc": "We ran Preview's Reduce File Size, the Shortcuts PDF action and SlimIO on the same three PDFs. What each one did to the file size, to the text and to the picture quality, and which to use.",
+ "published": "2026-10-11", "updated": "2026-10-11", "image": "/img/blog/iphone-mac-compare-en.jpg",
+ "cta": ["/", "Compress a PDF", "Works in Safari on iPhone, iPad and Mac. Text stays sharp, and you can aim for an exact size like 500KB or 1MB."],
+ "faq": [
+  ["Why did Preview make my PDF bigger?", "Preview's Reduce File Size filter re-saves the whole file, not just the photos. On PDFs that are mostly text it can come out larger: in our test an English report went from 61KB to 122KB, and a Korean one from 101KB to 667KB, because its text was turned into drawn shapes. Keep the original and compare the sizes before you replace anything."],
+  ["How do I compress a PDF on iPhone?", "Apple's built-in route is the Shortcuts action Optimize File Size of PDF, but it did not shrink any of our test files. A browser tool works in Safari: open the page, choose the PDF from Files, compress it and download the result, which lands in Files > Downloads."],
+  ["Does compressing a PDF lower the quality?", "Only the pictures inside change. Photos and scans are stored at a lower resolution and stronger JPEG compression; real text and vector drawings stay sharp with Ghostscript-style compression. At about 150 pixels per inch, scanned text is still easy to read on screen and in print."],
+  ["How do I get a PDF under 1MB or 500KB?", "Use a tool that aims for a size instead of a level, such as SlimIO's 1MB or 500KB pages. It tries stronger settings until the file fits and tells you if it can't."],
+  ["Is it safe to compress a PDF on a website?", "Preview and Shortcuts never send the file anywhere. On SlimIO, the private mode runs in your browser and the file never leaves your device; the default sharp mode sends it to our server, compresses it and deletes it straight away."]
+ ]}
+-->
+      <p>A PDF made from phone photos is big for a simple reason: every page is a 12-megapixel photo. Our three-page test document, at that size, came to 7.4 MB, far over the 1MB or 2MB limit many upload forms set. Apple gives you two built-in ways to shrink a PDF, Preview on the Mac and a Shortcuts action on iPhone, so we ran both on the same files, next to SlimIO, and measured what came out.</p>
+
+      <div class="callout">Tested on a Mac running macOS 27 in October 2026, with three PDFs we made for the test. The Shortcuts action is the same one the Shortcuts app offers on iPhone and iPad, but we ran it on the Mac.</div>
+
+      <h2>The three test files</h2>
+      <ul>
+          <li><b>Photos of a paper document:</b> a 3-page rental agreement made to look like phone photos of paper (one 3024 × 4032 JPEG per page, the 12-megapixel size phone cameras commonly save) and saved as one PDF, 7.4 MB. This is what most "my PDF is too big" problems look like.</li>
+          <li><b>Screenshots:</b> three phone screenshots (PNG) saved as a PDF, 655 KB.</li>
+          <li><b>A text-only report:</b> 4 pages of text, headings, a table and a chart, saved as PDF from a browser, 61 KB.</li>
+      </ul>
+
+      <h2>Results</h2>
+      <div class="table-wrap"><table>
+          <tr><th>Method</th><th>Document photos</th><th>Screenshots</th><th>Text report</th></tr>
+          <tr><td><b>Original</b></td><td>7.4 MB</td><td>655 KB</td><td>61 KB</td></tr>
+          <tr><td><b>Shortcuts: Optimize File Size of PDF</b></td><td>No change</td><td>No change</td><td>No change</td></tr>
+          <tr><td><b>Mac Preview: Reduce File Size</b></td><td>1.2 MB (−84%)</td><td>491 KB (−25%)</td><td>122 KB (<b>+99%</b>)</td></tr>
+          <tr><td><b>SlimIO, Sharp, Balanced</b></td><td>420 KB (−94%)</td><td>454 KB (−31%)</td><td>48 KB (−21%)</td></tr>
+          <tr><td><b>SlimIO, Private, Balanced</b></td><td>379 KB (−95%)</td><td>236 KB (−64%)</td><td>57 KB (−6%)</td></tr>
+      </table></div>
+      <p>Sizes are as Finder shows them (1 KB = 1,000 bytes). "No change" means the file came out within 1 KB of the original. We also ran a Korean version of the text report through Preview: it grew from 101 KB to 667 KB, and its text could no longer be selected or searched, because the filter had turned every letter into drawn shapes.</p>
+
+      <figure>
+          <img src="/img/blog/iphone-mac-compare-en.jpg" width="1058" height="440" loading="lazy" alt="The same paragraph of a photographed document after four methods: the original, Preview's Reduce File Size, SlimIO Balanced and SlimIO Smallest" />
+          <figcaption>Page 1 of the document photos, zoomed in. Preview's version shows faint blocky artifacts around the letters; SlimIO Balanced is a third of its size and as clear. SlimIO Smallest (129 KB) is softer but still readable.</figcaption>
+      </figure>
+
+      <h2>On a Mac: Preview's Reduce File Size</h2>
+      <p>This is the method Apple documents for the Mac:</p>
+      <ol>
+          <li>Open the PDF in Preview.</li>
+          <li>Choose <b>File &gt; Export</b> (not Export as PDF).</li>
+          <li>In the <b>Quartz Filter</b> pop-up menu, choose <b>Reduce File Size</b>.</li>
+          <li>Give the file a new name, so you keep the original, and click <b>Save</b>.</li>
+      </ol>
+      <p>On macOS 27 the filter's settings file asks for images at 144 pixels per inch, at most 2,400 pixels on a side, saved as JPEG at quality 0.7. That explains the results: it does a fair job on photos, though its JPEG setting leaves the file about three times larger than SlimIO's at a similar resolution. It doesn't stop at the photos, though. It rewrites the whole file, and on our text PDFs that made things worse. Compare the new file with the original before you delete anything.</p>
+      <p>Apple also lists three checkboxes in the same Export dialog: Create Linearized PDF, Optimize images for screen and Save images as JPEG. They are worth a try on a photo-heavy file, with the same rule: check the size afterwards.</p>
+
+      <h2>On iPhone and iPad: the Shortcuts action</h2>
+      <p>The built-in way on iPhone is an action in the Shortcuts app called <b>Optimize File Size of PDF</b>. Apple's own description of it is careful: it "optimizes the file size of the provided PDF file by compressing its images. If the images contained in the PDF are already compressed, this action might not have a measurable effect on file size."</p>
+      <p>That warning matched what we saw. Photos from a phone are already JPEGs, and the action left all three of our files the same size, the screenshots included. If you want to try it on your own file, make a shortcut with the action, then add a <b>Save File</b> action after it and turn on <b>Show in Share Sheet</b> in the shortcut's details, so you can run it from the Share button in Files.</p>
+
+      <h2>On iPhone, Mac or anything else: in the browser</h2>
+      <p>SlimIO runs in Safari like any other web page, so the same steps work on iPhone, iPad and Mac:</p>
+      <ol>
+          <li>Open <a href="/">pdfslimio.com</a> and tap the box to choose your PDF. On iPhone you pick it from the Files app.</li>
+          <li>Leave the defaults (Sharp, Balanced) and tap <b>Compress PDF</b>.</li>
+          <li>Tap <b>Download compressed PDF</b>. On iPhone the file goes to Files &gt; Downloads.</li>
+      </ol>
+      <figure>
+          <img src="/img/blog/iphone-mac-phone-en.jpg" width="780" height="918" loading="lazy" alt="SlimIO on a phone screen: original size 7.02 MB, after compression 410.0 KB, saved 94.3%" style="max-width:340px;display:block;margin:0 auto" />
+          <figcaption>The document photos on a phone. SlimIO counts 1 KB as 1,024 bytes, so it shows 7.02 MB → 410 KB; Files and Finder show the same files as 7.4 MB → 420 KB.</figcaption>
+      </figure>
+      <p>The two modes differ in where the work happens. <b>Sharp</b> sends the file to our server, where Ghostscript shrinks the images, tidies the fonts and deletes the file as soon as the result comes back; it is the one that made our text report smaller. <b>Private</b> never uploads anything: your phone's browser shrinks the photos inside the PDF and leaves the text alone. If a form wants a specific size, the <a href="/compress-pdf-to-1mb.html">1MB</a>, <a href="/compress-pdf-to-500kb.html">500KB</a> and <a href="/compress-pdf-to-200kb.html">200KB</a> pages keep trying stronger settings until the file fits.</p>
+
+      <h2>Which one to use</h2>
+      <div class="table-wrap"><table>
+          <tr><th>Your PDF</th><th>What to do</th></tr>
+          <tr><td>Photos or scans of paper</td><td>Any image compression helps a lot. Preview gets you about 6× smaller; SlimIO Balanced about 17×</td></tr>
+          <tr><td>Screenshots</td><td>Expect a smaller gain. SlimIO Private shrank ours by about two-thirds</td></tr>
+          <tr><td>Mostly text (exported from Word, Pages or a browser)</td><td>It is usually small already. Don't use Preview's filter; SlimIO Sharp trimmed ours by a fifth</td></tr>
+          <tr><td>Has to fit a limit like 1MB</td><td>Use a size page such as <a href="/compress-pdf-to-1mb.html">Compress PDF to 1MB</a></td></tr>
+      </table></div>
+      <p>If a document is still too big after all this, fewer pages beat any setting: take the pages the form actually asks for, or photograph the paper in good light so the scan has less noise to store. <a href="/guides/compress-pdf-without-losing-quality.html">How to compress a PDF without losing quality</a> explains what takes up the space inside a PDF and what each setting does.</p>
+
+      <h2>Sources</h2>
+      <ul>
+          <li>Apple Support, Reduce the size of a PDF in Preview on Mac — <a href="https://support.apple.com/guide/preview/prvw1509/mac" rel="noopener">support.apple.com</a></li>
+          <li>Apple, description of the Optimize File Size of PDF action in the Shortcuts app (macOS 27)</li>
+          <li>macOS 27, the Reduce File Size filter settings (/System/Library/Filters/Reduce File Size.qfilter)</li>
+      </ul>

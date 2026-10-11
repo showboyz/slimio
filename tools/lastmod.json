@@ -4,8 +4,8 @@
   "2026-10-08"
  ],
  "/about.html": [
-  "2b4111a07e531b71",
-  "2026-10-09"
+  "136d90df68341259",
+  "2026-10-11"
  ],
  "/add-page-numbers.html": [
   "26e1b163de862106",
@@ -80,8 +80,8 @@
   "2026-10-09"
  ],
  "/guides/": [
-  "f670c4649776c468",
-  "2026-10-09"
+  "6ba5a50e3f1c331f",
+  "2026-10-11"
  ],
  "/guides/compress-pdf-without-losing-quality.html": [
   "116f71bd2eb195a8",
@@ -94,6 +94,10 @@
  "/guides/kb-pixels-cm-dpi-explained.html": [
   "8aba796bf09fea96",
   "2026-10-09"
+ ],
+ "/guides/reduce-pdf-size-iphone-mac.html": [
+  "b97932bf75e271e8",
+  "2026-10-11"
  ],
  "/guides/signature-image-for-online-forms.html": [
   "dfc83a8733f3cdc2",
@@ -108,12 +112,12 @@
   "2026-10-09"
  ],
  "/ko/": [
-  "9544ab6e242e6d84",
-  "2026-10-09"
+  "de6104b327ffc121",
+  "2026-10-11"
  ],
  "/ko/about.html": [
-  "a36aa185125fda8c",
-  "2026-10-09"
+  "50215df92e672915",
+  "2026-10-11"
  ],
  "/ko/add-page-numbers.html": [
   "33aebe3c3d88a9ce",
@@ -184,12 +188,16 @@
   "2026-10-09"
  ],
  "/ko/guides/": [
-  "41f4f1af5f5e2d21",
-  "2026-10-09"
+  "05ba88abbb8a5a9f",
+  "2026-10-11"
  ],
  "/ko/guides/exam-application-photo-size.html": [
   "b461d444bfb697a5",
   "2026-10-09"
+ ],
+ "/ko/guides/iphone-mac-pdf-size.html": [
+  "0b44165c90eaad14",
+  "2026-10-11"
  ],
  "/ko/guides/pdf-compression-explained.html": [
   "ceab757b9af8b123",
