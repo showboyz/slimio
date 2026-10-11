@@ -51,6 +51,7 @@ const SlimIO = (() => {
       el.textContent = msg;
       el.style.display = "block";
       log(msg);
+      reportError("shown", msg);
    }
    function clearError(id) {
       const el = $(id || "error");
@@ -113,6 +114,17 @@ const SlimIO = (() => {
    // Any Umami event, tagged with the current tool (props may override it).
    function event(name, props) {
       try { window.umami && window.umami.track(name, Object.assign({ tool: toolName() }, props)); } catch (e) {}
+   }
+   // Umami "error" event, so we learn what goes wrong for real visitors. Never the file:
+   // quoted parts of a message (file names) are dropped. At most 5 different errors per page view.
+   // kind: "shown" (an error message the visitor saw), "fallback" (server compression failed and
+   // the browser took over), "js" / "promise" (an uncaught script error).
+   const reported = new Set();
+   function reportError(kind, msg) {
+      const m = String(msg || "").replace(/"[^"]*"|“[^”]*”/g, '"…"').replace(/\s+/g, " ").trim().slice(0, 140);
+      if (!m || reported.has(kind + m) || reported.size >= 5) return;
+      reported.add(kind + m);
+      event("error", { kind, msg: m });
    }
    function track(tool) {
       event("tool-used", tool ? { tool } : null);
@@ -179,14 +191,23 @@ const SlimIO = (() => {
       return { width: vw, height: vh, map };
    }
 
-   window.addEventListener("error", (e) => log("JS ERROR: " + e.message));
-   window.addEventListener("unhandledrejection", (e) =>
-      log("REJECTION: " + ((e.reason && e.reason.message) || e.reason)));
+   window.addEventListener("error", (e) => {
+      log("JS ERROR: " + e.message);
+      const src = e.filename || "";
+      if (src && !src.startsWith(location.origin) && !/cdnjs|jsdelivr|unpkg/.test(src)) return;   // browser extensions
+      if (/ResizeObserver loop/.test(e.message)) return;   // harmless browser notice
+      reportError("js", e.message + (src ? " @" + src.split("/").pop().split("?")[0] + ":" + e.lineno : ""));
+   });
+   window.addEventListener("unhandledrejection", (e) => {
+      const m = (e.reason && e.reason.message) || e.reason;
+      log("REJECTION: " + m);
+      reportError("promise", m);
+   });
 
    return {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
-      refreshStatus, updateLimit, consume, bindProgress, track, event, trackDownload, inputAdded, apiHeaders, page2user,
+      refreshStatus, updateLimit, consume, bindProgress, track, event, reportError, trackDownload, inputAdded, apiHeaders, page2user,
    };
 })();
 

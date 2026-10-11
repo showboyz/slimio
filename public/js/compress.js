@@ -120,12 +120,16 @@ async function compressOnServer() {
             body: await file.arrayBuffer(),
         });
     } catch (e) {
+        SlimIO.reportError("fallback", "network: " + e.message);
         return "fallback";   // connection dropped (e.g. upload refused mid-way)
     }
     // Anything that isn't our JSON (proxy error page, 413/502/503/504) -> compress in the browser.
     let j;
-    try { j = await resp.json(); } catch (e) { return "fallback"; }
-    if (resp.status === 413 || resp.status === 503 || resp.status >= 500 && !j.ok) return "fallback";
+    try { j = await resp.json(); } catch (e) { SlimIO.reportError("fallback", "not JSON, HTTP " + resp.status); return "fallback"; }
+    if (resp.status === 413 || resp.status === 503 || resp.status >= 500 && !j.ok) {
+        SlimIO.reportError("fallback", "HTTP " + resp.status + " " + (j.error || ""));
+        return "fallback";
+    }
     if (resp.status === 429) {
         showError(SlimIO.t("Daily limit reached. {limit} per day. Come back tomorrow.", { limit: j.limit || "?" }));
         refreshStatus();
@@ -253,6 +257,7 @@ function showError(msg) {
     errEl.style.display = "block";
     result.style.display = "none";
     log(msg);
+    SlimIO.reportError("shown", msg);
 }
 function clearError() { errEl.style.display = "none"; }
 
