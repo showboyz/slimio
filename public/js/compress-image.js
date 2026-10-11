@@ -17,6 +17,9 @@ const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "1
 const GUIDES = {
      default: { cy: 0.44, rx: 0.29, ry: 0.33 },
      "us-visa": { cy: 0.38, rx: 0.22, ry: 0.3, eyes: [0.31, 0.44] },   // head ≈ 60% (rule: 50–69%), eyes mid-band
+     // 35×45mm passports (Korea, ICAO): top of the skull (not the hair) to chin 32–36mm = 71–80%
+     // of the height. Oval = 34mm, from about 4.5mm below the top edge, leaving room for hair.
+     passport: { cy: 0.48, rx: 0.36, ry: 0.378 },
 };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
@@ -320,6 +323,8 @@ function syncCrop() {
              ? SlimIO.t("Drag the frame to set the crop on the first photo. The others are cropped from the center.")
              : $("resize").value === "us-visa"
              ? SlimIO.t("Drag the frame and zoom: head inside the oval, eyes between the two dotted lines.")
+             : $("resize").value === "passport"
+             ? SlimIO.t("Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");
      drawCrop();
 }
