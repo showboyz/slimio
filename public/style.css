@@ -169,6 +169,23 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
 .result .row .v { color: #fff; font-weight: 600; }
 .gain { color: var(--accent); font-weight: 800; }
 .dl { display: inline-block; margin-top: 6px; color: var(--accent); font-weight: 700; }
+/* the download is what people came for: a real button, big enough for a thumb */
+.result a.dl {
+   display: block; max-width: 360px; margin: 14px auto 0; padding: 13px 18px; border-radius: 10px;
+   background: var(--accent); color: #062a1c; font-size: 16px; text-align: center; cursor: pointer;
+}
+.result a.dl:hover { background: var(--accent-2); }
+.result.flash { animation: result-flash 1.4s ease-out; }
+@keyframes result-flash { from { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(70, 224, 160, 0.3); } }
+@media (prefers-reduced-motion: reduce) { .result.flash { animation: none; } }
+.result .inapp { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
+/* photo tools: the ZIP button gets its own row; one photo gets a bigger preview and a full button */
+.summary a.dl { flex-basis: 100%; margin-top: 4px; }
+.imglist li.one { flex-wrap: wrap; }
+.imglist li.one .thumb { width: 72px; height: auto; max-height: 110px; object-fit: contain; }
+.imglist li.one a.dl { flex-basis: 100%; margin-top: 4px; }
+.imglist li > a:not(.dl) { padding: 10px 0 10px 6px; }
+.result .inapp a { display: inline-block; padding: 4px 2px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 
 .error { color: #ff7a7a; font-size: 13px; margin-top: 14px; display: none; text-align: center; }
 .limit { font-size: 12px; color: var(--muted); margin-top: 16px; text-align: center; }
@@ -369,3 +386,14 @@ a.brand { color: var(--text); }
 .guide-card small { display: block; color: var(--muted); font-size: 14px; line-height: 1.5; }
 .guide-card .meta { display: block; color: var(--muted); font-size: 12px; margin-top: 8px; opacity: 0.8; }
 @media (max-width: 600px) { .article h1 { font-size: 27px; } }
+
+/* touch screens: iOS zooms into any form field whose text is under 16px (and stays zoomed), and
+   small icon buttons are hard to hit with a thumb. Desktop keeps the compact look. */
+@media (pointer: coarse) {
+   .tool input:not([type=file]):not([type=range]):not([type=checkbox]):not([type=radio]):not([type=color]), .tool select, .tool textarea { font-size: 16px; }
+   .filelist .fbtn { min-width: 40px; min-height: 40px; margin: -10px 0; }
+   .tool .pg .acts button { min-width: 40px; min-height: 40px; }
+   .tool .swatch { width: 32px; height: 32px; margin-right: 10px; }
+   .tool .linkbtn { padding: 10px 0; }
+   .tool .item .x::after, .tool .item .h::after { content: ""; position: absolute; inset: -12px; }
+}

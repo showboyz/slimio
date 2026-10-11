@@ -500,6 +500,7 @@ function showResult(bytes, r, format, t) {
      $("result").style.display = "block";
      const ext = format === "jpeg" ? "jpg" : "png";
      $("dl").onclick = () => SlimIO.download(bytes, `signature_${r.w}x${r.h}.${ext}`, type);
+     SlimIO.reveal($("result"));
 }
 
 SlimIO.refreshStatus();

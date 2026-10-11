@@ -97,6 +97,7 @@ function showResult(count, mime, bytes) {
      $("outtype-label").textContent = mime === "image/png" ? "PNG (PNG)" : "JPG (JPG)";
     dl.textContent = SlimIO.t("↓ Download ZIP");
     dl.onclick = () => SlimIO.download(bytes, "slimio_images.zip", "application/zip");
+    SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

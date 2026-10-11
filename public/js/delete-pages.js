@@ -99,6 +99,7 @@ function showResult(removedCount, left, bytes) {
      $("after").textContent = SlimIO.formatSize(bytes.length);
      dl.textContent = SlimIO.t("↓ Download PDF");
      dl.onclick = () => SlimIO.download(bytes, "slimio_removed.pdf", "application/pdf");
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

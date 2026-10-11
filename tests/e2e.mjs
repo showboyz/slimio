@@ -190,6 +190,9 @@ async function open(browser, url, { mobile = false } = {}) {
 // Click #go (or `go`) and wait for the download link or an error message.
 async function runTool(p, { go = "#go", done = "#dl", timeout = 120000 } = {}) {
   await p.waitForSelector(go + ":not([disabled])", { timeout: 30000 });
+  // On a phone the button is usually tapped at the bottom of the screen; the result must still
+  // end up on screen (it used to appear below the fold, and people tapped the button again).
+  if (MOBILE) await p.evaluate((go) => { const r = document.querySelector(go).getBoundingClientRect(); scrollBy(0, r.bottom - innerHeight + 10); }, go);
   await p.click(go);
   await p.waitForFunction(([done]) => {
     const err = document.querySelector("#error");
@@ -199,6 +202,11 @@ async function runTool(p, { go = "#go", done = "#dl", timeout = 120000 } = {}) {
   }, [done], { timeout });
   const err = await p.$eval("#error", (e) => (e.offsetParent !== null ? e.textContent.trim() : "")).catch(() => "");
   if (err) throw new Error("tool showed an error: " + err);
+  if (MOBILE) {
+    await p.waitForTimeout(800);   // smooth scroll
+    const off = await p.$eval(done, (d) => { const r = d.getBoundingClientRect(); return r.top < 0 || r.bottom > innerHeight ? `top ${Math.round(r.top)} of ${innerHeight}` : ""; });
+    if (off) throw new Error("download button is off screen after the run: " + off);
+  }
 }
 
 async function download(p, sel = "#dl") {

@@ -81,6 +81,7 @@ function showResult(r, label) {
      }
      const base = file.name.replace(/\.pdf$/i, "");
      dl.onclick = () => SlimIO.download(r.bytes, `${base}_${label.toLowerCase()}.pdf`, "application/pdf");
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

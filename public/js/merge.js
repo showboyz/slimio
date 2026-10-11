@@ -114,6 +114,7 @@ function showResult(fileCount, pageCount, bytes) {
     $("pages").textContent = pageCount;
     $("after").textContent = SlimIO.formatSize(bytes.length);
     dl.onclick = () => SlimIO.download(bytes, "slimio_merged.pdf", "application/pdf");
+    SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

@@ -12,6 +12,12 @@ window.SLIMIO_KO = {
    "Limit service currently unavailable.": "남은 횟수를 확인할 수 없어요.",
    "↓ Download PDF": "↓ PDF 다운로드",
    "↓ Download ZIP": "↓ ZIP 다운로드",
+   "In-app browsers sometimes can't save files. If nothing downloads, open this page in a browser and run it again.":
+      "앱 안에서 열린 화면에서는 파일 저장이 안 될 때가 있어요. 다운로드가 안 되면 브라우저로 열어서 다시 해 주세요.",
+   "In-app browsers sometimes can't save files. If nothing downloads, choose “Open in Safari” (or another browser) from the app's ⋯ menu and run it again.":
+      "앱 안에서 열린 화면에서는 파일 저장이 안 될 때가 있어요. 다운로드가 안 되면 앱의 ⋯ 메뉴에서 ‘Safari로 열기’(또는 다른 브라우저로 열기)를 누른 뒤 다시 해 주세요.",
+   "Open in Chrome": "Chrome으로 열기",
+   "Open in browser": "브라우저로 열기",
    "{pages} in this PDF.": "이 PDF는 {pages}예요.",
    "Could not read file: {msg}": "파일을 읽을 수 없어요: {msg}",
    'Could not read "{name}".': "“{name}” 파일을 읽을 수 없어요.",
@@ -135,6 +141,7 @@ window.SLIMIO_KO = {
    "This image can't be opened in this browser (HEIC photos, for example). Save it as JPG and try again.": "이 브라우저에서 열 수 없는 사진이에요(아이폰 HEIC 등). JPG로 저장한 뒤 다시 시도해 주세요.",
 
    // sign pdf
+   "Page {n}": "{n}페이지",
    "Page {n} / {total}": "{n} / {total}페이지",
    "Draw your signature first.": "먼저 서명을 그려 주세요.",
    "Type your name first.": "먼저 이름을 입력해 주세요.",

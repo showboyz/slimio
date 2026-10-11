@@ -245,6 +245,7 @@ function showResult(orig, after, bytes, note) {
     const url = URL.createObjectURL(keep ? file : new Blob([bytes], { type: "application/pdf" }));
     dl.href = url;
     dl.download = "slimio_" + (file ? file.name : "out.pdf");
+    SlimIO.reveal(result);
 }
 
 function updateLimit(remaining, limit) {

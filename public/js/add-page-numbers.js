@@ -88,6 +88,7 @@ function showResult(count, numbered, bytes) {
      $("after").textContent = SlimIO.pages(count);
      $("numbered").textContent = SlimIO.pages(numbered);
      dl.onclick = () => SlimIO.download(bytes, "slimio_numbered.pdf", "application/pdf");
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

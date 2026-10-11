@@ -89,7 +89,7 @@ function move(from, to) {
 function render() {
      grid.replaceChildren(...items.map((it) => it.el));
      items.forEach((it, i) => {
-             it.el.querySelector(".num").textContent = `Page ${it.src + 1}`;
+             it.el.querySelector(".num").textContent = SlimIO.t("Page {n}", { n: it.src + 1 });
              it.el.querySelector('[data-a="left"]').disabled = i === 0;
              it.el.querySelector('[data-a="right"]').disabled = i === items.length - 1;
              it.el.querySelector('[data-a="del"]').disabled = items.length === 1;
@@ -157,6 +157,7 @@ function showResult(count, out) {
      $("after").textContent = SlimIO.pages(count);
      $("size").textContent = SlimIO.formatSize(out.length);
      dl.onclick = () => SlimIO.download(out, "slimio_organized.pdf", "application/pdf");
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

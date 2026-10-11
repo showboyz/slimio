@@ -142,8 +142,9 @@ function showResult(pagesTxt, data, type, name) {
     pendingDownload = data;
     pendingType = type;
     pendingName = name || pendingName;
-    dl.textContent = "↓ Download " + (type === "application/zip" ? "ZIP" : "PDF");
+    dl.textContent = SlimIO.t(type === "application/zip" ? "↓ Download ZIP" : "↓ Download PDF");
     dl.onclick = () => SlimIO.download(data, pendingName, type);
+    SlimIO.reveal(result);
 }
 let pendingType = "application/pdf";
 

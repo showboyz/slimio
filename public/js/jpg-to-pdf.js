@@ -147,6 +147,7 @@ function showResult(count, bytes) {
      $("after").textContent = SlimIO.formatSize(bytes.length);
     dl.textContent = SlimIO.t("↓ Download PDF");
     dl.onclick = () => SlimIO.download(bytes, "slimio.pdf", "application/pdf");
+    SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

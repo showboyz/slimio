@@ -209,6 +209,18 @@
     .result .row .v { color: #fff; font-weight: 600; }
     .gain { color: var(--accent); font-weight: 800; }
     .dl { display: inline-block; margin-top: 6px; color: var(--accent); font-weight: 700; }
+    /* same as style.css: the download is a real button, and the result flashes when it's new */
+    .result a.dl {
+        display: block; max-width: 360px; margin: 14px auto 0; padding: 13px 18px; border-radius: 10px;
+        background: var(--accent); color: #062a1c; font-size: 16px; text-align: center; cursor: pointer;
+    }
+    .result a.dl:hover { background: var(--accent-2); }
+    .result.flash { animation: result-flash 1.4s ease-out; }
+    @keyframes result-flash { from { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(70, 224, 160, 0.3); } }
+    @media (prefers-reduced-motion: reduce) { .result.flash { animation: none; } }
+    .result .inapp { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
+    .result .inapp a { display: inline-block; padding: 4px 2px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+    @media (pointer: coarse) { .tool select, .tool input[type=text], .tool input[type=number] { font-size: 16px; } }   /* iOS zooms into smaller fields */
 
     .error { color: #ff7a7a; font-size: 13px; margin-top: 14px; display: none; text-align: center; }
     .limit { font-size: 12px; color: var(--muted); margin-top: 16px; text-align: center; }
@@ -549,8 +561,8 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/js/pdf-images.js?v=7a2dd178"></script>
-<script defer src="/i18n/ko.js?v=0d29fbd0"></script>
-<script defer src="/lib.js?v=002da096"></script>
-<script type="module" src="/js/compress.js?v=3f477210"></script>
+<script defer src="/i18n/ko.js?v=db2dd799"></script>
+<script defer src="/lib.js?v=3c9a5261"></script>
+<script type="module" src="/js/compress.js?v=8849bfb4"></script>
  </body>
 </html>

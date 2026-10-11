@@ -503,6 +503,7 @@ function showResult(done, label) {
                      a.download = d.name;
                      a.addEventListener("click", () => SlimIO.trackDownload());
                      a.textContent = SlimIO.t("↓ Download");
+                     if (done.length === 1) { li.classList.add("one"); a.className = "dl"; }   // one photo: a full-width button
                      info.append(name, meta);
                      li.append(info, a);
              } else {
@@ -536,6 +537,7 @@ function showResult(done, label) {
              SlimIO.download(new Uint8Array(await blob.arrayBuffer()), "slimio_images.zip", "application/zip");
      };
      result.style.display = "block";
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

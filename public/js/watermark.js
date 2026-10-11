@@ -139,6 +139,7 @@ function showResult(count, text, bytes) {
      $("after").textContent = SlimIO.pages(count);
      $("wm").textContent = text;
      dl.onclick = () => SlimIO.download(bytes, "slimio_watermarked.pdf", "application/pdf");
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

@@ -131,10 +131,63 @@ const SlimIO = (() => {
    }
    // The user actually took the result (not just ran the tool).
    function trackDownload() {
-      event("downloaded");
+      event("downloaded", inApp ? { app: inApp } : null);
       const next = $("next");   // "Next, you might want to…" cards (tools/gen_related.py)
       if (next && next.hidden) next.hidden = false;
    }
+
+   // Browsers inside apps (Naver, KakaoTalk, Instagram…). Android's in-app browsers often can't
+   // save a file made in the page (a blob: URL), so the result box tells those visitors how to
+   // reopen the page in a real browser.
+   const ua = navigator.userAgent;
+   const inApp = /NAVER\(inapp/i.test(ua) ? "naver" : /KAKAOTALK/i.test(ua) ? "kakaotalk" : /DaumApps/i.test(ua) ? "daum"
+      : /Instagram/.test(ua) ? "instagram" : /FBAN|FBAV|FB_IAB/.test(ua) ? "facebook" : /\bLine\//.test(ua) ? "line"
+      : /; wv\)/.test(ua) ? "webview" : "";
+   const android = /Android/i.test(ua);
+   function inAppNote(box) {
+      if (!inApp || box.querySelector(".inapp")) return;
+      const here = location.href.replace(/#.*$/, "");
+      const open = inApp === "kakaotalk" ? "kakaotalk://web/openExternal?url=" + encodeURIComponent(here)
+         : android ? "intent://" + here.replace(/^https?:\/\//, "") + "#Intent;scheme=https;package=com.android.chrome;end"
+         : "";
+      const p = document.createElement("p");
+      p.className = "inapp";
+      p.textContent = open
+         ? t("In-app browsers sometimes can't save files. If nothing downloads, open this page in a browser and run it again.")
+         : t("In-app browsers sometimes can't save files. If nothing downloads, choose “Open in Safari” (or another browser) from the app's ⋯ menu and run it again.");
+      if (open) {
+         const a = document.createElement("a");
+         a.href = open;
+         a.textContent = inApp === "kakaotalk" ? t("Open in browser") : t("Open in Chrome");
+         a.addEventListener("click", () => event("open-browser", { app: inApp }));
+         p.append(" ", a);
+      }
+      box.appendChild(p);
+   }
+
+   // Show a finished result. On a phone the run button is often at the bottom of the screen, so
+   // the result used to appear below it, off screen, and people tapped the button again. Scroll
+   // it into view, and flash it so a second run visibly gives a new result.
+   function reveal(box) {
+      box = box || $("result");
+      if (!box) return;
+      inAppNote(box);
+      const r = box.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > innerHeight) {
+         const still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+         box.scrollIntoView({ block: r.height < innerHeight - 40 ? "center" : "start", behavior: still ? "auto" : "smooth" });
+      }
+      box.classList.remove("flash");
+      void box.offsetWidth;   // restart the animation
+      box.classList.add("flash");
+   }
+   // Long-pressing a result picture to save it skips the download button: count it too.
+   let held = false;
+   document.addEventListener("contextmenu", (e) => {
+      if (held || !e.target.closest || !e.target.closest(".result img")) return;
+      held = true;
+      event("held-image", inApp ? { app: inApp } : null);
+   }, true);
    // Funnel step between "viewed" and "tool-used": the visitor gave the tool something to
    // work on (picked, dropped or drew). Sent once per page view.
    let added = false;
@@ -208,6 +261,7 @@ const SlimIO = (() => {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log,
       refreshStatus, updateLimit, consume, bindProgress, track, event, reportError, trackDownload, inputAdded, apiHeaders, page2user,
+      reveal, inApp,
    };
 })();
 

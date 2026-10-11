@@ -74,6 +74,7 @@ function showResult(count, deg, bytes) {
       $("rotated").textContent = deg === 0 ? SlimIO.t("No rotation") : SlimIO.t("{deg}° clockwise", { deg });
       dl.textContent = SlimIO.t("↓ Download PDF");
       dl.onclick = () => SlimIO.download(bytes, "slimio_rotated.pdf", "application/pdf");
+     SlimIO.reveal(result);
 }
 
 SlimIO.refreshStatus();

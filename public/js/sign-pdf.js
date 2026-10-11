@@ -549,6 +549,7 @@ function showResult(pages, count, out) {
      $("count").textContent = SlimIO.t(count === 1 ? "{n} signature" : "{n} signatures", { n: count });
      const name = file.name.replace(/\.pdf$/i, "") + "_signed.pdf";
      dl.onclick = () => SlimIO.download(out, name, "application/pdf");
+     SlimIO.reveal(result);
 }
 
 goBtn.addEventListener("click", sign);
