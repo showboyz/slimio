@@ -45,6 +45,29 @@ const SlimIO = (() => {
       setTimeout(() => URL.revokeObjectURL(url), 4000);
    }
 
+   // PDF tools take only PDFs. Some apps hand over a PDF with no type, so a .pdf name counts too.
+   function isPdf(f) {
+      return !!f && (f.type === "application/pdf"
+         || ((!f.type || f.type === "application/octet-stream") && /\.pdf$/i.test(f.name)));
+   }
+   // Not a PDF: say so. People do drop photos on "compress PDF to 300KB", so a picture also
+   // gets a link to the tool that takes pictures.
+   function notPdf(f, msg) {
+      const pic = f && (/^image\//.test(f.type) || /\.(jpe?g|png|webp|heic|heif|gif|bmp|avif)$/i.test(f.name));
+      if (!pic) return showError(msg || t("Please choose a PDF file."));
+      const shrink = /compress/.test(toolName());
+      const m = location.pathname.match(/compress-pdf-to-(\d+)(kb|mb)/i);
+      const target = m ? m[1] + m[2].toUpperCase() : "";
+      showError(shrink ? t("This is a picture, not a PDF. Pictures are made smaller in the image compressor.")
+         : t("This is a picture, not a PDF. To turn pictures into a PDF, use JPG to PDF."));
+      const el = $("error");
+      if (!el) return;
+      const a = document.createElement("a");
+      a.href = (lang === "ko" ? "/ko/" : "/") + (shrink ? "compress-image.html" + (target ? "?target=" + target : "") : "jpg-to-pdf.html");
+      a.textContent = !shrink ? t("JPG to PDF →") : target ? t("Make the picture under {kb} →", { kb: target }) : t("Compress image →");
+      el.append(" ", a);
+   }
+
    function showError(msg, id) {
       const el = $(id || "error");
       if (!el) return;
@@ -145,7 +168,8 @@ const SlimIO = (() => {
       : /; wv\)/.test(ua) ? "webview" : "";
    const android = /Android/i.test(ua);
    function inAppNote(box) {
-      if (!inApp || box.querySelector(".inapp")) return;
+      // The Naver app on iPhone saves files fine (checked 2026-10-12), so no note there.
+      if (!inApp || (inApp === "naver" && !android) || box.querySelector(".inapp")) return;
       const here = location.href.replace(/#.*$/, "");
       const open = inApp === "kakaotalk" ? "kakaotalk://web/openExternal?url=" + encodeURIComponent(here)
          : android ? "intent://" + here.replace(/^https?:\/\//, "") + "#Intent;scheme=https;package=com.android.chrome;end"
@@ -259,7 +283,7 @@ const SlimIO = (() => {
 
    return {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
-      showError, clearError, log,
+      showError, clearError, log, isPdf, notPdf,
       refreshStatus, updateLimit, consume, bindProgress, track, event, reportError, trackDownload, inputAdded, apiHeaders, page2user,
       reveal, inApp,
    };

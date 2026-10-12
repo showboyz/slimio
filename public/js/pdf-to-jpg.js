@@ -19,7 +19,7 @@ quality.oninput = () => (qval.textContent = quality.value + "%");
 scale.oninput = () => (sval.textContent = (scale.value / 100).toFixed(1) + "x");
 
 async function setFile(f) {
-    if (!f || f.type !== "application/pdf") { SlimIO.showError(SlimIO.t("Please choose a PDF file.")); return; }
+    if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f); return; }
     SlimIO.clearError();
     file = f;
     drop.querySelector(".drop-title").textContent = f.name;

@@ -13,7 +13,7 @@ let file = null;
 let pageCount = 0;
 
 function setFile(f) {
-     if (!f || f.type !== "application/pdf") { SlimIO.showError(SlimIO.t("Please choose a PDF file.")); return; }
+     if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f); return; }
      SlimIO.clearError();
      file = f;
      drop.querySelector(".drop-title").textContent = f.name;

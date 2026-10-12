@@ -254,6 +254,23 @@ function toolTests() {
     await p.waitForFunction(() => document.querySelector("#error")?.offsetParent !== null || document.querySelector("#dl")?.offsetParent !== null, null, { timeout: 30000 });
     return (await p.$eval("#error", (e) => e.offsetParent !== null)) ? null : "no error message for a broken file";
   });
+  // People drop photos on PDF tools: they get a link to the tool that takes photos.
+  for (const [page, href] of [["", "compress-image.html"], ["compress-pdf-to-300kb.html", "compress-image.html?target=300KB"],
+                              ["merge.html", "jpg-to-pdf.html"], ["sign-pdf.html", "jpg-to-pdf.html"]])
+    both(page, "a photo gets a link to the photo tool", async (p) => {
+      await p.setInputFiles(page === "merge.html" ? "#pdfs" : "#pdf", F("photo.jpg"));
+      const a = await p.waitForSelector("#error a", { timeout: 5000 }).catch(() => null);
+      if (!a) return "no link in the error message";
+      const h = await a.getAttribute("href");
+      return h.endsWith("/" + href) ? null : "the link goes to " + h;
+    });
+  both("rotate.html", "a PDF with no proper file type still opens", async (p) => {
+    // Playwright fills in an empty type from the name, so test the other case apps send
+    await p.setInputFiles("#pdf", { name: "scan.pdf", mimeType: "application/octet-stream", buffer: fs.readFileSync(F("text.pdf")) });
+    if (await p.evaluate(() => document.querySelector("#pdf").files[0].type) !== "application/octet-stream") return "test file got a type";
+    await runTool(p);
+    return pdfCheck((await download(p)).bytes, { pages: 3 });
+  });
   for (const lv of ["balanced", "small", "pages"]) both("", `private mode, ${lv}`, async (p) => {
     await p.setInputFiles("#pdf", F(lv === "pages" ? "text.pdf" : "photo.pdf"));
     await select(p, "#mode", "browser"); await select(p, "#blevel", lv);

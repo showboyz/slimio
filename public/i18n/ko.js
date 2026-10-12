@@ -4,6 +4,11 @@ window.SLIMIO_KO = {
    // common
    "Please choose a PDF file.": "PDF 파일을 선택해 주세요.",
    "Please choose PDF files.": "PDF 파일을 선택해 주세요.",
+   "This is a picture, not a PDF. Pictures are made smaller in the image compressor.": "PDF가 아니라 사진 파일이에요. 사진 용량은 사진 줄이기 도구에서 줄일 수 있어요.",
+   "This is a picture, not a PDF. To turn pictures into a PDF, use JPG to PDF.": "PDF가 아니라 사진 파일이에요. 사진을 PDF로 만들려면 JPG→PDF 도구를 쓰세요.",
+   "Make the picture under {kb} →": "사진을 {kb} 이하로 줄이기 →",
+   "Compress image →": "사진 용량 줄이기 →",
+   "JPG to PDF →": "사진을 PDF로 만들기 →",
    "Please choose image files (JPG, PNG, WebP…).": "이미지 파일(JPG, PNG, WebP 등)을 선택해 주세요.",
    "Daily limit reached. Come back tomorrow.": "오늘 무료 사용 횟수를 모두 썼어요. 내일 다시 이용해 주세요.",
    "Daily limit reached. {limit} per day. Come back tomorrow.": "오늘 무료 사용 횟수({limit}회)를 모두 썼어요. 내일 다시 이용해 주세요.",

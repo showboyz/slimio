@@ -52,8 +52,9 @@ function useBrowserMode(reason) {
 
 // ---- file selection ----
 function setFile(f) {
-    if (!f || f.type !== "application/pdf") {
-        showError(SlimIO.t("Please choose a PDF file."));
+    if (!SlimIO.isPdf(f)) {
+        result.style.display = "none";
+        SlimIO.notPdf(f);
         return;
     }
     file = f;

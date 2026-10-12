@@ -41,7 +41,7 @@ function onItemAction(action, idx) {
 async function addFiles(list) {
     SlimIO.clearError();
     for (const f of list) {
-        if (f.type !== "application/pdf") { SlimIO.showError(SlimIO.t("Please choose PDF files.")); return; }
+        if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f, SlimIO.t("Please choose PDF files.")); return; }
         try {
             const bytes = await f.arrayBuffer();
             const doc = await PDFLib.PDFDocument.load(bytes);
