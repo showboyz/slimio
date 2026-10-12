@@ -50,7 +50,7 @@ Good to know when recommending a page:
   so the file passes either way a form counts. A photo below a form's minimum KB is padded without
   changing the picture.
 - Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
-  kr-gosi, kr-history, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  kr-gosi, kr-history, kr-jobkorea, kr-saramin, upsc-photo, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
   Signature page: `?preset=bank-sign`, `bank-thumb`, `bank-decl`.
 - Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
   and set the size for you.
