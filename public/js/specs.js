@@ -2,6 +2,7 @@
 //   "dimensions of 50mm x 20mm or 140 x 60 pixels. size of the file should be between 30kb to 49kb"
 //   "about 6.0 cm (width) x 2.0 cm (height) at a resolution of 300 dpi, 10 kb to 20 kb, jpeg"
 // Returns { w, h, minKB, maxKB, format, notes[] } with whatever it found (fields may be missing).
+// A shape without pixels ("aspect ratio (height : width) = 1 : 3") gives a 400 px size in that shape.
 window.SlimSpecs = (() => {
      const NUM = "(\\d+(?:\\.\\d+)?)";
      const KB = "\\s*(kbytes?|kb|k\\.b\\.|kilobytes?|mb)";
@@ -71,11 +72,34 @@ window.SlimSpecs = (() => {
              return { w, h, dpi, fromUnit: pick.unit, notes };
      }
 
+     // "aspect ratio of signature (height : width) = 1 : r, where r must be between 2.75 and 3.75"
+     // (GATE) -> width / height, taking the middle of r's range. Only when the order is spelled out.
+     function ratio(text) {
+             const t = norm(text);
+             const m = t.match(/aspect ratio[^.]{0,40}?\(\s*(height|width)\s*:\s*(height|width)\s*\)\s*(?:=|:|is|of)?\s*(\d+(?:\.\d+)?)\s*:\s*(r\b|\d+(?:\.\d+)?)/);
+             if (!m || m[1] === m[2]) return null;
+             let b = m[4];
+             if (b === "r") {
+                     const r = t.match(/\br\b[^.]{0,30}?between\s*(\d+(?:\.\d+)?)\s*(?:and|to|-|–)\s*(\d+(?:\.\d+)?)/);
+                     if (!r) return null;
+                     b = (parseFloat(r[1]) + parseFloat(r[2])) / 2;
+             }
+             const a = parseFloat(m[3]); b = parseFloat(b);
+             if (!(a > 0 && b > 0)) return null;
+             return m[1] === "height" ? b / a : a / b;
+     }
+
      function parse(text) {
              if (!text || !text.trim()) return null;
              const s = sizes(text), d = dims(text);
              const t = text.toLowerCase();
              const format = /\bpng\b/.test(t) && !/\bjpe?g\b/.test(t) ? "png" : /\bjpe?g\b/.test(t) ? "jpeg" : null;
+             // only a shape, no pixels: 400 px on the long side in that shape
+             const r = d.w ? null : ratio(text);
+             if (r && r >= 0.2 && r <= 5) {
+                     d.w = Math.round(r >= 1 ? 400 : 400 * r); d.h = Math.round(r >= 1 ? 400 / r : 400);
+                     d.fromUnit = "ratio";
+             }
              return { ...s, w: d.w || null, h: d.h || null, dpi: d.dpi || null, fromUnit: d.fromUnit || null, format, notes: d.notes || [] };
      }
 

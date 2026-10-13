@@ -84,6 +84,7 @@ function drawnSignature() {
 // ---------------------------------------------------------------- upload
 
 let uploaded = null;   // decoded image, before cleanup
+let decoding = null;   // a big phone photo takes a moment; the button waits for it
 
 async function decode(f) {
      try {
@@ -236,10 +237,13 @@ $("sigfile").addEventListener("change", async () => {
      const f = $("sigfile").files[0];
      if (!f) return;
      SlimIO.clearError();
+     uploaded = null;
+     decoding = decode(f);
      try {
-             uploaded = await decode(f);
+             uploaded = await decoding;
              $("pickimg").firstChild.textContent = f.name;
      } catch (e) { SlimIO.showError(e.message); }
+     decoding = null;
 });
 
 document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => {
@@ -462,6 +466,7 @@ goBtn.addEventListener("click", async () => {
      let sig, box;
      try {
              box = sizeChoice();
+             if (mode !== "draw" && decoding) await decoding.catch(() => {});
              sig = mode === "draw" ? drawnSignature() : uploadedSignature();
      } catch (e) { SlimIO.showError(e.message); return; }
      const format = $("format").value;

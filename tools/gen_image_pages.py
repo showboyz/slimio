@@ -59,17 +59,18 @@ PAGES = [
  ],
 },
 {
- "slug": "compress-id-photo", "target": "100KB", "resize": "id-3x4", "picker": True,
- "title": "Passport & ID Photo Resizer — Crop and Compress to KB Free | SlimIO",
+ "slug": "compress-id-photo", "target": "100KB", "resize": "id-3x4", "picker": True, "paste_top": True,
+ "title": "Passport Size Photo Resize in KB — Paste Your Form’s Photo Rules | SlimIO",
  "short": "ID Photo Resizer | SlimIO",
- "desc": "Crop a photo to passport or ID size (3.5×4.5 cm, 3×4 cm) and compress it under 100KB, 50KB or 20KB for online applications. Free, runs in your browser.",
- "keywords": "passport size photo resize, id photo resizer, passport photo size in kb, resize photo for online application, 3.5x4.5 photo, compress id photo",
+ "desc": "Paste the photo rules from your application form (e.g. 200×230 pixels, 20–50KB, 3.5×4.5 cm) and get a JPG that fits — or crop to passport or ID size and compress under 100KB, 50KB or 20KB. Free, in your browser.",
+ "keywords": "passport size photo resize, id photo resizer, passport photo size in kb, resize photo for online application, photo resize as per form instructions, 200x230 photo 20-50kb, 3.5x4.5 photo, compress id photo",
  "h1": "ID &amp; passport photos,<br /><b>the right size.</b>",
- "lead": "Crop to 3×4 cm or 3.5×4.5 cm and get under the KB limit in one step — ready for online application forms.",
+ "lead": "Paste the photo rules from your form, or pick 3×4 cm or 3.5×4.5 cm, and get under the KB limit in one step.",
  "content": """
       <h2>How to resize an ID or passport photo</h2>
       <ul>
-          <li><b>1. Add your photo.</b> The ID photo 3×4 cm preset and a 100KB target are already selected.</li>
+          <li><b>0. Paste the rules (optional).</b> Copy the photo instructions from your form into the box above the photo area — the pixel size, KB range and format are set for you.</li>
+          <li><b>1. Add your photo.</b> Without pasted rules, the ID photo 3×4 cm preset and a 100KB target are selected.</li>
           <li><b>2. Match the form.</b> Switch Resize to Passport photo 3.5×4.5 cm if needed, and pick the KB limit the form states (for example 50KB or 20KB).</li>
           <li><b>3. Adjust the frame.</b> Drag the green frame onto your face and zoom until your head fills the dashed guide.</li>
           <li><b>4. Click Compress images and download.</b> The photo is cropped, scaled and compressed in one go.</li>
@@ -92,12 +93,13 @@ PAGES = [
       </ul>
       <p>Both are 300 dpi — sharp enough to print at the stated size. Always check the exact size and KB range in the form's instructions; they differ from site to site.</p>
       <h3>Form asks for exact pixels?</h3>
-      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. Choose <b>Custom size in pixels</b> under Resize and type the width and height. Move the frame onto your face, and the photo is cropped to that shape and saved at exactly that size, under your KB limit.</p>
+      <p>Some forms state the photo in pixels instead — for example 150×200px or 200×230px. The quickest way is to paste the form's sentence (“Photo 200 x 230 pixels, 20 KB to 50 KB, JPG”) into the box at the top: SlimIO reads the width, height, KB range and format and shows what it set. Or choose <b>Custom size in pixels</b> under Resize and type the width and height. Move the frame onto your face, and the photo is cropped to that shape and saved at exactly that size, under your KB limit.</p>
       <h3>Getting a good crop</h3>
       <p>Take the photo straight on against a plain, light background — it doesn't matter where you are in the frame, because you place the crop yourself. Most rules want the head (top of the hair to the chin) to fill roughly 70% of the photo's height, with a little space above; the dashed oval shows about that size.</p>
       <h3>Safe to submit</h3>
       <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>      <p>How cm, pixels, DPI and KB relate, with a conversion table: <a href="/guides/kb-pixels-cm-dpi-explained.html">photo size rules explained</a>. Exam-specific numbers: <a href="/guides/india-exam-photo-signature-size.html">RRB, SSC, UPSC, NEET and IBPS</a>.</p>""",
  "faq": [
+  ("My form gives rules like “200 × 230 pixels, 20–50 KB, JPG”. How do I match them?", "Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and click Compress images."),
   ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."),
   ("What size in KB should a passport or ID photo be?", "It depends on the form — common limits are 20–50KB, 100KB or 200KB. Select the limit from the target list; SlimIO keeps the best quality that fits."),
   ("The form wants 150×200 pixels. Can I do that?", "Yes. Choose Custom size in pixels under Resize, enter 150 and 200, and pick the KB limit. The photo is cropped to that shape and saved at exactly 150×200px."),
@@ -106,7 +108,7 @@ PAGES = [
  ],
 },
 {
- "slug": "compress-image-to-50kb", "target": "50KB",
+ "slug": "compress-image-to-50kb", "target": "50KB", "paste_top": True,
  "title": "Compress Image to 50KB — Reduce Photo Size Online Free | SlimIO",
  "short": "Compress Image to 50KB | SlimIO",
  "desc": "Reduce a photo to under 50KB for exam, job and government application forms. Crops ID photos to size and keeps the best quality that fits. Free, runs in your browser.",
@@ -139,7 +141,7 @@ PAGES = [
  ],
 },
 {
- "slug": "compress-image-to-20kb", "target": "20KB",
+ "slug": "compress-image-to-20kb", "target": "20KB", "paste_top": True,
  "title": "Compress Image to 20KB — Photo & Signature Size Reducer Free | SlimIO",
  "short": "Compress Image to 20KB | SlimIO",
  "desc": "Reduce a photo or signature image to under 20KB for online exam and job forms. Keeps the best quality that fits. Free, no signup, runs in your browser.",
@@ -172,7 +174,7 @@ PAGES = [
  ],
 },
 {
- "slug": "compress-image-to-100kb", "target": "100KB",
+ "slug": "compress-image-to-100kb", "target": "100KB", "paste_top": True,
  "title": "Compress Image to 100KB — Reduce Photo Size Online Free | SlimIO",
  "short": "Compress Image to 100KB | SlimIO",
  "desc": "Reduce a photo or image to under 100KB for job, exam and government upload forms. Keeps the best quality that fits. Free, no signup, runs in your browser.",
@@ -205,7 +207,7 @@ PAGES = [
  ],
 },
 {
- "slug": "compress-image-to-200kb", "target": "200KB",
+ "slug": "compress-image-to-200kb", "target": "200KB", "paste_top": True,
  "title": "Compress Image to 200KB — Reduce Photo Size Online Free | SlimIO",
  "short": "Compress Image to 200KB | SlimIO",
  "desc": "Reduce a photo or image to under 200KB for applications, portals and email. Keeps the best quality that fits. Free, no signup, runs in your browser.",
@@ -278,6 +280,21 @@ def with_size_row(s, slug):
     return sub1(r'(<!-- more-tools:start -->|<div class="related">\s*<h3>Related tools</h3>)', lambda m: size_row(slug) + m.group(1), s, slug)
 
 
+SPECS_BLOCK = re.compile(r'\n\s*<div class="specs">\n.*?<div class="specs-out" id="specsout" hidden></div>\n\s*</div>', re.S)
+
+
+def paste_on_top(s):
+    """Show the "paste your form's requirements" box above the drop area, like the signature
+    page, instead of inside the options that appear only after a photo is added. People
+    arrive with the form's rules in hand (they paste them into Google)."""
+    m = SPECS_BLOCK.search(s)
+    if not m:
+        sys.exit("[paste top] specs block not found")
+    block = "\n".join(l[4:] if l.startswith("    ") else l for l in m.group(0).split("\n"))
+    s = s[:m.start()] + s[m.end():]
+    return sub1(r'(\n\s*<div class="drop" id="drop">)', lambda mm: block + mm.group(1), s, "paste top")
+
+
 def build(p, base):
     s, url = base, f"{SITE}/{p['slug']}.html"
     s = sub1(r"<title>.*?</title>", f"<title>{html.escape(p['title'])}</title>", s, "title")
@@ -305,6 +322,8 @@ def build(p, base):
     s = sub1(rf'<option value="{p["target"]}">', f'<option value="{p["target"]}" selected>', s, "target option")
     if p.get("picker"):
         s = sub1(r'(\n(\s*)<div class="drop" id="drop">)', lambda m: "\n" + m.group(2) + PICKER.strip() + m.group(1), s, "picker")
+    if p.get("paste_top"):
+        s = paste_on_top(s)
     if p.get("resize"):
         s = sub1(r'<option value="1920" selected>', '<option value="1920">', s, "default resize")
         s = sub1(rf'<option value="{p["resize"]}">', f'<option value="{p["resize"]}" selected>', s, "resize option")

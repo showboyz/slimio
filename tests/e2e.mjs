@@ -392,7 +392,32 @@ function toolTests() {
     if (r.bytes.length > lim.max || r.bytes.length < lim.min) return `${KB(r.bytes.length)} is outside ${v.target}KB`;
     return null;
   });
-  const live = ["/ sharp mode", "/ko/ sharp mode", "/compress-pdf-to-1mb.html"];
+
+  // pasted form rules (sentences people really paste into Google): the box sets size and KB range
+  // before any photo is added, and the file that comes out meets them
+  const PASTED = [
+    ["compress-id-photo.html", "width 140px,height 110px. image should not exceed 50kb. (jpg format)", { w: 140, h: 110, max: 50 }],
+    ["compress-image-to-50kb.html", "Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG", { w: 200, h: 230, min: 20, max: 50 }],
+    ["signature-image.html", "the signature must be in blue or black only. upload jpeg/jpg file with aspect ratio of signature (height : width) = 1 : r, where r must be between 2.75 and 3.75. signature must occupy 70-80% of the image. the file size should be between 3 kb and 300 kb",
+      { ratio: [2.75, 3.75], min: 3, max: 300 }],
+  ];
+  for (const [page, text, want] of PASTED) both(page, `pasted rules "${text.slice(0, 24)}…"`, async (p) => {
+    if (!(await p.isVisible("#specs"))) return "the paste box is hidden before a file is added";
+    await p.fill("#specs", text);
+    await p.waitForSelector("#specsout:not([hidden])");
+    const sig = page.startsWith("signature");
+    if (sig) { await p.click('.tab[data-mode="upload"]'); await p.setInputFiles("#sigfile", F("sig.png")); await runTool(p); }
+    else { await p.setInputFiles("#images", F("photo.jpg")); await runTool(p, { done: "#result a[download], #result .warn" }); }
+    const warn = sig ? "" : await p.$$eval("#result .warn", (a) => a.map((e) => e.textContent).join(" "));
+    if (warn) return "result warning: " + warn.trim();
+    const r = await download(p, sig ? "#dl" : "#result a[download]"), s = imageSize(r.bytes);
+    if (!s) return "result is not an image";
+    if (want.w && (s.w !== want.w || s.h !== want.h)) return `${s.w}×${s.h}, expected ${want.w}×${want.h}`;
+    if (want.ratio && (s.w / s.h < want.ratio[0] || s.w / s.h > want.ratio[1])) return `${s.w}×${s.h}: width/height outside ${want.ratio.join("–")}`;
+    if (r.bytes.length > want.max * 1000 || r.bytes.length < (want.min || 0) * 1024) return `${KB(r.bytes.length)} is outside ${want.min || 0}–${want.max}KB`;
+    return null;
+  });
+  const live =["/ sharp mode", "/ko/ sharp mode", "/compress-pdf-to-1mb.html"];
   return T.filter((t) => (!filters.length || filters.some((f) => t.name.includes(f))) && (!LIVE || live.some((l) => t.name.startsWith(l))));
 }
 

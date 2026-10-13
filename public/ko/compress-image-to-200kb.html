@@ -147,6 +147,11 @@
       </div>
 
       <div class="tool">
+           <div class="specs">
+               <label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>
+               <textarea id="specs" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </div>
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
                <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
@@ -155,11 +160,6 @@
            </div>
 
            <div class="controls hidden" id="controls">
-               <div class="specs">
-                   <label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>
-                   <textarea id="specs" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
-                   <div class="specs-out" id="specsout" hidden></div>
-               </div>
                <div class="field">
                    <label>목표 용량</label>
                    <select id="target">
@@ -366,7 +366,7 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="/i18n/ko.js?v=7d412016"></script>
 <script defer src="/lib.js?v=ce844d5c"></script>
-<script defer src="/js/specs.js?v=7c6ecac8"></script>
+<script defer src="/js/specs.js?v=93d23862"></script>
 <script type="module" src="/js/compress-image.js?v=11988261"></script>
 </body>
 </html>

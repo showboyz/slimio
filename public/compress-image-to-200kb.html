@@ -147,6 +147,11 @@
       </div>
 
       <div class="tool">
+           <div class="specs">
+               <label for="specs">📋 Paste your form's photo requirements <small>(optional)</small></label>
+               <textarea id="specs" rows="2" placeholder="e.g. Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </div>
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
                <div class="drop-title">Drop images here</div>
@@ -155,11 +160,6 @@
            </div>
 
            <div class="controls hidden" id="controls">
-               <div class="specs">
-                   <label for="specs">📋 Paste your form's photo requirements <small>(optional)</small></label>
-                   <textarea id="specs" rows="2" placeholder="e.g. Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG"></textarea>
-                   <div class="specs-out" id="specsout" hidden></div>
-               </div>
                <div class="field">
                    <label>Target size</label>
                    <select id="target">
@@ -365,7 +365,7 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script defer src="/lib.js?v=ce844d5c"></script>
-<script defer src="/js/specs.js?v=7c6ecac8"></script>
+<script defer src="/js/specs.js?v=93d23862"></script>
 <script type="module" src="/js/compress-image.js?v=11988261"></script>
 </body>
 </html>
