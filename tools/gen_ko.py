@@ -902,6 +902,7 @@ KO["signature-image.html"] = dict(
         (">SSC signature — 10–20KB, about 6×2 cm<", ">SSC 서명 — 10~20KB, 약 6×2cm<"),
         (">UPSC signature — 20–300KB, 350–1000 px<", ">UPSC 서명 — 20~300KB, 350~1000px<"),
         (">NEET signature — 10–100KB<", ">NEET 서명 — 10~100KB<"),
+        (">UGC NET signature — 10–50KB<", ">UGC NET 서명 — 10~50KB<"),
         (">20–50KB<", ">20~50KB<"), (">50–100KB<", ">50~100KB<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("<label>File size</label>", "<label>파일 용량</label>"),
@@ -1552,7 +1553,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "GIF", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "GIF", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
 
 

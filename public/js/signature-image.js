@@ -268,6 +268,8 @@ const PRESETS = {
              hint: "UPSC: JPG between 20KB and 300KB, each side between 350 and 1000 px. Sign with a black pen on white paper." },
      "neet-sign": { box: [400, 160], target: "10-100",
              hint: "NEET (NTA): JPG between 10KB and 100KB. Sign with a black pen on white paper." },
+     "ugcnet-sign": { box: [400, 160], target: "10-50",
+             hint: "UGC NET (NTA, December 2026 bulletin): between 10KB and 50KB. Some sites still show the old 4–30KB limit. Sign with a black pen on white paper." },
 };
 function syncSize() {
      const v = $("size").value, p = PRESETS[v];

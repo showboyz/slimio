@@ -132,6 +132,7 @@ window.SLIMIO_KO = {
    "SSC: sign with a black pen on white paper; the notice asks for about 6.0 × 2.0 cm. Blurred or tiny signatures are rejected.": "SSC: 흰 종이에 검은 펜으로 서명하세요. 공고 기준은 약 6.0×2.0cm이고, 흐리거나 너무 작은 서명은 반려돼요.",
    "UPSC: JPG between 20KB and 300KB, each side between 350 and 1000 px. Sign with a black pen on white paper.": "UPSC: JPG 20~300KB, 가로·세로 각각 350~1000px이에요. 흰 종이에 검은 펜으로 서명하세요.",
    "NEET (NTA): JPG between 10KB and 100KB. Sign with a black pen on white paper.": "NEET(NTA): JPG 10~100KB예요. 흰 종이에 검은 펜으로 서명하세요.",
+   "UGC NET (NTA, December 2026 bulletin): between 10KB and 50KB. Some sites still show the old 4–30KB limit. Sign with a black pen on white paper.": "UGC NET(NTA, 2026년 12월 시험 공보): 10~50KB예요. 예전 기준인 4~30KB를 아직 안내하는 사이트도 있어요. 흰 종이에 검은 펜으로 서명하세요.",
    "padded to the minimum size; the image is unchanged": "최소 용량에 맞춰 여백 데이터를 더했어요(이미지는 그대로)",
    "Always check the exact numbers in your exam notice.": "정확한 숫자는 꼭 시험 공고문에서 확인하세요.",
    "under {kb} KB": "{kb}KB 이하",
