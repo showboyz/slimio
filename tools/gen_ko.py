@@ -683,6 +683,8 @@ KO["compress-image.html"] = dict(
         (">Korea Q-Net exam photo 300×400 px<", ">큐넷 자격시험 300×400px<"),
         (">Korea civil service exam 137×177 px<", ">공무원 시험 원서 137×177px<"),
         (">Korean History Exam 120×160 px<", ">한국사능력검정 120×160px<"),
+        (">Korea KCCI license exams 400×500 px (≤50KB)<", ">대한상의 컴활·워드 400×500px (50KB 이하)<"),
+        (">Korea KPC exams (ITQ) 225×300 px<", ">KPC ITQ·GTQ 225×300px<"),
         (">JobKorea résumé photo 103×132 px<", ">잡코리아 이력서 103×132px<"),
         (">Saramin résumé photo 100×140 px<", ">사람인 이력서 100×140px<"),
         (">UPSC photo 450×600 px (20–300KB)<", ">인도 UPSC 사진 450×600px (20~300KB)<"),
@@ -778,9 +780,9 @@ KO["us-visa-photo.html"] = dict(
 )
 
 KO["compress-id-photo.html"] = dict(
-    title="증명사진 용량 줄이기 - 큐넷·공무원·한능검 원서 사진 규격 무료 | SlimIO",
-    desc="증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.",
-    keywords="증명사진 용량 줄이기, 증명사진 크기 줄이기, 원서 사진 규격, 큐넷 사진 규격, 공무원 원서 사진 규격, 한국사능력검정시험 사진 규격, 반명함 사진 크기, 이력서 사진 용량, 이력서 사진 크기, 잡코리아 이력서 사진, 사람인 이력서 사진, 증명사진 100KB",
+    title="증명사진 용량 줄이기 - 큐넷·공무원·한능검·컴활 원서 사진 규격 무료 | SlimIO",
+    desc="증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px)·컴활(400×500px, 50KB) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.",
+    keywords="증명사진 용량 줄이기, 증명사진 크기 줄이기, 원서 사진 규격, 큐넷 사진 규격, 공무원 원서 사진 규격, 한국사능력검정시험 사진 규격, 컴활 사진 규격, 컴활 사진 용량, ITQ 사진 규격, 반명함 사진 크기, 이력서 사진 용량, 이력서 사진 크기, 잡코리아 이력서 사진, 사람인 이력서 사진, 증명사진 100KB",
     short="증명사진 용량 줄이기 | SlimIO",
     app_name="SlimIO 증명사진 용량 줄이기",
     app_desc="증명사진과 여권사진을 규격에 맞게 자르고 원하는 KB 이하로 줄이는 무료 도구. 브라우저에서 처리돼 사진이 업로드되지 않아요.",
@@ -795,12 +797,14 @@ KO["compress-id-photo.html"] = dict(
          '           <div class="exams" role="group" aria-label="시험 원서 사진 규격"><span>시험 원서</span>'
          '<button type="button" class="preset" data-resize="kr-qnet"><b>큐넷</b>300×400</button>'
          '<button type="button" class="preset" data-resize="kr-gosi"><b>공무원</b>137×177</button>'
-         '<button type="button" class="preset" data-resize="kr-history"><b>한능검</b>120×160</button></div>\n'
+         '<button type="button" class="preset" data-resize="kr-history"><b>한능검</b>120×160</button>'
+         '<button type="button" class="preset" data-resize="kr-korcham"><b>컴활·워드</b>400×500</button>'
+         '<button type="button" class="preset" data-resize="kr-kpc"><b>ITQ</b>225×300</button></div>\n'
          '           <div class="exams" role="group" aria-label="이력서 사진 규격"><span>이력서</span>'
          '<button type="button" class="preset" data-resize="kr-jobkorea"><b>잡코리아</b>103×132</button>'
          '<button type="button" class="preset" data-resize="kr-saramin"><b>사람인</b>100×140</button></div>'),
     ],
-    lead="3×4cm·3.5×4.5cm, 큐넷·공무원·한능검 원서 규격으로 자르고 용량 제한까지 맞춰요. 설치 없이, 무료로.",
+    lead="3×4cm·3.5×4.5cm, 큐넷·공무원·한능검·컴활 원서 규격으로 자르고 용량 제한까지 맞춰요. 설치 없이, 무료로.",
     ui=None,
     content="""
       <h2>증명사진 용량 줄이는 방법</h2>
@@ -833,6 +837,8 @@ KO["compress-id-photo.html"] = dict(
           <li><b>큐넷 (국가기술자격·전문자격)</b> → 300×400px 이상, JPG, 200KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-qnet">큐넷 규격으로 열기</a></li>
           <li><b>국가직 공무원 원서</b> → 3.5×4.5cm(137×177px), JPG·PNG, 350KB 미만(국가공무원 채용시스템 안내). <a href="/ko/compress-id-photo.html?resize=kr-gosi">공무원 규격으로 열기</a></li>
           <li><b>한국사능력검정시험</b> → 약 3×4cm(120×160px), JPG. <a href="/ko/compress-id-photo.html?resize=kr-history">한능검 규격으로 열기</a></li>
+          <li><b>컴활·워드프로세서 (대한상공회의소)</b> → 400×500px(1:1.25), JPG·PNG, 50KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-korcham">컴활 규격으로 열기</a></li>
+          <li><b>ITQ·GTQ (한국생산성본부 KPC)</b> → 가로 115~235·세로 150~315px, 500KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-kpc">ITQ 규격으로 열기</a></li>
           <li><b>토익</b> → 픽셀 제한 없이 JPG 6MB 이하. 반명함 3×4cm로 저장하면 돼요.</li>
       </ul>
       <h3>이력서 사진 규격 (잡코리아·사람인)</h3>
@@ -843,7 +849,7 @@ KO["compress-id-photo.html"] = dict(
           <li><b>한글·워드 이력서 양식</b> → 사진 칸이 3×4cm라면 354×472px로 저장해서 넣으세요.</li>
       </ul>
       <p>사이트별 차이와 사진이 안 올라갈 때 확인할 것은 <a href="/ko/guides/resume-photo-size.html">이력서 사진 크기 총정리</a>에 있어요.</p>
-      <p>여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 공고문의 문장을 위 <b>원서의 사진 규격 붙여넣기</b> 칸에 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
+      <p>컴활 사진이 "50kbyte를 초과할 수 없습니다"로 안 올라간다면 <a href="/ko/guides/computer-certificate-photo-size.html">컴활·워드·ITQ 사진 규격</a>을 보세요. 여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 공고문의 문장을 위 <b>원서의 사진 규격 붙여넣기</b> 칸에 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
       <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
       <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 틀을 얼굴에 맞춰 옮기면 그 비율로 잘라서 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
@@ -1553,7 +1559,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "GIF", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "GIF", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
 
 

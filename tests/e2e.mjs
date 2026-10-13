@@ -400,6 +400,8 @@ function toolTests() {
     ["compress-image-to-50kb.html", "Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG", { w: 200, h: 230, min: 20, max: 50 }],
     ["signature-image.html", "the signature must be in blue or black only. upload jpeg/jpg file with aspect ratio of signature (height : width) = 1 : r, where r must be between 2.75 and 3.75. signature must occupy 70-80% of the image. the file size should be between 3 kb and 300 kb",
       { ratio: [2.75, 3.75], min: 3, max: 300 }],
+    ["compress-id-photo.html", "사진 크기는 400 x 500 픽셀로 변경되며 1 : 1.25 비율로 맞춰주셔야 사진이 정상적으로 보입니다. 파일은 50kbyte를 초과할 수 없습니다.", { w: 400, h: 500, max: 50 }],
+    ["compress-id-photo.html", "크기: 가로 115~235픽셀, 세로 150~315픽셀 형식: PNG 파일 권장(JPG, GIF, PNG 파일 가능) 용량: 500KB 이하", { w: 235, h: 315, max: 500 }],
   ];
   for (const [page, text, want] of PASTED) both(page, `pasted rules "${text.slice(0, 24)}…"`, async (p) => {
     if (!(await p.isVisible("#specs"))) return "the paste box is hidden before a file is added";

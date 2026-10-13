@@ -14,7 +14,7 @@ Good to know when recommending a page:
   so the file passes either way a form counts. A photo below a form's minimum KB is padded without
   changing the picture.
 - Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
-  kr-gosi, kr-history, kr-jobkorea, kr-saramin, upsc-photo, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  kr-gosi, kr-history, kr-korcham, kr-kpc, kr-jobkorea, kr-saramin, upsc-photo, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
   Signature page: `?preset=` (bank-sign, bank-thumb, bank-decl, rrb-sign, ssc-sign, upsc-sign, neet-sign, ugcnet-sign).
 - Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
   and set the size for you.
@@ -82,7 +82,7 @@ Good to know when recommending a page:
 - [사진 50KB 줄이기 - 증명사진·이미지 용량 50KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-50kb.html): 증명사진·지원서 사진을 50KB 이하로 줄이세요. 시험 접수·채용·원서용으로 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.
 - [사진 100KB 줄이기 - 이미지 용량 100KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-100kb.html): 증명사진·지원서 사진을 100KB 이하로 줄이세요. 제한 안에서 가장 선명하게 맞춰요. 증명사진 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.
 - [사진 200KB 줄이기 - 이미지 용량 200KB 이하로 무료](https://pdfslimio.com/ko/compress-image-to-200kb.html): 사진·이미지를 200KB 이하로 줄이세요. 입학·장학금 서류, 온라인 신청, 메일 첨부용으로. 제한 안에서 가장 선명하게. 회원가입 없이 무료.
-- [증명사진 용량 줄이기 - 큐넷·공무원·한능검 원서 사진 규격 무료](https://pdfslimio.com/ko/compress-id-photo.html): 증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.
+- [증명사진 용량 줄이기 - 큐넷·공무원·한능검·컴활 원서 사진 규격 무료](https://pdfslimio.com/ko/compress-id-photo.html): 증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px)·컴활(400×500px, 50KB) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.
 - [미국 비자 사진 만들기 - DS-160 600×600·240KB 규격 무료](https://pdfslimio.com/ko/us-visa-photo.html): DS-160에 올릴 미국 비자 사진을 600×600 정사각형, 240KB 이하 JPG로 만드세요. 머리 크기·눈 높이 가이드까지. 무료, 브라우저에서 처리돼요.
 - [서명 이미지 만들기 - 서명 용량 20KB 줄이기, 투명 PNG 무료](https://pdfslimio.com/ko/signature-image.html): 서명을 직접 그리거나 종이에 쓴 서명 사진을 올려서 배경을 지우고, 원서 규격(예: 10~20KB, 140×60px)에 맞는 JPG나 투명 PNG로 만드세요. 무료, 브라우저에서 처리돼요.
 
@@ -95,12 +95,13 @@ Good to know when recommending a page:
 - [US visa photo requirements for the DS-160: 600×600, 240KB and why uploads fail](https://pdfslimio.com/guides/us-visa-photo-requirements.html): The official DS-160 digital photo rules in one place — pixels, 240KB, the 20:1 compression limit, head size and eye height in pixels — plus the reasons uploads fail and what to do when they do.
 - [How to reduce PDF size on iPhone and Mac: the built-in options, tested](https://pdfslimio.com/guides/reduce-pdf-size-iphone-mac.html): We ran Preview's Reduce File Size, the Shortcuts PDF action and SlimIO on the same three PDFs. What each one did to the file size, to the text and to the picture quality, and which to use.
 - [UGC NET December 2026 photo and signature size: what the bulletin asks for](https://pdfslimio.com/guides/ugc-net-photo-signature-size.html): The UGC-NET December 2026 bulletin asks for a live photograph, a 10–200KB photo with 80% face and ears visible, and a 10–50KB signature — not the old 4–30KB. Dates, rejection reasons and a free tool for each file.
-- [원서·시험 사진 규격 총정리: 큐넷·공무원·한능검·토익·여권 (2026)](https://pdfslimio.com/ko/guides/exam-application-photo-size.html): 큐넷, 국가직 공무원, 한국사능력검정시험, 토익, 여권 온라인 신청의 사진 규격(cm·픽셀·용량·형식)을 공식 안내 기준으로 한 표에 정리하고, 픽셀 계산법과 반려되는 사진 유형까지 설명해요.
+- [원서·시험 사진 규격 총정리: 큐넷·공무원·한능검·컴활·토익·여권 (2026)](https://pdfslimio.com/ko/guides/exam-application-photo-size.html): 큐넷, 국가직 공무원, 한국사능력검정시험, 컴활(대한상공회의소), ITQ, 토익, 여권 온라인 신청의 사진 규격(cm·픽셀·용량·형식)을 공식 안내 기준으로 한 표에 정리하고, 픽셀 계산법과 반려되는 사진 유형까지 설명해요.
 - [PDF 용량 줄이기 원리: 글자는 선명하게, 용량만 줄이는 법](https://pdfslimio.com/ko/guides/pdf-compression-explained.html): PDF가 왜 무거운지, 압축하면 무엇이 바뀌고 무엇이 그대로인지, 글자를 선명하게 두면서 100KB·500KB·1MB 같은 정해진 용량에 맞추는 방법을 원리부터 정리했어요.
 - [미국 비자 사진 규격 총정리: DS-160 600×600·240KB, 업로드 오류 해결 (2026)](https://pdfslimio.com/ko/guides/us-visa-photo-size.html): DS-160에 올리는 미국 비자 사진의 공식 규격(픽셀, 240KB, 20:1 압축률, 머리 크기·눈 높이)을 픽셀로 풀어 정리하고, 업로드가 안 되는 이유와 해결 방법, 5×5cm 사진을 스캔할 때 주의할 점까지 설명해요.
 - [아이폰·맥에서 PDF 용량 줄이기: 기본 기능 직접 비교해 봤어요](https://pdfslimio.com/ko/guides/iphone-mac-pdf-size.html): 맥 미리보기의 '파일 크기 줄이기', 아이폰 단축어의 'PDF 파일 크기 최적화', SlimIO를 같은 PDF 3개로 직접 비교했어요. 용량이 얼마나 줄었는지, 글자와 화질은 어떻게 됐는지, 언제 무엇을 쓰면 되는지 정리했어요.
 - [여권 재발급 온라인 사진 규격: 413×531·500KB, 반려 안 되게 맞추는 법 (2026)](https://pdfslimio.com/ko/guides/passport-photo-online.html): 정부24 여권 재발급에 올리는 사진 파일의 공식 규격(413×531 권장, 가로 395~431·세로 507~550픽셀, 500KB 이하 JPG)과 머리 길이 3.2~3.6cm를 픽셀로 바꾼 값, 반려되는 사진, 휴대폰에서 파일을 맞추는 방법을 정리했어요.
 - [이력서 사진 크기 총정리: 잡코리아·사람인·한글 이력서 양식 (2026)](https://pdfslimio.com/ko/guides/resume-photo-size.html): 잡코리아와 사람인이 안내하는 이력서 사진 픽셀·용량·파일 형식을 고객센터 기준으로 정리하고, 사진이 안 올라가는 이유와 한글·워드 이력서 양식에 넣는 크기까지 설명해요.
+- [컴활 사진 규격: 400×500px, 50KB 이하로 맞추는 법 (워드·ITQ까지)](https://pdfslimio.com/ko/guides/computer-certificate-photo-size.html): 컴활·워드프로세서 같은 대한상공회의소 자격 사진은 400×500픽셀(1:1.25), 50KB 이하예요. '50kbyte를 초과할 수 없습니다'가 뜨는 이유, GIF가 막히는 이유, 사진 변경 승인, ITQ(KPC) 규격까지 공식 등록 화면 기준으로 정리했어요.
 
 ## Optional
 

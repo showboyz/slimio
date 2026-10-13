@@ -48,8 +48,9 @@ window.SlimSpecs = (() => {
                              role: /max/.test(before) ? "max" : /min/.test(before) ? "min" : "" });
              }
              // "width 140px, height 110px" / "width: 140 pixels and height: 110 pixels"
-             const w1 = t.match(/(?:width|가로)\s*(?:of|:|=|-)?\s*(\d+(?:\.\d+)?)\s*(px|pixels?|cm|mm)?/);
-             const h1 = t.match(/(?:height|세로)\s*(?:of|:|=|-)?\s*(\d+(?:\.\d+)?)\s*(px|pixels?|cm|mm)?/);
+             // A range ("가로 115~235픽셀, 세로 150~315픽셀", KPC/ITQ) gives its largest size: the most detail that passes.
+             const side = (word) => t.match(new RegExp("(?:" + word + ")\\s*(?:of|:|=|-)?\\s*(?:\\d+(?:\\.\\d+)?\\s*(?:~|-|–|to)\\s*)?(\\d+(?:\\.\\d+)?)\\s*(px|pixels?|cm|mm)?"));
+             const w1 = side("width|가로"), h1 = side("height|세로");
              if (w1 && h1) pairs.push({ a: parseFloat(w1[1]), b: parseFloat(h1[1]), unit: (w1[2] || h1[2] || "px").replace(/s$/, ""), role: "" });
 
              const toPx = (v, unit) => {
