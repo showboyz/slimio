@@ -61,7 +61,7 @@
                   "name": "My form gives rules like “200 × 230 pixels, 20–50 KB, JPG”. How do I match them?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and click Compress images."
+                        "text": "Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and download the result below."
                   }
             },
             {
@@ -69,7 +69,7 @@
                   "name": "How do I resize a photo to passport size online?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."
+                        "text": "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and download the result. You get a 413×531px JPG under that limit."
                   }
             },
             {
@@ -108,7 +108,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=71149725" />
+<link rel="stylesheet" href="/style.css?v=ff96d68d" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -154,7 +154,7 @@
            </div>
       </div>
 
-      <div class="tool">
+      <div class="tool" data-live>
            <div class="presets" role="group" aria-label="Photo size">
                    <button type="button" class="preset" data-resize="id-3x4"><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="1" y="1" width="28" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="15.0" cy="16.0" r="6.0" fill="currentColor" opacity=".55"/><path d="M4.2 39 q0 -9.6 10.8 -9.6 q10.8 0 10.8 9.6z" fill="currentColor" opacity=".55"/></svg><b>3×4 cm</b><span>ID photo</span></button>
                    <button type="button" class="preset" data-resize="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5 cm</b><span>Passport</span></button>
@@ -287,7 +287,7 @@
           <li><b>1. Add your photo.</b> Without pasted rules, the ID photo 3×4 cm preset and a 100KB target are selected.</li>
           <li><b>2. Match the form.</b> Switch Resize to Passport photo 3.5×4.5 cm if needed, and pick the KB limit the form states (for example 50KB or 20KB).</li>
           <li><b>3. Adjust the frame.</b> Drag the green frame onto your face and zoom until your head fills the dashed guide.</li>
-          <li><b>4. Click Compress images and download.</b> The photo is cropped, scaled and compressed in one go.</li>
+          <li><b>4. Download.</b> The photo is cropped, scaled and compressed as soon as you add it, and again whenever you move the frame or change a setting. The result shows its pixels and KB.</li>
       </ul>
       <figure class="demo">
           <div class="demo-row">
@@ -318,11 +318,11 @@
       <h2>ID Photo Resizer — FAQ</h2>
       <details open>
           <summary>My form gives rules like “200 × 230 pixels, 20–50 KB, JPG”. How do I match them?</summary>
-          <p>Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and click Compress images.</p>
+          <p>Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and download the result below.</p>
       </details>
       <details>
           <summary>How do I resize a photo to passport size online?</summary>
-          <p>Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit.</p>
+          <p>Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and download the result. You get a 413×531px JPG under that limit.</p>
       </details>
       <details>
           <summary>What size in KB should a passport or ID photo be?</summary>
@@ -402,8 +402,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/lib.js?v=ce844d5c"></script>
+<script defer src="/lib.js?v=ee48edf6"></script>
 <script defer src="/js/specs.js?v=c011b942"></script>
-<script type="module" src="/js/compress-image.js?v=9088898a"></script>
+<script type="module" src="/js/compress-image.js?v=b64d2d5e"></script>
 </body>
 </html>

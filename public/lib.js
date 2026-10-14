@@ -192,12 +192,13 @@ const SlimIO = (() => {
    // Show a finished result. On a phone the run button is often at the bottom of the screen, so
    // the result used to appear below it, off screen, and people tapped the button again. Scroll
    // it into view, and flash it so a second run visibly gives a new result.
-   function reveal(box) {
+   // { scroll: false }: a result remade while the visitor edits (the ID photo crop) stays put.
+   function reveal(box, opts) {
       box = box || $("result");
       if (!box) return;
       inAppNote(box);
       const r = box.getBoundingClientRect();
-      if (r.top < 0 || r.bottom > innerHeight) {
+      if ((!opts || opts.scroll !== false) && (r.top < 0 || r.bottom > innerHeight)) {
          const still = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
          box.scrollIntoView({ block: r.height < innerHeight - 40 ? "center" : "start", behavior: still ? "auto" : "smooth" });
       }

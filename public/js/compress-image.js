@@ -57,13 +57,35 @@ async function padJpeg(blob, min) {
 }
 
 let files = [];
-let urls = [];   // object URLs from the last run, revoked before the next one
+let urls = [];   // object URLs from the last run, revoked after the next one is shown
+
+// ID photo pages (data-live on .tool): one photo is made as soon as it's added and made again
+// after every change, so the next step is always the download button. With a separate
+// "Compress" button first, people weren't sure which of the two buttons to press.
+// Several photos at once still use the button.
+const live = !!document.querySelector(".tool[data-live]");
+const liveOn = () => live && files.length === 1;
+let liveTimer = null, running = false, again = false;
+let charged = false;   // this photo already counted against the daily limit
+let limited = false;   // the daily limit was hit: don't ask the server again on every change
+let gen = 0;           // bumped for every new set of files, so a late result for old ones is dropped
+function schedule(delay) {
+     if (!liveOn()) return;
+     result.classList.add("busy");   // dims the old result and blocks its download (style.css)
+     clearTimeout(liveTimer);
+     liveTimer = setTimeout(() => {
+             liveTimer = null;
+             if (running) again = true; else run();
+     }, delay === undefined ? 300 : delay);
+}
 
 function setFiles(fileList) {
      const picked = [...fileList].filter((f) => f.type.startsWith("image/") || /\.(heic|heif)$/i.test(f.name));
      if (!picked.length) { SlimIO.showError(SlimIO.t("Please choose image files (JPG, PNG, WebP…).")); return; }
      SlimIO.clearError();
      files = picked;
+     gen++;
+     charged = false;
      const total = files.reduce((s, f) => s + f.size, 0);
      drop.querySelector(".drop-title").textContent = files.length === 1
              ? files[0].name
@@ -71,9 +93,12 @@ function setFiles(fileList) {
      drop.querySelector(".drop-or").textContent = SlimIO.formatSize(total);
      controls.classList.remove("hidden");
      result.style.display = "none";
+     result.classList.remove("busy");
      goBtn.disabled = false;
+     goBtn.parentElement.style.display = liveOn() ? "none" : "";   // the .run-row
      SlimIO.refreshStatus();
-     loadPreview();
+     previewReady = loadPreview();
+     schedule(0);
 }
 
 drop.addEventListener("click", () => $("images").click());
@@ -119,6 +144,9 @@ function syncCustom() {
      $("custom").hidden = $("resize").value !== "custom";
 }
 $("resize").addEventListener("change", syncCustom);
+// live pages: remake the photo after any change (typed numbers wait a little longer)
+for (const id of ["resize", "target", "format"]) $(id).addEventListener("change", () => schedule());
+for (const id of ["kmin", "kmax", "cw", "ch"]) $(id).addEventListener("input", () => schedule(600));
 
 // Size tiles (ID photo page): a friendlier front for the Resize select.
 const tiles = document.querySelectorAll(".preset[data-resize]");
@@ -154,6 +182,7 @@ function applySpecs() {
              found.push(r.minKB && r.maxKB ? `${r.minKB}–${r.maxKB} KB` : r.maxKB ? SlimIO.t("under {kb} KB", { kb: r.maxKB }) : SlimIO.t("at least {kb} KB", { kb: r.minKB }));
      }
      if (r.format) { $("format").value = r.format; found.push(r.format === "png" ? "PNG" : "JPG"); }
+     if (found.length) schedule();
      out.hidden = false;
      out.className = "specs-out" + (found.length ? "" : " none");
      out.textContent = found.length
@@ -228,8 +257,9 @@ function encode(canvas, format, quality) {
 
 // Best-looking image that fits `target` bytes: search JPEG/WebP quality first,
 // then scale down 20% at a time. PNG is lossless, so only scaling helps there.
-async function compressOne(file, opts, crop) {
-     const img = await loadImage(file);
+// `decoded`: the photo already decoded for the crop preview (live pages remake it often).
+async function compressOne(file, opts, crop, decoded) {
+     const img = decoded || await loadImage(file);
      try {
              const r = await shrink(img, opts, crop);
              // Never hand back a bigger file than the user gave us when nothing else had to change.
@@ -241,7 +271,7 @@ async function compressOne(file, opts, crop) {
              }
              return r;
      } finally {
-             if (img.close) img.close();
+             if (!decoded && img.close) img.close();
      }
 }
 
@@ -297,15 +327,23 @@ const cropBox = $("crop");
 const cv = $("cropcv");
 const zoom = $("zoom");
 let preview = null;           // decoded first photo
+let previewOf = null;         // the file it was decoded from
+let previewReady = Promise.resolve();
 let crop = { fx: 0.5, fy: 0.5, z: 1 };
 let view = null;              // how the photo is laid out on the canvas: { s, ox, oy }
 
 async function loadPreview() {
-     if (preview && preview.close) preview.close();
-     preview = null;
+     if (preview && preview.close && !running) preview.close();   // a live run may still be drawing it
+     preview = previewOf = null;
      crop = { fx: 0.5, fy: 0.5, z: 1 };
      zoom.value = 100;
-     try { preview = await loadImage(files[0]); } catch (e) { /* HEIC etc: the run shows the error */ }
+     const f = files[0];
+     try {
+             const img = await loadImage(f);
+             if (files[0] !== f) { if (img.close) img.close(); return; }   // another photo was picked meanwhile
+             preview = img;
+             previewOf = f;
+     } catch (e) { /* HEIC etc: the run shows the error */ }
      syncCrop();
 }
 
@@ -329,6 +367,7 @@ function syncCrop() {
              : $("resize").value === "passport"
              ? SlimIO.t("Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");
+     if (liveOn()) $("crophint").textContent += " " + SlimIO.t("The photo below follows the frame.");
      drawCrop();
 }
 
@@ -404,7 +443,7 @@ cv.addEventListener("pointermove", (e) => {
      settle();
      drawCrop();
 });
-const endDrag = () => { drag = null; cv.classList.remove("dragging"); };
+const endDrag = () => { if (drag) schedule(); drag = null; cv.classList.remove("dragging"); };
 cv.addEventListener("pointerup", endDrag);
 cv.addEventListener("pointercancel", endDrag);
 
@@ -415,8 +454,8 @@ function settle() {
      crop.fy = (r.sy + r.sh / 2) / preview.height;
 }
 
-zoom.addEventListener("input", () => { crop.z = zoom.value / 100; settle(); drawCrop(); });
-$("cropreset").addEventListener("click", () => { crop = { fx: 0.5, fy: 0.5, z: 1 }; zoom.value = 100; drawCrop(); });
+zoom.addEventListener("input", () => { crop.z = zoom.value / 100; settle(); drawCrop(); schedule(); });
+$("cropreset").addEventListener("click", () => { crop = { fx: 0.5, fy: 0.5, z: 1 }; zoom.value = 100; drawCrop(); schedule(); });
 $("resize").addEventListener("change", syncCrop);
 $("cw").addEventListener("input", syncCrop);
 $("ch").addEventListener("input", syncCrop);
@@ -424,14 +463,35 @@ window.addEventListener("resize", () => { if (!cropBox.hidden) drawCrop(); });
 
 async function run() {
      if (!files.length) return;
+     if (!liveOn()) return make(false);
+     running = true;
+     try {
+             await previewReady;
+             await make(true);
+     } finally {
+             running = false;
+             if (again && liveOn()) { again = false; run(); }
+             else if (!liveTimer) result.classList.remove("busy");
+     }
+}
+
+// auto: a live remake. No button or progress bar, and the result stays where it is.
+async function make(auto) {
      SlimIO.clearError();
+     const my = gen;
      const resize = resizeChoice();
-     if (!resize) { SlimIO.showError(SlimIO.t("Enter a width and height between 16 and 4000 pixels.")); return; }
-     goBtn.disabled = true;
-     goBtn.textContent = SlimIO.t("Compressing…");
-     prog.show();
-     result.style.display = "none";
-     urls.forEach((u) => URL.revokeObjectURL(u));
+     if (!resize) {
+             SlimIO.showError(SlimIO.t("Enter a width and height between 16 and 4000 pixels."));
+             if (auto) result.style.display = "none";
+             return;
+     }
+     if (!auto) {
+             goBtn.disabled = true;
+             goBtn.textContent = SlimIO.t("Compressing…");
+             prog.show();
+             result.style.display = "none";
+     }
+     const old = urls;
      urls = [];
      const label = $("target").value;
      const custom = label === "custom";
@@ -441,14 +501,22 @@ async function run() {
              : { target: parseSize(label), min: parseMin(label), resize, format: $("format").value };
      if (resize === "us-visa" && opts.format === "jpeg") opts.floor = 600 * 600 * 3 / 20;
      try {
-             const check = await SlimIO.consume();
-             if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
+             if (!auto || !charged) {   // a live photo counts once, however often it's remade
+                     const check = limited ? { ok: false } : await SlimIO.consume();
+                     if (check && !check.ok) {
+                             SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow."));
+                             if (auto) { limited = true; result.style.display = "none"; }
+                             return;
+                     }
+                     charged = true;
+             }
 
              const done = [];
              for (let i = 0; i < files.length; i++) {
                      const file = files[i];
                      try {
-                             const r = await compressOne(file, opts, i === 0 ? cropState() : null);   // the frame is set on the first photo
+                             const decoded = auto && previewOf === file ? preview : null;
+                             const r = await compressOne(file, opts, i === 0 ? cropState() : null, decoded);   // the frame is set on the first photo
                              if (opts.min && opts.format === "jpeg" && r.blob.size < opts.min) {
                                      r.blob = await padJpeg(r.blob, opts.min);
                                      r.padded = true;
@@ -459,17 +527,21 @@ async function run() {
                      }
                      prog.set(((i + 1) / files.length) * 100);
              }
-             showResult(done, label === "custom" ? ($("kmax").value ? $("kmax").value + "KB" : "") : label);
+             if (my !== gen) return;   // other photos were picked while this ran
+             showResult(done, label === "custom" ? ($("kmax").value ? $("kmax").value + "KB" : "") : label, auto);
      } catch (e) {
              SlimIO.showError(SlimIO.t("Compression failed: {msg}", { msg: e.message }));
      } finally {
-             goBtn.disabled = false;
-             goBtn.textContent = SlimIO.t("Compress images");
-             prog.hide();
+             if (!auto) {
+                     goBtn.disabled = false;
+                     goBtn.textContent = SlimIO.t("Compress images");
+                     prog.hide();
+             }
+             old.forEach((u) => URL.revokeObjectURL(u));
      }
 }
 
-function showResult(done, label) {
+function showResult(done, label, auto) {
      list.replaceChildren();
      let before = 0, after = 0;
      const ok = done.filter((d) => d.blob);
@@ -540,7 +612,7 @@ function showResult(done, label) {
              SlimIO.download(new Uint8Array(await blob.arrayBuffer()), "slimio_images.zip", "application/zip");
      };
      result.style.display = "block";
-     SlimIO.reveal(result);
+     SlimIO.reveal(result, auto ? { scroll: false } : undefined);   // a live remake must not pull the page away from the frame
 }
 
 SlimIO.refreshStatus();

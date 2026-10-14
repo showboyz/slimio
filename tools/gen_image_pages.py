@@ -27,7 +27,7 @@ PAGES = [
       <ul>
           <li><b>1. Add a photo.</b> US visa 600×600 and a 240KB limit are already selected.</li>
           <li><b>2. Line it up.</b> Drag the green frame so your head fills the dashed oval and your eyes sit between the two dotted lines.</li>
-          <li><b>3. Click Compress images and download.</b> You get a square JPEG, 600×600 px, under 240KB, ready to upload.</li>
+          <li><b>3. Download.</b> The photo is made as soon as you add it and again whenever you move the frame. You get a square JPEG, 600×600 px, under 240KB, ready to upload.</li>
       </ul>
       <figure class="demo">
           <div class="demo-row">
@@ -51,7 +51,7 @@ PAGES = [
       <h3>Printing a 2×2 inch photo?</h3>
       <p>600×600 pixels printed at 300 dpi is exactly 2×2 inches (51×51 mm), the printed size used for US visa and passport photos.</p>""",
  "faq": [
-  ("How do I resize a photo for the DS-160?", "Add your photo here — US visa 600×600 and 240KB are already selected — drag the frame onto your face and click Compress images. The download is a square JPEG under 240KB."),
+  ("How do I resize a photo for the DS-160?", "Add your photo here — US visa 600×600 and 240KB are already selected — drag the frame onto your face and download the result below. It's a square JPEG under 240KB."),
   ("Why does the DS-160 say my photo failed?", "The most common reasons are a file over 240KB, a photo that isn't square or is under 600×600 pixels, or a head that's too small or too big. This page fixes the first three; use the guide to get the head size right."),
   ("Can I wear glasses in a US visa photo?", "No. Glasses are no longer allowed except in rare medical cases with a doctor's statement."),
   ("Will SlimIO make my background white?", "No. It doesn't edit the background or your appearance — digitally altered photos are not accepted. Take the photo against a plain white or off-white wall."),
@@ -73,7 +73,7 @@ PAGES = [
           <li><b>1. Add your photo.</b> Without pasted rules, the ID photo 3×4 cm preset and a 100KB target are selected.</li>
           <li><b>2. Match the form.</b> Switch Resize to Passport photo 3.5×4.5 cm if needed, and pick the KB limit the form states (for example 50KB or 20KB).</li>
           <li><b>3. Adjust the frame.</b> Drag the green frame onto your face and zoom until your head fills the dashed guide.</li>
-          <li><b>4. Click Compress images and download.</b> The photo is cropped, scaled and compressed in one go.</li>
+          <li><b>4. Download.</b> The photo is cropped, scaled and compressed as soon as you add it, and again whenever you move the frame or change a setting. The result shows its pixels and KB.</li>
       </ul>
       <figure class="demo">
           <div class="demo-row">
@@ -99,8 +99,8 @@ PAGES = [
       <h3>Safe to submit</h3>
       <p>Everything happens in your browser — the photo is never uploaded. Location and camera data (EXIF) are removed when the photo is saved again.</p>      <p>How cm, pixels, DPI and KB relate, with a conversion table: <a href="/guides/kb-pixels-cm-dpi-explained.html">photo size rules explained</a>. Exam-specific numbers: <a href="/guides/india-exam-photo-signature-size.html">RRB, SSC, UPSC, NEET and IBPS</a>.</p>""",
  "faq": [
-  ("My form gives rules like “200 × 230 pixels, 20–50 KB, JPG”. How do I match them?", "Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and click Compress images."),
-  ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and click Compress images. You get a 413×531px JPG under that limit."),
+  ("My form gives rules like “200 × 230 pixels, 20–50 KB, JPG”. How do I match them?", "Copy the photo instructions from the form and paste them into the box at the top. SlimIO reads the pixel size (or cm/mm and dpi), the KB range and the format, sets everything for you and shows what it set. Then add your photo, move the frame onto your face and download the result below."),
+  ("How do I resize a photo to passport size online?", "Drop your photo here, choose Passport photo 3.5×4.5 cm under Resize, pick the KB limit your form asks for and download the result. You get a 413×531px JPG under that limit."),
   ("What size in KB should a passport or ID photo be?", "It depends on the form — common limits are 20–50KB, 100KB or 200KB. Select the limit from the target list; SlimIO keeps the best quality that fits."),
   ("The form wants 150×200 pixels. Can I do that?", "Yes. Choose Custom size in pixels under Resize, enter 150 and 200, and pick the KB limit. The photo is cropped to that shape and saved at exactly 150×200px."),
   ("My face isn't in the middle of the photo. Is that a problem?", "No. After you add the photo, drag the green frame onto your face and use Zoom to make your head fill the dashed guide. The download uses exactly that crop."),
@@ -325,6 +325,8 @@ def build(p, base):
     if p.get("paste_top"):
         s = paste_on_top(s)
     if p.get("resize"):
+        # photo pages: the result is made as soon as a photo is added (js/compress-image.js "live")
+        s = sub1(r'<div class="tool">', '<div class="tool" data-live>', s, "live")
         s = sub1(r'<option value="1920" selected>', '<option value="1920">', s, "default resize")
         s = sub1(rf'<option value="{p["resize"]}">', f'<option value="{p["resize"]}" selected>', s, "resize option")
     faq = "\n".join(f"      <details{' open' if i == 0 else ''}>\n          <summary>{html.escape(q)}</summary>\n          <p>{html.escape(a)}</p>\n      </details>"

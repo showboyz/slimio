@@ -181,6 +181,11 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
 @keyframes result-flash { from { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(70, 224, 160, 0.3); } }
 @media (prefers-reduced-motion: reduce) { .result.flash { animation: none; } }
 .result .inapp { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; }
+/* ID photo pages remake the photo after each change: the old one dims (only if the remake takes
+   a moment) and can't be downloaded until the new one is in */
+.result { transition: opacity 0.2s; }
+.result.busy { opacity: 0.5; transition-delay: 0.15s; }
+.result.busy a { pointer-events: none; }
 /* photo tools: the ZIP button gets its own row; one photo gets a bigger preview and a full button */
 .summary a.dl { flex-basis: 100%; margin-top: 4px; }
 .imglist li.one { flex-wrap: wrap; }

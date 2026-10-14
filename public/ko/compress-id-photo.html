@@ -62,7 +62,7 @@
                   "name": "증명사진 용량을 줄이려면 어떻게 하나요?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "이 페이지에 사진을 올리고 사진 용량 줄이기를 누르세요. 증명사진 3×4cm 규격과 100KB가 기본으로 골라져 있고, 접수 사이트에 맞게 규격과 용량을 바꿀 수 있어요."
+                        "text": "이 페이지에 사진을 올리면 바로 줄어든 사진과 다운로드 버튼이 나와요. 증명사진 3×4cm 규격과 100KB가 기본으로 골라져 있고, 접수 사이트에 맞게 규격과 용량을 바꾸면 결과도 바로 바뀌어요."
                   }
             },
             {
@@ -94,7 +94,7 @@
                   "name": "큐넷 사진은 어떻게 맞추나요?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "시험 원서 줄의 큐넷 버튼을 누르세요. 300×400px, 200KB 이하로 맞춰져요. 틀을 얼굴에 맞추고 사진 용량 줄이기를 누르면 큐넷에 바로 올릴 수 있는 JPG가 나와요."
+                        "text": "시험 원서 줄의 큐넷 버튼을 누르세요. 300×400px, 200KB 이하로 맞춰져요. 틀을 얼굴에 맞추고 다운로드하면 큐넷에 바로 올릴 수 있는 JPG예요."
                   }
             },
             {
@@ -117,7 +117,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=71149725" />
+<link rel="stylesheet" href="/style.css?v=ff96d68d" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -163,7 +163,7 @@
            </div>
       </div>
 
-      <div class="tool">
+      <div class="tool" data-live>
            <div class="presets" role="group" aria-label="사진 규격">
                    <button type="button" class="preset" data-resize="id-3x4"><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="1" y="1" width="28" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="15.0" cy="16.0" r="6.0" fill="currentColor" opacity=".55"/><path d="M4.2 39 q0 -9.6 10.8 -9.6 q10.8 0 10.8 9.6z" fill="currentColor" opacity=".55"/></svg><b>3×4cm</b><span>반명함 · 이력서</span></button>
                    <button type="button" class="preset" data-resize="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5cm</b><span>여권 · 신분증</span></button>
@@ -297,7 +297,7 @@
           <li><b>1. 사진 올리기.</b> 증명사진 3×4cm 규격과 100KB가 이미 골라져 있어요.</li>
           <li><b>2. 접수 조건에 맞추기.</b> 여권·신분증용이면 크기 조절을 여권사진 3.5×4.5cm로, 용량은 공고문에 적힌 제한(예: 50KB, 200KB)으로 바꾸세요.</li>
           <li><b>3. 자르기 틀 맞추기.</b> 초록색 틀을 얼굴로 끌어 오고, 확대해서 머리가 점선 안에 들어오게 하세요.</li>
-          <li><b>4. 사진 용량 줄이기 → 다운로드.</b> 자르기, 크기 맞추기, 용량 줄이기를 한 번에 해요.</li>
+          <li><b>4. 다운로드.</b> 사진을 올리면 자르기, 크기 맞추기, 용량 줄이기가 바로 돼요. 틀을 옮기거나 규격을 바꾸면 결과도 다시 만들어져요.</li>
       </ul>
       <figure class="demo">
           <div class="demo-row">
@@ -347,7 +347,7 @@
       <h2>증명사진 용량 줄이기 — 자주 묻는 질문</h2>
       <details open>
           <summary>증명사진 용량을 줄이려면 어떻게 하나요?</summary>
-          <p>이 페이지에 사진을 올리고 사진 용량 줄이기를 누르세요. 증명사진 3×4cm 규격과 100KB가 기본으로 골라져 있고, 접수 사이트에 맞게 규격과 용량을 바꿀 수 있어요.</p>
+          <p>이 페이지에 사진을 올리면 바로 줄어든 사진과 다운로드 버튼이 나와요. 증명사진 3×4cm 규격과 100KB가 기본으로 골라져 있고, 접수 사이트에 맞게 규격과 용량을 바꾸면 결과도 바로 바뀌어요.</p>
       </details>
       <details>
           <summary>증명사진은 몇 KB로 줄여야 하나요?</summary>
@@ -363,7 +363,7 @@
       </details>
       <details>
           <summary>큐넷 사진은 어떻게 맞추나요?</summary>
-          <p>시험 원서 줄의 큐넷 버튼을 누르세요. 300×400px, 200KB 이하로 맞춰져요. 틀을 얼굴에 맞추고 사진 용량 줄이기를 누르면 큐넷에 바로 올릴 수 있는 JPG가 나와요.</p>
+          <p>시험 원서 줄의 큐넷 버튼을 누르세요. 300×400px, 200KB 이하로 맞춰져요. 틀을 얼굴에 맞추고 다운로드하면 큐넷에 바로 올릴 수 있는 JPG예요.</p>
       </details>
       <details>
           <summary>공무원 원서 사진 규격은요?</summary>
@@ -435,9 +435,9 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=0bcc5f69"></script>
-<script defer src="/lib.js?v=ce844d5c"></script>
+<script defer src="/i18n/ko.js?v=72d154fd"></script>
+<script defer src="/lib.js?v=ee48edf6"></script>
 <script defer src="/js/specs.js?v=c011b942"></script>
-<script type="module" src="/js/compress-image.js?v=9088898a"></script>
+<script type="module" src="/js/compress-image.js?v=b64d2d5e"></script>
 </body>
 </html>

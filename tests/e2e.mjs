@@ -215,6 +215,21 @@ async function runTool(p, { go = "#go", done = "#dl", timeout = 120000 } = {}) {
   }
 }
 
+// Photo pages: the ID photo pages (data-live) make the photo as soon as it's added and remake it
+// after every change, with no button; the others have a button. Either way, wait for a result
+// that matches the current settings.
+async function photoResult(p) {
+  if (await p.isVisible("#go")) return runTool(p, { done: "#result a[download], #result .warn" });
+  await p.waitForFunction(() => {
+    const err = document.querySelector("#error");
+    if (err && err.offsetParent !== null && err.textContent.trim()) return true;
+    const r = document.querySelector("#result");
+    return r.offsetParent !== null && !r.classList.contains("busy") && !!r.querySelector("a[download], .warn");
+  }, null, { timeout: 60000 });
+  const err = await p.$eval("#error", (e) => (e.offsetParent !== null ? e.textContent.trim() : "")).catch(() => "");
+  if (err) throw new Error("tool showed an error: " + err);
+}
+
 async function download(p, sel = "#dl") {
   const [dl] = await Promise.all([p.waitForEvent("download", { timeout: 60000 }), p.click(sel)]);
   return { bytes: fs.readFileSync(await dl.path()), name: dl.suggestedFilename() };
@@ -385,7 +400,7 @@ function toolTests() {
     if (resize) await select(p, "#resize", resize);
     if (target) await select(p, "#target", target);
     const tgt = await p.$eval("#target", (s) => s.value);
-    await runTool(p, { done: "#result a[download], #result .warn" });
+    await photoResult(p);
     const warn = await p.$$eval("#result .warn", (a) => a.map((e) => e.textContent).join(" "));
     if (warn) return "result warning: " + warn.trim();
     const r = await download(p, "#result a[download]");
@@ -406,6 +421,24 @@ function toolTests() {
   for (const t of ["20kb", "50kb", "100kb", "200kb"]) both(`compress-image-to-${t}.html`, "fits", (p) => photo(p, {}));
   for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, (p) => photo(p, { resize: r }));
   both("us-visa-photo.html", "600×600, 54–240KB", (p) => photo(p, { expect: { min: 54000 } }));
+  both("compress-id-photo.html", "made without a button, follows the zoom", async (p) => {
+    await p.setInputFiles("#images", F("photo.jpg"));
+    await photoResult(p);
+    if (await p.isVisible("#go")) return "the Compress button is still shown for one photo";
+    const a = await download(p, "#result a[download]");
+    await p.$eval("#zoom", (z) => { z.value = 200; z.dispatchEvent(new Event("input")); });
+    await photoResult(p);
+    const b = await download(p, "#result a[download]"), s = imageSize(b.bytes);
+    if (!s || s.w !== PRESETS["id-3x4"][0] || s.h !== PRESETS["id-3x4"][1]) return `zoomed photo is ${s && s.w}×${s && s.h}`;
+    return Buffer.compare(a.bytes, b.bytes) ? null : "zooming didn't change the photo";
+  });
+  both("compress-id-photo.html", "two photos use the button", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]);
+    if (!(await p.isVisible("#go"))) return "no Compress button for two photos";
+    await runTool(p, { done: "#dlzip" });
+    const n = await p.$$eval("#result li a[download]", (a) => a.length);
+    return n === 2 ? null : `${n} downloads, expected 2`;
+  });
 
   // signatures: every preset from a photo of a paper signature
   const SIGS = objectLiteral("js/signature-image.js", "PRESETS");
@@ -437,7 +470,7 @@ function toolTests() {
     await p.waitForSelector("#specsout:not([hidden])");
     const sig = page.startsWith("signature");
     if (sig) { await p.click('.tab[data-mode="upload"]'); await p.setInputFiles("#sigfile", F("sig.png")); await runTool(p); }
-    else { await p.setInputFiles("#images", F("photo.jpg")); await runTool(p, { done: "#result a[download], #result .warn" }); }
+    else { await p.setInputFiles("#images", F("photo.jpg")); await photoResult(p); }
     const warn = sig ? "" : await p.$$eval("#result .warn", (a) => a.map((e) => e.textContent).join(" "));
     if (warn) return "result warning: " + warn.trim();
     const r = await download(p, sig ? "#dl" : "#result a[download]"), s = imageSize(r.bytes);
