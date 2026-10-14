@@ -126,7 +126,13 @@ async function makeFixtures(browser) {
   }, [w, h, q]));
   const photo = await jpeg(3024, 4032, 0.9);
   fs.writeFileSync(path.join(TMP, "photo.jpg"), photo);
-  fs.writeFileSync(path.join(TMP, "photo2.jpg"), await jpeg(1600, 1200, 0.85));
+  const photo2 = await jpeg(1600, 1200, 0.85);
+  fs.writeFileSync(path.join(TMP, "photo2.jpg"), photo2);
+  // the same landscape pixels with an EXIF tag saying "turn 90° clockwise", as phones store portrait shots
+  const tiff = Buffer.from([0x4d, 0x4d, 0, 0x2a, 0, 0, 0, 8, 0, 1, 0x01, 0x12, 0, 3, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 0, 0]);
+  const exif = Buffer.concat([Buffer.from("Exif\0\0", "binary"), tiff]);
+  fs.writeFileSync(path.join(TMP, "sideways.jpg"), Buffer.concat([photo2.subarray(0, 2),
+    Buffer.from([0xff, 0xe1, (exif.length + 2) >> 8, (exif.length + 2) & 255]), exif, photo2.subarray(2)]));
   fs.writeFileSync(path.join(TMP, "photo.pdf"), jpegPdf([photo, await jpeg(2480, 3508, 0.9)]));
   const sig = Buffer.from(await p.evaluate(async () => {
     const c = new OffscreenCanvas(1400, 520), x = c.getContext("2d");
@@ -338,6 +344,28 @@ function toolTests() {
   both("jpg-to-pdf.html", "2 photos", async (p) => {
     await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]); await runTool(p);
     return pdfCheck((await download(p)).bytes, { pages: 2 });
+  });
+  both("jpg-to-pdf.html", "under 200KB", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]);
+    await select(p, "#target", "200KB"); await runTool(p);
+    const r = await download(p);
+    if (r.bytes.length > 200000) return `${KB(r.bytes.length)} is over 200KB`;
+    if (!(await p.textContent("#fit")).includes("✓")) return "the result doesn't say it fits";
+    return pdfCheck(r.bytes, { pages: 2 });
+  });
+  both("jpg-to-pdf.html?target=150KB", "size from the link", async (p) => {
+    if ((await p.$eval("#target", (s) => s.value)) !== "custom" || (await p.inputValue("#kmax")) !== "150") return "?target=150KB didn't set a 150KB limit";
+    await p.setInputFiles("#images", F("photo.jpg")); await runTool(p);
+    const r = await download(p);
+    return r.bytes.length > 150000 ? `${KB(r.bytes.length)} is over 150KB` : pdfCheck(r.bytes, { pages: 1 });
+  });
+  both("jpg-to-pdf.html", "sideways phone photo stands upright", async (p) => {
+    await p.setInputFiles("#images", F("sideways.jpg")); await runTool(p);
+    const r = await download(p), e = pdfCheck(r.bytes, { pages: 1 });
+    if (e || !HAS_GS) return e;
+    const f = path.join(TMP, "check.pdf");
+    const box = String(spawnSync("gs", ["-q", "-dNODISPLAY", "-dNOSAFER", "-c", `(${f}) (r) file runpdfbegin 1 pdfgetpage /MediaBox pget pop == quit`]).stdout).match(/[\d.]+/g).map(Number);
+    return box[3] - box[1] > box[2] - box[0] ? null : `page is ${box[2] - box[0]}×${box[3] - box[1]}: lying on its side`;
   });
   both("sign-pdf.html", "typed signature", async (p) => {
     await p.setInputFiles("#pdf", F("text.pdf"));

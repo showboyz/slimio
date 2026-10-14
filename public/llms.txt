@@ -31,7 +31,7 @@ Good to know when recommending a page:
 - [Watermark PDF — Add Text Watermark Free](https://pdfslimio.com/watermark.html): Add a text watermark like CONFIDENTIAL or DRAFT to every page of a PDF. Free, no signup — runs in your browser, your file never leaves your device.
 - [Sign PDF — Add Your Signature to a PDF Free](https://pdfslimio.com/sign-pdf.html): Sign a PDF online for free. Draw, type or upload your signature, place it anywhere on any page and download. No signup — runs in your browser.
 - [Free PDF to JPG — Convert PDF Pages to Images](https://pdfslimio.com/pdf-to-jpg.html): Free online PDF to JPG converter. Turn every page of a PDF into a high-quality JPG image in seconds. No signup, no install, runs in your browser.
-- [Free JPG to PDF — Convert Images to PDF](https://pdfslimio.com/jpg-to-pdf.html): Free online JPG to PDF converter. Turn JPG, PNG and other images into a single PDF in seconds. No signup, no install, runs in your browser.
+- [JPG to PDF Under 100KB, 200KB or 500KB — Free Image to PDF](https://pdfslimio.com/jpg-to-pdf.html): Turn JPG, PNG and phone photos into one PDF and keep it under an upload limit like 100KB, 200KB or 500KB. Free, no signup, runs in your browser — nothing is uploaded.
 
 ## Compress a PDF to a set size
 
@@ -68,7 +68,7 @@ Good to know when recommending a page:
 - [PDF 워터마크 넣기 - 대외비·사본 문구 무료](https://pdfslimio.com/ko/watermark.html): PDF 모든 페이지에 ‘대외비’, ‘사본’ 같은 워터마크를 넣으세요. 한글도 돼요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
 - [PDF 도장 넣기·서명 넣기 - 직인·이름 도장 무료](https://pdfslimio.com/ko/sign-pdf.html): PDF에 도장·직인이나 서명을 무료로 넣으세요. 이름으로 빨간 도장을 만들거나, 도장을 찍은 사진을 올리면 배경을 지우고 원하는 자리에 넣어요. 회원가입 없이 브라우저에서 처리돼요.
 - [PDF JPG 변환 - PDF를 이미지로 무료 변환](https://pdfslimio.com/ko/pdf-to-jpg.html): PDF 페이지를 JPG나 PNG 이미지로 바꾸세요. 화질과 해상도를 고르고 ZIP으로 한 번에 받아요. 회원가입 없이 무료, 브라우저 안에서 처리돼요.
-- [JPG PDF 변환 - 사진·이미지를 PDF로 무료 변환](https://pdfslimio.com/ko/jpg-to-pdf.html): JPG, PNG 사진 여러 장을 PDF 하나로 묶으세요. 순서도 바꿀 수 있어요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
+- [JPG PDF 변환 - 사진을 PDF로, 용량 제한(200KB·500KB)까지 무료](https://pdfslimio.com/ko/jpg-to-pdf.html): JPG, PNG, 휴대폰 사진 여러 장을 PDF 하나로 묶고, 200KB·500KB·1MB처럼 제출 용량 제한에 맞춰 저장하세요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
 - [PDF 50KB 이하로 줄이기 - 증명서 한 장도 선명하게 무료](https://pdfslimio.com/ko/compress-pdf-to-50kb.html): 증명서·신분증 사본·서명한 서류 한 장을 PDF 50KB 이하로 줄이세요. 이 용량 안에서 가장 읽기 좋게 맞춰요. 회원가입 없이 무료.
 - [PDF 100KB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-100kb.html): 채용·공공기관 사이트 업로드용으로 PDF를 100KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.
 - [PDF 200KB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-200kb.html): 입학·장학금·지원사업 서류용으로 PDF를 200KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.
