@@ -155,7 +155,7 @@ def build(page):
     this, feat, nxt = PAGES[page]
     # next steps go right under the tool card, before the ad slot
     s = put(s, "next-steps:start", "next-steps:end", next_block(nxt),
-            (r'(\n\s*)(<div class="ad" id="ad">)', lambda m, b: "\n" + b + m.group(1).lstrip("\n") + m.group(2)), page)
+            (r'(\n\s*)(<div class="ad" id="ad")', lambda m, b: "\n" + b + m.group(1).lstrip("\n") + m.group(2)), page)
     if feat:
         s = put(s, "more-tools:start", "more-tools:end", more_block(this, feat),
                 (r'<div class="related">\s*<h3>Related tools</h3>.*?</div>\s*</div>\n', lambda m, b: b), page)

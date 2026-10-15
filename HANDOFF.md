@@ -54,7 +54,7 @@
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
 | Google Search Console | ✅ `sc-domain:pdfslimio.com`, 사이트맵 제출·주요 URL 색인 요청 완료 |
 | 네이버 서치어드바이저 | ✅ `https://pdfslimio.com` 등록·소유확인(홈 메타 태그)·사이트맵 제출·수집 요청 완료 |
-| 광고 슬롯 | ⚠️ `#ad` 자리만 있음 (AdSense 승인 후 채움) |
+| 광고 슬롯 | `<div class="ad" id="ad" hidden></div>` — 2026-10-15부터 '이 자리에 배너 광고가 표시될 수 있어요' 안내 상자를 숨김(심사 때 빈 광고 자리·안내 문구가 미완성 사이트처럼 보일 수 있어서). 승인 후 `hidden`을 빼고 광고 단위를 넣거나 자동 광고 사용. gen_related는 이 div 앞에 next-steps를 넣음 |
 
 ### 2026-09-24 수정 내역 (중요)
 - 도구 페이지 6개 전부 `$ is not defined`로 **작동 안 하던 문제** 수정 (`lib.js`가 전역 `$` export)

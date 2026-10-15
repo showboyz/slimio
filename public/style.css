@@ -203,7 +203,7 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
    font-size: 11px; color: var(--muted); white-space: pre-wrap; max-height: 160px; overflow: auto;
 }
 
-/* ad slot */
+/* ad slot: hidden until AdSense is approved (then auto ads or a unit goes here) */
 .ad {
    max-width: 620px; margin: 22px auto 0; text-align: center;
    border: 1px dashed #2b3444; border-radius: 10px; padding: 14px;

@@ -59,8 +59,6 @@ COMMON = [
     ('<a href="/#tools">All tools</a>', '<a href="/#tools">전체 도구</a>'),
     ('<a href="/#how">How it works</a>', '<a href="/#how">사용 방법</a>'),
     ('<a href="/#pricing">Pricing</a>', '<a href="/#pricing">요금</a>'),
-    ("SlimIO is free. A small <b>banner ad</b> may appear here to keep it free for everyone.",
-     "SlimIO는 무료예요. 계속 무료로 운영할 수 있도록 이 자리에 작은 <b>배너 광고</b>가 표시될 수 있어요."),
     ("<div>© 2026 SlimIO · Free PDF tools</div>", "<div>© 2026 SlimIO · 무료 PDF 도구</div>"),
     ("<div>Runs in your browser · No signup</div>", "<div>브라우저에서 실행 · 회원가입 없음</div>"),
     ("<div>No signup · Files are never stored</div>", "<div>회원가입 없음 · 파일은 저장되지 않아요</div>"),
