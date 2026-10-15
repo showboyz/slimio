@@ -283,15 +283,19 @@ def with_size_row(s, slug):
 SPECS_BLOCK = re.compile(r'\n\s*<div class="specs">\n.*?<div class="specs-out" id="specsout" hidden></div>\n\s*</div>', re.S)
 
 
-def paste_on_top(s):
+def paste_on_top(s, below_drop=False):
     """Show the "paste your form's requirements" box above the drop area, like the signature
     page, instead of inside the options that appear only after a photo is added. People
-    arrive with the form's rules in hand (they paste them into Google)."""
+    arrive with the form's rules in hand (they paste them into Google).
+    below_drop: right under the drop area instead (the ID photo page, whose size tiles
+    already fill the top; on a phone the drop area would fall below the first screen)."""
     m = SPECS_BLOCK.search(s)
     if not m:
         sys.exit("[paste top] specs block not found")
     block = "\n".join(l[4:] if l.startswith("    ") else l for l in m.group(0).split("\n"))
     s = s[:m.start()] + s[m.end():]
+    if below_drop:
+        return sub1(r'(\n\s*<div class="controls hidden" id="controls">)', lambda mm: block + mm.group(1), s, "paste below drop")
     return sub1(r'(\n\s*<div class="drop" id="drop">)', lambda mm: block + mm.group(1), s, "paste top")
 
 
@@ -323,7 +327,7 @@ def build(p, base):
     if p.get("picker"):
         s = sub1(r'(\n(\s*)<div class="drop" id="drop">)', lambda m: "\n" + m.group(2) + PICKER.strip() + m.group(1), s, "picker")
     if p.get("paste_top"):
-        s = paste_on_top(s)
+        s = paste_on_top(s, below_drop=p.get("picker", False))
     if p.get("resize"):
         # photo pages: the result is made as soon as a photo is added (js/compress-image.js "live")
         s = sub1(r'<div class="tool">', '<div class="tool" data-live>', s, "live")

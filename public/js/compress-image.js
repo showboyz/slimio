@@ -69,6 +69,7 @@ let liveTimer = null, running = false, again = false;
 let charged = false;   // this photo already counted against the daily limit
 let limited = false;   // the daily limit was hit: don't ask the server again on every change
 let gen = 0;           // bumped for every new set of files, so a late result for old ones is dropped
+let fresh = false;     // a photo was just added: its first result brings the frame into view
 function schedule(delay) {
      if (!liveOn()) return;
      result.classList.add("busy");   // dims the old result and blocks its download (style.css)
@@ -86,6 +87,7 @@ function setFiles(fileList) {
      files = picked;
      gen++;
      charged = false;
+     fresh = true;
      const total = files.reduce((s, f) => s + f.size, 0);
      drop.querySelector(".drop-title").textContent = files.length === 1
              ? files[0].name
@@ -613,6 +615,17 @@ function showResult(done, label, auto) {
      };
      result.style.display = "block";
      SlimIO.reveal(result, auto ? { scroll: false } : undefined);   // a live remake must not pull the page away from the frame
+     if (auto && fresh) { fresh = false; bringFrame(); }
+}
+
+// Right after a photo is added, the frame and the result can be a long way down the page
+// (under the exam chips and the paste box). Scroll to the frame once, not on later remakes.
+function bringFrame() {
+     const el = cropBox.hidden ? result : cropBox;
+     const r = el.getBoundingClientRect();
+     if (r.top < innerHeight * 0.6 && r.top >= 0) return;
+     const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+     el.scrollIntoView({ block: "start", behavior: still ? "auto" : "smooth" });
 }
 
 SlimIO.refreshStatus();

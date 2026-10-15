@@ -425,6 +425,9 @@ function toolTests() {
     await p.setInputFiles("#images", F("photo.jpg"));
     await photoResult(p);
     if (await p.isVisible("#go")) return "the Compress button is still shown for one photo";
+    // the frame is far down the page (under the exam chips): the first result scrolls to it
+    const inView = () => { const t = document.querySelector("#crop").getBoundingClientRect().top; return t >= 0 && t < innerHeight * 0.6; };
+    if (!(await p.waitForFunction(inView, null, { timeout: 3000 }).then(() => true, () => false))) return "the crop frame wasn't brought into view after adding a photo";
     const a = await download(p, "#result a[download]");
     await p.$eval("#zoom", (z) => { z.value = 200; z.dispatchEvent(new Event("input")); });
     await photoResult(p);
@@ -494,6 +497,11 @@ async function pageChecks(browser) {
     const p = await open(browser, u, { mobile: true });
     const over = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth);
     if (over > 1) p.problems.push(`scrolls sideways by ${over}px at phone width`);
+    // phones: the upload box says "tap" (no drag and drop there) and starts on the first screen
+    // (an iPhone shows about 660px of a page under Safari's bars)
+    const drop = await p.evaluate(() => { const d = document.querySelector(".drop"); return d && { top: d.getBoundingClientRect().top + scrollY, title: d.querySelector(".drop-title").textContent }; });
+    if (drop && /drop|click|끌어다|클릭/i.test(drop.title)) p.problems.push(`upload box says "${drop.title}" on a phone`);
+    if (drop && drop.top > 600) p.problems.push(`upload box starts at ${Math.round(drop.top)}px, below the first phone screen`);
     const ev = await p.evaluate(() => window.__ev.filter((e) => e[0] === "error").map((e) => e[1].kind + ": " + e[1].msg));
     p.problems.push(...ev.map((e) => "error event " + e));
     for (const h of await p.$$eval("a[href^='/'], img[src^='/'], link[href^='/'], script[src^='/']", (a) => a.map((e) => e.getAttribute("href") || e.getAttribute("src"))))

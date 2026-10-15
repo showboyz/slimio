@@ -804,9 +804,11 @@ KO["compress-id-photo.html"] = dict(
         ('aria-label="Photo size"', 'aria-label="사진 규격"'),
         ("<b>3×4 cm</b><span>ID photo</span>", "<b>3×4cm</b><span>반명함 · 이력서</span>"),
         ("<b>3.5×4.5 cm</b><span>Passport</span>", "<b>3.5×4.5cm</b><span>여권 · 신분증</span>"),
-        ("<b>Custom</b><span>Any pixels</span></button>\n               </div>",
-         "<b>직접 입력</b><span>원하는 픽셀</span></button>\n               </div>\n"
-         '           <div class="exams" role="group" aria-label="시험 원서 사진 규격"><span>시험 원서</span>'
+        ("<b>Custom</b><span>Any pixels</span>", "<b>직접 입력</b><span>원하는 픽셀</span>"),
+        # exam and résumé chips go under the drop area (above the paste box), so on a phone
+        # the drop area stays on the first screen
+        ('<div class="specs">',
+         '<div class="exams" role="group" aria-label="시험 원서 사진 규격"><span>시험 원서</span>'
          '<button type="button" class="preset" data-resize="kr-qnet"><b>큐넷</b>300×400</button>'
          '<button type="button" class="preset" data-resize="kr-gosi"><b>공무원</b>137×177</button>'
          '<button type="button" class="preset" data-resize="kr-history"><b>한능검</b>120×160</button>'
@@ -814,7 +816,8 @@ KO["compress-id-photo.html"] = dict(
          '<button type="button" class="preset" data-resize="kr-kpc"><b>ITQ</b>225×300</button></div>\n'
          '           <div class="exams" role="group" aria-label="이력서 사진 규격"><span>이력서</span>'
          '<button type="button" class="preset" data-resize="kr-jobkorea"><b>잡코리아</b>103×132</button>'
-         '<button type="button" class="preset" data-resize="kr-saramin"><b>사람인</b>100×140</button></div>'),
+         '<button type="button" class="preset" data-resize="kr-saramin"><b>사람인</b>100×140</button></div>\n'
+         '           <div class="specs">'),
     ],
     lead="3×4cm·3.5×4.5cm, 큐넷·공무원·한능검·컴활 원서 규격으로 자르고 용량 제한까지 맞춰요. 설치 없이, 무료로.",
     ui=None,

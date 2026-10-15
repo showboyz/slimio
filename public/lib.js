@@ -290,5 +290,22 @@ const SlimIO = (() => {
    };
 })();
 
+// Phones have no drag and drop, so the drop areas say "tap" there instead of "drop here or click".
+// The tools overwrite this text with the file name once a file is added.
+(() => {
+   if (!matchMedia("(pointer: coarse)").matches) return;
+   const t = SlimIO.t;
+   document.querySelectorAll(".drop").forEach((d) => {
+      const input = d.querySelector("input[type=file]");
+      const title = d.querySelector(".drop-title"), or = d.querySelector(".drop-or");
+      if (!input || !title || !or) return;
+      const pdf = input.accept.includes("pdf");
+      const several = input.multiple && !input.accept.includes(",");   // merge, JPG→PDF
+      title.textContent = pdf ? t(several ? "Tap to choose PDF files" : "Tap to choose a PDF") : t("Tap to choose photos");
+      or.textContent = several ? t("You can pick several at once")
+             : pdf ? t("Pick a file saved on your phone") : t("From your gallery or files");
+   });
+})();
+
 // Tool pages call $("id") directly.
 const $ = SlimIO.$;

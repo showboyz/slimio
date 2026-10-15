@@ -108,7 +108,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=36b5c2fd" />
+<link rel="stylesheet" href="/style.css?v=704e180f" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -160,16 +160,16 @@
                    <button type="button" class="preset" data-resize="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5 cm</b><span>Passport</span></button>
                    <button type="button" class="preset" data-resize="custom"><svg viewBox="0 0 34 40" aria-hidden="true"><rect x="1" y="1" width="32" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M11.0 20.0h12M17.0 14.0v12" stroke="currentColor" stroke-width="1.5"/></svg><b>Custom</b><span>Any pixels</span></button>
                </div>
-           <div class="specs">
-               <label for="specs">📋 Paste your form's photo requirements <small>(optional)</small></label>
-               <textarea id="specs" rows="2" placeholder="e.g. Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG"></textarea>
-               <div class="specs-out" id="specsout" hidden></div>
-           </div>
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
                <div class="drop-title">Drop images here</div>
                <div class="drop-or">or click to browse (JPG, PNG, WebP…)</div>
                <div class="drop-sub">Images never leave your device. Location data (EXIF) is removed.</div>
+           </div>
+           <div class="specs">
+               <label for="specs">📋 Paste your form's photo requirements <small>(optional)</small></label>
+               <textarea id="specs" rows="2" placeholder="e.g. Photo 200 x 230 pixels, file size 20 KB to 50 KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
            </div>
 
            <div class="controls hidden" id="controls">
@@ -400,8 +400,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/lib.js?v=ee48edf6"></script>
+<script defer src="/lib.js?v=2df86fbc"></script>
 <script defer src="/js/specs.js?v=c011b942"></script>
-<script type="module" src="/js/compress-image.js?v=b64d2d5e"></script>
+<script type="module" src="/js/compress-image.js?v=e2c96027"></script>
 </body>
 </html>

@@ -166,4 +166,10 @@ window.SLIMIO_KO = {
    "{n} signatures": "서명 {n}개",
    "Seal": "도장",
    "Your name": "홍길동",
+   "Tap to choose PDF files": "눌러서 PDF 파일 선택",
+   "Tap to choose a PDF": "눌러서 PDF 파일 선택",
+   "Tap to choose photos": "눌러서 사진 선택",
+   "You can pick several at once": "여러 개를 한 번에 고를 수 있어요",
+   "Pick a file saved on your phone": "휴대폰에 저장된 파일에서 골라요",
+   "From your gallery or files": "앨범이나 파일에서 골라요",
 };
