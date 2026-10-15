@@ -9,12 +9,16 @@ const prog = SlimIO.bindProgress("prog");
 // ID photo presets: crop to this shape from the center, then scale to these pixels
 const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600], "bank-photo": [200, 230],
      "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160], "upsc-photo": [450, 600],
-     "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300] };
+     "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300],
+     "kr-toeic": [300, 400], "kr-teps": [126, 165] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
-// KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px).
+// KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
+// TOEIC: YBM's upload window takes a JPG up to 6MB and saves its own 300×400 crop, so 500KB is just
+// "best quality"; TEPS: 126×165 px, ≤50KB JPG).
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "300KB",
-     "kr-korcham": "50KB", "kr-kpc": "200KB" };
+     "kr-korcham": "50KB", "kr-kpc": "200KB",
+     "kr-toeic": "500KB", "kr-teps": "50KB" };
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {
@@ -23,6 +27,10 @@ const GUIDES = {
      // 35×45mm passports (Korea, ICAO): top of the skull (not the hair) to chin 32–36mm = 71–80%
      // of the height. Oval = 34mm, from about 4.5mm below the top edge, leaving room for hair.
      passport: { cy: 0.48, rx: 0.36, ry: 0.378 },
+     // YBM's upload window runs a face check: face width 52–72% of the photo, centred, eyes not in
+     // the top 23%. A head filling the default oval (about 55–65% of the height) was refused as
+     // too small; 65–75% passed, 84% was too big. Same oval as passports (head about 75%).
+     "kr-toeic": { cy: 0.48, rx: 0.36, ry: 0.378 },
 };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
