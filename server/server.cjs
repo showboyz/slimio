@@ -116,13 +116,19 @@ function gs(args, input, output) {
           "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite",
           "-dPDFSETTINGS=/" + args.level,
           "-sOutputFile=" + output,
-          input,
        ];
        if (args.jpg !== undefined) {
           gsArgs.push("-dDownsampleColorImages=true");
           gsArgs.push("-dColorImageResolution=" + (args.jpg || 150));
           gsArgs.push("-dAutoRotatePages=/None");
        }
+       if (args.res !== undefined) {
+          // every photo/scan above res dpi is brought down to exactly res (threshold 1.0, not ebook's 1.5)
+          for (const k of ["Color", "Gray"]) {
+             gsArgs.push(`-dDownsample${k}Images=true`, `-d${k}ImageResolution=${args.res}`, `-d${k}ImageDownsampleThreshold=1.0`);
+          }
+       }
+       gsArgs.push(input);   // last: gs applies -d options only to files that come after them
        try {
           const proc = spawn("gs", gsArgs, { stdio: ["ignore", "pipe", "pipe"] });
           const timer = setTimeout(() => proc.kill("SIGKILL"), GS_TIMEOUT_MS);
@@ -138,7 +144,7 @@ function gs(args, input, output) {
 async function handle(req, res) {
    res.setHeader("Access-Control-Allow-Origin", "*");
    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-   res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Device, X-Level");
+   res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Device, X-Level, X-Jpg, X-Target");
    if (req.method === "OPTIONS") { res.writeHead(204); return res.end(); }
 
      if (req.url === "/api/stats" && req.method === "GET") {
@@ -170,6 +176,7 @@ async function handle(req, res) {
        }
        const level = LEVELS.has(req.headers["x-level"]) ? req.headers["x-level"] : "ebook";
        const jpg = req.headers["x-jpg"] ? parseInt(req.headers["x-jpg"], 10) : undefined;
+       const target = parseInt(req.headers["x-target"] || "0", 10) || 0;   // bytes the page needs to get under
 
        const slot = acquireGs();   // before reading the body, so waiting requests hold no memory
        if (!slot) return sendJson(res, 503, { error: "server busy — try Browser mode", remaining: remaining(u), limit: DAILY_LIMIT });
@@ -191,7 +198,21 @@ async function handle(req, res) {
           fs.writeFileSync(tmpIn, inBuf);
 
           try {
-             await gs({ level, jpg }, tmpIn, tmpOut);
+             // With a size target of 1MB or more, ebook's fixed 150dpi throws away detail the
+             // limit has room for (a 38MB phone-photo PDF came out 1.9MB for a 10MB limit).
+             // Start at 300dpi and step down only while it's too big; file size grows roughly
+             // with dpi², so one estimate usually lands it. Below 150dpi -> plain ebook as before.
+             let dpi = null;
+             if (target >= 1e6 && level === "ebook" && jpg === undefined) {
+                let res = 300;
+                for (let i = 0; i < 2 && res > 150; i++) {
+                   await gs({ level, res }, tmpIn, tmpOut);
+                   const n = fs.statSync(tmpOut).size;
+                   if (n <= target) { dpi = res; break; }
+                   res = Math.floor((res * Math.sqrt(target / n) * 0.95) / 10) * 10;
+                }
+             }
+             if (dpi === null) await gs({ level, jpg }, tmpIn, tmpOut);
              const outBuf = fs.readFileSync(tmpOut);
              sendJson(
                 res, 200,
@@ -200,6 +221,7 @@ async function handle(req, res) {
                    inBytes: inBuf.length,
                    outBytes: outBuf.length,
                    savedPct: ((1 - outBuf.length / inBuf.length) * 100).toFixed(1),
+                   ...(dpi ? { dpi } : {}),
                    remaining: remaining(u),
                    limit: DAILY_LIMIT,
                    pdf: outBuf.toString("base64"),

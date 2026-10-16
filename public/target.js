@@ -22,7 +22,8 @@ const SlimTarget = (() => {
       const level = target >= 1e6 ? "ebook" : "screen";
       const resp = await fetch(`${SERVER_BASE}/api/compress`, {
          method: "POST",
-         headers: SlimIO.apiHeaders({ "X-Level": level }),
+         // X-Target lets the server keep as much detail as the limit has room for
+         headers: SlimIO.apiHeaders({ "X-Level": level, "X-Target": String(target) }),
          body: await file.arrayBuffer(),
       });
       const j = await resp.json().catch(() => ({}));

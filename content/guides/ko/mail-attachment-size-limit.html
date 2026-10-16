@@ -1,0 +1,113 @@
+<!--
+{"title": "메일·카톡 첨부파일 용량 제한 총정리: 네이버 10MB·다음 25MB·지메일 25MB, 넘으면 어떻게 될까",
+ "seo_title": "메일 첨부파일 용량 제한 — 네이버 10MB·다음·지메일 25MB·카톡 300MB, PDF 줄여 일반 첨부로",
+ "desc": "네이버·다음·카카오메일·지메일·아웃룩·회사 메일·카카오톡의 첨부 용량 한도와, 한도를 넘으면 생기는 일(대용량 첨부 30일·드라이브 링크)을 각 서비스 고객센터 기준으로 정리했어요. 36MB 서류 PDF를 10MB·5MB·2MB·1MB로 줄여 작은 글씨가 어떻게 남는지도 직접 비교했어요.",
+ "published": "2026-10-16", "updated": "2026-10-16", "image": "/img/blog/mail-attach-hero.jpg",
+ "cta": ["/ko/compress-pdf-for-email.html", "메일 첨부용으로 PDF 줄이기", "기본 목표는 10MB예요. 네이버 메일 일반 첨부 한도에 맞고, 다음·지메일 25MB 안에도 넉넉히 들어가요."],
+ "faq": [
+  ["네이버 메일은 몇 MB까지 일반 첨부가 되나요?", "일반 첨부는 합쳐서 10MB까지예요. 10MB를 넘는 파일은 대용량 첨부로 바뀌고, 대용량 파일은 보낸 사람과 받는 사람을 합쳐 30일 동안 100번까지만 내려받을 수 있어요. 오래 남겨야 하는 서류라면 PDF를 10MB 이하로 줄여 일반 첨부로 보내세요."],
+  ["대용량 첨부 기간이 지나면 어떻게 되나요?", "네이버·다음·카카오메일 모두 대용량 첨부 파일은 30일 동안 보관되고 100번까지 내려받을 수 있어요. 기간이 지나거나 횟수를 넘기면 받을 수 없으니 다시 보내야 해요. 메일 안에 파일이 들어가는 일반 첨부는 이런 기한이 없어요."],
+  ["지메일에서 25MB가 넘으면 어떻게 되나요?", "첨부 파일 합계가 25MB를 넘으면 지메일이 파일을 구글 드라이브 링크로 바꿔 넣어요. 받는 사람이 그 파일을 볼 수 있는 권한이 없으면 보내기 전에 공유 설정을 바꾸라는 안내가 떠요. 링크 대신 파일 자체를 보내야 한다면 25MB 아래로 줄이세요."],
+  ["카카오톡으로 PDF는 몇 MB까지 보낼 수 있나요?", "파일은 한 번에 최대 300MB까지 보낼 수 있어요(톡클라우드 구독 시 26.7.0 이상 버전에서 1GB). 다만 카카오톡으로 받은 파일은 일정 기간이 지나면 저장·다운로드할 수 없고, 그 기간은 수시로 바뀐다고 안내돼 있어요. 받은 서류는 바로 저장해 두세요."],
+  ["PDF를 10MB 이하로 줄이면 화질이 많이 떨어지나요?", "서류 사진 10장으로 만든 35.96MB PDF를 SlimIO에서 10MB 이하로 줄이니 6.04MB가 됐고, 사진은 300dpi로 남아 원본과 거의 구분되지 않았어요. 2MB 이하(1.79MB, 150dpi)에서도 작은 글씨가 읽혔고, 1MB 이하로 맞추면 흐려지기 시작했어요."]
+ ]}
+-->
+      <p>서류 PDF를 메일로 보내려는데 첨부가 안 되거나, 첨부는 됐는데 <b>'대용량 첨부'</b>로 바뀌어 다운로드 기한이 붙는 경우가 많아요. 메일 서비스마다 일반 첨부 한도가 다르고, 한도를 넘었을 때 생기는 일도 달라요. 네이버·다음·카카오메일·지메일·아웃룩·회사 메일·카카오톡의 첨부 한도를 <b>각 서비스 고객센터 안내</b>로 정리하고, 큰 PDF를 한도에 맞게 줄이면 글씨가 어떻게 남는지 직접 실험했어요. (2026년 10월 확인)</p>
+
+      <div class="callout">회사·학교 메일은 관리자가 한도를 따로 정하는 경우가 많아서 이 글과 다를 수 있어요. 제출하는 곳이 정한 파일 형식·용량이 있다면 <b>그쪽이 우선</b>이에요. 출처는 글 맨 아래에 있어요.</div>
+
+      <h2>한눈에 보는 첨부 한도</h2>
+      <div class="table-wrap"><table>
+          <tr><th>서비스</th><th>일반 첨부</th><th>넘으면</th></tr>
+          <tr><td><b>네이버 메일</b></td><td><b>합쳐서 10MB</b></td><td>대용량 첨부로 바뀜 — 파일당 2GB, 한 통에 10개, 하루 10통. <b>30일 동안 100번</b>까지 다운로드</td></tr>
+          <tr><td><b>다음 메일</b></td><td><b>25MB</b> (본문 포함 한 통 30MB)</td><td>대용량 첨부로 바뀜 — 파일당 4GB, <b>30일 동안 100번</b></td></tr>
+          <tr><td><b>카카오메일</b></td><td><b>25MB</b> (50개까지)</td><td>대용량 첨부로 바뀜 — 파일당 4GB, <b>30일 동안 100번</b></td></tr>
+          <tr><td><b>지메일</b></td><td><b>25MB</b></td><td>구글 드라이브 링크로 바뀜 — 받는 사람에게 열람 권한이 있어야 열림</td></tr>
+          <tr><td><b>아웃룩</b> (Outlook.com)</td><td><b>25MB</b></td><td>OneDrive 파일 공유로 보내기 (2GB까지)</td></tr>
+          <tr><td><b>회사 메일</b> (Microsoft 365)</td><td>기본 보내기 35MB · 받기 36MB</td><td>관리자가 1MB~150MB 사이로 바꿀 수 있음</td></tr>
+          <tr><td><b>네이버 웍스</b></td><td>관리자가 최대 25MB까지 설정</td><td>기한 있는 파일 — 파일당 2GB, 10개, <b>7일 동안 100번</b></td></tr>
+          <tr><td><b>카카오톡</b></td><td>한 번에 <b>300MB</b> (사진·동영상·파일 각각)</td><td>톡클라우드 구독 시 1GB(26.7.0 이상). 받은 파일은 일정 기간이 지나면 다운로드 불가</td></tr>
+      </table></div>
+      <figure>
+          <img src="/img/blog/mail-attach-hero.jpg" width="1200" height="630" loading="lazy" alt="메일 서비스별 일반 첨부 한도: 네이버 10MB, 다음·카카오메일 25MB, 지메일 25MB, 아웃룩 25MB, 카카오톡 300MB. 서류 사진 PDF 10쪽 35.96MB를 SlimIO로 6.04MB(10MB 이하, 300dpi)로 줄인 결과" />
+          <figcaption>서비스별 일반 첨부 한도와, 10쪽짜리 서류 사진 PDF를 SlimIO에서 '10MB 이하'로 줄인 실제 결과예요. (가상 예시 서류)</figcaption>
+      </figure>
+      <p>표의 MB는 각 서비스 안내에 적힌 숫자 그대로예요. 컴퓨터마다 같은 파일이 36MB로도 37.7MB로도 보일 수 있으니(1MB를 1,024KB로 세느냐 1,000KB로 세느냐의 차이), 한도에 아슬아슬하게 맞추기보다 <b>조금 여유 있게</b> 줄이는 게 안전해요.</p>
+
+      <h2>'대용량 첨부'로 바뀌면 생기는 일</h2>
+      <p>일반 첨부는 파일이 메일 안에 함께 들어가요. 대용량 첨부는 파일을 메일 서비스에 따로 올려 두고 <b>받는 사람이 링크로 내려받는</b> 방식이라 기한이 있어요.</p>
+      <ul>
+          <li><b>네이버·다음·카카오메일:</b> 대용량 파일은 30일 동안 보관되고 100번까지 내려받을 수 있어요. 네이버는 보낸 사람과 받는 사람의 다운로드를 합쳐서 세요. 기간이 지나면 다시 보내야 해요.</li>
+          <li><b>지메일:</b> 25MB를 넘으면 파일이 자동으로 구글 드라이브 링크로 바뀌어요. 받는 사람이 파일을 볼 권한이 없으면 보내기 전에 공유 설정을 바꾸라는 안내가 떠요.</li>
+          <li><b>네이버 웍스:</b> 기한 있는 파일은 7일 동안 100번까지예요.</li>
+      </ul>
+      <p>지원서·증빙 서류처럼 받는 쪽이 나중에 다시 열어 볼 수 있는 파일은 기한이 없는 <b>일반 첨부</b>가 안전해요. 네이버 메일이라면 10MB, 다음·카카오메일·지메일이라면 25MB 아래로 PDF를 줄이면 일반 첨부로 보낼 수 있어요.</p>
+
+      <h2>받는 쪽에도 한도가 있어요</h2>
+      <p>보내는 쪽에서 첨부가 됐어도 받는 메일 서버의 한도에 걸리면 반송될 수 있어요. 네이버 메일은 한 통에 <b>40MB</b>까지 받을 수 있는데, 첨부 파일은 메일로 보낼 때 글자 형식으로 바뀌면서(인코딩) 크기가 25% 이상 커져서 실제로는 <b>약 30MB</b>까지의 첨부를 받을 수 있었다고 안내하고 있어요.</p>
+      <p>직접 확인해 보니, 6.04MB짜리 PDF 하나를 첨부한 메일 파일은 <b>8.16MB</b>로 약 1.35배가 됐어요. 첨부 합계가 받는 쪽 한도에 가까우면 반송될 수 있으니, 상대 메일 환경을 모를 때는 <b>10MB 이하</b>로 맞추는 게 무난해요.</p>
+
+      <h2>카카오톡으로 보낼 때</h2>
+      <ul>
+          <li><b>용량:</b> 사진·동영상·파일 모두 한 번에 최대 300MB예요. PC 카카오톡도 파일 하나에 300MB까지이고, PDF·HWP 같은 문서 파일을 보낼 수 있어요. 톡클라우드를 구독하면 26.7.0 이상 버전에서 1GB까지 보낼 수 있어요.</li>
+          <li><b>사진 여러 장:</b> 한 번에 120장까지 묶어 보낼 수 있고, 안정적인 전송을 위해 30장씩 나눠 전송돼요. 20MB가 넘는 사진은 묶음에 들어가지 않고 파일로 따로 가요.</li>
+          <li><b>받을 수 있는 기간:</b> 카카오톡으로 보낸 사진·파일은 서버에 잠시 저장되고, <b>일정 기간이 지나면 저장·다운로드할 수 없어요</b>. 기간은 시스템 상황에 따라 수시로 바뀌어 정확한 안내가 어렵다고 해요. 받은 서류는 바로 저장해 두세요.</li>
+          <li><b>사진 화질:</b> 사진 화질은 카카오톡 더보기 → 설정 → 채팅 → 사진 화질에서 고를 수 있어요. 작은 글씨가 있는 서류는 사진 여러 장보다 <a href="/ko/guides/multiple-photos-to-pdf.html">PDF 하나로 묶어</a> 파일로 보내면 받는 사람이 보기에도 편해요.</li>
+      </ul>
+      <p>카카오톡은 한도가 넉넉해서 용량 때문에 못 보내는 경우는 드물어요. 대신 받은 쪽이 나중에 내려받으려 할 때 기간이 지나 있을 수 있으니, 제출용 서류는 메일 일반 첨부로 보내는 편이 확실해요.</p>
+
+      <h2>직접 실험: 36MB 서류 PDF를 메일 한도에 맞추면</h2>
+      <p>휴대폰으로 찍은 서류 사진(장당 약 3.6MB, 3024×4032) 10장을 A4 페이지에 원본 그대로 넣은 PDF를 만들었어요. 사진을 그대로 묶으면 흔히 생기는 크기로, SlimIO에서 <b>35.96MB</b>로 표시됐어요. 네이버 일반 첨부(10MB)는 물론 다음·지메일(25MB)에도 일반 첨부로는 안 들어가는 크기예요. 이 PDF를 SlimIO의 <a href="/ko/compress-pdf-for-email.html">메일 첨부용 PDF 줄이기</a>에서 목표 용량별로 줄였어요.</p>
+      <div class="table-wrap"><table>
+          <tr><th>목표</th><th>결과</th><th>사진 해상도</th><th>보낼 수 있는 곳 (일반 첨부)</th></tr>
+          <tr><td>원본 그대로</td><td>35.96MB</td><td>약 365dpi</td><td>— (대용량 첨부·링크로 바뀜)</td></tr>
+          <tr><td>10MB 이하</td><td><b>6.04MB</b></td><td>300dpi</td><td>네이버·다음·카카오메일·지메일·아웃룩</td></tr>
+          <tr><td>5MB 이하</td><td>4.12MB</td><td>250dpi</td><td>모두</td></tr>
+          <tr><td>2MB 이하</td><td>1.79MB</td><td>150dpi</td><td>모두</td></tr>
+          <tr><td>1MB 이하</td><td>747.6KB</td><td>약 108dpi 이미지로 변환</td><td>모두 (글자 선택은 안 됨)</td></tr>
+      </table></div>
+      <figure>
+          <img src="/img/blog/mail-attach-limits-ko.jpg" width="900" height="971" loading="lazy" alt="같은 서류 PDF의 작은 글씨(약 7pt)를 원본, 10MB 이하(6.04MB, 300dpi), 5MB 이하(4.12MB, 250dpi), 2MB 이하(1.79MB, 150dpi), 1MB 이하(747.6KB, 약 108dpi)로 줄여 확대해 비교한 그림" />
+          <figcaption>재직증명서 아래쪽 작은 글씨(약 7pt)를 같은 배율로 확대했어요. 10MB·5MB는 원본과 거의 같고, 2MB는 조금 부드러워지지만 읽혀요. 1MB에서는 흐려지기 시작해요.</figcaption>
+      </figure>
+      <p>메일 한도에 맞추는 정도(10MB·5MB)라면 화질 손해는 거의 없어요. 휴대폰 사진은 서류를 보기에 필요한 것보다 훨씬 촘촘해서, 300dpi로만 맞춰도 용량이 6분의 1로 줄어요.</p>
+      <p>이 실험을 하다가 SlimIO가 '10MB 이하'를 골라도 사진을 150dpi(1.79MB)까지 줄이고 있던 걸 발견했어요. 한도에 여유가 있는데 필요 이상으로 화질을 낮춘 거예요. 지금은 <b>300dpi부터 시도하고, 한도를 넘을 때만 한 단계씩</b> 낮추도록 고쳐서, 한도 안에서 가장 선명한 결과를 남겨요. (2026년 10월 16일)</p>
+
+      <h2>용량을 줄이는 요령</h2>
+      <ul>
+          <li><b>목표는 받는 쪽 한도보다 조금 작게:</b> 네이버라면 10MB, 다음·지메일이라면 25MB 아래로요. 받는 사람의 메일 환경을 모르면 10MB가 무난해요.</li>
+          <li><b>필요 없는 페이지 빼기:</b> 빈 페이지나 중복된 장은 <a href="/ko/delete-pages.html">페이지 삭제</a>로 먼저 빼면 화질을 덜 낮춰도 돼요.</li>
+          <li><b>여러 파일은 하나로 합쳐서 한 번에:</b> <a href="/ko/merge.html">PDF 합치기</a>로 묶은 뒤 줄이면 첨부 합계를 맞추기 쉬워요. 그래도 크면 <a href="/ko/split.html">PDF 나누기</a>로 나눠 여러 통으로 보내세요.</li>
+          <li><b>서류 사진은 종이만 나오게:</b> 책상까지 찍힌 사진보다 종이만 나온 스캔본이 같은 용량에서 더 또렷해요. <a href="/ko/guides/multiple-photos-to-pdf.html">사진 여러 장을 PDF로 만드는 법</a>에 비교 실험이 있어요.</li>
+      </ul>
+
+      <h2>SlimIO로 메일 첨부용 PDF 줄이기</h2>
+      <ol>
+          <li><a href="/ko/compress-pdf-for-email.html">메일 첨부용 PDF 줄이기</a>를 열고 PDF를 올려요. 휴대폰에서는 '눌러서 PDF 파일 선택'을 누르면 돼요.</li>
+          <li><b>목표 용량</b>은 처음부터 10MB로 맞춰져 있어요. 다음·지메일로 보낸다면 25MB를 골라도 돼요.</li>
+          <li><b>PDF 압축하기</b>를 누르고, 결과 화면에서 압축 후 크기와 '✓ 10MB 이하' 표시를 확인한 뒤 다운로드해서 첨부해요.</li>
+      </ol>
+      <figure>
+          <img src="/img/blog/mail-attach-result-ko.jpg" width="800" height="896" loading="lazy" alt="SlimIO 메일 첨부용 PDF 줄이기 결과 화면: 원래 크기 35.96MB, 압축 후 6.04MB, 목표 10MB 이하 통과, PDF 다운로드 버튼" />
+          <figcaption>휴대폰 화면에서 실제로 줄인 결과예요. 원래 크기 35.96MB → 압축 후 6.04MB.</figcaption>
+      </figure>
+      <p>50MB까지의 PDF는 서버에서 페이지는 그대로 두고 안의 이미지만 줄여서, 글자로 된 문서라면 글자가 선명하고 복사도 그대로 돼요. 올린 파일은 압축 직후 삭제돼요. 목표가 아주 작아 이미지만 줄여서는 안 들어가면 페이지를 이미지로 바꿔 맞추고, 결과 화면에 그렇게 했다고 알려 줘요.</p>
+
+      <h2>출처</h2>
+      <ul>
+          <li>네이버 고객센터, "파일을 첨부하는 방법" — <a href="https://help.naver.com/service/30029/contents/21293" rel="noopener">help.naver.com</a></li>
+          <li>네이버 고객센터, "한 번에 여러 개의 파일을 첨부하는 방법" — <a href="https://help.naver.com/service/30029/contents/21294?lang=ko&amp;osType=MOBILE" rel="noopener">help.naver.com</a></li>
+          <li>네이버 고객센터, "첨부 가능한 파일 용량 안내" — <a href="https://help.naver.com/service/30029/contents/21295" rel="noopener">help.naver.com</a></li>
+          <li>네이버 고객센터, "1통 당 수신 가능한 용량 안내" — <a href="https://help.naver.com/service/30029/contents/21233" rel="noopener">help.naver.com</a></li>
+          <li>Daum 고객센터, "메일 사이즈 제한에 대해 알려주세요." — <a href="https://cs.daum.net/faq/service/43/category/4592/detail/35985" rel="noopener">cs.daum.net</a></li>
+          <li>Daum 고객센터, 모바일 웹메일 대용량 첨부 안내 — <a href="https://cs.daum.net/faq/service/43/category/15550/detail/38502" rel="noopener">cs.daum.net</a>, <a href="https://cs.daum.net/faq/service/43/category/15550/detail/38504" rel="noopener">cs.daum.net</a></li>
+          <li>Daum 고객센터, "대용량 첨부파일의 다운로드가 되지 않아요" — <a href="https://cs.daum.net/faq/service/43/category/4589/detail/37503" rel="noopener">cs.daum.net</a></li>
+          <li>카카오메일 고객센터(디케이테크인), 일반 첨부·대용량 첨부 안내 — <a href="https://www.dktechin.com/inquiry/1796?service=131&amp;tag=132&amp;tab=139" rel="noopener">dktechin.com</a>, <a href="https://www.dktechin.com/inquiry/1781?service=131" rel="noopener">dktechin.com</a></li>
+          <li>Gmail 고객센터, "Gmail 메일로 첨부파일 전송하기" — <a href="https://support.google.com/mail/answer/6584?hl=ko" rel="noopener">support.google.com</a>, "Gmail에서 Google 드라이브 첨부파일 보내기" — <a href="https://support.google.com/mail/answer/2487407?hl=ko" rel="noopener">support.google.com</a></li>
+          <li>Microsoft 지원, "Outlook.com의 전송 제한" — <a href="https://support.microsoft.com/ko-kr/outlook/sending-limits-in-outlook-com" rel="noopener">support.microsoft.com</a></li>
+          <li>Microsoft Learn, "Exchange Online limits" — <a href="https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits" rel="noopener">learn.microsoft.com</a></li>
+          <li>NAVER WORKS 관리자 가이드, "메일 설정" — <a href="https://help.worksmobile.com/ko/admin-guides/manage-service/mail/mail-settings/" rel="noopener">help.worksmobile.com</a></li>
+          <li>카카오 고객센터, 카카오톡 전송 가능한 멀티미디어 용량 — <a href="https://cs.kakao.com/helps_html/1073209424" rel="noopener">cs.kakao.com</a>, "PC에서 이미지/ 동영상/ 음성/ 압축 파일을 전송할 수 있나요?" — <a href="https://cs.kakao.com/helps_html/1073209399" rel="noopener">cs.kakao.com</a></li>
+          <li>카카오 고객센터, "사진은 최대 몇장 보낼 수 있나요?" — <a href="https://cs.kakao.com/helps_html/1073210382" rel="noopener">cs.kakao.com</a></li>
+          <li>카카오 고객센터, "멀티미디어 파일을 다운로드할 수 있는 유효 기간은 얼마인가요?" — <a href="https://cs.kakao.com/helps_html/1073209427" rel="noopener">cs.kakao.com</a>, "톡클라우드에 백업된 이미지 파일의 화질이 안 좋게 보여요."(사진 화질 설정 위치) — <a href="https://cs.kakao.com/helps_html/1073206342" rel="noopener">cs.kakao.com</a></li>
+      </ul>

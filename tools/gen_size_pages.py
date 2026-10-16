@@ -260,18 +260,17 @@ PAGES = [
       </ul>
       <h3>Email attachment limits</h3>
       <ul>
-          <li><b>Gmail:</b> 25MB total per message.</li>
-          <li><b>Outlook.com:</b> 20MB per message for regular attachments.</li>
-          <li><b>Yahoo Mail:</b> 25MB per message.</li>
-          <li><b>Work email:</b> company mail servers are often set to 10MB, and the recipient's server limit applies too.</li>
+          <li><b>Gmail:</b> 25MB of attachments for personal accounts. Above that, Gmail replaces the file with a Google Drive link.</li>
+          <li><b>Outlook.com:</b> 25MB. Bigger files can be shared from OneDrive instead (up to 2GB).</li>
+          <li><b>Work email (Microsoft 365):</b> 35MB to send and 36MB to receive by default, and admins can set anything from 1MB to 150MB. The recipient's server limit applies too.</li>
       </ul>
-      <h3>Why a 20MB file can bounce from a 25MB inbox</h3>
-      <p>Attachments are encoded for sending, which makes them roughly a third larger in transit. A 20MB PDF can travel as about 27MB and be rejected. Aim for a file comfortably below the limit — 10MB is a safe choice when you don't know the recipient's setup.</p>
+      <h3>Why a file under the limit can still bounce</h3>
+      <p>Attachments are encoded for sending, which makes them larger in transit — we attached a 6.04MB PDF to a message and the message came to 8.16MB, about 1.35 times the file. A PDF close to the recipient's limit can be rejected. Aim for a file comfortably below it — 10MB is a safe choice when you don't know the recipient's setup.</p>
       <h3>Sending several documents?</h3>
       <p>Combine them with <a href="/merge.html">Merge PDF</a> first, then compress once. If one message still can't fit everything, use <a href="/split.html">Split PDF</a> and send the parts in separate emails.</p>""",
  "faq": [
   ("How do I make a PDF small enough to email?", "Drop it on this page and click Compress. The default 10MB target fits nearly every email service. The compressed PDF downloads right away."),
-  ("What size should a PDF be for Gmail?", "Gmail allows 25MB per message, but encoding adds about a third in transit. Keep the PDF under about 18MB — or pick 10MB to be safe."),
+  ("What size should a PDF be for Gmail?", "Personal Gmail accounts can attach up to 25MB. Above that, Gmail sends a Google Drive link instead of the file. To send the file itself, keep it under 25MB — or pick 10MB so the recipient's server has room too."),
   ("Why was my email rejected even though the file is under the limit?", "The recipient's mail server may have a smaller limit, and attachments grow when encoded for sending. Compress to 10MB or less."),
   ("Will the recipient see a lower-quality PDF?", "SlimIO keeps text sharp whenever it can and only reduces image detail as much as needed. For typical documents the difference is hard to notice."),
   ("Is there a size limit for the file I upload?", "Files up to 50MB get text-preserving compression on our server. Larger files are compressed entirely in your browser."),

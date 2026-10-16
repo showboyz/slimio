@@ -134,6 +134,8 @@ async function makeFixtures(browser) {
   fs.writeFileSync(path.join(TMP, "sideways.jpg"), Buffer.concat([photo2.subarray(0, 2),
     Buffer.from([0xff, 0xe1, (exif.length + 2) >> 8, (exif.length + 2) & 255]), exif, photo2.subarray(2)]));
   fs.writeFileSync(path.join(TMP, "photo.pdf"), jpegPdf([photo, await jpeg(2480, 3508, 0.9)]));
+  // three different phone-size photos: well over 10MB, but 10MB has room for much more than 150 dpi
+  fs.writeFileSync(path.join(TMP, "photos3.pdf"), jpegPdf([photo, await jpeg(3024, 4032, 0.9), await jpeg(3024, 4032, 0.9)]));
   const sig = Buffer.from(await p.evaluate(async () => {
     const c = new OffscreenCanvas(1400, 520), x = c.getContext("2d");
     x.fillStyle = "#f4f2ec"; x.fillRect(0, 0, 1400, 520);
@@ -304,6 +306,17 @@ function toolTests() {
     const r = await download(p), lim = kbRange(t.toUpperCase());
     if (r.bytes.length > lim.max) return `result ${KB(r.bytes.length)} is over ${t}`;
     return pdfCheck(r.bytes, { pages: 2 });
+  });
+  both("compress-pdf-for-email.html", "keeps more than 150 dpi when 10MB has room", async (p) => {
+    let dpi = null;
+    p.on("response", async (r) => { if (r.url().includes("/api/compress")) dpi = (await r.json().catch(() => ({}))).dpi || 150; });
+    const inSize = fs.statSync(F("photos3.pdf")).size;
+    if (inSize <= 10e6) return `fixture is only ${KB(inSize)}`;
+    await p.setInputFiles("#pdf", F("photos3.pdf")); await runTool(p);
+    const r = await download(p);
+    if (r.bytes.length > 10e6) return `result ${KB(r.bytes.length)} is over 10MB`;
+    if (!(dpi > 150)) return `server went down to ${dpi} dpi though the limit had room (result ${KB(r.bytes.length)})`;
+    return pdfCheck(r.bytes, { pages: 3 });
   });
   both("compress-pdf-for-email.html", "fits the target", async (p) => {
     await p.setInputFiles("#pdf", F("photo.pdf")); await runTool(p);

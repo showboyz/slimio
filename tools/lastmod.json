@@ -4,7 +4,7 @@
   "2026-10-15"
  ],
  "/about.html": [
-  "d45711dea5caf95c",
+  "8f90b7cc2ed883b4",
   "2026-10-16"
  ],
  "/add-page-numbers.html": [
@@ -40,8 +40,8 @@
   "2026-10-15"
  ],
  "/compress-pdf-for-email.html": [
-  "21ad4b78c44b29fe",
-  "2026-10-15"
+  "87047ecf678df82a",
+  "2026-10-16"
  ],
  "/compress-pdf-to-100kb.html": [
   "84e648585d8023fb",
@@ -120,7 +120,7 @@
   "2026-10-15"
  ],
  "/ko/about.html": [
-  "dfe3c4080ef28849",
+  "e1cfef32d8943d5b",
   "2026-10-16"
  ],
  "/ko/add-page-numbers.html": [
@@ -152,8 +152,8 @@
   "2026-10-15"
  ],
  "/ko/compress-pdf-for-email.html": [
-  "383e80e72a8f6861",
-  "2026-10-15"
+  "1b8967692dccd2a0",
+  "2026-10-16"
  ],
  "/ko/compress-pdf-to-100kb.html": [
   "8d6081634fd9127f",
@@ -192,7 +192,7 @@
   "2026-10-15"
  ],
  "/ko/guides/": [
-  "fddd7d6ba2dd9ecf",
+  "9f0e415bcf5adf31",
   "2026-10-16"
  ],
  "/ko/guides/computer-certificate-photo-size.html": [
@@ -214,6 +214,10 @@
  "/ko/guides/language-test-photo.html": [
   "039d844e3721cb22",
   "2026-10-15"
+ ],
+ "/ko/guides/mail-attachment-size-limit.html": [
+  "78ef0b4335950c77",
+  "2026-10-16"
  ],
  "/ko/guides/multiple-photos-to-pdf.html": [
   "1c26c73fefafe135",
