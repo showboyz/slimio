@@ -60,6 +60,7 @@
 | Fly token | ✅ 재발급 완료 (2026-09-24) |
 | Google Search Console | ✅ `sc-domain:pdfslimio.com`, 사이트맵 제출·주요 URL 색인 요청 완료 |
 | 네이버 서치어드바이저 | ✅ `https://pdfslimio.com` 등록·소유확인(홈 메타 태그)·사이트맵 제출·수집 요청 완료 |
+| 빙 웹마스터 도구 | ✅ 2026-10-16 등록 — 사장님 Google 계정(todays777)으로 로그인, GSC에서 가져오기(소유확인 자동, Bing에 GSC 보기 전용 권한 부여 — 끊으면 다시 확인 필요). 사이트맵 `https://pdfslimio.com/sitemap.xml` 직접 제출(가져오기로는 0개). 계기: Umami에 duckduckgo.com 유입(덕덕고·야후는 빙 결과). 검색 실적·AI Performance(베타) 데이터는 최대 48시간 뒤. IndexNow(`tools/indexnow.sh`)가 빙에도 전달됨 |
 | 광고 슬롯 | `<div class="ad" id="ad" hidden></div>` — 2026-10-15부터 '이 자리에 배너 광고가 표시될 수 있어요' 안내 상자를 숨김(심사 때 빈 광고 자리·안내 문구가 미완성 사이트처럼 보일 수 있어서). 승인 후 `hidden`을 빼고 광고 단위를 넣거나 자동 광고 사용. gen_related는 이 div 앞에 next-steps를 넣음 |
 
 ### 2026-09-24 수정 내역 (중요)
