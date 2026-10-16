@@ -143,7 +143,8 @@ async function fitToLimit(limit) {
             if (!img) { SlimIO.showError(SlimIO.t('Could not read "{name}".', { name: it.name })); return null; }
             pics.push(img);
         }
-        let side = Math.min(2000, Math.max(...pics.map((p) => Math.max(p.width, p.height)))), smallest = null, step = 0;
+        const full = Math.max(...pics.map((p) => Math.max(p.width, p.height)));
+        let side = Math.min(2000, full), smallest = null, step = 0;
         const tick = () => prog.set(Math.min(98, 30 + ++step * 4));
         for (let round = 0; round < 12; round++, side = Math.round(side * 0.8)) {
             const canvases = pics.map((p) => draw(p, side));
@@ -155,12 +156,14 @@ async function fitToLimit(limit) {
             }
             let best = lo, a = 0.3, b = 0.9;
             const top = await build(pics, canvases, b); tick();
-            if (top.length <= limit) return { bytes: top, fits: true, side };
+            // small print (about 8pt on A4) blurred below ~1000 px on the long side in our tests
+            const blurry = side < 1000 && side < full;
+            if (top.length <= limit) return { bytes: top, fits: true, side, blurry };
             for (let i = 0; i < 5; i++) {
                 const mid = (a + b) / 2, m = await build(pics, canvases, mid); tick();
                 if (m.length <= limit) { best = m; a = mid; } else b = mid;
             }
-            return { bytes: best, fits: true, side };
+            return { bytes: best, fits: true, side, blurry };
         }
         return smallest;
     } finally {
@@ -254,8 +257,8 @@ function showResult(count, r, limit) {
     else if (r.kept) note.textContent = SlimIO.t("Already under {size} — the photos are in at full quality.", { size: label });
     else if (r.fits) {
         note.textContent = SlimIO.t("To fit {size}, the photos were saved again at up to {px} px on the long side.", { size: label, px: r.side }) +
-            (r.side < 700 ? SlimIO.t(" Small print may be hard to read — fewer photos or a higher limit will give a sharper result.") : "");
-        if (r.side < 700) note.className = "note warn";
+            (r.blurry ? SlimIO.t(" Small print may be hard to read — fewer photos or a higher limit will give a sharper result.") : "");
+        if (r.blurry) note.className = "note warn";
     }
     else note.textContent = SlimIO.t("This is the smallest we could make it. To get under {size}, use fewer photos or crop away what isn't needed.", { size: label });
     dl.textContent = SlimIO.t("↓ Download PDF");
