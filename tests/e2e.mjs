@@ -515,6 +515,23 @@ async function pageChecks(browser) {
     const drop = await p.evaluate(() => { const d = document.querySelector(".drop"); return d && { top: d.getBoundingClientRect().top + scrollY, title: d.querySelector(".drop-title").textContent }; });
     if (drop && /drop|click|끌어다|클릭/i.test(drop.title)) p.problems.push(`upload box says "${drop.title}" on a phone`);
     if (drop && drop.top > 600) p.problems.push(`upload box starts at ${Math.round(drop.top)}px, below the first phone screen`);
+    // guides: the tool button sits on the first phone screen, and a bar with it shows while
+    // reading but not over the end box (search visitors used to leave before reaching any button)
+    if (/\/guides\/.+\.html$/.test(u)) {
+      const g = await p.evaluate(async () => {
+        const top = document.querySelector(".cta-top"), bar = document.querySelector(".cta-sticky"), end = document.querySelector(".cta-box");
+        if (!top || !bar || !end) return "no tool button under the intro";
+        const y = top.getBoundingClientRect().top + scrollY;
+        if (y > 600) return `tool button starts at ${Math.round(y)}px, below the first phone screen`;
+        const wait = () => new Promise((r) => setTimeout(r, 300));
+        scrollTo(0, y + 1200); await wait();
+        if (!bar.classList.contains("on")) return "the button bar does not show while reading";
+        end.scrollIntoView({ block: "center" }); await wait();
+        if (bar.classList.contains("on")) return "the button bar still shows over the end box";
+        scrollTo(0, 0); await wait();
+      });
+      if (g) p.problems.push(g);
+    }
     const ev = await p.evaluate(() => window.__ev.filter((e) => e[0] === "error").map((e) => e[1].kind + ": " + e[1].msg));
     p.problems.push(...ev.map((e) => "error event " + e));
     for (const h of await p.$$eval("a[href^='/'], img[src^='/'], link[href^='/'], script[src^='/']", (a) => a.map((e) => e.getAttribute("href") || e.getAttribute("src"))))

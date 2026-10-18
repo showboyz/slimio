@@ -12,6 +12,9 @@ an HTML comment holding JSON metadata:
     -->
     <p>Body…</p>
 
+The cta button appears under the first paragraph, in the end box, and in a bar that guide.js
+shows while reading; clicks on it and on tool links in the text are Umami `guide-cta` events.
+
 Articles exist in one language only (no hreflang pair); the two hub pages are paired.
 This also adds a Guides link to every page footer. Run it before gen_ko.py, which
 rebuilds the Korean tool pages from the English ones:
@@ -29,7 +32,7 @@ UMAMI = "ab53f00a-b92a-4d4d-aaf0-6b5329869de7"
 
 T = {
     "en": dict(guides="Guides", home="SlimIO", compress="Compress", all_tools="All tools", by="By SlimIO",
-               updated="Updated", read="min read", faq="Questions", more="More guides", try_it="Try it free",
+               updated="Updated", read="min read", faq="Questions", more="More guides", try_it="Try it free", close="Close",
                hub_title="Guides — Photo, Signature and PDF Size Help | SlimIO",
                hub_h1="Guides", hub_lead="Practical, sourced answers for the size rules on application forms: photos, signatures and PDFs.",
                hub_desc="Guides to photo, signature and PDF size requirements for exam and job applications, with the official numbers and how to meet them.",
@@ -38,7 +41,7 @@ T = {
                foot2="© 2026 SlimIO · Free PDF tools", foot3="Runs in your browser · No signup",
                months=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]),
     "ko": dict(guides="가이드", home="SlimIO", compress="PDF 압축", all_tools="전체 도구", by="SlimIO 작성",
-               updated="업데이트", read="분 분량", faq="자주 묻는 질문", more="다른 가이드", try_it="무료로 해 보기",
+               updated="업데이트", read="분 분량", faq="자주 묻는 질문", more="다른 가이드", try_it="무료로 해 보기", close="닫기",
                hub_title="가이드 — 사진·서명·PDF 용량 규격 정리 | SlimIO",
                hub_h1="가이드", hub_lead="원서·서류 제출에서 막히는 사진, 서명, PDF 규격을 공식 기준과 함께 정리했어요.",
                hub_desc="시험 원서 사진 규격, PDF 용량 줄이기 원리 등 서류 제출에 필요한 사진·서명·PDF 규격을 공식 기준과 함께 정리한 가이드.",
@@ -73,12 +76,13 @@ def load():
     return arts
 
 
-def head(lang, title, desc, path, og_type="article", image=None, alternates=None, ld=()):
+def head(lang, title, desc, path, og_type="article", image=None, alternates=None, ld=(), scripts=()):
     t = T[lang]
     alt = ""
     if alternates:
         alt = "".join(f'<link rel="alternate" hreflang="{hl}" href="{SITE}{p}" />\n' for hl, p in alternates)
     img = f'<meta property="og:image" content="{SITE}{image}" />\n' if image else ""
+    js = "".join(f'<script defer src="{x}?v=0"></script>\n' for x in scripts)
     lds = "".join(f'<script type="application/ld+json">\n{json.dumps(x, ensure_ascii=False, indent=2)}\n</script>\n' for x in ld)
     return f"""<!DOCTYPE html>
 <html lang="{lang}">
@@ -96,7 +100,7 @@ def head(lang, title, desc, path, og_type="article", image=None, alternates=None
 <meta property="og:description" content="{html.escape(desc)}" />
 <meta property="og:url" content="{SITE}{path}" />
 {img}<link rel="stylesheet" href="/style.css?v=0" />
-<script defer src="https://cloud.umami.is/script.js" data-website-id="{UMAMI}" data-domains="pdfslimio.com"></script>
+{js}<script defer src="https://cloud.umami.is/script.js" data-website-id="{UMAMI}" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="{ADSENSE}" />
 {lds}</head>
 <body>
@@ -131,9 +135,27 @@ def foot(lang):
 """
 
 
+def track(pos, guide, to=None):
+    """Umami counts clicks on elements carrying data-umami-event (its script waits for the
+    event before following the link)."""
+    return (f' data-umami-event="guide-cta" data-umami-event-pos="{pos}" data-umami-event-guide="{guide}"'
+            + (f' data-umami-event-to="{to}"' if to else ""))
+
+
+def tag_tool_links(body, guide):
+    """Mark links from the article text to tool pages (not other guides or images) so clicks are counted."""
+    def sub(m):
+        href = m.group(2)
+        if "/guides/" in href or href.startswith("/img/") or "data-umami-event" in m.group(0):
+            return m.group(0)
+        return f'<a{m.group(1)}href="{href}"{m.group(3)}{track("body", guide, href.split("?")[0])}>'
+    return re.sub(r'<a\b([^>]*?)href="(/[^"]*)"([^>]*)>', sub, body)
+
+
 def article_page(a, siblings):
     lang, t = a["lang"], T[a["lang"]]
     path = art_path(lang, a["slug"])
+    guide = ("ko/" if lang == "ko" else "") + a["slug"]
     ld = [{
         "@context": "https://schema.org", "@type": "Article", "headline": a["title"], "description": a["desc"],
         "datePublished": a["published"], "dateModified": a["updated"], "inLanguage": lang,
@@ -149,20 +171,28 @@ def article_page(a, siblings):
     if a.get("faq"):
         ld.append({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", ans)}} for q, ans in a["faq"]]})
-    out = head(lang, a["seo_title"] + " | SlimIO", a["desc"], path, image=a.get("image"), ld=ld)
+    out = head(lang, a["seo_title"] + " | SlimIO", a["desc"], path, image=a.get("image"), ld=ld, scripts=["/guide.js"] if a.get("cta") else [])
+    body = tag_tool_links(a["body"], guide)
+    if a.get("cta"):
+        # Search visitors decide on the first screen: put the tool button right under the intro
+        # (it used to be only at the end, 5-7 phone screens down).
+        href, label, line = a["cta"]
+        i = body.find("</p>") + len("</p>")
+        body = body[:i] + f"""
+      <p class="cta-top"><a class="cta-btn" href="{href}"{track("top", guide)}>{label} →</a><span>{line}</span></p>""" + body[i:]
     out += f"""
 <main class="content article">
       <p class="crumbs"><a href="{'/' if lang == 'en' else '/ko/'}">SlimIO</a> › <a href="{hub_path(lang)}">{t['guides']}</a></p>
       <h1>{a['title']}</h1>
       <p class="byline">{t['by']} · {t['updated']} <time datetime="{a['updated']}">{fmt_date(a['updated'], lang)}</time> · {a['minutes']} {t['read']}</p>
-{a['body']}
+{body}
 """
     if a.get("cta"):
-        href, label, line = a["cta"]
         out += f"""      <div class="cta-box">
           <div><b>{t['try_it']}</b><p>{line}</p></div>
-          <a class="cta-btn" href="{href}">{label} →</a>
+          <a class="cta-btn" href="{href}"{track("bottom", guide)}>{label} →</a>
       </div>
+      <div class="cta-sticky"><a class="cta-btn" href="{href}"{track("sticky", guide)}>{label} →</a><button type="button" aria-label="{t['close']}">✕</button></div>
 """
     out += "</main>\n"
     if a.get("faq"):
