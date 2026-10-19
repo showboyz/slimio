@@ -529,6 +529,10 @@ async function pageChecks(browser) {
         end.scrollIntoView({ block: "center" }); await wait();
         if (bar.classList.contains("on")) return "the button bar still shows over the end box";
         scrollTo(0, 0); await wait();
+        // the list at the end offers guides in the same language (picked by topic in gen_guides.py)
+        const rel = [...document.querySelectorAll(".related a.guide-card")].map((a) => a.getAttribute("href"));
+        const dir = location.pathname.replace(/[^/]*$/, "");
+        if (rel.length < 3 || rel.some((h) => !h.startsWith(dir))) return `related guides: ${rel.join(", ") || "none"}`;
       });
       if (g) p.problems.push(g);
     }

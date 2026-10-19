@@ -5,7 +5,7 @@ Each article is an HTML fragment in content/guides/<lang>/<slug>.html whose firs
 an HTML comment holding JSON metadata:
 
     <!--
-    {"title": "...", "seo_title": "...", "desc": "...", "published": "2026-10-09",
+    {"title": "...", "seo_title": "...", "desc": "...", "topic": "exam", "published": "2026-10-09",
      "updated": "2026-10-09", "image": "/img/blog/x.jpg",
      "cta": ["/signature-image.html", "Make your signature image", "One line about the tool"],
      "faq": [["Question?", "Answer."], ...]}
@@ -14,6 +14,7 @@ an HTML comment holding JSON metadata:
 
 The cta button appears under the first paragraph, in the end box, and in a bar that guide.js
 shows while reading; clicks on it and on tool links in the text are Umami `guide-cta` events.
+`topic` (see TOPICS) picks the related guides listed at the end; clicks on those are `guide-related`.
 
 Articles exist in one language only (no hreflang pair); the two hub pages are paired.
 This also adds a Guides link to every page footer. Run it before gen_ko.py, which
@@ -29,10 +30,13 @@ SRC = os.path.join(HERE, "..", "content", "guides")
 SITE = "https://pdfslimio.com"
 ADSENSE = "ca-pub-5339352429300786"
 UMAMI = "ab53f00a-b92a-4d4d-aaf0-6b5329869de7"
+# topic -> broader group. exam: photos/signatures for exam, school and job forms;
+# id: passport, licence and visa photos; pdf: making and shrinking PDFs.
+TOPICS = {"exam": "photo", "id": "photo", "pdf": "pdf"}
 
 T = {
     "en": dict(guides="Guides", home="SlimIO", compress="Compress", all_tools="All tools", by="By SlimIO",
-               updated="Updated", read="min read", faq="Questions", more="More guides", try_it="Try it free", close="Close",
+               updated="Updated", read="min read", faq="Questions", more="Related guides", try_it="Try it free", close="Close",
                hub_title="Guides — Photo, Signature and PDF Size Help | SlimIO",
                hub_h1="Guides", hub_lead="Practical, sourced answers for the size rules on application forms: photos, signatures and PDFs.",
                hub_desc="Guides to photo, signature and PDF size requirements for exam and job applications, with the official numbers and how to meet them.",
@@ -41,7 +45,7 @@ T = {
                foot2="© 2026 SlimIO · Free PDF tools", foot3="Runs in your browser · No signup",
                months=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]),
     "ko": dict(guides="가이드", home="SlimIO", compress="PDF 압축", all_tools="전체 도구", by="SlimIO 작성",
-               updated="업데이트", read="분 분량", faq="자주 묻는 질문", more="다른 가이드", try_it="무료로 해 보기", close="닫기",
+               updated="업데이트", read="분 분량", faq="자주 묻는 질문", more="함께 보면 좋은 가이드", try_it="무료로 해 보기", close="닫기",
                hub_title="가이드 — 사진·서명·PDF 용량 규격 정리 | SlimIO",
                hub_h1="가이드", hub_lead="원서·서류 제출에서 막히는 사진, 서명, PDF 규격을 공식 기준과 함께 정리했어요.",
                hub_desc="시험 원서 사진 규격, PDF 용량 줄이기 원리 등 서류 제출에 필요한 사진·서명·PDF 규격을 공식 기준과 함께 정리한 가이드.",
@@ -68,6 +72,7 @@ def load():
             s = open(f).read()
             m = re.match(r"\s*<!--(.*?)-->\s*", s, re.S)
             meta = json.loads(m.group(1))
+            assert meta.get("topic") in TOPICS, f"{f}: topic must be one of {list(TOPICS)}"
             body = s[m.end():].strip()
             words = len(re.sub(r"<[^>]+>", " ", body).split())
             chars = len(re.sub(r"\s", "", re.sub(r"<[^>]+>", "", body)))
@@ -152,6 +157,17 @@ def tag_tool_links(body, guide):
     return re.sub(r'<a\b([^>]*?)href="(/[^"]*)"([^>]*)>', sub, body)
 
 
+def related(a, others, n=4):
+    """Guides on the same subject first: someone who came for one exam's photo rules is more
+    likely to open another exam's than the newest guide about PDFs. Links between the two
+    articles count too; ties keep the order of `others` (newest first)."""
+    def links(x, y): return art_path(y["lang"], y["slug"]) in x["body"]
+    def score(s):
+        return ((6 if s["topic"] == a["topic"] else 0) + (3 if TOPICS[s["topic"]] == TOPICS[a["topic"]] else 0)
+                + (3 if links(a, s) else 0) + (2 if links(s, a) else 0))
+    return sorted(others, key=score, reverse=True)[:n]
+
+
 def article_page(a, siblings):
     lang, t = a["lang"], T[a["lang"]]
     path = art_path(lang, a["slug"])
@@ -200,8 +216,9 @@ def article_page(a, siblings):
         out += "".join(f"      <details>\n          <summary>{q}</summary>\n          <p>{ans}</p>\n      </details>\n" for q, ans in a["faq"])
         out += "</section>\n"
     if siblings:
-        out += f'\n<section class="content">\n      <h2>{t["more"]}</h2>\n      <div class="guide-list">\n'
-        out += "".join(f'          <a class="guide-card" href="{art_path(s["lang"], s["slug"])}"><b>{s["title"]}</b><small>{s["desc"]}</small></a>\n' for s in siblings)
+        out += f'\n<section class="content related">\n      <h2>{t["more"]}</h2>\n      <div class="guide-list">\n'
+        out += "".join(f'          <a class="guide-card" href="{art_path(s["lang"], s["slug"])}" data-umami-event="guide-related" data-umami-event-guide="{guide}"'
+                       f' data-umami-event-to="{s["slug"]}"><b>{s["title"]}</b><small>{s["desc"]}</small></a>\n' for s in siblings)
         out += "      </div>\n</section>\n"
     return out + foot(lang)
 
@@ -248,7 +265,7 @@ def build():
         os.makedirs(os.path.join(ROOT, hub_path(lang).strip("/")), exist_ok=True)
         open(os.path.join(ROOT, hub_path(lang).strip("/"), "index.html"), "w").write(hub_page(lang, mine))
         for a in mine:
-            open(os.path.join(ROOT, art_path(lang, a["slug"]).lstrip("/")), "w").write(article_page(a, [s for s in mine if s is not a][:4]))
+            open(os.path.join(ROOT, art_path(lang, a["slug"]).lstrip("/")), "w").write(article_page(a, related(a, [s for s in mine if s is not a])))
             print(f"  {art_path(lang, a['slug'])}  {a['words']} words, {a['minutes']} min")
     print(f"guides: {len(arts)} articles · footer links added to {footer_links()} page(s)")
 

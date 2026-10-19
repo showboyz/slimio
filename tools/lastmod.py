@@ -4,7 +4,7 @@
 Every build rewrites every page (asset version hashes, the shared tool links, the footer), so "today"
 would be the date of every URL, and Google ignores lastmod that is never accurate. Here a page's date
 moves only when its own content changes: title, description and body text, without the nav, the
-shared "More free tools" block, the "More guides" list under articles, the footer and scripts.
+shared "More free tools" block, the related-guides list under articles, the footer and scripts.
 
 Dates are kept in tools/lastmod.json (gen_ko.py updates it when it writes the sitemap).
 `python3 tools/lastmod.py` rebuilds that file from git history.
@@ -16,7 +16,7 @@ REPO = os.path.join(HERE, "..")
 ROOT = os.path.join(REPO, "public")
 STORE = os.path.join(HERE, "lastmod.json")
 SHARED = re.compile(r'(?s)<head>.*?</head>|<nav>.*?</nav>|<!-- more-tools:start -->.*?<!-- more-tools:end -->'
-                    r'|<section class="content">\s*<h2>[^<]*</h2>\s*<div class="guide-list">.*?</section>'
+                    r'|<section class="content(?: related)?">\s*<h2>[^<]*</h2>\s*<div class="guide-list">.*?</section>'
                     r'|<footer>.*?</footer>|<script\b.*?</script>|<style\b.*?</style>|<!--.*?-->')
 
 
