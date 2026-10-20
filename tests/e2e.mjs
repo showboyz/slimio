@@ -423,8 +423,9 @@ function toolTests() {
     const want = PRESETS[resize || (await p.$eval("#resize", (e) => e.value))];
     if (want && (s.w !== want[0] || s.h !== want[1])) return `${s.w}×${s.h}, expected ${want[0]}×${want[1]}`;
     if (!want && Math.max(s.w, s.h) > 1920) return `${s.w}×${s.h} is over 1920`;
-    const lim = kbRange(tgt);
-    if (lim && (r.bytes.length > lim.max || r.bytes.length < lim.min)) return `${KB(r.bytes.length)} is outside ${tgt}`;
+    // a preset with a range the list lacks (China visa 40–120KB) fills in the custom fields
+    const lim = tgt === "custom" ? await p.evaluate(() => ({ min: +document.querySelector("#kmin").value * 1024, max: +document.querySelector("#kmax").value * 1000 })) : kbRange(tgt);
+    if (lim && (r.bytes.length > lim.max || r.bytes.length < lim.min)) return `${KB(r.bytes.length)} is outside ${tgt === "custom" ? `${lim.min}–${lim.max} bytes` : tgt}`;
     if (expect.min && r.bytes.length < expect.min) return `${KB(r.bytes.length)} is under ${KB(expect.min)}`;
     return null;
   }
@@ -437,6 +438,11 @@ function toolTests() {
   for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, async (p) => !(NOT_KO.includes(r) && p.url().includes("/ko/")) ? photo(p, { resize: r })
     : (await p.$(`#resize option[value="${r}"]`)) ? `${r} is still in the Korean size list` : null);
   both("us-visa-photo.html", "600×600, 54–240KB", (p) => photo(p, { expect: { min: 54000 } }));
+  both("compress-id-photo.html", "China visa picks 40–120KB", async (p) => {
+    const err = await photo(p, { resize: "cn-visa" });
+    const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));
+    return err || (v === "custom 40 120" ? null : `the size limit is "${v}", expected custom 40–120`);
+  });
   both("compress-id-photo.html", "made without a button, follows the zoom", async (p) => {
     await p.setInputFiles("#images", F("photo.jpg"));
     await photoResult(p);

@@ -169,7 +169,7 @@
                <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, WebP 등)</div>
                <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
            </div>
-           <div class="exams" role="group" aria-label="시험·이력서 사진 규격"><span>시험·이력서</span><button type="button" class="preset" data-resize="kr-qnet" data-umami-event="id-size" data-umami-event-size="kr-qnet"><b>큐넷</b><small>300×400</small></button><button type="button" class="preset" data-resize="kr-gosi" data-umami-event="id-size" data-umami-event-size="kr-gosi"><b>공무원</b><small>137×177</small></button><button type="button" class="preset" data-resize="kr-history" data-umami-event="id-size" data-umami-event-size="kr-history"><b>한능검</b><small>120×160</small></button><button type="button" class="preset" data-resize="kr-korcham" data-umami-event="id-size" data-umami-event-size="kr-korcham"><b>컴활·워드</b><small>400×500</small></button><button type="button" class="preset" data-resize="kr-kpc" data-umami-event="id-size" data-umami-event-size="kr-kpc"><b>ITQ</b><small>225×300</small></button><button type="button" class="preset" data-resize="kr-toeic" data-umami-event="id-size" data-umami-event-size="kr-toeic"><b>토익</b><small>300×400</small></button><button type="button" class="preset" data-resize="kr-teps" data-umami-event="id-size" data-umami-event-size="kr-teps"><b>텝스</b><small>126×165</small></button><button type="button" class="preset" data-resize="kr-jobkorea" data-umami-event="id-size" data-umami-event-size="kr-jobkorea"><b>잡코리아</b><small>103×132</small></button><button type="button" class="preset" data-resize="kr-saramin" data-umami-event="id-size" data-umami-event-size="kr-saramin"><b>사람인</b><small>100×140</small></button></div>
+           <div class="exams" role="group" aria-label="시험·이력서·비자 사진 규격"><span>시험·이력서·비자</span><button type="button" class="preset" data-resize="kr-qnet" data-umami-event="id-size" data-umami-event-size="kr-qnet"><b>큐넷</b><small>300×400</small></button><button type="button" class="preset" data-resize="kr-gosi" data-umami-event="id-size" data-umami-event-size="kr-gosi"><b>공무원</b><small>137×177</small></button><button type="button" class="preset" data-resize="kr-history" data-umami-event="id-size" data-umami-event-size="kr-history"><b>한능검</b><small>120×160</small></button><button type="button" class="preset" data-resize="kr-korcham" data-umami-event="id-size" data-umami-event-size="kr-korcham"><b>컴활·워드</b><small>400×500</small></button><button type="button" class="preset" data-resize="kr-kpc" data-umami-event="id-size" data-umami-event-size="kr-kpc"><b>ITQ</b><small>225×300</small></button><button type="button" class="preset" data-resize="kr-toeic" data-umami-event="id-size" data-umami-event-size="kr-toeic"><b>토익</b><small>300×400</small></button><button type="button" class="preset" data-resize="kr-teps" data-umami-event="id-size" data-umami-event-size="kr-teps"><b>텝스</b><small>126×165</small></button><button type="button" class="preset" data-resize="kr-jobkorea" data-umami-event="id-size" data-umami-event-size="kr-jobkorea"><b>잡코리아</b><small>103×132</small></button><button type="button" class="preset" data-resize="kr-saramin" data-umami-event="id-size" data-umami-event-size="kr-saramin"><b>사람인</b><small>100×140</small></button><button type="button" class="preset" data-resize="cn-visa" data-umami-event="id-size" data-umami-event-size="cn-visa"><b>중국 비자</b><small>354×472</small></button></div>
            <details class="specs" id="pastebox">
                <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
                <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
@@ -209,6 +209,7 @@
                        <option value="0">원래 크기 유지</option>
                        <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
                        <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
                        <option value="kr-qnet">큐넷 자격시험 300×400px</option>
                        <option value="kr-gosi">공무원 시험 원서 137×177px</option>
                        <option value="kr-history">한국사능력검정 120×160px</option>
@@ -304,7 +305,7 @@
       </ul>
       <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
       <h3>시험 원서별 사진 규격</h3>
-      <p>위의 <b>시험 원서</b>·<b>어학시험</b> 버튼을 누르면 픽셀 크기와 용량이 한 번에 맞춰져요. 링크로 바로 열 수도 있어요.</p>
+      <p>위의 <b>시험·이력서·비자</b> 버튼을 누르면 픽셀 크기와 용량이 한 번에 맞춰져요. 링크로 바로 열 수도 있어요.</p>
       <ul>
           <li><b>큐넷 (국가기술자격·전문자격)</b> → 300×400px 이상, JPG, 200KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-qnet">큐넷 규격으로 열기</a></li>
           <li><b>국가직 공무원 원서</b> → 3.5×4.5cm(137×177px), JPG·PNG, 350KB 미만(국가공무원 채용시스템 안내). <a href="/ko/compress-id-photo.html?resize=kr-gosi">공무원 규격으로 열기</a></li>
@@ -315,9 +316,10 @@
           <li><b>텝스</b> → 3×4cm(126×165px), JPG 50KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-teps">텝스 규격으로 열기</a></li>
           <li><b>운전면허 갱신·재발급 (안전운전 통합민원)</b> → 3.5×4.5cm, 413×531px 권장, JPG 500KB 이하. <a href="/ko/compress-id-photo.html?resize=passport">여권 규격으로 열기</a> · <a href="/ko/guides/driver-license-photo.html">운전면허 사진 규격</a></li>
           <li><b>대입 수시·정시 원서 (진학어플라이·유웨이어플라이)</b> → 3개월 이내 반명함 3×4cm, JPG. 수능 응시원서는 여권용 3.5×4.5cm. <a href="/ko/compress-id-photo.html?resize=id-3x4">3×4 규격으로 열기</a> · <a href="/ko/guides/university-application-photo.html">대입 원서 사진 규격</a></li>
+          <li><b>중국 비자 (중국비자신청서비스센터 온라인 신청)</b> → JPG 354×472~420×560px, 40~120KB, 흰색 배경. 머리 위치 기준을 재는 354×472px로 맞춰요. <a href="/ko/compress-id-photo.html?resize=cn-visa">중국 비자 규격으로 열기</a> · <a href="/ko/guides/china-visa-photo.html">중국 비자 사진 규격</a></li>
       </ul>
       <h3>이력서 사진 규격 (잡코리아·사람인)</h3>
-      <p>위의 <b>이력서</b> 줄 버튼을 누르면 취업 사이트가 안내하는 픽셀로 맞춰져요.</p>
+      <p>위의 <b>잡코리아</b>·<b>사람인</b> 버튼을 누르면 취업 사이트가 안내하는 픽셀로 맞춰져요.</p>
       <ul>
           <li><b>잡코리아</b> → 103×132px 권장. 150×210px를 넘으면 등록이 안 돼요(GIF·JPG·PNG, 5MB 이내). <a href="/ko/compress-id-photo.html?resize=kr-jobkorea">잡코리아 규격으로 열기</a></li>
           <li><b>사람인</b> → 100×140px 권장, JPG·GIF, 10MB 이내. <a href="/ko/compress-id-photo.html?resize=kr-saramin">사람인 규격으로 열기</a></li>
@@ -425,9 +427,9 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/i18n/ko.js?v=a693a1ca"></script>
+<script defer src="/i18n/ko.js?v=4bb0e51a"></script>
 <script defer src="/lib.js?v=2df86fbc"></script>
 <script defer src="/js/specs.js?v=c011b942"></script>
-<script type="module" src="/js/compress-image.js?v=913435a2"></script>
+<script type="module" src="/js/compress-image.js?v=e5646751"></script>
 </body>
 </html>

@@ -123,6 +123,7 @@ window.SLIMIO_KO = {
    // compress image
    "Compress images": "사진 용량 줄이기",
    "Drag the frame and zoom: head inside the oval, eyes between the two dotted lines.": "틀을 옮기고 확대해서 머리는 타원 안에, 눈은 두 점선 사이에 오게 하세요.",
+   "Drag the frame and zoom until your face fills the oval's width and your eyes sit between the two dotted lines.": "틀을 옮기고 확대해서 얼굴 폭이 타원을 가로로 채우고, 눈이 두 점선 사이에 오게 하세요.",
    "Drag the frame so your face sits inside the guide.": "틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.",
    "The photo below follows the frame.": "아래 결과 사진도 바로 바뀌어요.",
    "Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.": "틀을 옮기고 확대해서 머리카락을 뺀 정수리부터 턱까지가 타원을 위아래로 꽉 채우게 하세요.",

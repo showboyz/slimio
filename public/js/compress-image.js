@@ -10,15 +10,17 @@ const prog = SlimIO.bindProgress("prog");
 const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600], "bank-photo": [200, 230],
      "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160], "upsc-photo": [450, 600],
      "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300],
-     "kr-toeic": [300, 400], "kr-teps": [126, 165] };
+     "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
 // KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
 // TOEIC: YBM's upload window takes a JPG up to 6MB and saves its own 300×400 crop, so 500KB is just
-// "best quality"; TEPS: 126×165 px, ≤50KB JPG).
+// "best quality"; TEPS: 126×165 px, ≤50KB JPG; Chinese visa (MFA photo rules, used by the visa
+// centres' online form): JPEG 354×472 to 420×560 px and 40–120KB — 354×472 is the size the head
+// rules are measured on, and the KB range goes into the custom fields since the list doesn't have it).
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "300KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
-     "kr-toeic": "500KB", "kr-teps": "50KB" };
+     "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB" };
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {
@@ -31,6 +33,12 @@ const GUIDES = {
      // the top 23%. A head filling the default oval (about 55–65% of the height) was refused as
      // too small; 65–75% passed, 84% was too big. Same oval as passports (head about 75%).
      "kr-toeic": { cy: 0.48, rx: 0.36, ry: 0.378 },
+     // Chinese visa, on the 354×472 example: face 205 ± 14 px wide (58%), crown 10–70 px from the
+     // top, eye line at least 256 px from the bottom (eyes no lower than 45.8% from the top);
+     // paper photo: chin to crown 28–33 mm of 48 (58–69%). So the oval is the face (58% wide, eyes
+     // near its middle), not the hair: with full hair, fitting the hair into an oval left the face
+     // at 49% of the width.
+     "cn-visa": { cy: 0.43, rx: 0.29, ry: 0.31, eyes: [0.30, 0.45] },
 };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
@@ -170,7 +178,13 @@ tiles.forEach((t) => t.addEventListener("click", () => {
 $("resize").addEventListener("change", syncTiles);
 $("resize").addEventListener("change", () => {
      const t = PRESET_TARGET[$("resize").value];
-     if (t) { $("target").value = t; $("target").dispatchEvent(new Event("change")); }
+     if (!t) return;
+     if ([...$("target").options].some((o) => o.value === t)) $("target").value = t;
+     else {   // a range the list doesn't have: fill in the custom range
+             const [lo, hi] = t.match(/\d+/g);
+             $("target").value = "custom"; $("kmin").value = lo; $("kmax").value = hi;
+     }
+     $("target").dispatchEvent(new Event("change"));
 });
 $("target").addEventListener("change", () => { $("krange").hidden = $("target").value !== "custom"; });
 $("krange").hidden = $("target").value !== "custom";
@@ -291,10 +305,12 @@ async function compressOne(file, opts, crop, decoded) {
 }
 
 // US visa photos must not be compressed more than 20:1 (at least 54KB for 600×600), so a
-// very smooth photo that fits easily is saved at a higher quality instead.
+// very smooth photo that fits easily is saved at a higher quality instead. Same for a form's
+// minimum KB (Chinese visa: 40KB at 390×520): real detail first, padding only if still short.
 async function atLeast(c, opts, b) {
+     const floor = Math.max(opts.floor || 0, opts.min || 0);
      for (const q of [0.96, 0.99, 1]) {
-             if (!opts.floor || b.size >= opts.floor) break;
+             if (!floor || b.size >= floor) break;
              const n = await encode(c, opts.format, q);
              if (n.size > opts.target) break;
              b = n;
@@ -379,6 +395,8 @@ function syncCrop() {
              ? SlimIO.t("Drag the frame to set the crop on the first photo. The others are cropped from the center.")
              : $("resize").value === "us-visa"
              ? SlimIO.t("Drag the frame and zoom: head inside the oval, eyes between the two dotted lines.")
+             : $("resize").value === "cn-visa"
+             ? SlimIO.t("Drag the frame and zoom until your face fills the oval's width and your eyes sit between the two dotted lines.")
              : $("resize").value === "passport"
              ? SlimIO.t("Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");

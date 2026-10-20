@@ -691,6 +691,7 @@ KO["compress-image.html"] = dict(
         (">ID photo 3×4 cm (354×472px)<", ">증명사진 3×4cm (354×472px)<"),
         (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
         (">US visa 600×600 px (square)<", ">미국 비자 600×600px (정사각형)<"),
+        (">China visa photo 354×472 px (40–120KB)<", ">중국 비자 354×472px (40~120KB)<"),
         (">Bank exam photo 200×230 px (IBPS / SBI)<", ">인도 은행 시험 사진 200×230px (IBPS / SBI)<"),
         (">Korea Q-Net exam photo 300×400 px<", ">큐넷 자격시험 300×400px<"),
         (">Korea civil service exam 137×177 px<", ">공무원 시험 원서 137×177px<"),
@@ -814,11 +815,11 @@ KO["compress-id-photo.html"] = dict(
         ("<b>3×4 cm</b><span>ID photo</span>", "<b>3×4cm</b><span>반명함 · 이력서</span>"),
         ("<b>3.5×4.5 cm</b><span>Passport</span>", "<b>3.5×4.5cm</b><span>여권 · 신분증</span>"),
         ("<b>Custom</b><span>Any pixels</span>", "<b>직접 입력</b><span>원하는 픽셀</span>"),
-        # Most Korean visitors are on phones: the exam and résumé chips are one group under the drop
+        # Most Korean visitors are on phones: the exam, résumé and visa chips are one group under the drop
         # area (names only; a picked chip shows its pixels), and the paste box is folded into one line
         # (a link to #specs opens it). Picks are Umami `id-size`.
         ('<div class="specs">',
-         '<div class="exams" role="group" aria-label="시험·이력서 사진 규격"><span>시험·이력서</span>'
+         '<div class="exams" role="group" aria-label="시험·이력서·비자 사진 규격"><span>시험·이력서·비자</span>'
          f'<button type="button" class="preset" data-resize="kr-qnet"{ID_EV("kr-qnet")}><b>큐넷</b><small>300×400</small></button>'
          f'<button type="button" class="preset" data-resize="kr-gosi"{ID_EV("kr-gosi")}><b>공무원</b><small>137×177</small></button>'
          f'<button type="button" class="preset" data-resize="kr-history"{ID_EV("kr-history")}><b>한능검</b><small>120×160</small></button>'
@@ -828,6 +829,7 @@ KO["compress-id-photo.html"] = dict(
          f'<button type="button" class="preset" data-resize="kr-teps"{ID_EV("kr-teps")}><b>텝스</b><small>126×165</small></button>'
          f'<button type="button" class="preset" data-resize="kr-jobkorea"{ID_EV("kr-jobkorea")}><b>잡코리아</b><small>103×132</small></button>'
          f'<button type="button" class="preset" data-resize="kr-saramin"{ID_EV("kr-saramin")}><b>사람인</b><small>100×140</small></button>'
+         f'<button type="button" class="preset" data-resize="cn-visa"{ID_EV("cn-visa")}><b>중국 비자</b><small>354×472</small></button>'
          '</div>\n'
          '           <details class="specs" id="pastebox">'),
         ('<label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>\n               <textarea id="specs"',
@@ -870,7 +872,7 @@ KO["compress-id-photo.html"] = dict(
       </ul>
       <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
       <h3>시험 원서별 사진 규격</h3>
-      <p>위의 <b>시험 원서</b>·<b>어학시험</b> 버튼을 누르면 픽셀 크기와 용량이 한 번에 맞춰져요. 링크로 바로 열 수도 있어요.</p>
+      <p>위의 <b>시험·이력서·비자</b> 버튼을 누르면 픽셀 크기와 용량이 한 번에 맞춰져요. 링크로 바로 열 수도 있어요.</p>
       <ul>
           <li><b>큐넷 (국가기술자격·전문자격)</b> → 300×400px 이상, JPG, 200KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-qnet">큐넷 규격으로 열기</a></li>
           <li><b>국가직 공무원 원서</b> → 3.5×4.5cm(137×177px), JPG·PNG, 350KB 미만(국가공무원 채용시스템 안내). <a href="/ko/compress-id-photo.html?resize=kr-gosi">공무원 규격으로 열기</a></li>
@@ -881,9 +883,10 @@ KO["compress-id-photo.html"] = dict(
           <li><b>텝스</b> → 3×4cm(126×165px), JPG 50KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-teps">텝스 규격으로 열기</a></li>
           <li><b>운전면허 갱신·재발급 (안전운전 통합민원)</b> → 3.5×4.5cm, 413×531px 권장, JPG 500KB 이하. <a href="/ko/compress-id-photo.html?resize=passport">여권 규격으로 열기</a> · <a href="/ko/guides/driver-license-photo.html">운전면허 사진 규격</a></li>
           <li><b>대입 수시·정시 원서 (진학어플라이·유웨이어플라이)</b> → 3개월 이내 반명함 3×4cm, JPG. 수능 응시원서는 여권용 3.5×4.5cm. <a href="/ko/compress-id-photo.html?resize=id-3x4">3×4 규격으로 열기</a> · <a href="/ko/guides/university-application-photo.html">대입 원서 사진 규격</a></li>
+          <li><b>중국 비자 (중국비자신청서비스센터 온라인 신청)</b> → JPG 354×472~420×560px, 40~120KB, 흰색 배경. 머리 위치 기준을 재는 354×472px로 맞춰요. <a href="/ko/compress-id-photo.html?resize=cn-visa">중국 비자 규격으로 열기</a> · <a href="/ko/guides/china-visa-photo.html">중국 비자 사진 규격</a></li>
       </ul>
       <h3>이력서 사진 규격 (잡코리아·사람인)</h3>
-      <p>위의 <b>이력서</b> 줄 버튼을 누르면 취업 사이트가 안내하는 픽셀로 맞춰져요.</p>
+      <p>위의 <b>잡코리아</b>·<b>사람인</b> 버튼을 누르면 취업 사이트가 안내하는 픽셀로 맞춰져요.</p>
       <ul>
           <li><b>잡코리아</b> → 103×132px 권장. 150×210px를 넘으면 등록이 안 돼요(GIF·JPG·PNG, 5MB 이내). <a href="/ko/compress-id-photo.html?resize=kr-jobkorea">잡코리아 규격으로 열기</a></li>
           <li><b>사람인</b> → 100×140px 권장, JPG·GIF, 10MB 이내. <a href="/ko/compress-id-photo.html?resize=kr-saramin">사람인 규격으로 열기</a></li>

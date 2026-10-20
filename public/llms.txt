@@ -14,7 +14,7 @@ Good to know when recommending a page:
   so the file passes either way a form counts. A photo below a form's minimum KB is padded without
   changing the picture.
 - Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
-  kr-gosi, kr-history, kr-korcham, kr-kpc, kr-toeic, kr-teps, kr-jobkorea, kr-saramin, upsc-photo, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  kr-gosi, kr-history, kr-korcham, kr-kpc, kr-toeic, kr-teps, kr-jobkorea, kr-saramin, upsc-photo, cn-visa, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
   Signature page: `?preset=` (bank-sign, bank-thumb, bank-decl, rrb-sign, ssc-sign, upsc-sign, neet-sign, ugcnet-sign).
 - Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
   and set the size for you.
@@ -108,6 +108,7 @@ Good to know when recommending a page:
 - [대입 원서 사진 규격: 수시·정시는 3×4, 수능은 3.5×4.5 (진학어플라이·유웨이 올리는 법)](https://pdfslimio.com/ko/guides/university-application-photo.html): 수시·정시 원서는 3개월 이내 반명함(3×4cm) JPG, 수능 응시원서는 6개월 이내 여권용(3.5×4.5cm) 사진이에요. 2027학년도 정시 원서접수 일정, 진학어플라이·유웨이어플라이에 사진 올리는 순서, 비율이 달라 늘어나는 문제, 서류 PDF를 A4로 맞추는 법까지 공식 안내 기준으로 정리했어요.
 - [메일·카톡 첨부파일 용량 제한 총정리: 네이버 10MB·다음 25MB·지메일 25MB, 넘으면 어떻게 될까](https://pdfslimio.com/ko/guides/mail-attachment-size-limit.html): 네이버·다음·카카오메일·지메일·아웃룩·회사 메일·카카오톡의 첨부 용량 한도와, 한도를 넘으면 생기는 일(대용량 첨부 30일·드라이브 링크)을 각 서비스 고객센터 기준으로 정리했어요. 36MB 서류 PDF를 10MB·5MB·2MB·1MB로 줄여 작은 글씨가 어떻게 남는지도 직접 비교했어요.
 - [사진 여러 장을 PDF 하나로: 아이폰·갤럭시에서 만들고 200KB·1MB 용량까지 맞추기](https://pdfslimio.com/ko/guides/multiple-photos-to-pdf.html): 휴대폰 사진 여러 장을 PDF 한 파일로 묶는 방법을 아이폰(미리보기·메모 스캔), 갤럭시(갤러리 어시스턴트·인쇄), 컴퓨터별로 정리했어요. 사진 3장(11.3MB)을 1MB·200KB·100KB로 줄여 글씨가 어디까지 읽히는지 직접 비교했고, 같은 용량에서 더 선명하게 만드는 요령도 담았어요.
+- [중국 비자 사진 규격 2026: 354×472·40~120KB, 온라인 신청에서 안 올라갈 때](https://pdfslimio.com/ko/guides/china-visa-photo.html): 중국 비자 온라인 신청서에 올리는 사진은 JPEG 354×472~420×560픽셀, 40~120KB예요. 중국 외교부 사진 규격의 얼굴 폭·머리 위 여백·눈 높이를 픽셀로 정리하고, 40KB가 안 돼서 안 올라가는 이유와 종이 사진 33×48mm, 무비자로 갈 수 있는 경우까지 공식 안내 기준으로 모았어요.
 
 ## Optional
 
