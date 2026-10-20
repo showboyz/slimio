@@ -201,6 +201,11 @@ function applySpecs() {
 }
 let specsTimer = null;
 $("specs").addEventListener("input", () => { clearTimeout(specsTimer); specsTimer = setTimeout(applySpecs, 300); });
+// Korean ID photo page: the paste box is folded (<details>); a link to #specs opens it
+{
+     const box = $("specs").closest("details");
+     if (box && location.hash === "#specs") { box.open = true; $("specs").focus({ preventScroll: true }); }
+}
 
 // ?resize=bank-photo&target=50KB preselects options (links from guide pages)
 {

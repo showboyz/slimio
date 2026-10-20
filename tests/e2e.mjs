@@ -432,7 +432,10 @@ function toolTests() {
   both("compress-image.html", "20–50KB range", (p) => photo(p, { target: "20-50KB" }));
   both("compress-image.html", "WebP 100KB", (p) => photo(p, { target: "100KB", format: "webp" }));
   for (const t of ["20kb", "50kb", "100kb", "200kb"]) both(`compress-image-to-${t}.html`, "fits", (p) => photo(p, {}));
-  for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, (p) => photo(p, { resize: r }));
+  // the Korean page leaves out the US visa (own page) and Indian exam sizes
+  const NOT_KO = ["us-visa", "bank-photo", "upsc-photo"];
+  for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, async (p) => !(NOT_KO.includes(r) && p.url().includes("/ko/")) ? photo(p, { resize: r })
+    : (await p.$(`#resize option[value="${r}"]`)) ? `${r} is still in the Korean size list` : null);
   both("us-visa-photo.html", "600×600, 54–240KB", (p) => photo(p, { expect: { min: 54000 } }));
   both("compress-id-photo.html", "made without a button, follows the zoom", async (p) => {
     await p.setInputFiles("#images", F("photo.jpg"));
@@ -481,6 +484,8 @@ function toolTests() {
     ["compress-id-photo.html", "크기: 가로 115~235픽셀, 세로 150~315픽셀 형식: PNG 파일 권장(JPG, GIF, PNG 파일 가능) 용량: 500KB 이하", { w: 235, h: 315, max: 500 }],
   ];
   for (const [page, text, want] of PASTED) both(page, `pasted rules "${text.slice(0, 24)}…"`, async (p) => {
+    const fold = await p.$("details.specs:not([open]) > summary");   // Korean ID photo page: folded into one line
+    if (fold) await fold.click();
     if (!(await p.isVisible("#specs"))) return "the paste box is hidden before a file is added";
     await p.fill("#specs", text);
     await p.waitForSelector("#specsout:not([hidden])");

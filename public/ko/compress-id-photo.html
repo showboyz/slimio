@@ -117,7 +117,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=3899da17" />
+<link rel="stylesheet" href="/style.css?v=4ab01379" />
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -152,22 +152,16 @@
 </div>
 
 <div class="wrap" id="tool">
-      <div class="hero">
+      <div class="hero tight">
            <h1>증명사진,<br /><b>규격도 용량도 한 번에.</b></h1>
            <p>3×4cm·3.5×4.5cm, 큐넷·공무원·한능검·컴활 원서 규격으로 자르고 용량 제한까지 맞춰요. 설치 없이, 무료로.</p>
-           <div class="trust-row">
-               <span>⚡ 빠름</span>
-               <span>🔒 안전</span>
-               <span>🆓 무료</span>
-               <span>📦 설치 없음</span>
-           </div>
       </div>
 
       <div class="tool" data-live>
            <div class="presets" role="group" aria-label="사진 규격">
-                   <button type="button" class="preset" data-resize="id-3x4"><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="1" y="1" width="28" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="15.0" cy="16.0" r="6.0" fill="currentColor" opacity=".55"/><path d="M4.2 39 q0 -9.6 10.8 -9.6 q10.8 0 10.8 9.6z" fill="currentColor" opacity=".55"/></svg><b>3×4cm</b><span>반명함 · 이력서</span></button>
-                   <button type="button" class="preset" data-resize="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5cm</b><span>여권 · 신분증</span></button>
-                   <button type="button" class="preset" data-resize="custom"><svg viewBox="0 0 34 40" aria-hidden="true"><rect x="1" y="1" width="32" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M11.0 20.0h12M17.0 14.0v12" stroke="currentColor" stroke-width="1.5"/></svg><b>직접 입력</b><span>원하는 픽셀</span></button>
+                   <button type="button" class="preset" data-resize="id-3x4" data-umami-event="id-size" data-umami-event-size="id-3x4"><svg viewBox="0 0 30 40" aria-hidden="true"><rect x="1" y="1" width="28" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="15.0" cy="16.0" r="6.0" fill="currentColor" opacity=".55"/><path d="M4.2 39 q0 -9.6 10.8 -9.6 q10.8 0 10.8 9.6z" fill="currentColor" opacity=".55"/></svg><b>3×4cm</b><span>반명함 · 이력서</span></button>
+                   <button type="button" class="preset" data-resize="passport" data-umami-event="id-size" data-umami-event-size="passport"><svg viewBox="0 0 35 45" aria-hidden="true"><rect x="1" y="1" width="33" height="43" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="18.0" r="7.0" fill="currentColor" opacity=".55"/><path d="M4.9 44 q0 -10.8 12.6 -10.8 q12.6 0 12.6 10.8z" fill="currentColor" opacity=".55"/></svg><b>3.5×4.5cm</b><span>여권 · 신분증</span></button>
+                   <button type="button" class="preset" data-resize="custom" data-umami-event="id-size" data-umami-event-size="custom"><svg viewBox="0 0 34 40" aria-hidden="true"><rect x="1" y="1" width="32" height="38" rx="3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3"/><path d="M11.0 20.0h12M17.0 14.0v12" stroke="currentColor" stroke-width="1.5"/></svg><b>직접 입력</b><span>원하는 픽셀</span></button>
                </div>
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
@@ -175,14 +169,12 @@
                <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, WebP 등)</div>
                <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
            </div>
-           <div class="exams" role="group" aria-label="시험 원서 사진 규격"><span>시험 원서</span><button type="button" class="preset" data-resize="kr-qnet"><b>큐넷</b>300×400</button><button type="button" class="preset" data-resize="kr-gosi"><b>공무원</b>137×177</button><button type="button" class="preset" data-resize="kr-history"><b>한능검</b>120×160</button><button type="button" class="preset" data-resize="kr-korcham"><b>컴활·워드</b>400×500</button><button type="button" class="preset" data-resize="kr-kpc"><b>ITQ</b>225×300</button></div>
-           <div class="exams" role="group" aria-label="어학시험 사진 규격"><span>어학시험</span><button type="button" class="preset" data-resize="kr-toeic"><b>토익</b>300×400</button><button type="button" class="preset" data-resize="kr-teps"><b>텝스</b>126×165</button></div>
-           <div class="exams" role="group" aria-label="이력서 사진 규격"><span>이력서</span><button type="button" class="preset" data-resize="kr-jobkorea"><b>잡코리아</b>103×132</button><button type="button" class="preset" data-resize="kr-saramin"><b>사람인</b>100×140</button></div>
-           <div class="specs">
-               <label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>
-               <textarea id="specs" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+           <div class="exams" role="group" aria-label="시험·이력서 사진 규격"><span>시험·이력서</span><button type="button" class="preset" data-resize="kr-qnet" data-umami-event="id-size" data-umami-event-size="kr-qnet"><b>큐넷</b><small>300×400</small></button><button type="button" class="preset" data-resize="kr-gosi" data-umami-event="id-size" data-umami-event-size="kr-gosi"><b>공무원</b><small>137×177</small></button><button type="button" class="preset" data-resize="kr-history" data-umami-event="id-size" data-umami-event-size="kr-history"><b>한능검</b><small>120×160</small></button><button type="button" class="preset" data-resize="kr-korcham" data-umami-event="id-size" data-umami-event-size="kr-korcham"><b>컴활·워드</b><small>400×500</small></button><button type="button" class="preset" data-resize="kr-kpc" data-umami-event="id-size" data-umami-event-size="kr-kpc"><b>ITQ</b><small>225×300</small></button><button type="button" class="preset" data-resize="kr-toeic" data-umami-event="id-size" data-umami-event-size="kr-toeic"><b>토익</b><small>300×400</small></button><button type="button" class="preset" data-resize="kr-teps" data-umami-event="id-size" data-umami-event-size="kr-teps"><b>텝스</b><small>126×165</small></button><button type="button" class="preset" data-resize="kr-jobkorea" data-umami-event="id-size" data-umami-event-size="kr-jobkorea"><b>잡코리아</b><small>103×132</small></button><button type="button" class="preset" data-resize="kr-saramin" data-umami-event="id-size" data-umami-event-size="kr-saramin"><b>사람인</b><small>100×140</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
                <div class="specs-out" id="specsout" hidden></div>
-           </div>
+           </details>
 
            <div class="controls hidden" id="controls">
                <div class="field">
@@ -215,13 +207,8 @@
                    <label>크기 조절</label>
                    <select id="resize">
                        <option value="0">원래 크기 유지</option>
-                       <option value="1920">긴 변 1920px</option>
-                       <option value="1280">긴 변 1280px</option>
-                       <option value="800">긴 변 800px</option>
                        <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
                        <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
-                       <option value="us-visa">미국 비자 600×600px (정사각형)</option>
-                       <option value="bank-photo">인도 은행 시험 사진 200×230px (IBPS / SBI)</option>
                        <option value="kr-qnet">큐넷 자격시험 300×400px</option>
                        <option value="kr-gosi">공무원 시험 원서 137×177px</option>
                        <option value="kr-history">한국사능력검정 120×160px</option>
@@ -231,7 +218,6 @@
                        <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
                        <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
                        <option value="kr-saramin">사람인 이력서 100×140px</option>
-                       <option value="upsc-photo">인도 UPSC 사진 450×600px (20~300KB)</option>
                        <option value="custom">픽셀 직접 입력…</option>
                    </select>
                    <div class="px-row" id="custom" hidden>
@@ -338,7 +324,7 @@
           <li><b>한글·워드 이력서 양식</b> → 사진 칸이 3×4cm라면 354×472px로 저장해서 넣으세요.</li>
       </ul>
       <p>사이트별 차이와 사진이 안 올라갈 때 확인할 것은 <a href="/ko/guides/resume-photo-size.html">이력서 사진 크기 총정리</a>에 있어요.</p>
-      <p>컴활 사진이 "50kbyte를 초과할 수 없습니다"로 안 올라간다면 <a href="/ko/guides/computer-certificate-photo-size.html">컴활·워드·ITQ 사진 규격</a>을 보세요. 여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 공고문의 문장을 위 <b>원서의 사진 규격 붙여넣기</b> 칸에 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
+      <p>컴활 사진이 "50kbyte를 초과할 수 없습니다"로 안 올라간다면 <a href="/ko/guides/computer-certificate-photo-size.html">컴활·워드·ITQ 사진 규격</a>을 보세요. 여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 위의 <b>원서의 사진 규격 붙여넣기</b>를 누르고, 공고문의 문장을 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
       <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
       <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 틀을 얼굴에 맞춰 옮기면 그 비율로 잘라서 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
@@ -442,6 +428,6 @@
 <script defer src="/i18n/ko.js?v=a693a1ca"></script>
 <script defer src="/lib.js?v=2df86fbc"></script>
 <script defer src="/js/specs.js?v=c011b942"></script>
-<script type="module" src="/js/compress-image.js?v=a71cb5d5"></script>
+<script type="module" src="/js/compress-image.js?v=913435a2"></script>
 </body>
 </html>

@@ -793,6 +793,10 @@ KO["us-visa-photo.html"] = dict(
     ],
 )
 
+def ID_EV(size):
+    return f' data-umami-event="id-size" data-umami-event-size="{size}"'
+
+
 KO["compress-id-photo.html"] = dict(
     title="증명사진 용량 줄이기 - 큐넷·공무원·한능검·컴활 원서 사진 규격 무료 | SlimIO",
     desc="증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px)·컴활(400×500px, 50KB) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.",
@@ -804,27 +808,41 @@ KO["compress-id-photo.html"] = dict(
     h1="증명사진,<br /><b>규격도 용량도 한 번에.</b>",
     ui_extra=[
         ('aria-label="Photo size"', 'aria-label="사진 규격"'),
+        ('class="preset" data-resize="id-3x4">', f'class="preset" data-resize="id-3x4"{ID_EV("id-3x4")}>'),
+        ('class="preset" data-resize="passport">', f'class="preset" data-resize="passport"{ID_EV("passport")}>'),
+        ('class="preset" data-resize="custom">', f'class="preset" data-resize="custom"{ID_EV("custom")}>'),
         ("<b>3×4 cm</b><span>ID photo</span>", "<b>3×4cm</b><span>반명함 · 이력서</span>"),
         ("<b>3.5×4.5 cm</b><span>Passport</span>", "<b>3.5×4.5cm</b><span>여권 · 신분증</span>"),
         ("<b>Custom</b><span>Any pixels</span>", "<b>직접 입력</b><span>원하는 픽셀</span>"),
-        # exam and résumé chips go under the drop area (above the paste box), so on a phone
-        # the drop area stays on the first screen
+        # Most Korean visitors are on phones: the exam and résumé chips are one group under the drop
+        # area (names only; a picked chip shows its pixels), and the paste box is folded into one line
+        # (a link to #specs opens it). Picks are Umami `id-size`.
         ('<div class="specs">',
-         '<div class="exams" role="group" aria-label="시험 원서 사진 규격"><span>시험 원서</span>'
-         '<button type="button" class="preset" data-resize="kr-qnet"><b>큐넷</b>300×400</button>'
-         '<button type="button" class="preset" data-resize="kr-gosi"><b>공무원</b>137×177</button>'
-         '<button type="button" class="preset" data-resize="kr-history"><b>한능검</b>120×160</button>'
-         '<button type="button" class="preset" data-resize="kr-korcham"><b>컴활·워드</b>400×500</button>'
-         '<button type="button" class="preset" data-resize="kr-kpc"><b>ITQ</b>225×300</button></div>\n'
-         '           <div class="exams" role="group" aria-label="어학시험 사진 규격"><span>어학시험</span>'
-         '<button type="button" class="preset" data-resize="kr-toeic"><b>토익</b>300×400</button>'
-         '<button type="button" class="preset" data-resize="kr-teps"><b>텝스</b>126×165</button></div>\n'
-         '           <div class="exams" role="group" aria-label="이력서 사진 규격"><span>이력서</span>'
-         '<button type="button" class="preset" data-resize="kr-jobkorea"><b>잡코리아</b>103×132</button>'
-         '<button type="button" class="preset" data-resize="kr-saramin"><b>사람인</b>100×140</button></div>\n'
-         '           <div class="specs">'),
+         '<div class="exams" role="group" aria-label="시험·이력서 사진 규격"><span>시험·이력서</span>'
+         f'<button type="button" class="preset" data-resize="kr-qnet"{ID_EV("kr-qnet")}><b>큐넷</b><small>300×400</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-gosi"{ID_EV("kr-gosi")}><b>공무원</b><small>137×177</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-history"{ID_EV("kr-history")}><b>한능검</b><small>120×160</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-korcham"{ID_EV("kr-korcham")}><b>컴활·워드</b><small>400×500</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-kpc"{ID_EV("kr-kpc")}><b>ITQ</b><small>225×300</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-toeic"{ID_EV("kr-toeic")}><b>토익</b><small>300×400</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-teps"{ID_EV("kr-teps")}><b>텝스</b><small>126×165</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-jobkorea"{ID_EV("kr-jobkorea")}><b>잡코리아</b><small>103×132</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-saramin"{ID_EV("kr-saramin")}><b>사람인</b><small>100×140</small></button>'
+         '</div>\n'
+         '           <details class="specs" id="pastebox">'),
+        ('<label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>\n               <textarea id="specs"',
+         '<summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>\n               <textarea id="specs" aria-label="원서의 사진 규격"'),
+        ('<div class="specs-out" id="specsout" hidden></div>\n           </div>',
+         '<div class="specs-out" id="specsout" hidden></div>\n           </details>'),
+        # a shorter hero, without the badge row, so a laptop shows the whole upload box too
+        ('<div class="hero">', '<div class="hero tight">'),
+        ('\n           <div class="trust-row">\n               <span>⚡ Instant</span>\n               <span>🔒 Private</span>\n'
+         '               <span>🆓 Free</span>\n               <span>📦 No install</span>\n           </div>', ''),
     ],
     lead="3×4cm·3.5×4.5cm, 큐넷·공무원·한능검·컴활 원서 규격으로 자르고 용량 제한까지 맞춰요. 설치 없이, 무료로.",
+    # sizes for other countries (US visa has its own page, the Indian exams are on the English page)
+    # and plain long-side sizes, which an ID photo never needs
+    drop_options=["1920", "1280", "800", "us-visa", "bank-photo", "upsc-photo"],
     ui=None,
     content="""
       <h2>증명사진 용량 줄이는 방법</h2>
@@ -872,7 +890,7 @@ KO["compress-id-photo.html"] = dict(
           <li><b>한글·워드 이력서 양식</b> → 사진 칸이 3×4cm라면 354×472px로 저장해서 넣으세요.</li>
       </ul>
       <p>사이트별 차이와 사진이 안 올라갈 때 확인할 것은 <a href="/ko/guides/resume-photo-size.html">이력서 사진 크기 총정리</a>에 있어요.</p>
-      <p>컴활 사진이 "50kbyte를 초과할 수 없습니다"로 안 올라간다면 <a href="/ko/guides/computer-certificate-photo-size.html">컴활·워드·ITQ 사진 규격</a>을 보세요. 여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 공고문의 문장을 위 <b>원서의 사진 규격 붙여넣기</b> 칸에 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
+      <p>컴활 사진이 "50kbyte를 초과할 수 없습니다"로 안 올라간다면 <a href="/ko/guides/computer-certificate-photo-size.html">컴활·워드·ITQ 사진 규격</a>을 보세요. 여권·토익까지 포함한 규격 표와 출처는 <a href="/ko/guides/exam-application-photo-size.html">원서 사진 규격 총정리</a>에 있어요. 2026년 10월 각 접수 사이트 안내 기준이에요. 지방직·기업 채용처럼 규격이 다른 곳은 위의 <b>원서의 사진 규격 붙여넣기</b>를 누르고, 공고문의 문장을 그대로 붙여 넣으면 숫자를 읽어서 맞춰 줘요.</p>
       <h3>“150×200 픽셀”처럼 픽셀로 정해져 있다면</h3>
       <p>cm 대신 픽셀로 규격을 적어 둔 접수 사이트도 많아요. 크기 조절에서 <b>픽셀 직접 입력</b>을 고르고 가로·세로를 입력하세요. 틀을 얼굴에 맞춰 옮기면 그 비율로 잘라서 정확히 그 픽셀 크기로, 용량 제한 안에 맞춰 저장해요.</p>
       <h3>잘 잘리게 찍는 팁</h3>
@@ -1612,6 +1630,8 @@ def build(page):
         if en not in s:
             sys.exit(f"[{page}] UI text not found (English page changed?): {en!r}")
         s = s.replace(en, ko)
+    for v in d.get("drop_options", []):
+        s = sub1(rf'\n\s*<option value="{re.escape(v)}">[^<]*</option>', "", s, f"{page} option {v}")
     if page in SIZE_PAGES or image_page:
         s = re.sub(r">Under (\d+(?:KB|MB))<", r">\1 이하<", s)
     for en, ko in COMMON:

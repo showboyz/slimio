@@ -106,6 +106,28 @@ button.btn:disabled { background: #333d4d; color: var(--muted); cursor: not-allo
 .exams .preset { flex-direction: row; gap: 5px; padding: 7px 11px; border-radius: 999px; }
 .exams .preset b { font-size: 12.5px; }
 .drop + .exams, .drop + .specs { margin-top: 16px; }   /* ID photo page: chips and paste box under the drop area */
+.exams small { display: none; font-size: 11.5px; }   /* Korean ID photo page: a chip shows its pixels once picked */
+.exams .preset.on small { display: inline; }
+details.specs summary { cursor: pointer; list-style: none; font-size: 14px; font-weight: 700; padding: 4px 0; }
+details.specs summary::-webkit-details-marker { display: none; }
+details.specs summary small { color: var(--muted); font-weight: 400; }
+details.specs summary::after { content: "+"; float: right; color: var(--accent); }
+details.specs[open] summary { margin-bottom: 8px; }
+details.specs[open] summary::after { content: "−"; }
+/* Korean ID photo page: a shorter hero (no badge row) and smaller size tiles, so the whole upload
+   box is on the first screen of a phone and of a laptop */
+.hero.tight { padding: 34px 0 18px; }
+.hero.tight h1 { font-size: clamp(30px, 4.4vw, 44px); }
+.hero.tight p { margin-top: 12px; font-size: 16.5px; }
+.hero.tight + .tool { padding-top: 24px; }
+.hero.tight + .tool .preset { padding: 11px 6px 9px; }
+.hero.tight + .tool .preset svg { height: 44px; margin-bottom: 4px; }
+@media (max-width: 560px) {
+   .hero.tight { padding: 18px 0 12px; }
+   .hero.tight p { font-size: 15px; margin-top: 10px; }
+   .hero.tight + .tool { padding-top: 16px; }
+   .hero.tight + .tool .preset svg { height: 36px; }
+}
 
 /* before/after demo (compress-id-photo) */
 .demo { margin: 22px 0 8px; padding: 18px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
