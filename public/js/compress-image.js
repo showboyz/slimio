@@ -10,17 +10,19 @@ const prog = SlimIO.bindProgress("prog");
 const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600], "bank-photo": [200, 230],
      "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160], "upsc-photo": [450, 600],
      "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300],
-     "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472] };
+     "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472], "kr-kuksiwon": [413, 531] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
 // KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
 // TOEIC: YBM's upload window takes a JPG up to 6MB and saves its own 300×400 crop, so 500KB is just
 // "best quality"; TEPS: 126×165 px, ≤50KB JPG; Chinese visa (MFA photo rules, used by the visa
 // centres' online form): JPEG 354×472 to 420×560 px and 40–120KB — 354×472 is the size the head
-// rules are measured on, and the KB range goes into the custom fields since the list doesn't have it).
+// rules are measured on, and the KB range goes into the custom fields since the list doesn't have it;
+// KUKSIWON (health licensing exams: nurses, care workers, ...): JPG, at least 276×354 px (3.5×4.5cm at
+// 200 dpi), no KB limit, and the photo goes on the licence, so 3.5×4.5 at 300 dpi and best quality).
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "300KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
-     "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB" };
+     "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB" };
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {
@@ -55,8 +57,25 @@ function parseMin(s) {
      return m ? parseInt(m[1], 10) * 1024 : 0;
 }
 
+// Length of the JFIF header (APP0) right after SOI, or 0 if the JPEG doesn't start with one.
+function jfifLength(b) {
+     return b[2] === 0xff && b[3] === 0xe0 && String.fromCharCode(...b.subarray(6, 11)) === "JFIF\0" ? 2 + ((b[4] << 8) | b[5]) : 0;
+}
+
+// Fixed-size photos are saved at 300 dpi, so file properties show 3×4cm / 3.5×4.5cm and a form's
+// "200 dpi or more" rule visibly passes (a canvas JPEG says "no unit", which Windows shows as 96 dpi).
+// Only the JFIF header's density fields change; the size in bytes stays the same.
+async function setJpegDpi(blob, dpi) {
+     const b = new Uint8Array(await blob.arrayBuffer());
+     if (!jfifLength(b)) return blob;
+     b[13] = 1;   // units: dots per inch
+     b[14] = b[16] = dpi >> 8;
+     b[15] = b[17] = dpi & 0xff;
+     return new Blob([b], { type: "image/jpeg" });
+}
+
 // A file under a form's minimum can't honestly get bigger as a picture, so we add inert
-// padding: a JPEG comment segment right after SOI. Viewers ignore it; the image is unchanged.
+// padding: JPEG comment segments after the JFIF header. Viewers ignore them; the image is unchanged.
 async function padJpeg(blob, min) {
      const bytes = new Uint8Array(await blob.arrayBuffer());
      const need = min - bytes.length + 256;
@@ -69,7 +88,8 @@ async function padJpeg(blob, min) {
              segs.push(seg);
              left -= n;
      }
-     return new Blob([bytes.subarray(0, 2), ...segs, bytes.subarray(2)], { type: "image/jpeg" });
+     const at = 2 + jfifLength(bytes);
+     return new Blob([bytes.subarray(0, at), ...segs, bytes.subarray(at)], { type: "image/jpeg" });
 }
 
 let files = [];
@@ -306,7 +326,7 @@ async function compressOne(file, opts, crop, decoded) {
 
 // US visa photos must not be compressed more than 20:1 (at least 54KB for 600×600), so a
 // very smooth photo that fits easily is saved at a higher quality instead. Same for a form's
-// minimum KB (Chinese visa: 40KB at 390×520): real detail first, padding only if still short.
+// minimum KB (Chinese visa: 40KB at 354×472): real detail first, padding only if still short.
 async function atLeast(c, opts, b) {
      const floor = Math.max(opts.floor || 0, opts.min || 0);
      for (const q of [0.96, 0.99, 1]) {
@@ -397,6 +417,8 @@ function syncCrop() {
              ? SlimIO.t("Drag the frame and zoom: head inside the oval, eyes between the two dotted lines.")
              : $("resize").value === "cn-visa"
              ? SlimIO.t("Drag the frame and zoom until your face fills the oval's width and your eyes sit between the two dotted lines.")
+             : $("resize").value === "kr-kuksiwon"   // the photo must come from a studio: a scan or the studio's file
+             ? SlimIO.t("Scanned a printed photo? Zoom and drag until the frame sits just inside the photo's edges. Otherwise keep your face inside the guide.")
              : $("resize").value === "passport"
              ? SlimIO.t("Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");
@@ -550,6 +572,10 @@ async function make(auto) {
                      try {
                              const decoded = auto && previewOf === file ? preview : null;
                              const r = await compressOne(file, opts, i === 0 ? cropState() : null, decoded);   // the frame is set on the first photo
+                             if (opts.format === "jpeg" && !r.kept && (Array.isArray(resize) || PRESETS[resize])) {
+                                     r.blob = await setJpegDpi(r.blob, 300);
+                                     r.dpi = 300;
+                             }
                              if (opts.min && opts.format === "jpeg" && r.blob.size < opts.min) {
                                      r.blob = await padJpeg(r.blob, opts.min);
                                      r.padded = true;
@@ -597,7 +623,7 @@ function showResult(done, label, auto) {
                      thumb.src = url;
                      thumb.alt = "";
                      li.appendChild(thumb);
-                     meta.textContent = `${SlimIO.formatSize(d.file.size)} → ${SlimIO.formatSize(d.blob.size)} · ${d.w}×${d.h}`;
+                     meta.textContent = `${SlimIO.formatSize(d.file.size)} → ${SlimIO.formatSize(d.blob.size)} · ${d.w}×${d.h}${d.dpi ? " · " + d.dpi + "dpi" : ""}`;
                      if (d.kept) meta.append(" · " + SlimIO.t("already optimized, kept as is"));
                      if (d.padded) meta.append(" · " + SlimIO.t("padded to the minimum size; the image is unchanged"));
                      if (label && !d.fits) {

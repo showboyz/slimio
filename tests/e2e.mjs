@@ -423,6 +423,9 @@ function toolTests() {
     const want = PRESETS[resize || (await p.$eval("#resize", (e) => e.value))];
     if (want && (s.w !== want[0] || s.h !== want[1])) return `${s.w}×${s.h}, expected ${want[0]}×${want[1]}`;
     if (!want && Math.max(s.w, s.h) > 1920) return `${s.w}×${s.h} is over 1920`;
+    // fixed sizes are saved at 300 dpi (JFIF header right after SOI: units 1, X and Y density 300)
+    const b = r.bytes, dpi = b[3] === 0xe0 && b[13] === 1 ? [(b[14] << 8) | b[15], (b[16] << 8) | b[17]] : null;
+    if (want && s.type === "jpeg" && !(dpi && dpi[0] === 300 && dpi[1] === 300)) return `saved at ${dpi ? dpi.join("×") + " dpi" : "no dpi"}, expected 300 dpi`;
     // a preset with a range the list lacks (China visa 40–120KB) fills in the custom fields
     const lim = tgt === "custom" ? await p.evaluate(() => ({ min: +document.querySelector("#kmin").value * 1024, max: +document.querySelector("#kmax").value * 1000 })) : kbRange(tgt);
     if (lim && (r.bytes.length > lim.max || r.bytes.length < lim.min)) return `${KB(r.bytes.length)} is outside ${tgt === "custom" ? `${lim.min}–${lim.max} bytes` : tgt}`;
@@ -438,6 +441,11 @@ function toolTests() {
   for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, async (p) => !(NOT_KO.includes(r) && p.url().includes("/ko/")) ? photo(p, { resize: r })
     : (await p.$(`#resize option[value="${r}"]`)) ? `${r} is still in the Korean size list` : null);
   both("us-visa-photo.html", "600×600, 54–240KB", (p) => photo(p, { expect: { min: 54000 } }));
+  both("compress-id-photo.html", "KUKSIWON picks 413×531, 500KB", async (p) => {
+    const err = await photo(p, { resize: "kr-kuksiwon" });
+    const v = await p.evaluate(() => document.querySelector("#target").value);
+    return err || (v === "500KB" ? null : `the size limit is "${v}", expected 500KB`);
+  });
   both("compress-id-photo.html", "China visa picks 40–120KB", async (p) => {
     const err = await photo(p, { resize: "cn-visa" });
     const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));

@@ -700,6 +700,7 @@ KO["compress-image.html"] = dict(
         (">Korea KPC exams (ITQ) 225×300 px<", ">KPC ITQ·GTQ 225×300px<"),
         (">Korea TOEIC photo 300×400 px<", ">토익·토익스피킹 300×400px<"),
         (">Korea TEPS photo 126×165 px (≤50KB)<", ">텝스 126×165px (50KB 이하)<"),
+        (">Korea health licensing exams (KUKSIWON) 413×531 px<", ">국시원 간호사·요양보호사 등 413×531px<"),
         (">JobKorea résumé photo 103×132 px<", ">잡코리아 이력서 103×132px<"),
         (">Saramin résumé photo 100×140 px<", ">사람인 이력서 100×140px<"),
         (">UPSC photo 450×600 px (20–300KB)<", ">인도 UPSC 사진 450×600px (20~300KB)<"),
@@ -827,6 +828,7 @@ KO["compress-id-photo.html"] = dict(
          f'<button type="button" class="preset" data-resize="kr-kpc"{ID_EV("kr-kpc")}><b>ITQ</b><small>225×300</small></button>'
          f'<button type="button" class="preset" data-resize="kr-toeic"{ID_EV("kr-toeic")}><b>토익</b><small>300×400</small></button>'
          f'<button type="button" class="preset" data-resize="kr-teps"{ID_EV("kr-teps")}><b>텝스</b><small>126×165</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-kuksiwon"{ID_EV("kr-kuksiwon")}><b>국시원</b><small>413×531</small></button>'
          f'<button type="button" class="preset" data-resize="kr-jobkorea"{ID_EV("kr-jobkorea")}><b>잡코리아</b><small>103×132</small></button>'
          f'<button type="button" class="preset" data-resize="kr-saramin"{ID_EV("kr-saramin")}><b>사람인</b><small>100×140</small></button>'
          f'<button type="button" class="preset" data-resize="cn-visa"{ID_EV("cn-visa")}><b>중국 비자</b><small>354×472</small></button>'
@@ -870,7 +872,7 @@ KO["compress-id-photo.html"] = dict(
           <li><b>3×4cm (반명함)</b> → 354×472px. 이력서, 입사지원서, 자격시험 접수에 많이 써요.</li>
           <li><b>3.5×4.5cm (여권용)</b> → 413×531px. 여권, 주민등록증, 운전면허증에 쓰는 크기예요.</li>
       </ul>
-      <p>두 규격 모두 300dpi라서 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
+      <p>두 규격 모두 300dpi로 저장돼서 파일 정보에도 그 크기(cm)로 나오고, 그 크기로 인쇄해도 선명해요. 접수 사이트마다 요구하는 크기와 용량이 다를 수 있으니 공고문의 안내를 꼭 확인하세요.</p>
       <h3>시험 원서별 사진 규격</h3>
       <p>위의 <b>시험·이력서·비자</b> 버튼을 누르면 픽셀 크기와 용량이 한 번에 맞춰져요. 링크로 바로 열 수도 있어요.</p>
       <ul>
@@ -881,6 +883,7 @@ KO["compress-id-photo.html"] = dict(
           <li><b>ITQ·GTQ (한국생산성본부 KPC)</b> → 가로 115~235·세로 150~315px, 500KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-kpc">ITQ 규격으로 열기</a></li>
           <li><b>토익·토익스피킹</b> → JPG 6MB 이하. 등록 창이 3:4로 잘라 300×400px로 저장하고 얼굴 크기를 검사해요. <a href="/ko/compress-id-photo.html?resize=kr-toeic">토익 규격으로 열기</a> · <a href="/ko/guides/language-test-photo.html">토익·텝스 사진 규격</a></li>
           <li><b>텝스</b> → 3×4cm(126×165px), JPG 50KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-teps">텝스 규격으로 열기</a></li>
+          <li><b>국시원 (간호사·요양보호사·간호조무사 등 보건의료인 국가시험)</b> → JPG, 276×354px 이상, 200dpi 이상. 면허증에도 쓰이는 사진이라 413×531px(3.5×4.5cm, 300dpi), 높은 화질로 저장해요. 셀프·휴대폰 촬영 사진은 안 받아요. <a href="/ko/compress-id-photo.html?resize=kr-kuksiwon">국시원 규격으로 열기</a> · <a href="/ko/guides/kuksiwon-photo.html">국시원 사진 규격</a></li>
           <li><b>운전면허 갱신·재발급 (안전운전 통합민원)</b> → 3.5×4.5cm, 413×531px 권장, JPG 500KB 이하. <a href="/ko/compress-id-photo.html?resize=passport">여권 규격으로 열기</a> · <a href="/ko/guides/driver-license-photo.html">운전면허 사진 규격</a></li>
           <li><b>대입 수시·정시 원서 (진학어플라이·유웨이어플라이)</b> → 3개월 이내 반명함 3×4cm, JPG. 수능 응시원서는 여권용 3.5×4.5cm. <a href="/ko/compress-id-photo.html?resize=id-3x4">3×4 규격으로 열기</a> · <a href="/ko/guides/university-application-photo.html">대입 원서 사진 규격</a></li>
           <li><b>중국 비자 (중국비자신청서비스센터 온라인 신청)</b> → JPG 354×472~420×560px, 40~120KB, 흰색 배경. 머리 위치 기준을 재는 354×472px로 맞춰요. <a href="/ko/compress-id-photo.html?resize=cn-visa">중국 비자 규격으로 열기</a> · <a href="/ko/guides/china-visa-photo.html">중국 비자 사진 규격</a></li>
