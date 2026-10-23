@@ -196,8 +196,8 @@ details.specs[open] summary::after { content: "−"; }
    margin-top: 20px; padding: 18px; background: #10141b;
    border: 1px solid var(--line); border-radius: 12px; text-align: left; display: none;
 }
-.result .row { display: flex; justify-content: space-between; font-size: 14px; margin: 7px 0; }
-.result .row .v { color: #fff; font-weight: 600; }
+.result .row { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; margin: 7px 0; }
+.result .row .v { color: #fff; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
 .result .note { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
 .result .note.warn { color: #ffcf6e; }
 .gain { color: var(--accent); font-weight: 800; }

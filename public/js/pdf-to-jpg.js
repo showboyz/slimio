@@ -94,7 +94,7 @@ async function convert() {
 function showResult(count, mime, bytes) {
     result.style.display = "block";
      $("after").textContent = SlimIO.pages(count);
-     $("outtype-label").textContent = mime === "image/png" ? "PNG (PNG)" : "JPG (JPG)";
+     $("outtype-label").textContent = mime === "image/png" ? "PNG" : "JPG";
     dl.textContent = SlimIO.t("↓ Download ZIP");
     dl.onclick = () => SlimIO.download(bytes, "slimio_images.zip", "application/zip");
     SlimIO.reveal(result);

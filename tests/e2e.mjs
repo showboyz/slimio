@@ -364,6 +364,14 @@ function toolTests() {
     if (!/^[\x20-\x7e]+$/.test(mark) && render(r.bytes) === render(fs.readFileSync(F("text.pdf")))) return "no watermark on page 1";
     return pdfCheck(r.bytes, { pages: 3, text: /^[\x20-\x7e]+$/.test(mark) ? [mark, ...TEXT] : TEXT });
   });
+  both("watermark.html", "tiled long phrase", async (p) => {
+    await p.setInputFiles("#pdf", F("text.pdf"));
+    await p.fill("#text", "햇살카페 알바 채용 서류 제출용 2026.11.4");
+    await select(p, "#style", "tiled"); await runTool(p);
+    const r = await download(p);
+    if (render(r.bytes) === render(fs.readFileSync(F("text.pdf")))) return "no watermark on page 1";
+    return pdfCheck(r.bytes, { pages: 3, text: TEXT });
+  });
   both("pdf-to-jpg.html", "3 images", async (p) => {
     await p.setInputFiles("#pdf", F("text.pdf")); await runTool(p);
     const n = zipCount((await download(p)).bytes);

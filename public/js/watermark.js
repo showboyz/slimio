@@ -107,12 +107,20 @@ async function addWatermark() {
                  const v = SlimIO.page2user(page);
                  const w = v.width, h = v.height;
                  if (style === "tiled") {
+                     // Rows run along the 30° text itself, so a long phrase never runs into the next row.
                      const size = Math.max(14, Math.min(w, h) / 14);
-                     const stepX = drawer.width(size) + size * 3;
-                     const stepY = size * 5;
-                     for (let row = 0, y = -h / 2; y < h * 1.5; row++, y += stepY) {
-                         for (let x = -w / 2 + (row % 2) * (stepX / 2); x < w * 1.5; x += stepX) {
-                             stamp(page, v, drawer, size, x, y, 30, opacity);
+                     const t = (30 * Math.PI) / 180;
+                     const along = drawer.width(size) + size * 3;
+                     const across = size * 4.5;
+                     const reach = Math.hypot(w, h);
+                     const rows = Math.ceil(reach / across), cols = Math.ceil(reach / along) + 1;
+                     for (let j = -rows; j <= rows; j++) {
+                         for (let i = -cols; i <= cols; i++) {
+                             const a = i * along + (j % 2) * (along / 2);
+                             const cx = w / 2 + a * Math.cos(t) - j * across * Math.sin(t);
+                             const cy = h / 2 + a * Math.sin(t) + j * across * Math.cos(t);
+                             if (cx < -along || cx > w + along || cy < -along || cy > h + along) continue;
+                             stamp(page, v, drawer, size, cx, cy, 30, opacity);
                          }
                      }
                  } else {

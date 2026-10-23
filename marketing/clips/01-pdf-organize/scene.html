@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+*{box-sizing:border-box}
+body{margin:0;width:1080px;height:1920px;overflow:hidden;font-family:"Apple SD Gothic Neo",sans-serif;background:#1c1917;color:#fff;position:relative}
+.bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,#3f3a36 0%,#1c1917 70%)}
+.top{position:absolute;left:0;right:0;top:150px;text-align:center}
+.tag{display:inline-block;background:#facc15;color:#1c1917;font-weight:900;font-size:40px;padding:10px 28px;border-radius:999px}
+.cap{position:absolute;left:60px;right:60px;top:260px;text-align:center;font-size:92px;font-weight:900;line-height:1.15;letter-spacing:-2px;opacity:0}
+.cap em{font-style:normal;color:#facc15}
+.stage{position:absolute;left:0;right:0;top:640px;height:620px}
+.pg{position:absolute;top:90px;opacity:0;width:200px;height:283px;background:#fff;border-radius:10px;box-shadow:0 20px 40px rgba(0,0,0,.5);overflow:hidden}
+.pg img{width:100%;height:100%;display:block;object-fit:cover}
+.chip{position:absolute;font-size:46px;font-weight:900;padding:12px 26px;border-radius:18px;opacity:0;white-space:nowrap}
+.x{background:#ef4444}.r{background:#facc15;color:#1c1917}.m{background:#22c55e}
+.bad{background:#fff;color:#b91c1c;border:6px solid #b91c1c}
+.res{position:absolute;left:60px;right:60px;top:640px;text-align:center;opacity:0}
+.res .n{font-size:130px;font-weight:900;letter-spacing:-3px}
+.res .n b{color:#facc15}
+.res .s{font-size:48px;color:#d6d3d1;margin-top:10px}
+.shot{position:absolute;left:270px;top:980px;width:540px;border-radius:24px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);opacity:0}
+.shot img{width:100%;display:block}
+.shot div{position:absolute;left:0;right:0;top:0;background:#facc15;color:#1c1917;font-weight:900;font-size:30px;text-align:center;padding:8px}
+.end{position:absolute;inset:0;background:#facc15;color:#1c1917;opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.end .a{font-size:84px;font-weight:900;line-height:1.2;letter-spacing:-2px}
+.end .b{font-size:46px;font-weight:700;margin-top:40px;line-height:1.6}
+.end .c{margin-top:70px;background:#1c1917;color:#facc15;font-size:64px;font-weight:900;padding:22px 46px;border-radius:24px}
+.end .d{margin-top:34px;font-size:40px;font-weight:700}
+.foot{position:absolute;left:0;right:0;bottom:60px;text-align:center;font-size:36px;color:#a8a29e}
+</style></head><body><div class="bg"></div>
+<div class="top"><span class="tag">PDF 꿀팁</span></div>
+<div class="cap" id="c1">휴대폰으로 스캔한 PDF<br><em>이러면 곤란하죠</em></div>
+<div class="cap" id="c2"><em>버튼 3번</em>이면<br>정리 끝</div>
+<div class="cap" id="c3">↻ 누운 쪽<br><em>세우고</em></div>
+<div class="cap" id="c4">✕ 빈 뒷면<br><em>빼고</em></div>
+<div class="cap" id="c5">← 순서<br><em>바로잡기</em></div>
+<div class="cap" id="c6">결과는?</div>
+<div class="stage" id="stage">
+ <div class="pg" id="g1" style="left:20px"><img src="p1.jpg"></div>
+ <div class="pg" id="g2" style="left:230px"><img src="budget_r.jpg"></div>
+ <div class="pg" id="g3" style="left:440px"><img src="act.jpg"></div>
+ <div class="pg" id="g4" style="left:650px"><img src="blank.jpg"></div>
+ <div class="pg" id="g5" style="left:860px"><img src="sign.jpg"></div>
+ <div class="chip bad" id="b2" style="left:170px;top:420px">옆으로 누움</div>
+ <div class="chip bad" id="b4" style="left:620px;top:420px">빈 뒷면</div>
+ <div class="chip bad" id="b3" style="left:330px;top:0px">순서 뒤죽박죽</div>
+</div>
+<div class="res" id="res"><div class="n">5쪽 → <b>4쪽</b></div><div class="s">1.43MB → <b>1.18MB</b> · 화질 그대로</div></div>
+<div class="shot" id="shot"><img src="after.png"><div>실제 화면</div></div>
+<div class="end" id="end"><div class="a">PDF 정리,<br>설치 없이 무료로</div><div class="b">파일이 서버로 안 가요<br>휴대폰 브라우저에서 바로</div><div class="c">pdfslimio.com</div><div class="d">블로그 · 문서·사진 생활 꿀팁</div></div>
+<div class="foot" id="foot">예시 서류는 가상 문서예요</div>
+<script>
+const $=id=>document.getElementById(id);
+const A=(el,kf,start,dur,easing='cubic-bezier(.2,.8,.2,1)')=>el.animate(kf,{delay:start*1000,duration:dur*1000,fill:'forwards',easing});
+const show=(id,a,b)=>{A($(id),[{opacity:0,transform:'translateY(40px)'},{opacity:1,transform:'none'}],a,.45);A($(id),[{opacity:1},{opacity:0}],b,.3);};
+// 0-3.2 hook
+show('c1',0.2,3.0);
+['g1','g2','g3','g4','g5'].forEach((g,i)=>A($(g),[{opacity:0,transform:'translateY(80px) scale(.9)'},{opacity:1,transform:'none'}],0.3+i*0.12,.5));
+['b2','b4','b3'].forEach((b,i)=>A($(b),[{opacity:0,transform:'scale(.6)'},{opacity:1,transform:'scale(1)'}],1.2+i*0.35,.35,'cubic-bezier(.3,1.6,.5,1)'));
+// zoom out row to fit: shift stage left so pages 2-4 centered
+
+show('c2',3.3,5.0);
+// 5.2-7.4 rotate page 2
+show('c3',5.2,7.4);
+A($('b2'),[{opacity:1},{opacity:0}],5.4,.3);
+A($('g2'),[{transform:'rotate(0)'},{transform:'rotate(90deg) scale(.72)'}],5.8,.8);
+// 7.6-9.8 delete blank
+show('c4',7.6,9.8);
+A($('b4'),[{opacity:1},{opacity:0}],7.8,.3);
+A($('g4'),[{opacity:1,transform:'none'},{opacity:0,transform:'translateY(260px) rotate(12deg) scale(.6)'}],8.2,.8,'ease-in');
+A($('g5'),[{transform:'none'},{transform:'translateX(-210px)'}],9.0,.6);
+// 10-12.4 swap 2 and 3
+show('c5',10.0,12.4);
+A($('b3'),[{opacity:1},{opacity:0}],10.2,.3);
+A($('g3'),[{transform:'none'},{transform:'translateX(-210px) translateY(-40px)'},{transform:'translateX(-210px)'}],10.5,.9);
+A($('g2'),[{transform:'rotate(90deg) scale(.72)'},{transform:'translateX(210px) translateY(40px) rotate(90deg) scale(.72)'},{transform:'translateX(210px) rotate(90deg) scale(.72)'}],10.5,.9);
+// 12.6-17 result
+show('c6',12.6,17.0);
+A($('stage'),[{opacity:1},{opacity:0}],12.6,.4);
+A($('res'),[{opacity:0,transform:'scale(.8)'},{opacity:1,transform:'none'}],13.0,.5,'cubic-bezier(.3,1.5,.5,1)');
+A($('shot'),[{opacity:0,transform:'translateY(120px)'},{opacity:1,transform:'none'}],14.0,.6);
+A($('res'),[{opacity:1},{opacity:0}],16.9,.3);A($('shot'),[{opacity:1},{opacity:0}],16.9,.3);
+// 17.2-21 end card
+A($('end'),[{opacity:0,transform:'scale(1.06)'},{opacity:1,transform:'none'}],17.2,.5);
+A($('foot'),[{opacity:1},{opacity:0}],17.0,.2);
+document.getAnimations().forEach(a=>a.pause());
+window.seek=t=>document.getAnimations().forEach(a=>{a.currentTime=t*1000;});
+</script></body></html>
