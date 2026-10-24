@@ -25,7 +25,7 @@ SIZE_PAGES = ["compress-pdf-to-50kb.html", "compress-pdf-to-100kb.html", "compre
               "compress-pdf-to-2mb.html", "compress-pdf-for-email.html"]
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
-         "sign-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
+         "sign-pdf.html", "receipt-to-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
          "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
          "us-visa-photo.html", "signature-image.html"] + SIZE_PAGES
 
@@ -179,6 +179,7 @@ KO["index.html"] = dict(
         ("<h3>Split PDF</h3><p>Extract pages or split by range</p>", "<h3>PDF 나누기</h3><p>페이지별로 나누거나 범위 추출</p>"),
         ("<h3>PDF to JPG</h3><p>Convert pages to images</p>", "<h3>PDF → JPG</h3><p>페이지를 이미지로 변환</p>"),
         ("<h3>JPG to PDF</h3><p>Turn images into a PDF</p>", "<h3>JPG → PDF</h3><p>사진을 PDF로 묶기</p>"),
+        ("<h3>Receipts to PDF</h3><p>Receipts on A4 pages, under a size limit</p>", "<h3>영수증 PDF</h3><p>A4에 모아 번호 붙이고 용량 맞추기</p>"),
         ("<h3>Remove Pages</h3><p>Delete pages from a PDF</p>", "<h3>페이지 삭제</h3><p>필요 없는 페이지 빼기</p>"),
         ("<h3>Rotate PDF</h3><p>Turn pages 90/180/270°</p>", "<h3>PDF 회전</h3><p>90° · 180° · 270° 돌리기</p>"),
         ("<h3>Organize PDF</h3><p>Reorder, rotate or delete pages</p>", "<h3>페이지 순서 변경</h3><p>순서 바꾸기 · 회전 · 삭제</p>"),
@@ -666,6 +667,80 @@ KO["jpg-to-pdf.html"] = dict(
         ("어떤 이미지 형식을 지원하나요?", "JPG, PNG, WebP 등 브라우저에서 열리는 이미지는 대부분 돼요."),
         ("휴대폰 사진도 되나요?", "네. 아이폰, 갤럭시 브라우저에서 사진을 바로 골라 PDF로 만들 수 있어요."),
         ("파일이 서버로 올라가나요?", "아니요. 브라우저 안에서만 처리돼서 사진이 서버로 가지 않아요."),
+    ],
+)
+
+KO["receipt-to-pdf.html"] = dict(
+    title="영수증 PDF 만들기 - A4에 여러 장 모아 번호 붙이고 용량 맞추기 무료 | SlimIO",
+    desc="영수증 사진을 A4 한 장에 2·4·6장씩 모아 PDF 하나로 만드세요. 번호, 표지 목록과 합계, 5MB·10MB 같은 제출 용량 제한까지. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.",
+    keywords="영수증 PDF 만들기, 영수증 A4 한장에, 영수증 모아서 PDF, 경비 정산 영수증 PDF, 영수증 첨부지, 영수증 사진 PDF 변환, 증빙서류 PDF 용량 줄이기, 영수증 PDF 5MB",
+    short="영수증 PDF 만들기 | SlimIO",
+    app_name="SlimIO 영수증 PDF 만들기",
+    app_desc="영수증 사진을 A4에 모아 번호를 붙이고, 표지 목록과 합계를 넣고, 제출 용량에 맞춰 PDF 하나로 만드는 무료 도구. 브라우저에서 처리돼 영수증이 업로드되지 않아요.",
+    features=["A4 한 장에 영수증 1·2·4·6장 배치", "영수증 번호 붙이기", "표지 목록과 합계 (선택)", "파일 이름·파일 날짜 순서로 정렬", "흐린 영수증 글씨 선명하게", "PDF 용량 제한에 맞추기 (1MB~20MB, 직접 입력)", "브라우저에서 처리 (업로드 없음)"],
+    h1="영수증을 PDF로,<br /><b>제출용으로 보기 좋게.</b>",
+    lead="영수증 사진을 A4에 2장·4장·6장씩 모으고, 번호와 표지 목록·합계를 넣고, 제출 용량 제한까지 맞춰요. 무료로, 설치 없이 브라우저에서 바로.",
+    ui=[
+        (">Drop receipt photos here<", ">영수증 사진을 여기에 끌어다 놓으세요<"),
+        ("Receipts never leave your device — everything happens locally in your browser.", LOCAL_ONLY.format("처리해요")),
+        (">Sort by file name<", ">파일 이름순 정렬<"),
+        (">Sort by file date<", ">파일 날짜순 정렬<"),
+        ('<label for="per">Receipts per page</label>', '<label for="per">한 페이지에 영수증</label>'),
+        (">1 — one receipt per page<", ">1장 — 한 페이지에 한 장씩<"),
+        (">2 per page<", ">2장씩<"), (">4 per page<", ">4장씩<"), (">6 per page<", ">6장씩<"),
+        ("Pages are A4. Tall receipts are placed side by side, wide ones one above the other.", "페이지는 A4예요. 길쭉한 영수증은 옆으로 나란히, 가로로 넓은 영수증은 위아래로 놓아요."),
+        (" Number the receipts (1, 2, 3…)", " 영수증에 번호 붙이기 (1, 2, 3…)"),
+        (" Make faded text clearer (black &amp; white)", " 흐린 글씨 선명하게 (흑백으로)"),
+        (" Add a cover page with a list and total", " 표지에 목록과 합계 넣기"),
+        ('<label for="c-title">Cover page</label>', '<label for="c-title">표지</label>'),
+        ('placeholder="Title (for example: Expense receipts, October)"', 'placeholder="제목 (예: 10월 경비 영수증)"'),
+        ('placeholder="Name, project or period (optional)"', 'placeholder="이름, 과제명 또는 기간 (선택)"'),
+        ("Fill in the date, store and amount under each receipt above. The numbers match the numbers on the receipts.", "위 목록에서 영수증마다 날짜, 사용처, 금액을 적으세요. 표의 번호는 영수증에 붙은 번호와 같아요."),
+        ('<label for="target">PDF size limit</label>', '<label for="target">PDF 용량 제한</label>'),
+        (">No limit — keep full quality<", ">제한 없음 — 원래 화질 그대로<"),
+        (">Under 1MB<", ">1MB 이하<"), (">Under 2MB<", ">2MB 이하<"), (">Under 5MB<", ">5MB 이하<"),
+        (">Under 10MB<", ">10MB 이하<"), (">Under 20MB<", ">20MB 이하<"),
+        (">Custom limit…<", ">직접 입력…<"),
+        ('<label for="kmax">Up to</label>', '<label for="kmax">최대</label>'),
+        ("For upload forms with a limit: the pages are made smaller until the whole PDF fits.", "제출 용량 제한이 있을 때 고르세요. PDF 전체가 들어갈 때까지 페이지를 줄여요."),
+        (">Make PDF</button>", ">PDF 만들기</button>"),
+        ("<span>Receipts</span>", "<span>영수증</span>"),
+        ("<span>PDF size</span>", "<span>PDF 크기</span>"),
+        ("<span>Limit</span>", "<span>제한</span>"),
+    ],
+    content="""
+      <h2>영수증을 PDF 하나로 만드는 방법</h2>
+      <p>경비 정산, 연구비·과제 집행, 종합소득세 신고 증빙처럼 영수증을 PDF 하나로 내라는 곳이 많고, 때로는 A4 한 장에 여러 장을 붙여서 내라고 해요. SlimIO가 페이지 배치를 대신 해 드려요. 모두 브라우저 안에서 처리돼서 영수증이 서버로 올라가지 않아요.</p>
+      <ul>
+          <li><b>1. 영수증 사진 올리기.</b> JPG, PNG, WebP 파일을 끌어다 놓거나 클릭해서 고르세요.</li>
+          <li><b>2. 순서 정하기.</b> ▲ ▼ 버튼으로 옮기거나, 파일 이름순·파일 날짜순으로 한 번에 정렬하세요.</li>
+          <li><b>3. 배치 고르기.</b> 한 페이지에 1·2·4·6장, 번호, 표지, 용량 제한을 정하세요.</li>
+          <li><b>4. PDF 만들기.</b> 받은 PDF를 정산 문서나 제출 화면에 올리면 돼요.</li>
+      </ul>
+      <h3>A4 한 장에 영수증 여러 장</h3>
+      <p>영수증을 한 페이지에 한 장씩이 아니라 A4 한 장에 모아서 붙이는 곳이 많아요. 2장·4장·6장씩을 고르면 영수증이 가장 크게 보이는 배치를 SlimIO가 골라요. 길쭉한 영수증은 옆으로 나란히, 가로로 넓은 영수증은 위아래로 놓아요. 영수증마다 얇은 테두리가 생기고, 원하면 모서리에 번호도 붙어요.</p>
+      <h3>표지에 목록과 합계 넣기</h3>
+      <p><b>표지에 목록과 합계 넣기</b>를 켜고 영수증마다 날짜, 사용처, 금액을 적으면 첫 페이지가 표로 만들어져요. 표의 번호는 영수증에 붙은 번호와 같고, 맨 아래에 합계가 나와요. 영수증을 자동으로 읽지는 않아요. 표에 들어갈 내용은 직접 정하니까 틀릴 일이 없어요.</p>
+      <h3>5MB·10MB·20MB 이하로 만들기</h3>
+      <p>휴대폰 사진은 한 장에 수 MB라서 영수증이 쌓이면 제출 용량 제한을 금방 넘어요. <b>PDF 용량 제한</b>에서 크기를 고르거나 <b>직접 입력</b>으로 원하는 KB를 넣으세요. 페이지를 JPG로 다시 저장하면서 화질을 먼저 낮추고, 그래도 크면 크기를 줄여서 PDF 전체가 들어가게 해요. 결과 화면에 어떻게 줄였는지 알려 주고, 그래도 안 들어가면 만들 수 있는 가장 작은 파일을 주면서 그렇다고 알려 줘요.</p>
+      <h3>흐린 영수증 글씨 선명하게</h3>
+      <p>감열지 영수증은 시간이 지나면 연한 회색으로 날아가요. <b>흐린 글씨 선명하게</b>를 켜면 영수증을 흑백으로 바꾸고 밝기 범위를 늘려서 글씨는 진하게, 종이는 하얗게 만들어요. 영수증을 평평하게 놓고 바로 위에서, 그림자와 손가락이 안 나오게 밝은 곳에서 찍으면 가장 잘 나와요.</p>
+      <h3>이럴 때 팁</h3>
+      <ul>
+          <li>영수증 주변 책상이 찍혔다면 폰 사진 편집에서 잘라서 올리세요. 영수증이 사진을 가득 채울수록 PDF에서 더 크게 보여요.</li>
+          <li>사진 이름을 01, 02, 03처럼 붙이고 <b>파일 이름순 정렬</b>을 누르면 순서를 한 번에 맞출 수 있어요.</li>
+          <li>아이폰 HEIC 사진은 브라우저에서 안 열릴 수 있어요. 설정 → 카메라 → 포맷에서 "호환성 우선"을 고르거나 JPG로 공유해서 올리세요.</li>
+          <li>이미 만든 PDF를 합치려면 <a href="/ko/merge.html">PDF 합치기</a>를, 용량이 큰 PDF는 <a href="/ko/">PDF 용량 줄이기</a>를 쓰세요.</li>
+      </ul>""",
+    faq_title="영수증 PDF 만들기",
+    faq=[
+        ("영수증을 A4 한 장에 여러 장 넣으려면 어떻게 하나요?", "영수증 사진을 올리고 한 페이지에 2장·4장·6장 중 하나를 고른 뒤 PDF 만들기를 누르세요. 영수증이 가장 크게 보이도록 길쭉한 영수증은 옆으로 나란히, 넓은 영수증은 위아래로 배치해요."),
+        ("표지에 목록과 합계를 넣을 수 있나요?", "네. 표지에 목록과 합계 넣기를 켜고 영수증마다 날짜, 사용처, 금액을 적으면 첫 페이지에 번호가 붙은 표와 합계가 들어가요. 표의 번호는 영수증에 붙은 번호와 같아요."),
+        ("PDF를 5MB나 10MB 이하로 만들려면 어떻게 하나요?", "PDF 만들기를 누르기 전에 PDF 용량 제한에서 크기를 고르세요. PDF 전체가 들어갈 때까지 페이지 화질을 낮추고, 필요하면 크기도 줄여요. 다른 용량은 직접 입력으로 넣을 수 있어요."),
+        ("영수증 글씨가 흐려요. 선명하게 할 수 있나요?", "흐린 글씨 선명하게를 켜세요. 영수증을 흑백으로 바꾸고 밝기 범위를 늘려서 연한 회색 글씨를 진하게 만들어요. 바로 위에서 밝은 곳에서 찍은 사진일수록 잘 나와요."),
+        ("영수증 순서는 어떻게 정해지나요?", "목록 순서대로예요. ▲ ▼ 버튼으로 하나씩 옮기거나, 파일 이름순 정렬·파일 날짜순 정렬로 한꺼번에 맞출 수 있어요."),
+        ("어떤 이미지 형식을 지원하나요?", "JPG, PNG, WebP 등 브라우저에서 열리는 이미지는 대부분 돼요. 아이폰 HEIC는 안 열릴 수 있으니 호환성 우선으로 찍거나 JPG로 공유해서 올리세요."),
+        ("영수증이 서버로 올라가나요?", "아니요. 브라우저 안에서만 처리돼서 영수증이 서버로 가지 않아요."),
     ],
 )
 

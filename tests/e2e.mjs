@@ -395,6 +395,29 @@ function toolTests() {
     const r = await download(p);
     return r.bytes.length > 150000 ? `${KB(r.bytes.length)} is over 150KB` : pdfCheck(r.bytes, { pages: 1 });
   });
+  both("receipt-to-pdf.html", "5 receipts, 4 per page → 2 pages", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg"), F("photo.jpg"), F("photo2.jpg"), F("photo.jpg")]); await runTool(p);
+    return pdfCheck((await download(p)).bytes, { pages: 2 });
+  });
+  both("receipt-to-pdf.html", "1 per page + cover + clear text → cover page added", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]);
+    await select(p, "#per", "1"); await p.check("#clear"); await p.check("#cover");
+    await p.fill("#c-title", "경비 Receipts"); await p.fill(".rc-amount >> nth=0", "12,000"); await p.fill(".rc-amount >> nth=1", "3,500");
+    await runTool(p);
+    return pdfCheck((await download(p)).bytes, { pages: 3 });
+  });
+  both("receipt-to-pdf.html", "under 2MB", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg"), F("photo.jpg"), F("photo2.jpg")]);
+    await select(p, "#per", "2"); await select(p, "#target", "2MB"); await runTool(p);
+    const r = await download(p);
+    if (r.bytes.length > 2000000) return `${KB(r.bytes.length)} is over 2MB`;
+    if (!(await p.textContent("#fit")).includes("✓")) return "the result doesn't say it fits";
+    return pdfCheck(r.bytes, { pages: 2 });
+  });
+  both("receipt-to-pdf.html?target=1MB", "size from the link", async (p) => {
+    if ((await p.$eval("#target", (s) => s.value)) !== "1MB") return "?target=1MB didn't set the 1MB limit";
+    return null;
+  });
   both("jpg-to-pdf.html", "sideways phone photo stands upright", async (p) => {
     await p.setInputFiles("#images", F("sideways.jpg")); await runTool(p);
     const r = await download(p), e = pdfCheck(r.bytes, { pages: 1 });

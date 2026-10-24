@@ -291,6 +291,22 @@ h2.sec { text-align: center; font-size: 26px; margin-bottom: 8px; }
 }
 .tools-row .mini:hover { color: var(--text); border-color: var(--accent); }
 
+/* receipts to PDF */
+.filelist li.rc-item { flex-wrap: wrap; }
+.filelist .rc-item .fname { flex: 1 1 0; min-width: 0; }
+.rc-fields { display: flex; gap: 6px; width: 100%; }
+.rc-fields input, .field input[type=text] {
+   background: #0b0d12; border: 1px solid var(--line); border-radius: 8px; color: var(--text);
+   padding: 8px 10px; font-size: 13px; min-width: 0; width: 100%; font-family: inherit;
+}
+.rc-fields .rc-date { flex: 0 0 96px; width: 96px; }
+.rc-fields .rc-shop { flex: 1 1 auto; }
+.rc-fields .rc-amount { flex: 0 0 96px; width: 96px; text-align: right; }
+.field.checks { display: grid; gap: 8px; }
+.field .chk { display: flex; align-items: center; gap: 8px; justify-content: flex-start; cursor: pointer; }
+.field .chk input { width: 16px; height: 16px; }
+.tools-row[hidden] { display: none; }
+
 /* footer */
 footer { border-top: 1px solid var(--line); margin-top: 60px; padding: 30px 0 40px; }
 .foot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; font-size: 13px; color: var(--muted); }

@@ -1,6 +1,19 @@
 // Korean UI strings. Keys are the English text used in the code (see SlimIO.t in lib.js).
 // Load this before lib.js on /ko/ pages.
 window.SLIMIO_KO = {
+   // receipts to PDF
+   "Date": "날짜",
+   "Store / purpose": "사용처",
+   "Amount": "금액",
+   "Total": "합계",
+   "Receipts": "영수증",
+   "{n} receipts": "영수증 {n}장",
+   "{n} receipt": "영수증 {n}장",
+   "Enter a size of at least 50KB.": "50KB 이상의 용량을 입력해 주세요.",
+   "Make PDF": "PDF 만들기",
+   "Already under {size} — full quality.": "이미 {size} 안에 들어가요 — 원래 화질 그대로예요.",
+   "To fit {size}, the pages were saved at {dpi} dpi, JPG quality {q}%.": "{size}에 맞추려고 페이지를 {dpi}dpi, JPG 화질 {q}%로 저장했어요.",
+   "This is the smallest we could make it. To get under {size}, put fewer receipts in one PDF.": "만들 수 있는 가장 작은 크기예요. {size} 아래로 가려면 PDF 하나에 영수증을 더 적게 넣으세요.",
    // common
    "Please choose a PDF file.": "PDF 파일을 선택해 주세요.",
    "Please choose PDF files.": "PDF 파일을 선택해 주세요.",
