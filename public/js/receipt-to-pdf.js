@@ -11,7 +11,10 @@ const prog = SlimIO.bindProgress("prog");
 // cover table (Korean text included), the numbers and the faded-text fix all share one path.
 const PW = 1240, PH = 1754, MARGIN = 60, GAP = 28;
 const A4 = [595.28, 841.89];
+const AREA = { w: PW - MARGIN * 2, h: PH - MARGIN * 2 - 30 };   // where receipts go, above the page number
 const FONT = '"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Segoe UI",Arial,sans-serif';
+const COVER_ROWS = 22;   // receipts listed per cover page
+const QUALITY = 0.9;     // JPG quality of the pages when there is no size limit
 
 let items = [];   // { name, size, file, modified, date, shop, amount }
 
@@ -44,10 +47,13 @@ function render() {
         if (coverOn()) {
             const row = document.createElement("div");
             row.className = "rc-fields";
-            [["date", "Date", "text", 10], ["shop", "Store / purpose", "text", 40], ["amount", "Amount", "text", 14]].forEach(([k, ph]) => {
+            [["date", "Date", 16], ["shop", "Store / purpose", 40], ["amount", "Amount", 16]].forEach(([k, ph, max]) => {
                 const inp = document.createElement("input");
                 inp.type = "text";
                 inp.placeholder = SlimIO.t(ph);
+                inp.setAttribute("aria-label", `${i + 1}. ${SlimIO.t(ph)}`);
+                inp.maxLength = max;
+                if (k === "amount") inp.inputMode = "decimal";
                 inp.value = it[k];
                 inp.className = "rc-" + k;
                 inp.addEventListener("input", () => { it[k] = inp.value; });
@@ -80,13 +86,22 @@ $("sort-date").addEventListener("click", () => {
 });
 $("cover").addEventListener("change", () => { $("coverbox").hidden = !coverOn(); render(); });
 
+// HEIC (iPhone) photos copied to a computer often have no image type at all, so they go by name,
+// and the file dialog is told to show them. Phones keep plain image/*: iPhones turn HEIC into JPG
+// themselves unless the list names HEIC, and Android shows its photo picker only for image types.
+function looksHeic(f) { return /\.(heic|heif)$/i.test(f.name) || /^image\/hei[cf]/i.test(f.type); }
+const PHONE = /Android|iP(hone|ad|od)/.test(navigator.userAgent) || (/Mac/.test(navigator.platform) && navigator.maxTouchPoints > 1);
+if (!PHONE) $("images").accept = "image/*,.heic,.heif";
+
 function addFiles(list) {
     SlimIO.clearError();
+    let skipped = 0;
     for (const f of list) {
-        if (!f.type.startsWith("image/")) { SlimIO.showError(SlimIO.t("Please choose image files (JPG, PNG, WebP…).")); return; }
+        if (!f.type.startsWith("image/") && !looksHeic(f)) { skipped++; continue; }
         items.push({ name: f.name, size: f.size, file: f, modified: f.lastModified || 0, date: "", shop: "", amount: "" });
     }
     render();
+    if (skipped) SlimIO.showError(SlimIO.t("Please choose image files (JPG, PNG, WebP…)."));
 }
 
 drop.addEventListener("click", () => $("images").click());
@@ -121,11 +136,60 @@ $("target").addEventListener("change", () => { $("krange").hidden = $("target").
 })();
 $("krange").hidden = $("target").value !== "custom";
 
+// Most browsers other than Safari can't open HEIC, so a decoder (about 650KB) is fetched the
+// first time one needs it.
+const HEIC_LIB = "https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js";
+let heicLib = null;
+function loadHeic() {
+    if (!heicLib) heicLib = new Promise((resolve, reject) => {
+        const s = document.createElement("script");
+        s.src = HEIC_LIB;
+        s.onload = () => (window.HeicTo ? resolve(window.HeicTo) : reject(new Error("no decoder")));
+        s.onerror = () => { heicLib = null; reject(new Error(SlimIO.t("The HEIC photo decoder could not be loaded. Check your connection and try again."))); };
+        document.head.appendChild(s);
+    });
+    return heicLib;
+}
+// HEIF files say so in their first bytes: "ftyp" and a brand such as heic or mif1
+async function isHeic(file) {
+    const b = new Uint8Array(await file.slice(0, 12).arrayBuffer());
+    const s = String.fromCharCode(...b);
+    return s.slice(4, 8) === "ftyp" && ["heic", "heix", "hevc", "hevx", "heim", "heis", "mif1", "msf1"].includes(s.slice(8, 12));
+}
+
 // Decoded with the EXIF rotation applied, so phone photos stand the right way up
 async function decode(file) {
     try { if (window.createImageBitmap) return await createImageBitmap(file, { imageOrientation: "from-image" }); } catch (e) { /* <img> below */ }
     const url = URL.createObjectURL(file);
-    try { const img = new Image(); img.src = url; await img.decode(); return img; } catch (e) { return null; } finally { URL.revokeObjectURL(url); }
+    try { const img = new Image(); img.src = url; await img.decode(); return img; } catch (e) { /* HEIC below */ } finally { URL.revokeObjectURL(url); }
+    if (!looksHeic(file) && !(await isHeic(file))) return null;
+    const label = goBtn.textContent;
+    goBtn.textContent = SlimIO.t("Opening HEIC photos…");
+    try { return await (await loadHeic())({ blob: file, type: "bitmap" }); }
+    catch (e) { if (e && e.message && heicLib === null) throw e; return null; }   // a failed download says so; a bad file is "Could not read"
+    finally { goBtn.textContent = label; }
+}
+
+function release(pic) {
+    if (pic.close) pic.close();
+    else if (pic.getContext) { pic.width = 0; pic.height = 0; }   // iOS counts canvas memory until it's emptied
+}
+
+// A receipt is never drawn larger than the page's receipt area, so a 12-megapixel phone photo is
+// shrunk to that as soon as it's read and the full-size copy freed. Thirty photos then add about
+// 0.2GB to Chrome's memory instead of 1.7GB, which is what keeps a phone's browser from giving up.
+async function load(file) {
+    const full = await decode(file);
+    if (!full) return null;
+    const s = Math.min(AREA.w / full.width, AREA.h / full.height);
+    if (s >= 1) return full;
+    const c = document.createElement("canvas");
+    c.width = Math.max(1, Math.round(full.width * s)); c.height = Math.max(1, Math.round(full.height * s));
+    const x = c.getContext("2d");
+    x.imageSmoothingQuality = "high";
+    x.drawImage(full, 0, 0, c.width, c.height);
+    release(full);
+    return c;
 }
 
 // Grid choice for one page: of the layouts that hold exactly n receipts (2 → 2×1 or 1×2,
@@ -144,24 +208,28 @@ function bestGrid(n, pics, area) {
     return best;
 }
 
-// Stretches the grey levels of a drawn receipt so faded thermal paper turns black on white.
+// Turns a drawn receipt black on white so faded thermal print shows. White is set by the paper
+// (the brightest few percent of the photo) and black by the faintest print near that brightness,
+// not by the photo as a whole: a dark table around a small receipt used to wash its print out.
 function clearUp(ctx, x, y, w, h) {
     const d = ctx.getImageData(x, y, w, h), px = d.data, hist = new Uint32Array(256);
     for (let i = 0; i < px.length; i += 4) {
         const g = (px[i] * 77 + px[i + 1] * 151 + px[i + 2] * 28) >> 8;
         px[i] = g; hist[g]++;
     }
-    const total = w * h;
-    let lo = 0, hi = 255, acc = 0;
-    for (let v = 0; v < 256; v++) { acc += hist[v]; if (acc >= total * 0.01) { lo = v; break; } }
-    acc = 0;
-    for (let v = 255; v >= 0; v--) { acc += hist[v]; if (acc >= total * 0.35) { hi = v; break; } }   // paper is the bright majority
-    if (hi - lo < 20) hi = Math.min(255, lo + 20);
-    const k = 255 / (hi - lo);
-    for (let i = 0; i < px.length; i += 4) {
-        const v = Math.max(0, Math.min(255, (px[i] - lo) * k));
-        px[i] = px[i + 1] = px[i + 2] = v;
-    }
+    // the grey level that a share q of the pixels at least `from` bright are darker than
+    const level = (from, q) => {
+        let total = 0, acc = 0;
+        for (let v = from; v < 256; v++) total += hist[v];
+        for (let v = from; v < 256; v++) { acc += hist[v]; if (acc >= total * q) return v; }
+        return 255;
+    };
+    const paper = level(0, 0.97);
+    const lo = Math.min(paper * 0.8, Math.max(paper * 0.55, level(Math.round(paper * 0.5), 0.02)));
+    const span = Math.max(8, paper * 0.94 - lo);
+    const map = new Uint8ClampedArray(256);   // a slight curve keeps faint strokes dark
+    for (let v = 0; v < 256; v++) map[v] = 255 * Math.pow(Math.max(0, Math.min(1, (v - lo) / span)), 1.3);
+    for (let i = 0; i < px.length; i += 4) px[i] = px[i + 1] = px[i + 2] = map[px[i]];
     ctx.putImageData(d, x, y);
 }
 
@@ -182,20 +250,34 @@ function amountOf(s) {
     const n = parseFloat(String(s).replace(/[^0-9.\-]/g, ""));
     return isFinite(n) ? n : 0;
 }
+// "12,000원" and "3,500원" add up to "15,500원"; a sign in front such as "$" is kept the same way.
+// Mixed or missing units give a bare number.
+function withUnit(list, n) {
+    const vals = list.map((it) => it.amount.trim()).filter(Boolean);
+    const same = (re) => { const u = vals.map((v) => v.match(re)[0].trim()); return u.every((s) => s === u[0]) ? u[0] : ""; };
+    return same(/^[^\d.+\-]*/) + n.toLocaleString() + same(/[^\d.,]*$/);
+}
+
+// Shortens s with "…" until it fits maxW in the current font
+function clip(x, s, maxW) {
+    if (x.measureText(s).width <= maxW) return s;
+    const ch = [...s];
+    while (ch.length > 1 && x.measureText(ch.join("") + "…").width > maxW) ch.pop();
+    return ch.join("") + "…";
+}
 
 // One page of n receipts (or fewer on the last page)
-function receiptPage(group, startNo, per, opts) {
+function receiptPage(pics, startNo, per, opts) {
     const { c, x } = newPage();
-    const area = { w: PW - MARGIN * 2, h: PH - MARGIN * 2 - 30 };
-    const g = bestGrid(per, group.map((e) => e.pic), area);
-    group.forEach((e, k) => {
+    const g = bestGrid(per, pics, AREA);
+    pics.forEach((pic, k) => {
         const col = k % g.c, row = Math.floor(k / g.c);
         const cx = MARGIN + col * (g.cw + GAP), cy = MARGIN + row * (g.ch + GAP);
-        const s = Math.min(g.cw / e.pic.width, g.ch / e.pic.height, 1.6);
-        const w = Math.max(1, Math.round(e.pic.width * s)), h = Math.max(1, Math.round(e.pic.height * s));
+        const s = Math.min(g.cw / pic.width, g.ch / pic.height, 1.6);
+        const w = Math.max(1, Math.round(pic.width * s)), h = Math.max(1, Math.round(pic.height * s));
         const dx = Math.round(cx + (g.cw - w) / 2), dy = Math.round(cy + (g.ch - h) / 2);
         x.imageSmoothingQuality = "high";
-        x.drawImage(e.pic, dx, dy, w, h);
+        x.drawImage(pic, dx, dy, w, h);
         if (opts.clear) clearUp(x, dx, dy, w, h);
         x.strokeStyle = "#bbb"; x.lineWidth = 2; x.strokeRect(dx - 1, dy - 1, w + 2, h + 2);
         if (opts.number) {
@@ -214,23 +296,25 @@ function receiptPage(group, startNo, per, opts) {
 function coverPages(list) {
     const title = $("c-title").value.trim() || SlimIO.t("Receipts");
     const who = $("c-who").value.trim();
-    const total = list.reduce((n, it) => n + amountOf(it.amount), 0);
     const hasAmount = list.some((it) => it.amount.trim());
-    const rowH = 54, perPage = 22, out = [];
-    for (let p = 0, first = true; p < list.length || first; p += perPage, first = false) {
+    const total = hasAmount ? withUnit(list, list.reduce((n, it) => n + amountOf(it.amount), 0)) : "";
+    const rowH = 54, width = PW - MARGIN * 2, out = [];
+    for (let p = 0, first = true; p < list.length || first; p += COVER_ROWS, first = false) {
         const { c, x } = newPage();
         let y = MARGIN + 30;
         if (first) {
-            x.fillStyle = "#111"; x.textAlign = "left"; x.textBaseline = "alphabetic"; x.font = `bold 54px ${FONT}`;
-            x.fillText(title, MARGIN, y + 40);
+            x.fillStyle = "#111"; x.textAlign = "left"; x.textBaseline = "alphabetic";
+            let size = 54;   // a long title gets a smaller font before it gets cut
+            do x.font = `bold ${size}px ${FONT}`; while (x.measureText(title).width > width && (size -= 2) >= 36);
+            x.fillText(clip(x, title, width), MARGIN, y + 40);
             y += 70;
             x.font = `28px ${FONT}`; x.fillStyle = "#444";
-            if (who) { x.fillText(who, MARGIN, y + 28); y += 44; }
-            x.fillText(SlimIO.t("{n} receipts", { n: list.length }) + (hasAmount ? " · " + SlimIO.t("Total") + " " + total.toLocaleString() : ""), MARGIN, y + 28);
+            if (who) { x.fillText(clip(x, who, width), MARGIN, y + 28); y += 44; }
+            x.fillText(SlimIO.t(list.length === 1 ? "{n} receipt" : "{n} receipts", { n: list.length }) + (hasAmount ? " · " + SlimIO.t("Total") + " " + total : ""), MARGIN, y + 28);
             y += 70;
         } else y += 20;
         const cols = [MARGIN, MARGIN + 90, MARGIN + 330, PW - MARGIN];   // No | Date | Store | Amount (right edge)
-        x.fillStyle = "#eee"; x.fillRect(MARGIN, y, PW - MARGIN * 2, rowH);
+        x.fillStyle = "#eee"; x.fillRect(MARGIN, y, width, rowH);
         x.fillStyle = "#111"; x.font = `bold 26px ${FONT}`; x.textBaseline = "middle";
         x.textAlign = "left";
         x.fillText("No.", cols[0] + 14, y + rowH / 2);
@@ -239,67 +323,78 @@ function coverPages(list) {
         x.textAlign = "right"; x.fillText(SlimIO.t("Amount"), cols[3] - 14, y + rowH / 2);
         y += rowH;
         x.font = `26px ${FONT}`;
-        list.slice(p, p + perPage).forEach((it, k) => {
+        list.slice(p, p + COVER_ROWS).forEach((it, k) => {
             x.fillStyle = "#222"; x.textAlign = "left";
             x.fillText(String(p + k + 1), cols[0] + 14, y + rowH / 2);
-            x.fillText(it.date, cols[1], y + rowH / 2);
-            let shop = it.shop;
-            while (shop.length > 1 && x.measureText(shop).width > cols[3] - cols[2] - 230) shop = shop.slice(0, -1);
-            x.fillText(shop === it.shop ? shop : shop + "…", cols[2], y + rowH / 2);
-            x.textAlign = "right"; x.fillText(it.amount, cols[3] - 14, y + rowH / 2);
+            x.fillText(clip(x, it.date, cols[2] - cols[1] - 16), cols[1], y + rowH / 2);
+            x.fillText(clip(x, it.shop, cols[3] - cols[2] - 230), cols[2], y + rowH / 2);
+            x.textAlign = "right"; x.fillText(clip(x, it.amount, 200), cols[3] - 14, y + rowH / 2);
             y += rowH;
             x.strokeStyle = "#ddd"; x.lineWidth = 1.5;
             x.beginPath(); x.moveTo(MARGIN, y); x.lineTo(PW - MARGIN, y); x.stroke();
         });
-        if (p + perPage >= list.length && hasAmount) {
+        if (p + COVER_ROWS >= list.length && hasAmount) {
             x.font = `bold 30px ${FONT}`; x.fillStyle = "#111"; x.textAlign = "left";
             x.fillText(SlimIO.t("Total"), cols[2], y + rowH / 2 + 6);
-            x.textAlign = "right"; x.fillText(total.toLocaleString(), cols[3] - 14, y + rowH / 2 + 6);
+            x.textAlign = "right"; x.fillText(clip(x, total, cols[3] - cols[2] - 140), cols[3] - 14, y + rowH / 2 + 6);
         }
         out.push(c);
     }
     return out;
 }
 
-function toJpeg(canvas, scale, quality) {
-    let src = canvas;
-    if (scale < 1) {
-        src = document.createElement("canvas");
-        src.width = Math.round(canvas.width * scale); src.height = Math.round(canvas.height * scale);
-        const x = src.getContext("2d");
-        x.imageSmoothingQuality = "high";
-        x.drawImage(canvas, 0, 0, src.width, src.height);
-    }
+function toJpeg(canvas, quality) {
     return new Promise((resolve, reject) => {
-        src.toBlob(async (b) => {
+        canvas.toBlob(async (b) => {
             if (!b) return reject(new Error("toBlob failed"));
             try { resolve(new Uint8Array(await b.arrayBuffer())); } catch (e) { reject(e); }
         }, "image/jpeg", quality);
     });
 }
 
-async function build(pages, scale, quality) {
+// A finished page saved again smaller, for the size limit
+async function reencode(jpeg, scale, quality) {
+    const pic = await decode(new Blob([jpeg], { type: "image/jpeg" }));
+    const c = document.createElement("canvas");
+    c.width = Math.round(PW * scale); c.height = Math.round(PH * scale);
+    const x = c.getContext("2d");
+    x.imageSmoothingQuality = "high";
+    x.drawImage(pic, 0, 0, c.width, c.height);
+    release(pic);
+    try { return await toJpeg(c, quality); } finally { release(c); }
+}
+
+async function build(jpegs) {
     const out = await PDFDocument.create();
-    for (let i = 0; i < pages.length; i++) {
-        const img = await out.embedJpg(await toJpeg(pages[i], scale, quality));
+    for (const j of jpegs) {
+        const img = await out.embedJpg(j);
         out.addPage(A4).drawImage(img, { x: 0, y: 0, width: A4[0], height: A4[1] });
     }
     return out.save();
 }
 
 // Under a limit: quality goes down first, then the pixel size, until the whole PDF fits.
+// A setting stops as soon as its pages add up to more than the limit; the last one, the
+// smallest, always finishes so there is something to give back.
 async function fitToLimit(pages, limit) {
-    let smallest = null, step = 0;
-    const tick = () => prog.set(Math.min(98, 40 + ++step * 3));
+    const full = await build(pages);
+    if (full.length <= limit) return { bytes: full, scale: 1, q: QUALITY, fits: true };
     const rungs = [];
     for (const scale of [1, 0.8, 0.64, 0.5, 0.4]) for (const q of [0.85, 0.7, 0.55, 0.4]) rungs.push([scale, q]);
-    for (const [scale, q] of rungs) {
-        const bytes = await build(pages, scale, q);
-        tick();
-        if (!smallest || bytes.length < smallest.bytes.length) smallest = { bytes, scale, q, fits: false };
-        if (bytes.length <= limit) return { bytes, scale, q, fits: true };
+    for (let i = 0; i < rungs.length; i++) {
+        const [scale, q] = rungs[i], last = i === rungs.length - 1;
+        prog.set(Math.min(98, 45 + i * 3));
+        const jpegs = [];
+        let sum = 0;
+        for (const page of pages) {
+            const j = await reencode(page, scale, q);
+            jpegs.push(j); sum += j.length;
+            if (sum > limit && !last) break;
+        }
+        if (sum > limit && !last) continue;
+        const bytes = await build(jpegs);
+        if (bytes.length <= limit || last) return { bytes, scale, q, fits: bytes.length <= limit };
     }
-    return smallest;
 }
 
 async function convert() {
@@ -311,37 +406,39 @@ async function convert() {
     goBtn.textContent = SlimIO.t("Converting…");
     prog.show();
     result.style.display = "none";
-    const entries = [];
+    let group = [];
     try {
         const check = await SlimIO.consume();
         if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
 
-        for (let i = 0; i < items.length; i++) {
-            const pic = await decode(items[i].file);
-            if (!pic) { SlimIO.showError(SlimIO.t('Could not read "{name}".', { name: items[i].name })); return; }
-            entries.push({ pic, it: items[i] });
-            prog.set(Math.round(((i + 1) / items.length) * 30));
-        }
         const per = Number($("per").value);
         const opts = { clear: $("clear").checked, number: $("number").checked };
+        const covers = coverOn() ? coverPages(items) : [];
+        const count = covers.length + Math.ceil(items.length / per);
+        // Pages are drawn one at a time and kept only as JPEG, with "3 / 5" at the foot
         const pages = [];
-        if (coverOn()) pages.push(...coverPages(items));
-        const covers = pages.length;
-        for (let i = 0; i < entries.length; i += per) {
-            pages.push(receiptPage(entries.slice(i, i + per), i + 1, per, opts));
-            prog.set(30 + Math.round(((i + per) / entries.length) * 10));
+        const finish = async (c) => { footer(c.getContext("2d"), pages.length + 1, count); pages.push(await toJpeg(c, QUALITY)); release(c); };
+        for (const c of covers) await finish(c);
+        for (let i = 0; i < items.length; i += per) {
+            for (const it of items.slice(i, i + per)) {
+                const pic = await load(it.file);
+                if (!pic) { SlimIO.showError(SlimIO.t('Could not read "{name}".', { name: it.name })); return; }
+                group.push(pic);
+            }
+            const c = receiptPage(group, i + 1, per, opts);
+            group.forEach(release); group = [];
+            await finish(c);
+            prog.set(Math.round((Math.min(i + per, items.length) / items.length) * (limit ? 45 : 95)));
         }
-        // "3 / 5" at the foot of every page
-        pages.forEach((c, k) => footer(c.getContext("2d"), k + 1, pages.length));
 
-        const r = limit ? await fitToLimit(pages, limit) : { bytes: await build(pages, 1, 0.9), fits: true, scale: 1, q: 0.9 };
+        const r = limit ? await fitToLimit(pages, limit) : { bytes: await build(pages), fits: true, scale: 1, q: QUALITY };
         SlimIO.event("receipt-to-pdf-result", { target: limit ? limitLabel() : "none", fits: r.fits, receipts: items.length,
-            per, cover: covers > 0, clear: opts.clear, outKB: Math.round(r.bytes.length / 1024) });
+            per, cover: covers.length > 0, clear: opts.clear, outKB: Math.round(r.bytes.length / 1024) });
         showResult(pages.length, r, limit);
     } catch (e) {
         SlimIO.showError(SlimIO.t("Conversion failed: {msg}", { msg: e.message }));
     } finally {
-        entries.forEach((e) => e.pic.close && e.pic.close());
+        group.forEach(release);
         goBtn.disabled = false;
         goBtn.textContent = SlimIO.t("Make PDF");
         prog.hide();

@@ -14,6 +14,8 @@ window.SLIMIO_KO = {
    "Already under {size} — full quality.": "이미 {size} 안에 들어가요 — 원래 화질 그대로예요.",
    "To fit {size}, the pages were saved at {dpi} dpi, JPG quality {q}%.": "{size}에 맞추려고 페이지를 {dpi}dpi, JPG 화질 {q}%로 저장했어요.",
    "This is the smallest we could make it. To get under {size}, put fewer receipts in one PDF.": "만들 수 있는 가장 작은 크기예요. {size} 아래로 가려면 PDF 하나에 영수증을 더 적게 넣으세요.",
+   "Opening HEIC photos…": "HEIC 사진 여는 중…",
+   "The HEIC photo decoder could not be loaded. Check your connection and try again.": "HEIC 사진 변환 도구를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
    // common
    "Please choose a PDF file.": "PDF 파일을 선택해 주세요.",
    "Please choose PDF files.": "PDF 파일을 선택해 주세요.",

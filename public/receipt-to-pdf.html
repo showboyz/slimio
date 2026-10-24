@@ -54,7 +54,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=9a504e32" />
+<link rel="stylesheet" href="/style.css?v=c7836cbe" />
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
 <script type="application/ld+json">
@@ -107,7 +107,7 @@
             "name": "Which image types can I use?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "JPG, PNG and WebP. iPhone HEIC photos may not open in the browser — set the camera to Most Compatible or share the photos as JPG."
+                "text": "JPG, PNG, WebP and iPhone HEIC photos. HEIC photos are opened in your browser too; the first one takes a few seconds longer while the decoder loads."
             }
         },
         {
@@ -153,7 +153,7 @@
           <div class="drop" id="drop">
               <input type="file" id="images" accept="image/*" multiple hidden />
               <div class="drop-title">Drop receipt photos here</div>
-              <div class="drop-or">or click to browse (JPG, PNG, WebP…)</div>
+              <div class="drop-or">or click to browse (JPG, PNG, HEIC…)</div>
               <div class="drop-sub" id="sub">Receipts never leave your device — everything happens locally in your browser.</div>
           </div>
 
@@ -237,7 +237,7 @@
       <h2>How to turn receipts into one PDF — in 4 steps</h2>
       <p>Expense reports, research budgets and tax filings often ask for the receipts as a single PDF, sometimes with several receipts on each A4 sheet. SlimIO lays the pages out for you, in your browser, so the receipts are never uploaded.</p>
       <ul>
-          <li><b>1. Add the receipt photos.</b> Drop in JPG, PNG or WebP files, or click to browse.</li>
+          <li><b>1. Add the receipt photos.</b> Drop in JPG, PNG, WebP or iPhone HEIC files, or click to browse.</li>
           <li><b>2. Put them in order.</b> Use the arrows, or sort by file name or file date.</li>
           <li><b>3. Choose the layout.</b> Pick 1, 2, 4 or 6 receipts per page, numbering, a cover page, and a size limit if the form has one.</li>
           <li><b>4. Make the PDF.</b> Download it and attach it to your report or upload form.</li>
@@ -254,7 +254,7 @@
       <ul>
           <li>Crop away the table around a receipt in your phone's photo editor before adding it — the larger the receipt fills its photo, the larger it prints.</li>
           <li>Name the photos in order, such as 01, 02, 03, and use <b>Sort by file name</b>.</li>
-          <li>iPhone photos in HEIC format may not open in the browser. Choose "Most Compatible" under Settings → Camera → Formats, or share the photo as JPG.</li>
+          <li>iPhone HEIC photos copied to a computer work as they are — no need to convert them to JPG first.</li>
           <li>Need to merge PDFs you already have? Use <a href="/merge.html">Merge PDF</a>, or <a href="/">compress a PDF</a> that is too large.</li>
       </ul>
 </div>
@@ -283,7 +283,7 @@
     </details>
     <details>
         <summary>Which image types can I use?</summary>
-        <p>JPG, PNG and WebP. iPhone HEIC photos may not open in the browser — set the camera to Most Compatible or share the photos as JPG.</p>
+        <p>JPG, PNG, WebP and iPhone HEIC photos. HEIC photos are opened in your browser too; the first one takes a few seconds longer while the decoder loads.</p>
     </details>
     <details>
         <summary>Are my receipts uploaded?</summary>
@@ -341,6 +341,6 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/lib.js?v=2df86fbc"></script>
-<script type="module" src="/js/receipt-to-pdf.js?v=5cd2e0b8"></script>
+<script type="module" src="/js/receipt-to-pdf.js?v=c5e42f50"></script>
  </body>
 </html>

@@ -70,7 +70,7 @@ Good to know when recommending a page:
 - [PDF 도장 넣기·서명 넣기 - 직인·이름 도장 무료](https://pdfslimio.com/ko/sign-pdf.html): PDF에 도장·직인이나 서명을 무료로 넣으세요. 이름으로 빨간 도장을 만들거나, 도장을 찍은 사진을 올리면 배경을 지우고 원하는 자리에 넣어요. 회원가입 없이 브라우저에서 처리돼요.
 - [PDF JPG 변환 - PDF를 이미지로 무료 변환](https://pdfslimio.com/ko/pdf-to-jpg.html): PDF 페이지를 JPG나 PNG 이미지로 바꾸세요. 화질과 해상도를 고르고 ZIP으로 한 번에 받아요. 회원가입 없이 무료, 브라우저 안에서 처리돼요.
 - [JPG PDF 변환 - 사진을 PDF로, 용량 제한(200KB·500KB)까지 무료](https://pdfslimio.com/ko/jpg-to-pdf.html): JPG, PNG, 휴대폰 사진 여러 장을 PDF 하나로 묶고, 200KB·500KB·1MB처럼 제출 용량 제한에 맞춰 저장하세요. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
-- [영수증 PDF 만들기 - A4에 여러 장 모아 번호 붙이고 용량 맞추기 무료](https://pdfslimio.com/ko/receipt-to-pdf.html): 영수증 사진을 A4 한 장에 2·4·6장씩 모아 PDF 하나로 만드세요. 번호, 표지 목록과 합계, 5MB·10MB 같은 제출 용량 제한까지. 회원가입 없이 무료이고, 파일은 브라우저 안에서만 처리돼요.
+- [영수증 스캔 PDF 만들기 - A4 용지에 여러 장 붙여 제출, 번호·용량까지 무료](https://pdfslimio.com/ko/receipt-to-pdf.html): 영수증을 A4 용지에 붙여 스캔하지 않아도 돼요. 휴대폰으로 찍은 영수증을 A4 한 장에 2·4·6장씩 모아 PDF 하나로 만들고, 번호·표지 목록과 합계·5MB 같은 제출 용량까지 맞추세요. 회원가입 없이 무료, 브라우저 안에서만 처리돼요.
 - [PDF 50KB 이하로 줄이기 - 증명서 한 장도 선명하게 무료](https://pdfslimio.com/ko/compress-pdf-to-50kb.html): 증명서·신분증 사본·서명한 서류 한 장을 PDF 50KB 이하로 줄이세요. 이 용량 안에서 가장 읽기 좋게 맞춰요. 회원가입 없이 무료.
 - [PDF 100KB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-100kb.html): 채용·공공기관 사이트 업로드용으로 PDF를 100KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.
 - [PDF 200KB 이하로 줄이기 - 무료 용량 맞춤 압축](https://pdfslimio.com/ko/compress-pdf-to-200kb.html): 입학·장학금·지원사업 서류용으로 PDF를 200KB 이하로 줄이세요. 제한 안에서 가장 좋은 화질을 자동으로 찾아요. 회원가입 없이 무료.

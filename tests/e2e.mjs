@@ -65,6 +65,15 @@ function render(bytes) {
   return String(spawnSync("gs", ["-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pnggray", "-r40", "-dFirstPage=1", "-dLastPage=1", "-sOutputFile=-", f]).stdout.toString("base64"));
 }
 
+// page 1 as raw grey pixels (0 = black)
+function grayPage(bytes, res) {
+  const f = path.join(TMP, "gray.pdf");
+  fs.writeFileSync(f, bytes);
+  const out = spawnSync("gs", ["-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pgmraw", `-r${res}`, "-dFirstPage=1", "-dLastPage=1", "-sOutputFile=-", f]).stdout;
+  const m = out.toString("latin1", 0, 200).match(/^P5\s+(?:#[^\n]*\n\s*)*(\d+)\s+(\d+)\s+255\s/);   // Ghostscript adds a comment line
+  return { w: +m[1], h: +m[2], px: out.subarray(m[0].length) };
+}
+
 function zipCount(bytes) {
   if (bytes[0] !== 0x50 || bytes[1] !== 0x4b) return -1;
   let n = 0;
@@ -133,6 +142,22 @@ async function makeFixtures(browser) {
   const exif = Buffer.concat([Buffer.from("Exif\0\0", "binary"), tiff]);
   fs.writeFileSync(path.join(TMP, "sideways.jpg"), Buffer.concat([photo2.subarray(0, 2),
     Buffer.from([0xff, 0xe1, (exif.length + 2) >> 8, (exif.length + 2) & 255]), exif, photo2.subarray(2)]));
+  // a faded till receipt, small on a dark table: "Make faded text clearer" used to turn its print white
+  fs.writeFileSync(path.join(TMP, "faded.jpg"), Buffer.from(await p.evaluate(async () => {
+    const c = new OffscreenCanvas(3024, 4032), x = c.getContext("2d");
+    x.fillStyle = "#6d5440"; x.fillRect(0, 0, 3024, 4032);
+    x.fillStyle = "#eeebe4"; x.fillRect(1062, 666, 900, 2700);
+    x.fillStyle = "#b5b0a6"; x.font = "56px monospace";
+    for (let i = 0; i < 24; i++) x.fillText(`ITEM ${i + 1}   1,234`, 1120, 900 + i * 100);
+    const d = x.getImageData(0, 0, 3024, 4032), a = d.data;
+    for (let i = 0; i < a.length; i += 4) { const n = (Math.random() - 0.5) * 18; a[i] += n; a[i + 1] += n; a[i + 2] += n; }
+    x.putImageData(d, 0, 0);
+    const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
+    return Array.from(new Uint8Array(await b.arrayBuffer()));
+  })));
+  // an iPhone-style HEIC photo (Chrome can't open these itself); only where macOS sips can make one
+  spawnSync("sips", ["-s", "format", "heic", path.join(TMP, "photo2.jpg"), "--out", path.join(TMP, "photo.heic")], { stdio: "ignore" });
+  fs.writeFileSync(path.join(TMP, "notes.txt"), "not a picture");
   fs.writeFileSync(path.join(TMP, "photo.pdf"), jpegPdf([photo, await jpeg(2480, 3508, 0.9)]));
   // three different phone-size photos: well over 10MB, but 10MB has room for much more than 150 dpi
   fs.writeFileSync(path.join(TMP, "photos3.pdf"), jpegPdf([photo, await jpeg(3024, 4032, 0.9), await jpeg(3024, 4032, 0.9)]));
@@ -379,6 +404,7 @@ function toolTests() {
   });
   both("jpg-to-pdf.html", "2 photos", async (p) => {
     await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]); await runTool(p);
+    if (await p.isVisible("#fitrow")) return "the Limit row shows with no limit chosen";
     return pdfCheck((await download(p)).bytes, { pages: 2 });
   });
   both("jpg-to-pdf.html", "under 200KB", async (p) => {
@@ -397,7 +423,45 @@ function toolTests() {
   });
   both("receipt-to-pdf.html", "5 receipts, 4 per page → 2 pages", async (p) => {
     await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg"), F("photo.jpg"), F("photo2.jpg"), F("photo.jpg")]); await runTool(p);
+    if (await p.isVisible("#fitrow")) return "the Limit row shows with no limit chosen";
     return pdfCheck((await download(p)).bytes, { pages: 2 });
+  });
+  both("receipt-to-pdf.html", "a text file among the photos: photos kept, error shown", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("notes.txt"), F("photo2.jpg")]);
+    const n = await p.$$eval("#filelist li", (l) => l.length);
+    if (n !== 2) return `${n} files in the list, expected the 2 photos`;
+    if (!(await p.isVisible("#error"))) return "no message about the text file";
+    await runTool(p);
+    return pdfCheck((await download(p)).bytes, { pages: 1 });
+  });
+  both("receipt-to-pdf.html", "faded receipt on a dark table: clearer text makes the print dark", async (p) => {
+    await p.setInputFiles("#images", F("faded.jpg"));
+    await select(p, "#per", "1"); await p.check("#clear"); await p.uncheck("#number"); await runTool(p);
+    const r = await download(p), e = pdfCheck(r.bytes, { pages: 1 });
+    if (e || !HAS_GS) return e;
+    // the middle of the paper, where the print is: some of it must be dark
+    const g = grayPage(r.bytes, 50);
+    let dark = 0, all = 0;
+    for (let y = Math.round(g.h * 0.3); y < g.h * 0.7; y++) for (let x = Math.round(g.w / 2 - 40); x < g.w / 2 + 40; x++, all++) if (g.px[y * g.w + x] < 100) dark++;
+    return dark / all > 0.03 ? null : `the print didn't turn dark (${(100 * dark / all).toFixed(1)}% dark pixels on the paper)`;
+  });
+  both("receipt-to-pdf.html", "iPhone HEIC photo", async (p) => {
+    if (!fs.existsSync(F("photo.heic"))) return null;   // no sips (not macOS): nothing to test with
+    await p.setInputFiles("#images", [F("photo.heic"), F("photo2.jpg")]);
+    await select(p, "#per", "1"); await runTool(p);
+    const r = await download(p), e = pdfCheck(r.bytes, { pages: 2 });
+    if (e || !HAS_GS) return e;
+    // the HEIC page must hold the photo, not an empty frame: page 1 drawn as grey must not be near-white
+    const gray = Buffer.from(render(r.bytes), "base64");
+    return gray.length < 3000 ? `page 1 looks empty (${gray.length} bytes as PNG)` : null;
+  });
+  both("receipt-to-pdf.html", "6 phone photos under 1MB, one per page: pages are saved smaller", async (p) => {
+    await p.setInputFiles("#images", Array(6).fill(F("photo.jpg")));
+    await select(p, "#per", "1"); await select(p, "#target", "1MB"); await runTool(p);
+    const r = await download(p);
+    if (r.bytes.length > 1000000) return `${KB(r.bytes.length)} is over 1MB`;
+    if (!/dpi/.test(await p.textContent("#note"))) return "the note doesn't say how the pages were made smaller: " + (await p.textContent("#note"));
+    return pdfCheck(r.bytes, { pages: 6 });
   });
   both("receipt-to-pdf.html", "1 per page + cover + clear text → cover page added", async (p) => {
     await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]);
