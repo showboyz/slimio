@@ -4,7 +4,7 @@ const controls = $("controls");
 const mode = $("mode");
 const optRange = $("opt-range");
 const optPages = $("opt-pagesinfo");
-const rangeSel = $("range");
+const rangeInput = $("range");
 const pagesInfo = $("pagesinfo");
 const goBtn = $("go");
 const result = $("result");
@@ -18,19 +18,8 @@ let pageCount = 0;
 mode.onchange = () => {
     const range = mode.value === "range";
     optRange.style.display = range ? "block" : "none";
-    fillRangeOptions();
+    if (range) rangeInput.focus();
 };
-
-function fillRangeOptions() {
-    rangeSel.innerHTML = "";
-    for (let i = 1; i <= Math.max(pageCount, 1); i++) {
-        const o = document.createElement("option");
-        o.value = String(i - 1);
-        o.textContent = i;
-        rangeSel.appendChild(o);
-    }
-    rangeSel.value = String(Math.max(pageCount - 1, 0));
-}
 
 async function setFile(f) {
     if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f); return; }
@@ -46,7 +35,6 @@ async function setFile(f) {
     optPages.style.display = "block";
     pagesInfo.textContent = SlimIO.t("{pages} in this PDF.", { pages: SlimIO.pages(pageCount) });
     optRange.style.display = mode.value === "range" ? "block" : "none";
-    fillRangeOptions();
     goBtn.disabled = false;
     SlimIO.refreshStatus();
 }
@@ -115,7 +103,7 @@ async function splitEach() {
         const copied = await out.copyPages(doc, [i]);
         out.addPage(copied[0]);
         const bytes = await out.save();
-        zip.file(`${base}_page_${i + 1}.pdf`, bytes);
+        zip.file(`${base}_page_${String(i + 1).padStart(String(pageCount).length, "0")}.pdf`, bytes);
         prog.set(Math.round(((i + 1) / pageCount) * 100));
     }
     const blob = await zip.generateAsync({ type: "uint8array" });
@@ -125,14 +113,16 @@ async function splitEach() {
 }
 
 async function extractRange() {
-    const raw = String(rangeSel.value).trim();
+    const raw = rangeInput.value.trim();
     const pages = parseRanges(raw, pageCount);
     if (pages.length === 0) { SlimIO.showError(SlimIO.t("No valid pages in that range.")); return; }
     const out = await PDFDocument.create();
     const copied = await out.copyPages(doc, pages);
     copied.forEach((p) => out.addPage(p));
     const bytes = await out.save();
-    const name = (file.name || "document").replace(/\.pdf$/i, "") + "_extracted.pdf";
+    // name the file after its pages, so parts cut one after another don't share a name
+    const label = raw.replace(/\s+/g, "").replace(/,/g, "_").replace(/[^0-9_-]/g, "").slice(0, 40);
+    const name = (file.name || "document").replace(/\.pdf$/i, "") + "_" + (label || "extracted") + ".pdf";
     showResult(SlimIO.pages(pages.length), bytes, "application/pdf", name);
 }
 

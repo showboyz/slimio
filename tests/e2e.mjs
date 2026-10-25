@@ -357,12 +357,15 @@ function toolTests() {
     await p.setInputFiles("#pdf", F("text.pdf")); await runTool(p);
     const n = zipCount((await download(p)).bytes); if (n !== 3) return `ZIP has ${n} files, expected 3`;
     await select(p, "#mode", "range");
-    await p.evaluate(() => { const s = document.querySelector("#range"); s.value = s.options[s.options.length - 1]?.value ?? s.value; });
-    const want = await p.$eval("#range", (s) => s.value);
-    await runTool(p);
-    const r = await download(p);
-    const m = String(want).match(/^(\d+)-(\d+)$/);
-    return pdfCheck(r.bytes, m ? { pages: m[2] - m[1] + 1 } : {});
+    for (const [typed, want] of [["2-3", [2, 3]], ["1, 3", [1, 3]], ["1", [1]]]) {
+      await p.fill("#range", typed); await runTool(p);
+      const r = await download(p);
+      const err = pdfCheck(r.bytes, { pages: want.length, text: want.map((n) => `Test page ${n}`) });
+      if (err) return `"${typed}": ${err}`;
+      if (typed === "2-3" && r.name !== "text_2-3.pdf") return `range file is named ${r.name}`;
+    }
+    await p.fill("#range", "9"); await p.click("#go");
+    return await p.waitForFunction(() => /\S/.test(document.querySelector("#error")?.textContent || ""), null, { timeout: 5000 }).then(() => null, () => '"9" in a 3-page PDF shows no error');
   });
   both("delete-pages.html", "remove page 2", async (p) => {
     await p.setInputFiles("#pdf", F("text.pdf")); await p.fill("#pages", "2"); await runTool(p);
