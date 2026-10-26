@@ -175,20 +175,118 @@ function release(pic) {
     else if (pic.getContext) { pic.width = 0; pic.height = 0; }   // iOS counts canvas memory until it's emptied
 }
 
+// Where the receipt is in a photo of it lying on a table: the largest bright shape that the darker
+// table surrounds. Worked out on a copy about 320 px long, so it takes a few milliseconds.
+// Returns the receipt's box in the photo's pixels, measured from the photo's centre in a frame
+// turned by `angle` (radians) so a slightly crooked receipt stands straight — or null when there is
+// no receipt to cut out: a white table, a scan or screenshot, or a receipt that already fills the photo.
+function findReceipt(pic) {
+    const k = Math.min(1, 320 / Math.max(pic.width, pic.height));
+    const w = Math.max(1, Math.round(pic.width * k)), h = Math.max(1, Math.round(pic.height * k)), n = w * h;
+    const c = document.createElement("canvas");
+    c.width = w; c.height = h;
+    const cx = c.getContext("2d", { willReadFrequently: true });
+    cx.drawImage(pic, 0, 0, w, h);
+    const px = cx.getImageData(0, 0, w, h).data;
+    release(c);
+    const g = new Uint8Array(n), hist = new Uint32Array(256);
+    for (let i = 0; i < n; i++) { g[i] = (px[i * 4] * 77 + px[i * 4 + 1] * 151 + px[i * 4 + 2] * 28) >> 8; hist[g[i]]++; }
+
+    // Otsu's threshold: the grey level that best splits the photo into paper and table
+    let all = 0;
+    for (let v = 0; v < 256; v++) all += v * hist[v];
+    let cnt = 0, acc = 0, best = -1, t = 128, gap = 0;
+    for (let v = 0; v < 255; v++) {
+        cnt += hist[v]; acc += v * hist[v];
+        if (!cnt || cnt === n) continue;
+        const dark = acc / cnt, bright = (all - acc) / (n - cnt), between = cnt * (n - cnt) * (bright - dark) ** 2;
+        if (between > best) { best = between; t = v; gap = bright - dark; }
+    }
+    if (gap < 50) return null;   // paper and table about as bright: nothing to tell apart
+
+    // The table: dark pixels joined to the photo's edge. If much of the edge is bright, the table
+    // is white or the receipt fills the photo.
+    const out = new Uint8Array(n), queue = new Int32Array(n);
+    let qn = 0, edge = 0, brightEdge = 0;
+    const seed = (i) => { edge++; if (g[i] > t) brightEdge++; else if (!out[i]) { out[i] = 1; queue[qn++] = i; } };
+    for (let x = 0; x < w; x++) { seed(x); if (h > 1) seed((h - 1) * w + x); }
+    for (let y = 1; y < h - 1; y++) { seed(y * w); if (w > 1) seed(y * w + w - 1); }
+    if (brightEdge > edge * 0.35) return null;
+    for (let q = 0; q < qn; q++) {
+        const i = queue[q], x = i % w;
+        for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, i - w, i + w]) {
+            if (j >= 0 && j < n && !out[j] && g[j] <= t) { out[j] = 1; queue[qn++] = j; }
+        }
+    }
+    // Everything else, print and creases included, is paper or other things on the table; the
+    // receipt is the biggest connected piece.
+    const label = new Int32Array(n);
+    let paper = null;
+    for (let s = 0, id = 0; s < n; s++) {
+        if (out[s] || label[s]) continue;
+        id++; label[s] = id;
+        let m = 0; queue[m++] = s;
+        for (let q = 0; q < m; q++) {
+            const i = queue[q], x = i % w;
+            for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, i - w, i + w]) {
+                if (j >= 0 && j < n && !out[j] && !label[j]) { label[j] = id; queue[m++] = j; }
+            }
+        }
+        if (!paper || m > paper.length) paper = queue.slice(0, m);
+    }
+    if (!paper || paper.length < n * 0.04 || paper.length > n * 0.9) return null;
+
+    // Its tilt from the shape's second moments: turn the long side to the nearest upright or level
+    let mx = 0, my = 0;
+    for (const i of paper) { mx += i % w; my += (i / w) | 0; }
+    mx /= paper.length; my /= paper.length;
+    let sxx = 0, syy = 0, sxy = 0;
+    for (const i of paper) { const dx = i % w - mx, dy = ((i / w) | 0) - my; sxx += dx * dx; syy += dy * dy; sxy += dx * dy; }
+    const theta = 0.5 * Math.atan2(2 * sxy, sxx - syy);
+    const half = (sxx + syy) / 2, r = Math.sqrt(((sxx - syy) / 2) ** 2 + sxy * sxy);
+    let angle = Math.round(theta / (Math.PI / 2)) * (Math.PI / 2) - theta;
+    // squarish shapes have no clear long side; under 0.5° isn't worth it, over 25° is a guess
+    if ((half + r) / Math.max(1, half - r) < 1.15 || Math.abs(angle) > 0.44 || Math.abs(angle) < 0.009) angle = 0;
+
+    // The box of the turned shape, ignoring a few stray pixels, plus a small margin
+    const cos = Math.cos(angle), sin = Math.sin(angle);
+    const xs = new Float32Array(paper.length), ys = new Float32Array(paper.length);
+    paper.forEach((i, j) => {
+        const dx = i % w + 0.5 - w / 2, dy = ((i / w) | 0) + 0.5 - h / 2;
+        xs[j] = dx * cos - dy * sin; ys[j] = dx * sin + dy * cos;
+    });
+    xs.sort(); ys.sort();
+    const at = (a, f) => a[Math.min(a.length - 1, Math.floor(a.length * f))];
+    let x0 = at(xs, 0.002), x1 = at(xs, 0.998), y0 = at(ys, 0.002), y1 = at(ys, 0.998);
+    const bw = x1 - x0, bh = y1 - y0;
+    if (paper.length < bw * bh * 0.7) return null;   // not a rectangle: a hand, a pile, a curled strip
+    if (bw * bh > n * 0.85) return null;             // the receipt nearly fills the photo already
+    x0 -= bw * 0.015 + 1; x1 += bw * 0.015 + 1; y0 -= bh * 0.015 + 1; y1 += bh * 0.015 + 1;
+    return { x: x0 / k, y: y0 / k, w: (x1 - x0) / k, h: (y1 - y0) / k, angle };
+}
+
 // A receipt is never drawn larger than the page's receipt area, so a 12-megapixel phone photo is
 // shrunk to that as soon as it's read and the full-size copy freed. Thirty photos then add about
 // 0.2GB to Chrome's memory instead of 1.7GB, which is what keeps a phone's browser from giving up.
-async function load(file) {
+// With `crop`, the table around the receipt is cut away first, from the full-size photo.
+async function load(file, crop) {
     const full = await decode(file);
     if (!full) return null;
-    const s = Math.min(AREA.w / full.width, AREA.h / full.height);
-    if (s >= 1) return full;
+    const box = crop ? findReceipt(full) : null;
+    const b = box || { x: -full.width / 2, y: -full.height / 2, w: full.width, h: full.height, angle: 0 };
+    const s = Math.min(AREA.w / b.w, AREA.h / b.h, 1);
+    if (!box && s >= 1) return full;
     const c = document.createElement("canvas");
-    c.width = Math.max(1, Math.round(full.width * s)); c.height = Math.max(1, Math.round(full.height * s));
+    c.width = Math.max(1, Math.round(b.w * s)); c.height = Math.max(1, Math.round(b.h * s));
     const x = c.getContext("2d");
+    x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height);
     x.imageSmoothingQuality = "high";
-    x.drawImage(full, 0, 0, c.width, c.height);
+    x.setTransform(s, 0, 0, s, -b.x * s, -b.y * s);   // photo → turned around its centre → box
+    x.rotate(b.angle);
+    x.translate(-full.width / 2, -full.height / 2);
+    x.drawImage(full, 0, 0);
     release(full);
+    c.cropped = !!box;
     return c;
 }
 
@@ -412,7 +510,8 @@ async function convert() {
         if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
 
         const per = Number($("per").value);
-        const opts = { clear: $("clear").checked, number: $("number").checked };
+        const opts = { clear: $("clear").checked, number: $("number").checked, crop: $("crop").checked };
+        let cropped = 0;
         const covers = coverOn() ? coverPages(items) : [];
         const count = covers.length + Math.ceil(items.length / per);
         // Pages are drawn one at a time and kept only as JPEG, with "3 / 5" at the foot
@@ -421,8 +520,9 @@ async function convert() {
         for (const c of covers) await finish(c);
         for (let i = 0; i < items.length; i += per) {
             for (const it of items.slice(i, i + per)) {
-                const pic = await load(it.file);
+                const pic = await load(it.file, opts.crop);
                 if (!pic) { SlimIO.showError(SlimIO.t('Could not read "{name}".', { name: it.name })); return; }
+                if (pic.cropped) cropped++;
                 group.push(pic);
             }
             const c = receiptPage(group, i + 1, per, opts);
@@ -433,7 +533,7 @@ async function convert() {
 
         const r = limit ? await fitToLimit(pages, limit) : { bytes: await build(pages), fits: true, scale: 1, q: QUALITY };
         SlimIO.event("receipt-to-pdf-result", { target: limit ? limitLabel() : "none", fits: r.fits, receipts: items.length,
-            per, cover: covers.length > 0, clear: opts.clear, outKB: Math.round(r.bytes.length / 1024) });
+            per, cover: covers.length > 0, clear: opts.clear, cropped, outKB: Math.round(r.bytes.length / 1024) });
         showResult(pages.length, r, limit);
     } catch (e) {
         SlimIO.showError(SlimIO.t("Conversion failed: {msg}", { msg: e.message }));

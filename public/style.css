@@ -303,6 +303,15 @@ h2.sec { text-align: center; font-size: 26px; margin-bottom: 8px; }
 .rc-fields .rc-date { flex: 0 0 96px; width: 96px; }
 .rc-fields .rc-shop { flex: 1 1 auto; }
 .rc-fields .rc-amount { flex: 0 0 96px; width: 96px; text-align: right; }
+/* phones: the store gets the room next to the date and the amount drops to its own line; 16px text
+   so iPhones don't zoom in on every tap */
+@media (max-width: 560px) {
+   .rc-fields { flex-wrap: wrap; }
+   .rc-fields input, #coverbox input[type=text] { font-size: 16px; }
+   .rc-fields .rc-date { flex: 0 0 104px; width: 104px; }
+   .rc-fields .rc-shop { flex: 1 1 calc(100% - 110px); }
+   .rc-fields .rc-amount { flex: 0 0 calc(50% - 3px); width: auto; margin-left: auto; }
+}
 .field.checks { display: grid; gap: 8px; }
 .field .chk { display: flex; align-items: center; gap: 8px; justify-content: flex-start; cursor: pointer; }
 .field .chk input { width: 16px; height: 16px; }

@@ -44,6 +44,7 @@
       },
       "featureList": [
             "A4 한 장에 영수증 1·2·4·6장 배치",
+            "사진에서 영수증만 잘라 똑바로 세우기",
             "영수증 번호 붙이기",
             "표지 목록과 합계 (선택)",
             "파일 이름·파일 날짜 순서로 정렬",
@@ -55,7 +56,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=c7836cbe" />
+<link rel="stylesheet" href="/style.css?v=12b6b8eb" />
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
 <script type="application/ld+json">
@@ -101,6 +102,14 @@
                   "acceptedAnswer": {
                         "@type": "Answer",
                         "text": "네. 영수증을 평평하게 놓고 휴대폰으로 바로 위에서 찍은 뒤 흐린 글씨 선명하게를 켜면 흑백 스캔본처럼 나와요. 여러 장을 A4에 모아 PDF 하나로 받으면 돼요."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "사진에 찍힌 책상은 잘라낼 수 있나요?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "네. '사진에서 영수증만 잘라 크게'가 기본으로 켜져 있어요. 어두운 책상 위의 밝은 종이를 찾아서, 살짝 기울어진 영수증은 똑바로 세우고 나머지를 잘라내요. 그래서 영수증이 더 크게 들어가요. 흰 책상 위에서는 종이와 책상을 구분하지 못해 사진을 그대로 써요. 어두운 곳에 놓고 찍거나 미리 잘라서 올리세요."
                   }
             },
             {
@@ -183,6 +192,7 @@
                   <div class="hint">페이지는 A4예요. 길쭉한 영수증은 옆으로 나란히, 가로로 넓은 영수증은 위아래로 놓아요.</div>
               </div>
               <div class="field checks">
+                  <label class="chk"><input type="checkbox" id="crop" checked /> 사진에서 영수증만 잘라 크게 (주변 책상 빼기)</label>
                   <label class="chk"><input type="checkbox" id="number" checked /> 영수증에 번호 붙이기 (1, 2, 3…)</label>
                   <label class="chk"><input type="checkbox" id="clear" /> 흐린 글씨 선명하게 (흑백으로)</label>
                   <label class="chk"><input type="checkbox" id="cover" /> 표지에 목록과 합계 넣기</label>
@@ -254,7 +264,7 @@
       <h3>영수증 A4 용지 제출, 풀칠·스캔 없이</h3>
       <p>영수증을 A4 용지에 붙인 뒤 스캔해서 내라는 곳이 많아요. 영수증마다 풀칠하고 스캐너 앞에 서는 대신, 휴대폰으로 영수증을 찍어 여기서 A4에 배치하면 같은 모양의 PDF가 나와요. 한 장에 몇 장씩 붙일지, 번호를 붙일지 고를 수 있고, 첨부 파일 용량 제한이 있으면 그 안으로 맞춰요. 종이로 내야 한다면 이 PDF를 그대로 인쇄하면 돼요.</p>
       <h3>A4 한 장에 영수증 여러 장</h3>
-      <p>영수증을 한 페이지에 한 장씩이 아니라 A4 한 장에 모아서 붙이는 곳이 많아요. 2장·4장·6장씩을 고르면 영수증이 가장 크게 보이는 배치를 SlimIO가 골라요. 길쭉한 영수증은 옆으로 나란히, 가로로 넓은 영수증은 위아래로 놓아요. 영수증마다 얇은 테두리가 생기고, 원하면 모서리에 번호도 붙어요.</p>
+      <p>영수증을 한 페이지에 한 장씩이 아니라 A4 한 장에 모아서 붙이는 곳이 많아요. 2장·4장·6장씩을 고르면 영수증이 가장 크게 보이는 배치를 SlimIO가 골라요. 길쭉한 영수증은 옆으로 나란히, 가로로 넓은 영수증은 위아래로 놓아요. 사진은 먼저 영수증 부분만 잘라내서 주변 책상이 자리를 차지하지 않아요. 영수증마다 얇은 테두리가 생기고, 원하면 모서리에 번호도 붙어요.</p>
       <h3>표지에 목록과 합계 넣기</h3>
       <p><b>표지에 목록과 합계 넣기</b>를 켜고 영수증마다 날짜, 사용처, 금액을 적으면 첫 페이지가 표로 만들어져요. 표의 번호는 영수증에 붙은 번호와 같고, 맨 아래에 합계가 나와요. 영수증을 자동으로 읽지는 않아요. 표에 들어갈 내용은 직접 정하니까 틀릴 일이 없어요.</p>
       <h3>5MB·10MB·20MB 이하로 만들기</h3>
@@ -263,7 +273,7 @@
       <p>감열지 영수증은 시간이 지나면 연한 회색으로 날아가요. <b>흐린 글씨 선명하게</b>를 켜면 영수증을 흑백으로 바꾸고 밝기 범위를 늘려서 글씨는 진하게, 종이는 하얗게 만들어요. 영수증을 평평하게 놓고 바로 위에서, 그림자와 손가락이 안 나오게 밝은 곳에서 찍으면 가장 잘 나와요.</p>
       <h3>이럴 때 팁</h3>
       <ul>
-          <li>영수증 주변 책상이 찍혔다면 폰 사진 편집에서 잘라서 올리세요. 영수증이 사진을 가득 채울수록 PDF에서 더 크게 보여요.</li>
+          <li>영수증은 어두운 책상이나 바닥 위에서 찍으세요. 사진마다 영수증만 자동으로 잘라내요. 흰 책상 위라면 종이와 책상을 구분하지 못하니 폰 사진 편집에서 잘라서 올리세요. 영수증이 사진을 가득 채울수록 PDF에서 더 크게 보여요.</li>
           <li>사진 이름을 01, 02, 03처럼 붙이고 <b>파일 이름순 정렬</b>을 누르면 순서를 한 번에 맞출 수 있어요.</li>
           <li>컴퓨터로 옮긴 아이폰 HEIC 사진도 JPG로 바꾸지 않고 그대로 올리면 돼요.</li>
           <li>이미 만든 PDF를 합치려면 <a href="/ko/merge.html">PDF 합치기</a>를, 용량이 큰 PDF는 <a href="/ko/">PDF 용량 줄이기</a>를 쓰세요.</li>
@@ -291,6 +301,10 @@
       <details>
           <summary>스캐너 없이 영수증을 스캔한 것처럼 만들 수 있나요?</summary>
           <p>네. 영수증을 평평하게 놓고 휴대폰으로 바로 위에서 찍은 뒤 흐린 글씨 선명하게를 켜면 흑백 스캔본처럼 나와요. 여러 장을 A4에 모아 PDF 하나로 받으면 돼요.</p>
+      </details>
+      <details>
+          <summary>사진에 찍힌 책상은 잘라낼 수 있나요?</summary>
+          <p>네. &#x27;사진에서 영수증만 잘라 크게&#x27;가 기본으로 켜져 있어요. 어두운 책상 위의 밝은 종이를 찾아서, 살짝 기울어진 영수증은 똑바로 세우고 나머지를 잘라내요. 그래서 영수증이 더 크게 들어가요. 흰 책상 위에서는 종이와 책상을 구분하지 못해 사진을 그대로 써요. 어두운 곳에 놓고 찍거나 미리 잘라서 올리세요.</p>
       </details>
       <details>
           <summary>영수증 순서는 어떻게 정해지나요?</summary>
@@ -357,6 +371,6 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/i18n/ko.js?v=924853bc"></script>
 <script defer src="/lib.js?v=2df86fbc"></script>
-<script type="module" src="/js/receipt-to-pdf.js?v=c5e42f50"></script>
+<script type="module" src="/js/receipt-to-pdf.js?v=914c7d72"></script>
  </body>
 </html>

@@ -44,6 +44,7 @@
     },
     "featureList": [
         "Receipts on A4 pages (1, 2, 4 or 6 per page)",
+        "Each photo cut down to the receipt and straightened",
         "Numbered receipts and an optional cover table with a total",
         "Sort by file name or file date",
         "Clear faded receipt text",
@@ -54,7 +55,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=c7836cbe" />
+<link rel="stylesheet" href="/style.css?v=12b6b8eb" />
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
 <script type="application/ld+json">
@@ -92,6 +93,14 @@
             "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "Tick Make faded text clearer. Each receipt is turned to black and white and its levels are stretched, so grey thermal-paper print turns dark on white. It works best on photos taken straight on, in good light."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can it cut the table out of my receipt photos?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Cut the receipt out of each photo is on by default: SlimIO finds the paper against a darker table, straightens a slightly crooked receipt and drops the rest, so the receipt prints larger. On a white table it can't tell paper from table and leaves the photo as it is — put the receipt on something darker, or crop the photo first."
             }
         },
         {
@@ -174,6 +183,7 @@
                   <div class="hint">Pages are A4. Tall receipts are placed side by side, wide ones one above the other.</div>
               </div>
               <div class="field checks">
+                  <label class="chk"><input type="checkbox" id="crop" checked /> Cut the receipt out of each photo (drops the table around it)</label>
                   <label class="chk"><input type="checkbox" id="number" checked /> Number the receipts (1, 2, 3…)</label>
                   <label class="chk"><input type="checkbox" id="clear" /> Make faded text clearer (black &amp; white)</label>
                   <label class="chk"><input type="checkbox" id="cover" /> Add a cover page with a list and total</label>
@@ -243,7 +253,7 @@
           <li><b>4. Make the PDF.</b> Download it and attach it to your report or upload form.</li>
       </ul>
       <h3>Several receipts per A4 page</h3>
-      <p>Many offices want receipts attached to A4 sheets rather than one photo per page. Pick 2, 4 or 6 per page and SlimIO chooses the arrangement that draws the receipts largest: long, narrow till receipts stand side by side, wide ones go one above the other. Each receipt gets a thin frame and, if you like, a number in the corner.</p>
+      <p>Many offices want receipts attached to A4 sheets rather than one photo per page. Pick 2, 4 or 6 per page and SlimIO chooses the arrangement that draws the receipts largest: long, narrow till receipts stand side by side, wide ones go one above the other. Each photo is first cut down to the receipt itself, so the table around it doesn't take up the space. Each receipt gets a thin frame and, if you like, a number in the corner.</p>
       <h3>A cover page with a list and total</h3>
       <p>Tick <b>Add a cover page</b> and type the date, store and amount for each receipt. The first page becomes a table whose numbers match the numbers on the receipts, with the total at the bottom. SlimIO does not read the receipts automatically, so you decide exactly what the table says.</p>
       <h3>Under 5MB, 10MB or 20MB</h3>
@@ -252,7 +262,7 @@
       <p>Thermal paper fades to light grey. <b>Make faded text clearer</b> turns each receipt to black and white and stretches its brightness so the print is dark and the paper white. Photograph the receipt flat, from straight above, in even light, and keep your finger and shadows out of the picture.</p>
       <h3>Tips</h3>
       <ul>
-          <li>Crop away the table around a receipt in your phone's photo editor before adding it — the larger the receipt fills its photo, the larger it prints.</li>
+          <li>Photograph receipts on a darker surface: each one is then cut out of its photo automatically. On a white table, crop the photo in your phone's editor first — the larger the receipt fills its photo, the larger it prints.</li>
           <li>Name the photos in order, such as 01, 02, 03, and use <b>Sort by file name</b>.</li>
           <li>iPhone HEIC photos copied to a computer work as they are — no need to convert them to JPG first.</li>
           <li>Need to merge PDFs you already have? Use <a href="/merge.html">Merge PDF</a>, or <a href="/">compress a PDF</a> that is too large.</li>
@@ -276,6 +286,10 @@
     <details>
         <summary>My receipt text is faded. Can it be made clearer?</summary>
         <p>Tick Make faded text clearer. Each receipt is turned to black and white and its levels are stretched, so grey thermal-paper print turns dark on white. It works best on photos taken straight on, in good light.</p>
+    </details>
+    <details>
+        <summary>Can it cut the table out of my receipt photos?</summary>
+        <p>Yes. Cut the receipt out of each photo is on by default: SlimIO finds the paper against a darker table, straightens a slightly crooked receipt and drops the rest, so the receipt prints larger. On a white table it can't tell paper from table and leaves the photo as it is — put the receipt on something darker, or crop the photo first.</p>
     </details>
     <details>
         <summary>In what order do the receipts go?</summary>
@@ -341,6 +355,6 @@
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/lib.js?v=2df86fbc"></script>
-<script type="module" src="/js/receipt-to-pdf.js?v=c5e42f50"></script>
+<script type="module" src="/js/receipt-to-pdf.js?v=914c7d72"></script>
  </body>
 </html>

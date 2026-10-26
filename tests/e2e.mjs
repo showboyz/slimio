@@ -155,6 +155,21 @@ async function makeFixtures(browser) {
     const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
     return Array.from(new Uint8Array(await b.arrayBuffer()));
   })));
+  // a receipt lying 6° crooked on a dark table, the way phone photos of receipts usually look
+  fs.writeFileSync(path.join(TMP, "tilted.jpg"), Buffer.from(await p.evaluate(async () => {
+    const c = new OffscreenCanvas(3024, 4032), x = c.getContext("2d");
+    x.fillStyle = "#4a3b2e"; x.fillRect(0, 0, 3024, 4032);
+    x.translate(1512, 2016); x.rotate(6 * Math.PI / 180);
+    x.fillStyle = "#f2efe8"; x.fillRect(-500, -1500, 1000, 3000);
+    x.fillStyle = "#858585"; x.font = "60px monospace";   // grey print, so only the table counts as dark below
+    for (let i = 0; i < 26; i++) x.fillText(`ITEM ${i + 1}   1,234`, -430, -1350 + i * 110);
+    x.setTransform(1, 0, 0, 1, 0, 0);
+    const d = x.getImageData(0, 0, 3024, 4032), a = d.data;
+    for (let i = 0; i < a.length; i += 4) { const n = (Math.random() - 0.5) * 18; a[i] += n; a[i + 1] += n; a[i + 2] += n; }
+    x.putImageData(d, 0, 0);
+    const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
+    return Array.from(new Uint8Array(await b.arrayBuffer()));
+  })));
   // an iPhone-style HEIC photo (Chrome can't open these itself); only where macOS sips can make one
   spawnSync("sips", ["-s", "format", "heic", path.join(TMP, "photo2.jpg"), "--out", path.join(TMP, "photo.heic")], { stdio: "ignore" });
   fs.writeFileSync(path.join(TMP, "notes.txt"), "not a picture");
@@ -447,6 +462,34 @@ function toolTests() {
     let dark = 0, all = 0;
     for (let y = Math.round(g.h * 0.3); y < g.h * 0.7; y++) for (let x = Math.round(g.w / 2 - 40); x < g.w / 2 + 40; x++, all++) if (g.px[y * g.w + x] < 100) dark++;
     return dark / all > 0.03 ? null : `the print didn't turn dark (${(100 * dark / all).toFixed(1)}% dark pixels on the paper)`;
+  });
+  // Share of the page that is dark table: the photo's table is cut away and the crooked receipt
+  // turned straight, so (almost) none of it is left; with the option off it is most of the photo
+  const tableShare = (bytes) => {
+    const g = grayPage(bytes, 30);
+    let dark = 0;
+    for (const v of g.px) if (v < 95) dark++;
+    return dark / g.px.length;
+  };
+  both("receipt-to-pdf.html", "receipt photo on a dark table: cut out and straightened", async (p) => {
+    await p.setInputFiles("#images", F("tilted.jpg"));
+    await select(p, "#per", "1"); await p.uncheck("#number");
+    if (!(await p.isChecked("#crop"))) return "cutting out the receipt isn't on by default";
+    await runTool(p);
+    const r = await download(p), e = pdfCheck(r.bytes, { pages: 1 });
+    if (e || !HAS_GS) return e;
+    const cut = tableShare(r.bytes);
+    await p.uncheck("#crop"); await runTool(p);
+    const kept = tableShare((await download(p)).bytes);
+    if (kept < 0.3) return `the test photo shows too little table (${(100 * kept).toFixed(0)}%) to tell`;
+    return cut < 0.03 ? null : `${(100 * cut).toFixed(1)}% of the page is still table (${(100 * kept).toFixed(0)}% without cutting)`;
+  });
+  both("receipt-to-pdf.html", "cover fields: the store box has room on a phone", async (p) => {
+    await p.setInputFiles("#images", [F("photo.jpg"), F("photo2.jpg")]); await p.check("#cover");
+    const w = await p.$eval(".rc-shop", (e) => e.getBoundingClientRect().width);
+    const fs16 = await p.$eval(".rc-shop", (e) => parseFloat(getComputedStyle(e).fontSize));
+    if (MOBILE && fs16 < 16) return `the boxes use ${fs16}px text, so iPhones zoom in when tapped`;
+    return w >= 140 ? null : `the store box is only ${Math.round(w)}px wide`;
   });
   both("receipt-to-pdf.html", "iPhone HEIC photo", async (p) => {
     if (!fs.existsSync(F("photo.heic"))) return null;   // no sips (not macOS): nothing to test with
