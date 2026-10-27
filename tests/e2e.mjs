@@ -355,6 +355,19 @@ function toolTests() {
     if (!/is locked|편집 제한이 걸린/.test(msg)) return msg ? "message: " + msg : "a download was offered";
     return used ? "it used up one of the day's turns" : null;
   });
+  // One bad file in a pick used to stop the rest of the pick from being added (and the list wasn't redrawn).
+  both("merge.html", "a rejected file doesn't drop the rest of the pick", async (p) => {
+    if (!HAS_GS) return null;
+    p.expected = /is encrypted/;
+    await p.setInputFiles("#pdfs", [F("locked.pdf"), F("text.pdf"), F("photo.pdf")]);
+    await p.waitForFunction(() => document.querySelectorAll("#filelist li").length === 2, null, { timeout: 10000 }).catch(() => {});
+    const names = await p.$$eval("#filelist li", (l) => l.map((li) => li.textContent));
+    if (names.length !== 2) return `${names.length} files in the list, expected text.pdf and photo.pdf`;
+    if (!(await p.isVisible("#error"))) return "no message about the locked file";
+    await runTool(p).catch(() => {});   // the message about the locked file is still up, so check the result directly
+    await p.waitForSelector("#dl", { state: "visible", timeout: 60000 });
+    return pdfCheck((await download(p)).bytes, { pages: 5 });
+  });
   // People drop photos on PDF tools: they get a link to the tool that takes photos.
   for (const [page, href] of [["", "compress-image.html"], ["compress-pdf-to-300kb.html", "compress-image.html?target=300KB"],
                               ["merge.html", "jpg-to-pdf.html"], ["sign-pdf.html", "jpg-to-pdf.html"]])
@@ -751,6 +764,13 @@ async function pageChecks(browser) {
 
 // ------------------------------------------------------------------ main
 
+// A server left over from an earlier run would answer instead of ours (ours can't bind the port),
+// so the tests would quietly check whatever code that one was started with.
+if (!LIVE && await fetch(BASE + "/").then(() => true, () => false)) {
+  console.error(`Port ${PORT} is already in use (a test server from an earlier run?). Stop it and run again.`);
+  fs.rmSync(TMP, { recursive: true, force: true });
+  process.exit(2);
+}
 const server = LIVE ? null : spawn("node", [path.join(ROOT, "server/server.cjs")], {
   env: { ...process.env, PORT: String(PORT), HOST: "127.0.0.1", DAILY_LIMIT: "100000", IP_DAILY_LIMIT: "100000" },
   stdio: "ignore",

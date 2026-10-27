@@ -40,15 +40,15 @@ function onItemAction(action, idx) {
 
 async function addFiles(list) {
     SlimIO.clearError();
+    // A file that can't be used is named and skipped; the rest of the pick still goes in the list.
     for (const f of list) {
-        if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f, SlimIO.t("Please choose PDF files.")); return; }
+        if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f, SlimIO.t("Please choose PDF files.")); continue; }
         try {
             const bytes = await f.arrayBuffer();
             const doc = await PDFLib.PDFDocument.load(bytes);
             items.push({ file: f, name: f.name, size: f.size, doc });
         } catch (e) {
             SlimIO.showError(SlimIO.pdfError('Could not read "{name}": {msg}', e, { name: f.name }));
-            return;
         }
     }
     render();
