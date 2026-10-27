@@ -13,4 +13,3 @@ for img in "$@"; do
 done
 [ "$SMALL" != "-" ] && bash $T/small.sh $W $SMALL
 orca computer get-app-state --app com.google.Chrome --window-id $W --json | python3 -c 'import json,sys;d=json.load(sys.stdin);print(d["result"]["screenshot"]["path"])'
-Shell cwd was reset to /Users/home/orca/workspaces/mymy/ondine
