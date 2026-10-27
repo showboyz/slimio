@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Every SlimIO.t("...") key used in public/ JS must have a Korean entry in public/i18n/ko.js."""
+"""Every SlimIO.t("...") / SlimIO.pdfError("...") key used in public/ JS must have a Korean entry in public/i18n/ko.js."""
 import glob, os, re, sys
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "public")
 used = set()
 for f in glob.glob(os.path.join(ROOT, "js", "*.js")) + [os.path.join(ROOT, n) for n in ("lib.js", "target.js")]:
     s = open(f).read()
-    for m in re.finditer(r'\bt\((["\'])(.*?)(?<!\\)\1', s):
+    for m in re.finditer(r'\b(?:t|pdfError)\((["\'])(.*?)(?<!\\)\1', s):
         used.add(m.group(2).replace('\\"', '"').replace("\\'", "'"))
     for m in re.finditer(r'\bt\([^()]*?\? "(.*?)" : "(.*?)"', s):
         used.update(m.groups())

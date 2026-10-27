@@ -133,9 +133,13 @@ function gs(args, input, output) {
           const proc = spawn("gs", gsArgs, { stdio: ["ignore", "pipe", "pipe"] });
           const timer = setTimeout(() => proc.kill("SIGKILL"), GS_TIMEOUT_MS);
           proc.on("close", () => clearTimeout(timer));
-          let err = "";
+          let err = "", said = "";
           proc.stderr.on("data", (d) => (err += d));
-          proc.on("close", (code) => code === 0 ? resolve() : reject(new Error(err || "gs exit " + code)));
+          proc.stdout.on("data", (d) => { if (said.length < 4096) said += d; });
+          // A PDF that needs a password to open still exits 0, with a blank one-page file.
+          proc.on("close", (code) => /requires a password/i.test(said + err)
+             ? reject(Object.assign(new Error("password"), { code: "password" }))
+             : code === 0 ? resolve() : reject(new Error(err || "gs exit " + code)));
           proc.on("error", reject);
        } catch (e) { reject(e); }
    });
@@ -181,21 +185,23 @@ async function handle(req, res) {
        const slot = acquireGs();   // before reading the body, so waiting requests hold no memory
        if (!slot) return sendJson(res, 503, { error: "server busy — try Browser mode", remaining: remaining(u), limit: DAILY_LIMIT });
        await slot;
+       const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
+       const tmpOut = tmpIn + "_out.pdf";
        try {
-          const chunks = [];
+          // Straight to disk: holding a 40MB upload in memory (twice, with the concat) next to
+          // Ghostscript got node OOM-killed on the 256MB machine, restarting it mid-request.
+          const ws = fs.createWriteStream(tmpIn);
           let size = 0;
-          for await (const c of req) {
-             size += c.length;
-             if (size > MAX_UPLOAD) return sendJson(res, 413, { error: "file too large (max 50 MB)" });
-             chunks.push(c);
+          try {
+             for await (const c of req) {
+                size += c.length;
+                if (size > MAX_UPLOAD) return sendJson(res, 413, { error: "file too large (max 50 MB)" });
+                if (!ws.write(c)) await new Promise((r) => ws.once("drain", r));
+             }
+          } finally {
+             await new Promise((r) => ws.end(r));
           }
-          const inBuf = Buffer.concat(chunks);
-          if (inBuf.length < 200) return sendJson(res, 400, { error: "empty file" });
-          consume(u);
-
-          const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
-          const tmpOut = tmpIn + "_out.pdf";
-          fs.writeFileSync(tmpIn, inBuf);
+          if (size < 200) return sendJson(res, 400, { error: "empty file" });
 
           try {
              // With a size target of 1MB or more, ebook's fixed 150dpi throws away detail the
@@ -214,13 +220,14 @@ async function handle(req, res) {
              }
              if (dpi === null) await gs({ level, jpg }, tmpIn, tmpOut);
              const outBuf = fs.readFileSync(tmpOut);
+             consume(u);   // only a finished compression counts
              sendJson(
                 res, 200,
                 {
                    ok: true,
-                   inBytes: inBuf.length,
+                   inBytes: size,
                    outBytes: outBuf.length,
-                   savedPct: ((1 - outBuf.length / inBuf.length) * 100).toFixed(1),
+                   savedPct: ((1 - outBuf.length / size) * 100).toFixed(1),
                    ...(dpi ? { dpi } : {}),
                    remaining: remaining(u),
                    limit: DAILY_LIMIT,
@@ -228,12 +235,13 @@ async function handle(req, res) {
                 }
              );
            } catch (e) {
-             sendJson(res, 500, { error: e.message, inBytes: inBuf.length, outBytes: 0, remaining: remaining(u), limit: DAILY_LIMIT });
-           } finally {
-             fs.unlink(tmpIn, () => {});
-             fs.unlink(tmpOut, () => {});
+             // 422, not 5xx: the page would fall back to browser mode, which can't open it either
+             if (e.code === "password") return sendJson(res, 422, { error: "password", code: "password", remaining: remaining(u), limit: DAILY_LIMIT });
+             sendJson(res, 500, { error: e.message, inBytes: size, outBytes: 0, remaining: remaining(u), limit: DAILY_LIMIT });
            }
        } finally {
+          fs.unlink(tmpIn, () => {});
+          fs.unlink(tmpOut, () => {});
           releaseGs();
        }
        return;

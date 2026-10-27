@@ -46,10 +46,9 @@ async function addNumbers() {
      prog.show();
      result.style.display = "none";
      try {
+             const doc = await PDFDocument.load(await file.arrayBuffer());
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
-
-             const doc = await PDFDocument.load(await file.arrayBuffer());
              const font = await doc.embedFont(StandardFonts.Helvetica);
              const [vert, horiz] = $("pos").value.split("-");
              const fmt = $("fmt").value;
@@ -75,7 +74,7 @@ async function addNumbers() {
              const out = await doc.save();
              showResult(pages.length, numbered, out);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Numbering failed: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Numbering failed: {msg}", e));
      } finally {
              goBtn.disabled = false;
              goBtn.textContent = SlimIO.t("Add page numbers");

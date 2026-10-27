@@ -49,7 +49,7 @@ async function compress() {
              if (r.limited) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
              showResult(r, label);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Compression failed: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Compression failed: {msg}", e));
      } finally {
              goBtn.disabled = false;
              goBtn.textContent = SlimIO.t("Compress PDF");

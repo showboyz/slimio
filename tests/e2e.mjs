@@ -190,6 +190,11 @@ async function makeFixtures(browser) {
   await p.setContent(`<style>body{font:13pt/1.6 sans-serif}section{page-break-after:always}</style>` +
     [1, 2, 3].map((n) => `<section><h1>Test page ${n}</h1><p>${para.repeat(12)}</p></section>`).join(""));
   fs.writeFileSync(path.join(TMP, "text.pdf"), await p.pdf({ format: "A4" }));
+  // issued certificates: one that needs a password to open, one that opens but has editing locked
+  // (the password one has photos, so it's over the size targets and really goes to the server)
+  if (HAS_GS) for (const [name, lock, src] of [["password.pdf", "-sUserPassword=030301", "photo.pdf"], ["locked.pdf", "-dPermissions=-3904", "text.pdf"]])
+    spawnSync("gs", ["-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite", "-sOwnerPassword=owner", lock, "-dEncryptionR=3", "-dKeyLength=128",
+      "-dPassThroughJPEGImages=true", "-sOutputFile=" + path.join(TMP, name), path.join(TMP, src)]);
   await p.close();
 }
 
@@ -316,6 +321,39 @@ function toolTests() {
     await p.click("#go");
     await p.waitForFunction(() => document.querySelector("#error")?.offsetParent !== null || document.querySelector("#dl")?.offsetParent !== null, null, { timeout: 30000 });
     return (await p.$eval("#error", (e) => e.offsetParent !== null)) ? null : "no error message for a broken file";
+  });
+  // A PDF that needs a password used to come back from the server as a blank page, shown as "−94%".
+  const shownError = async (p) => {
+    await p.waitForFunction(() => document.querySelector("#error")?.offsetParent !== null || document.querySelector("#dl")?.offsetParent !== null, null, { timeout: 60000 });
+    return p.$eval("#error", (e) => (e.offsetParent !== null ? e.textContent.trim() : ""));
+  };
+  for (const page of ["", "compress-pdf-to-300kb.html"]) both(page, "a PDF that needs a password says so, no blank file", async (p) => {
+    if (!HAS_GS) return null;
+    p.expected = /422|password/i;
+    await p.setInputFiles("#pdf", F("password.pdf")); await p.click("#go");
+    const msg = await shownError(p);
+    return /needs a password|암호가 필요한/.test(msg) ? null : msg ? "message: " + msg : "a download was offered";
+  });
+  // Editing-locked PDFs gave pdf-lib's English "is encrypted ... ignoreEncryption" and used up a turn.
+  for (const [page, setup] of [
+    ["merge.html", (p) => p.setInputFiles("#pdfs", [F("locked.pdf"), F("text.pdf")])],
+    ["split.html", (p) => p.setInputFiles("#pdf", F("locked.pdf"))],
+    ["rotate.html", (p) => p.setInputFiles("#pdf", F("locked.pdf"))],
+    ["delete-pages.html", async (p) => { await p.setInputFiles("#pdf", F("locked.pdf")); await p.fill("#pages", "1"); }],
+    ["add-page-numbers.html", (p) => p.setInputFiles("#pdf", F("locked.pdf"))],
+    ["watermark.html", (p) => p.setInputFiles("#pdf", F("locked.pdf"))],
+    ["organize.html", (p) => p.setInputFiles("#pdf", F("locked.pdf"))],
+  ]) both(page, "an editing-locked PDF says so and uses no turn", async (p) => {
+    if (!HAS_GS) return null;
+    p.expected = /is encrypted/;
+    let used = 0;
+    p.on("request", (r) => { if (r.url().includes("/api/consume")) used++; });
+    await setup(p);
+    await p.waitForTimeout(800);
+    if (!(await p.isVisible("#error")) && await p.isEnabled("#go")) await p.click("#go");
+    const msg = await shownError(p);
+    if (!/is locked|편집 제한이 걸린/.test(msg)) return msg ? "message: " + msg : "a download was offered";
+    return used ? "it used up one of the day's turns" : null;
   });
   // People drop photos on PDF tools: they get a link to the tool that takes photos.
   for (const [page, href] of [["", "compress-image.html"], ["compress-pdf-to-300kb.html", "compress-image.html?target=300KB"],

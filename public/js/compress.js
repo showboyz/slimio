@@ -103,7 +103,7 @@ async function compress() {
         }
     } catch (e) {
         console.error(e);
-        showError(SlimIO.t("Something went wrong: {msg}", { msg: e.message }));
+        showError(SlimIO.pdfError("Something went wrong: {msg}", e));
     } finally {
         goBtn.disabled = false;
         goBtn.textContent = SlimIO.t("Compress PDF");
@@ -137,7 +137,7 @@ async function compressOnServer() {
         return;
     }
     if (!j.ok) {
-        showError(SlimIO.t("Server error: {msg}", { msg: j.error || "unknown" }));
+        showError(SlimIO.lockedPdf(j.code) || SlimIO.t("Server error: {msg}", { msg: j.error || "unknown" }));
         refreshStatus();
         return;
     }

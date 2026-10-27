@@ -49,6 +49,7 @@ async function convert() {
     prog.show();
     result.style.display = "none";
     try {
+        const src = await pdfjsLib.getDocument(await file.arrayBuffer()).promise;
         const check = await SlimIO.consume();
         if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
 
@@ -56,9 +57,6 @@ async function convert() {
         const q = parseInt(quality.value, 10) / 100;
         const s = parseInt(scale.value, 10) / 100;
         const ext = mime === "image/png" ? "png" : "jpg";
-        const data = await file.arrayBuffer();
-
-        const src = await pdfjsLib.getDocument(data).promise;
         const zip = new JSZip();
         const base = (file.name || "document").replace(/\.pdf$/i, "");
 
@@ -83,7 +81,7 @@ async function convert() {
         const out = await zip.generateAsync({ type: "uint8array" });
         showResult(src.numPages, mime, out);
      } catch (e) {
-        SlimIO.showError(SlimIO.t("Conversion failed: {msg}", { msg: e.message }));
+        SlimIO.showError(SlimIO.pdfError("Conversion failed: {msg}", e));
      } finally {
         goBtn.disabled = false;
         goBtn.textContent = SlimIO.t("Convert to JPG");

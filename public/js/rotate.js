@@ -43,11 +43,10 @@ async function rotate() {
      prog.show();
      result.style.display = "none";
      try {
-             const check = await SlimIO.consume();
-             if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
-
              const data = await file.arrayBuffer();
              const doc = await PDFDocument.load(data);
+             const check = await SlimIO.consume();
+             if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
              pageCount = doc.getPageCount();
              const deg = parseInt(angle.value, 10);
 
@@ -60,7 +59,7 @@ async function rotate() {
              const out = await doc.save();
              showResult(pageCount, deg, out);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Rotate failed: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Rotate failed: {msg}", e));
      } finally {
              goBtn.disabled = false;
              goBtn.textContent = SlimIO.t("Rotate PDF");

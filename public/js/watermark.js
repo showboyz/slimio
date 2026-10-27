@@ -93,10 +93,9 @@ async function addWatermark() {
      prog.show();
      result.style.display = "none";
      try {
+             const doc = await PDFDocument.load(await file.arrayBuffer());
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
-
-             const doc = await PDFDocument.load(await file.arrayBuffer());
              const drawer = await makeDrawer(doc, text, $("color").value);
              const style = $("style").value;
              const opacity = parseInt($("opacity").value, 10) / 100;
@@ -134,7 +133,7 @@ async function addWatermark() {
              const out = await doc.save();
              showResult(pages.length, text, out);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Watermark failed: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Watermark failed: {msg}", e));
      } finally {
              goBtn.disabled = false;
              goBtn.textContent = SlimIO.t("Add watermark");

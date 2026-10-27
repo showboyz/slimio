@@ -36,7 +36,7 @@ async function setFile(f) {
              bytes = data;
              viewer = doc;
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Could not open this PDF: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Could not open this PDF: {msg}", e));
              return;
      }
      drop.querySelector(".drop-title").textContent = f.name;
@@ -517,10 +517,9 @@ async function sign() {
      prog.show();
      result.style.display = "none";
      try {
+             const doc = await PDFDocument.load(bytes);
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
-
-             const doc = await PDFDocument.load(bytes);
              const embedded = new Map();
              for (let i = 0; i < items.length; i++) {
                      const it = items[i];
@@ -535,7 +534,7 @@ async function sign() {
              const out = await doc.save();
              showResult(doc.getPageCount(), items.length, out);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Sign failed: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Sign failed: {msg}", e));
      } finally {
              updateGo();
              goBtn.textContent = SlimIO.t("Sign & download");

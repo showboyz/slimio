@@ -29,6 +29,7 @@ const SlimTarget = (() => {
       const j = await resp.json().catch(() => ({}));
       if (resp.status === 429) return { limited: true };
       if (j.remaining !== undefined) SlimIO.updateLimit(j.remaining, j.limit);
+      if (j.code === "password") throw new Error("password");   // the browser can't open it either
       if (!j.ok) {
          SlimIO.reportError("fallback", "HTTP " + resp.status + " " + (j.error || ""));
          return { failed: true };
@@ -114,7 +115,10 @@ const SlimTarget = (() => {
                best = { bytes: r.bytes, method: "server", fits: r.bytes.length <= target };
                if (best.fits) { SlimIO.track(); return best; }
             }
-         } catch (e) { SlimIO.reportError("fallback", "network: " + e.message); }   // fall through to browser
+         } catch (e) {
+            if (e.message === "password") throw e;
+            SlimIO.reportError("fallback", "network: " + e.message);   // fall through to browser
+         }
       }
       if (charged) SlimIO.track();   // server path counted the use but the result didn't fit
       else {

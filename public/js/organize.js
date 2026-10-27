@@ -34,7 +34,7 @@ async function setFile(f) {
              goBtn.disabled = false;
              for (const it of items) await drawThumb(it);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Could not open this PDF: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Could not open this PDF: {msg}", e));
      }
      SlimIO.refreshStatus();
 }
@@ -129,10 +129,9 @@ async function save() {
      prog.show();
      result.style.display = "none";
      try {
+             const src = await PDFDocument.load(bytes);
              const check = await SlimIO.consume();
              if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
-
-             const src = await PDFDocument.load(bytes);
              const out = await PDFDocument.create();
              const copied = await out.copyPages(src, items.map((it) => it.src));
              copied.forEach((page, i) => {
@@ -144,7 +143,7 @@ async function save() {
              const saved = await out.save();
              showResult(copied.length, saved);
      } catch (e) {
-             SlimIO.showError(SlimIO.t("Save failed: {msg}", { msg: e.message }));
+             SlimIO.showError(SlimIO.pdfError("Save failed: {msg}", e));
      } finally {
              goBtn.disabled = false;
              goBtn.textContent = SlimIO.t("Save PDF");

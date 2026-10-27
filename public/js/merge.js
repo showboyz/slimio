@@ -47,7 +47,7 @@ async function addFiles(list) {
             const doc = await PDFLib.PDFDocument.load(bytes);
             items.push({ file: f, name: f.name, size: f.size, doc });
         } catch (e) {
-            SlimIO.showError(SlimIO.t('Could not read "{name}": {msg}', { name: f.name, msg: e.message }));
+            SlimIO.showError(SlimIO.pdfError('Could not read "{name}": {msg}', e, { name: f.name }));
             return;
         }
     }
@@ -100,7 +100,7 @@ async function merge() {
         }
             showResult(items.length, out.getPageCount(), bytes);
     } catch (e) {
-        SlimIO.showError(SlimIO.t("Merge failed: {msg}", { msg: e.message }));
+        SlimIO.showError(SlimIO.pdfError("Merge failed: {msg}", e));
     } finally {
         goBtn.disabled = false;
         goBtn.textContent = SlimIO.t("Merge PDFs");

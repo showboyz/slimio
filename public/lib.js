@@ -68,6 +68,21 @@ const SlimIO = (() => {
       el.append(" ", a);
    }
 
+   // Issued certificates often come with an open password or with editing locked. pdf-lib won't
+   // touch either ("is encrypted") and pdf.js asks for the password, so say it in plain words.
+   function lockedPdf(e, name) {
+      const m = String((e && e.message) || e || "");
+      const msg = (e && e.name === "PasswordException") || /password/i.test(m)
+         ? t("This PDF needs a password to open. Open it with the password, save a copy without one, and add that copy.")
+         : /is encrypted/i.test(m)
+         ? t("This PDF is locked (a password or an editing lock), so it can't be changed here. Submit it as it is, or get a copy without the lock.")
+         : "";
+      return msg && name ? `“${name}”: ${msg}` : msg;
+   }
+   function pdfError(key, e, vars) {
+      return lockedPdf(e, vars && vars.name) || t(key, { ...vars, msg: e.message });
+   }
+
    function showError(msg, id) {
       const el = $(id || "error");
       if (!el) return;
@@ -284,7 +299,7 @@ const SlimIO = (() => {
 
    return {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
-      showError, clearError, log, isPdf, notPdf,
+      showError, clearError, log, isPdf, notPdf, lockedPdf, pdfError,
       refreshStatus, updateLimit, consume, bindProgress, track, event, reportError, trackDownload, inputAdded, apiHeaders, page2user,
       reveal, inApp,
    };

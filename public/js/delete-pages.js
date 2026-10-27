@@ -68,11 +68,10 @@ async function remove() {
      prog.show();
      result.style.display = "none";
      try {
-            const check = await SlimIO.consume();
-            if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
-
             const data = await file.arrayBuffer();
             const src = await PDFDocument.load(data);
+            const check = await SlimIO.consume();
+            if (check && !check.ok) { SlimIO.showError(SlimIO.t("Daily limit reached. Come back tomorrow.")); return; }
             pageCount = src.getPageCount();
             const removed = parseNumbers(pagesInput.value, pageCount);
             if (removed.length === 0) { SlimIO.showError(SlimIO.t("None of those page numbers exist in this PDF.")); return; }
@@ -84,7 +83,7 @@ async function remove() {
             prog.set(100);
             showResult(removed.length, src.getPageCount(), out);
      } catch (e) {
-            SlimIO.showError(SlimIO.t("Remove failed: {msg}", { msg: e.message }));
+            SlimIO.showError(SlimIO.pdfError("Remove failed: {msg}", e));
      } finally {
             goBtn.disabled = !pagesInput.value.trim();
             goBtn.textContent = SlimIO.t("Remove pages");

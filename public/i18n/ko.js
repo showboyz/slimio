@@ -18,6 +18,8 @@ window.SLIMIO_KO = {
    "The HEIC photo decoder could not be loaded. Check your connection and try again.": "HEIC 사진 변환 도구를 불러오지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.",
    // common
    "Please choose a PDF file.": "PDF 파일을 선택해 주세요.",
+   "This PDF needs a password to open. Open it with the password, save a copy without one, and add that copy.": "열 때 암호가 필요한 PDF예요. 암호를 넣어 연 다음 암호 없는 사본으로 저장해서, 그 사본을 올려 주세요.",
+   "This PDF is locked (a password or an editing lock), so it can't be changed here. Submit it as it is, or get a copy without the lock.": "암호나 편집 제한이 걸린 PDF라 여기서 고칠 수 없어요. 받은 그대로 제출하거나, 잠금이 없는 사본을 받아서 올려 주세요.",
    "Please choose PDF files.": "PDF 파일을 선택해 주세요.",
    "This is a picture, not a PDF. Pictures are made smaller in the image compressor.": "PDF가 아니라 사진 파일이에요. 사진 용량은 사진 줄이기 도구에서 줄일 수 있어요.",
    "This is a picture, not a PDF. To turn pictures into a PDF, use JPG to PDF.": "PDF가 아니라 사진 파일이에요. 사진을 PDF로 만들려면 JPG→PDF 도구를 쓰세요.",

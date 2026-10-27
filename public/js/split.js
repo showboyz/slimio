@@ -30,7 +30,7 @@ async function setFile(f) {
     try {
         doc = await PDFDocument.load(await f.arrayBuffer());
         pageCount = doc.getPageCount();
-    } catch (e) { SlimIO.showError(SlimIO.t("Could not read file: {msg}", { msg: e.message })); return; }
+    } catch (e) { SlimIO.showError(SlimIO.pdfError("Could not read file: {msg}", e)); return; }
     controls.classList.remove("hidden");
     optPages.style.display = "block";
     pagesInfo.textContent = SlimIO.t("{pages} in this PDF.", { pages: SlimIO.pages(pageCount) });
@@ -84,7 +84,7 @@ async function split() {
         }
         SlimIO.consume();
     } catch (e) {
-        SlimIO.showError(SlimIO.t("Split failed: {msg}", { msg: e.message }));
+        SlimIO.showError(SlimIO.pdfError("Split failed: {msg}", e));
     } finally {
         goBtn.disabled = false;
         goBtn.textContent = SlimIO.t("Split PDF");

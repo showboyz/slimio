@@ -1,5 +1,8 @@
 app = "glowing-meadowbrook-286"
 primary_region = "sin"
+# 256MB machine: a big upload next to Ghostscript got node OOM-killed (2026-10-27).
+# Swap on the machine's own disk rides out such spikes instead of restarting.
+swap_size_mb = 512
 
 [build]
   dockerfile = "Dockerfile"
