@@ -304,6 +304,14 @@
  
     .foot-links a { color: var(--muted); }
     .foot-links a:hover { color: var(--text); }
+
+    /* guide cards (the same look as /guides/) */
+    .guide-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 22px 0 8px; text-align: left; }
+    .guide-card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
+    .guide-card:hover { border-color: var(--accent); }
+    .guide-card b { display: block; color: var(--text); font-size: 16px; margin-bottom: 4px; }
+    .guide-card small { display: block; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    @media (max-width: 720px) { .guide-list { grid-template-columns: 1fr; } }
     </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />

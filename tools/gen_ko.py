@@ -13,6 +13,7 @@ it stops and tells you which one, so the Korean page never silently drifts.
 """
 import glob, html, json, os, re, sys, datetime
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import gen_guide_links   # guide cards: marker pairs go in before the Korean build, the cards after
 import gen_related   # cross-link blocks: written into the English pages first, translated with COMMON
 import lastmod       # sitemap dates that change only when a page's own content does
 
@@ -1771,6 +1772,7 @@ COMMON += gen_related.ko_pairs()
 
 if __name__ == "__main__":
     gen_related.run()
+    gen_guide_links.prepare()
     missing = [p for p in PAGES if p not in KO]
     if missing:
         sys.exit(f"no Korean text for: {missing}")
@@ -1784,5 +1786,6 @@ if __name__ == "__main__":
         for path, lang in ((os.path.join(ROOT, p), "en"), (os.path.join(ROOT, "ko", p), "ko")):
             html_ = lang_links(open(path).read(), p, lang)
             open(path, "w").write(html_)
+    gen_guide_links.fill()
     write_sitemap()
     print(f"sitemap: {open(os.path.join(ROOT, 'sitemap.xml')).read().count('<loc>')} URLs")
