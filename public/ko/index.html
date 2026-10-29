@@ -266,7 +266,7 @@
     .badge b { color: var(--text); display: block; }
 
    /* pricing */
-    .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 620px; margin: 0 auto; }
+    .plans { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 320px; margin: 0 auto; }
     .plan { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
     .plan.feat { border-color: var(--accent); position: relative; }
     .plan .tag { position: absolute; top: -10px; left: 26px; background: var(--accent); color: #062a1c; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
@@ -553,29 +553,18 @@
      <!-- pricing -->
       <section class="steps" id="pricing">
           <div class="wrap">
-              <h2 class="sec">간단한 요금제</h2>
-              <p class="sec-sub">무료로 시작하고, 더 필요할 때만 업그레이드하세요.</p>
+              <h2 class="sec">무료로 쓰세요</h2>
+              <p class="sec-sub">회원가입도 워터마크도 없어요. 도구를 열고 바로 쓰면 돼요.</p>
               <div class="plans">
                 <div class="plan feat">
-                    <span class="tag">가장 인기</span>
                     <h3>무료</h3>
                     <div class="price">$0<small> / 평생</small></div>
                     <ul>
-                        <li>하루 20회 압축</li>
+                        <li>모든 도구 하루 20회까지</li>
                         <li>브라우저 · 서버 모드 모두</li>
                         <li>계정 필요 없음</li>
                     </ul>
                     <button class="btn" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">무료로 시작</button>
-                </div>
-                <div class="plan">
-                    <h3>Pro</h3>
-                    <div class="price">$5<small> / 월</small></div>
-                    <ul>
-                        <li>무제한 압축</li>
-                        <li>우선 처리</li>
-                        <li>광고 없음</li>
-                    </ul>
-                    <button class="btn" style="background:#1a2130;color:#e6e6e6;">준비 중</button>
                 </div>
             </div>
         </div>

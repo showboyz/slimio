@@ -201,7 +201,7 @@
     .badge b { color: var(--text); display: block; }
 
    /* pricing */
-    .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; max-width: 620px; margin: 0 auto; }
+    .plans { display: grid; grid-template-columns: 1fr; gap: 18px; max-width: 320px; margin: 0 auto; }
     .plan { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 26px; }
     .plan.feat { border-color: var(--accent); position: relative; }
     .plan .tag { position: absolute; top: -10px; left: 26px; background: var(--accent); color: #062a1c; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 20px; }
@@ -448,29 +448,18 @@
      <!-- pricing -->
       <section class="steps" id="pricing">
           <div class="wrap">
-              <h2 class="sec">Simple, free pricing</h2>
-              <p class="sec-sub">Start free. Upgrade only if you need more.</p>
+              <h2 class="sec">Free to use</h2>
+              <p class="sec-sub">No sign-up and no watermark. Open a tool and use it.</p>
               <div class="plans">
                 <div class="plan feat">
-                    <span class="tag">Most popular</span>
                     <h3>Free</h3>
                     <div class="price">$0<small> / forever</small></div>
                     <ul>
-                        <li>20 compressions per day</li>
+                        <li>Every tool, up to 20 uses a day</li>
                         <li>Both browser &amp; server mode</li>
                         <li>No account needed</li>
                     </ul>
                     <button class="btn" onclick="document.getElementById('tool').scrollIntoView({behavior:'smooth'})">Start free</button>
-                </div>
-                <div class="plan">
-                    <h3>Pro</h3>
-                    <div class="price">$5<small> / month</small></div>
-                    <ul>
-                        <li>Unlimited compressions</li>
-                        <li>Priority speed</li>
-                        <li>No ads</li>
-                    </ul>
-                    <button class="btn" style="background:#1a2130;color:#e6e6e6;">Coming soon</button>
                 </div>
             </div>
         </div>
