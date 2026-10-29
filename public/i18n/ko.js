@@ -169,7 +169,11 @@ window.SLIMIO_KO = {
    "↓ Download": "↓ 다운로드",
    "Total: {before} → {after} ({change})": "전체: {before} → {after} ({change})",
    "already optimized, kept as is": "이미 최적화된 파일이라 그대로 두었어요",
-   "This image can't be opened in this browser (HEIC photos, for example). Save it as JPG and try again.": "이 브라우저에서 열 수 없는 사진이에요(아이폰 HEIC 등). JPG로 저장한 뒤 다시 시도해 주세요.",
+   "This image can't be opened in this browser. Save it as JPG and try again.": "이 브라우저에서 열 수 없는 사진이에요. JPG로 저장한 뒤 다시 시도해 주세요.",
+   // HEIC to JPG
+   "Please choose HEIC photos or other image files.": "HEIC 사진이나 다른 이미지 파일을 골라 주세요.",
+   "{n} JPG files · {size}": "JPG {n}개 · {size}",
+   "{n} JPG file · {size}": "JPG {n}개 · {size}",
 
    // sign pdf
    "Page {n}": "{n}페이지",

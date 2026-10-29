@@ -95,7 +95,7 @@
             "name": "Which image types can I use?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "JPG, PNG and WebP. iPhone HEIC photos may not open in the browser — set the camera to Most Compatible or share the photos as JPG."
+                "text": "JPG, PNG, WebP and iPhone HEIC photos. HEIC photos are opened in your browser too; the first one takes a few seconds longer while the decoder loads."
             }
         },
         {
@@ -141,7 +141,7 @@
           <div class="drop" id="drop">
               <input type="file" id="images" accept="image/*" multiple hidden />
               <div class="drop-title">Drop image files here</div>
-              <div class="drop-or">or click to browse (JPG, PNG, WebP…)</div>
+              <div class="drop-or">or click to browse (JPG, PNG, HEIC…)</div>
               <div class="drop-sub" id="sub">Files never leave your device — conversion happens locally in your browser.</div>
           </div>
 
@@ -202,7 +202,7 @@
       <h2>How to convert JPG to PDF — in 3 steps</h2>
       <p>SlimIO's JPG to PDF tool bundles your images into one PDF, in the order you choose. Everything runs in your browser, so your files stay private and there is nothing to upload.</p>
       <ul>
-          <li><b>1. Add your images.</b> Drop in JPG, PNG or WebP files, or click to browse.</li>
+          <li><b>1. Add your images.</b> Drop in JPG, PNG, WebP or iPhone HEIC files, or click to browse.</li>
           <li><b>2. Arrange the order.</b> Use the up and down arrows to set the page order.</li>
           <li><b>3. Set a size limit (optional).</b> If the upload form says “PDF under 200KB”, pick that limit.</li>
           <li><b>4. Download.</b> Click Convert and save the combined PDF to your device.</li>
@@ -224,7 +224,7 @@
      <h3>Tips</h3>
      <ul>
          <li>Photos straight from a modern phone are often 3–5MB each; ten of them make a 30–50MB PDF. A size limit keeps the PDF light.</li>
-         <li>iPhone photos in HEIC format may not open in the browser. Choose "Most Compatible" under Settings → Camera → Formats, or share the photo as JPG.</li>
+         <li>iPhone HEIC photos work as they are — they are turned into JPG pages. To get JPG files from them instead, use <a href="/heic-to-jpg.html">HEIC to JPG</a>.</li>
      </ul>
 </div>
 
@@ -252,7 +252,7 @@
     </details>
     <details>
         <summary>Which image types can I use?</summary>
-        <p>JPG, PNG and WebP. iPhone HEIC photos may not open in the browser — set the camera to Most Compatible or share the photos as JPG.</p>
+        <p>JPG, PNG, WebP and iPhone HEIC photos. HEIC photos are opened in your browser too; the first one takes a few seconds longer while the decoder loads.</p>
     </details>
     <details>
         <summary>Are my images uploaded?</summary>
@@ -302,6 +302,7 @@
           <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
           <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>Bank Exam Documents</b><small>IBPS / SBI photo, signature, thumb, declaration</small></span></a>
           <a class="tcard" href="/compress-image.html"><span class="ico">📸</span><span class="tx"><b>Compress Image</b><small>Shrink photos to any KB</small></span></a>
+          <a class="tcard" href="/heic-to-jpg.html"><span class="ico">🔁</span><span class="tx"><b>HEIC to JPG</b><small>iPhone photos as JPG, many at once</small></span></a>
       </div>
       <p class="more-sub">Compress a photo to a set size</p>
       <div class="sizes"><a href="/compress-image-to-20kb.html" title="Compress photo to 20KB">20KB</a><a href="/compress-image-to-50kb.html" title="Compress photo to 50KB">50KB</a><a href="/compress-image-to-100kb.html" title="Compress photo to 100KB">100KB</a><a href="/compress-image-to-200kb.html" title="Compress photo to 200KB">200KB</a></div>
@@ -320,7 +321,7 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/lib.js?v=c981660f"></script>
-<script type="module" src="/js/jpg-to-pdf.js?v=c53a9080"></script>
+<script defer src="/lib.js?v=a1a4902b"></script>
+<script type="module" src="/js/jpg-to-pdf.js?v=ebaa3538"></script>
  </body>
 </html>

@@ -41,6 +41,7 @@ GUIDES = {
         "us-visa-photo.html": ["us-visa-photo-requirements", "india-e-visa-photo-requirements", "kb-pixels-cm-dpi-explained"],
         "compress-id-photo.html": [*E_PHOTO, "india-e-visa-photo-requirements"],
         **{p: E_PHOTO for p in gen_related.SIZE_IMG},
+        "heic-to-jpg.html": ["kb-pixels-cm-dpi-explained", "us-visa-photo-requirements", "india-e-visa-photo-requirements"],
     },
     "ko": {
         "default_pdf": K_DOC,
@@ -58,6 +59,7 @@ GUIDES = {
         "compress-image-to-50kb.html": ["exam-application-photo-size", "university-application-photo", "kuksiwon-photo"],
         "compress-image-to-100kb.html": ["china-visa-photo", "language-test-photo", "resume-photo-size"],
         "compress-image-to-200kb.html": ["passport-photo-online", "driver-license-photo", "exam-application-photo-size"],
+        "heic-to-jpg.html": ["language-test-photo", "resume-photo-size", "passport-photo-online"],
     },
 }
 TEXT = {

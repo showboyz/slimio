@@ -28,7 +28,7 @@ PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
          "sign-pdf.html", "receipt-to-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
          "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
-         "us-visa-photo.html", "signature-image.html"] + SIZE_PAGES
+         "us-visa-photo.html", "signature-image.html", "heic-to-jpg.html"] + SIZE_PAGES
 
 
 # English-only pages (no Korean version): listed in the sitemap, no hreflang.
@@ -82,6 +82,7 @@ COMMON = [
     (">Privacy Policy</a>", ">개인정보처리방침</a>"),
     (">Contact</a>", ">문의하기</a>"),
     (">Compress Image</a>", ">사진 용량 줄이기</a>"),
+    (">HEIC to JPG</a>", ">HEIC → JPG</a>"),
     (">Compress image (any size)</a>", ">사진 용량 줄이기 (용량 자유)</a>"),
     (">Compress image to 20KB</a>", ">사진 20KB로 줄이기</a>"),
     (">Compress image to 50KB</a>", ">사진 50KB로 줄이기</a>"),
@@ -189,6 +190,7 @@ KO["index.html"] = dict(
         ("<h3>Watermark PDF</h3><p>Stamp text on every page</p>", "<h3>워터마크</h3><p>대외비 · 사본 문구 넣기</p>"),
         ("<h3>Sign PDF</h3><p>Draw, type or upload a signature</p>", "<h3>PDF 서명</h3><p>그리기 · 이름 · 도장으로 서명</p>"),
         ("<h3>Compress Image</h3><p>Shrink JPG and PNG photos to any size</p>", "<h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p>"),
+        ("<h3>HEIC to JPG</h3><p>iPhone photos as JPG, many at once</p>", "<h3>HEIC → JPG</h3><p>아이폰 사진을 JPG로, 여러 장 한 번에</p>"),
         ("<h3>ID Photo</h3><p>Crop to passport or ID size, under the KB limit</p>", "<h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p>"),
         ("<h3>US Visa Photo</h3><p>600×600 for the DS-160, under 240KB</p>", "<h3>미국 비자 사진</h3><p>DS-160용 600×600 · 240KB 이하</p>"),
         ("<h3>Signature Image</h3><p>Clean JPG or PNG signature, 10–20KB</p>", "<h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p>"),
@@ -633,7 +635,7 @@ KO["jpg-to-pdf.html"] = dict(
     content="""
       <h2>사진을 PDF로 바꾸는 방법</h2>
       <ul>
-          <li><b>1. 이미지 올리기.</b> JPG, PNG 파일을 한꺼번에 선택하거나 끌어다 놓으세요.</li>
+          <li><b>1. 이미지 올리기.</b> JPG, PNG, 아이폰 HEIC 파일을 한꺼번에 선택하거나 끌어다 놓으세요.</li>
           <li><b>2. 순서 정하기.</b> ▲ ▼ 버튼으로 순서를 바꾸고, ✕로 뺄 수 있어요.</li>
           <li><b>3. 용량 제한 고르기 (선택).</b> "PDF 200KB 이하"처럼 제출 제한이 있다면 PDF 용량 제한에서 고르세요.</li>
           <li><b>4. 다운로드.</b> 한 장이 한 페이지인 PDF를 받으세요.</li>
@@ -660,7 +662,7 @@ KO["jpg-to-pdf.html"] = dict(
         ("사진을 PDF로 무료 변환할 수 있나요?", "네. 회원가입 없이 하루 20회까지 무료로 쓸 수 있어요."),
         ("휴대폰 사진이 옆으로 누워서 들어가요.", "휴대폰은 사진을 옆으로 저장하고 어느 쪽이 위인지 파일 안에 적어 두는 경우가 많아요. SlimIO는 그 정보를 읽어서 페이지를 바로 세워요. 그래도 이상하면 사진 앱에서 회전해 다시 저장한 뒤 올려 보세요."),
         ("여러 장을 PDF 하나로 만들 수 있나요?", "네. 여러 장을 한꺼번에 올리면 올린 순서대로 한 장이 한 페이지가 돼요. ▲ ▼ 버튼으로 순서를 바꿀 수 있어요."),
-        ("어떤 이미지 형식을 지원하나요?", "JPG, PNG, WebP 등 브라우저에서 열리는 이미지는 대부분 돼요."),
+        ("어떤 이미지 형식을 지원하나요?", "JPG, PNG, WebP와 아이폰 HEIC 사진이 돼요. HEIC도 브라우저 안에서 열고, 첫 장은 변환 도구를 불러오느라 몇 초 더 걸려요."),
         ("휴대폰 사진도 되나요?", "네. 아이폰, 갤럭시 브라우저에서 사진을 바로 골라 PDF로 만들 수 있어요."),
         ("파일이 서버로 올라가나요?", "아니요. 브라우저 안에서만 처리돼서 사진이 서버로 가지 않아요."),
     ],
@@ -818,7 +820,70 @@ KO["compress-image.html"] = dict(
         ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
         ("사진의 위치정보도 지워지나요?", "네. 사진을 다시 저장하면서 촬영 위치(GPS), 기종, 촬영 날짜 같은 EXIF 정보가 지워져요."),
         ("증명사진 규격에 맞출 수 있나요?", "네. 증명사진 3×4cm나 여권사진 3.5×4.5cm를 고르면 비율에 맞게 자르고(틀을 끌어서 위치 조정 가능), 접수 사이트에서 흔히 요구하는 픽셀 크기로 맞춰요."),
-        ("아이폰 사진이 안 열려요.", "아이폰 사진은 HEIC 형식인 경우가 많은데, 이 형식은 브라우저에 따라 열리지 않아요. 사진을 JPG로 공유하거나, 아이폰 설정 → 카메라 → 포맷에서 ‘높은 호환성’으로 바꾼 뒤 다시 시도해 주세요."),
+        ("아이폰 HEIC 사진도 되나요?", "네. HEIC 사진도 그대로 올리면 브라우저 안에서 열어서 JPG로 저장해요. 첫 장은 변환 도구를 불러오느라 몇 초 더 걸려요. 용량은 그대로 두고 JPG로만 바꾸려면 HEIC → JPG 도구를 쓰세요."),
+    ],
+)
+
+KO["heic-to-jpg.html"] = dict(
+    title="HEIC JPG 변환 - 아이폰 사진 무료 변환, 여러 장 한 번에 | SlimIO",
+    desc="아이폰 HEIC 사진을 JPG로 무료 변환하세요. 여러 장을 한 번에 바꿔 ZIP으로 받고, 1MB·500KB 같은 용량 제한도 맞춰요. 프로그램 설치·회원가입 없이 브라우저 안에서만 처리돼서 사진이 업로드되지 않아요.",
+    keywords="HEIC JPG 변환, 아이폰 HEIC JPG 변환, HEIC JPG 변환 무료, HEIC JPG 변환 사이트, HEIC JPG 변환 프로그램, HEIC 변환, HEIC 파일 열기, 아이폰 사진 JPG 변환, HEIF JPG 변환",
+    short="HEIC JPG 변환 | SlimIO",
+    app_name="SlimIO HEIC JPG 변환",
+    app_desc="아이폰 HEIC·HEIF 사진을 JPG로 바꾸는 무료 도구. 여러 장을 한 번에 바꾸고 용량 제한도 맞춰요. 브라우저에서 처리돼 사진이 업로드되지 않아요.",
+    features=["HEIC·HEIF를 JPG로 변환", "여러 장 한 번에, ZIP으로 받기", "화질 선택", "용량 제한 맞추기 (100KB~2MB)", "브라우저에서 처리 (업로드 없음)", "회원가입 없음"],
+    h1="HEIC를 JPG로,<br /><b>설치 없이 무료로.</b>",
+    lead="아이폰 HEIC 사진을 어디에나 올릴 수 있는 JPG로 바꿔요. 한 장도, 여러 장도 한 번에. 사진은 업로드되지 않아요.",
+    ui=[
+        (">Drop HEIC photos here<", ">HEIC 사진을 여기에 끌어다 놓으세요<"),
+        ("Photos never leave your device — they are converted right in your browser.", LOCAL_ONLY.format("JPG로 바꿔요")),
+        ('<label for="quality">JPG quality</label>', '<label for="quality">JPG 화질</label>'),
+        (">High — 92% (looks the same)<", ">높게 — 92% (눈으로 보기엔 그대로)<"),
+        (">Standard — 85%<", ">보통 — 85%<"),
+        (">Smaller — 75%<", ">작게 — 75%<"),
+        ('<label for="resize">Picture size</label>', '<label for="resize">사진 크기</label>'),
+        (">Keep the original size<", ">원래 크기 그대로<"),
+        (">Longest side 2048px<", ">긴 쪽 2048px<"), (">Longest side 1600px<", ">긴 쪽 1600px<"), (">Longest side 1280px<", ">긴 쪽 1280px<"),
+        ('<label for="target">Keep under</label>', '<label for="target">용량 제한</label>'),
+        (">No size limit<", ">제한 없음<"),
+        (">Under 2MB<", ">2MB 이하<"), (">Under 1MB<", ">1MB 이하<"), (">Under 500KB<", ">500KB 이하<"),
+        (">Under 200KB<", ">200KB 이하<"), (">Under 100KB<", ">100KB 이하<"),
+        ('For an exact range like 20–50KB or an ID photo size, use <a href="/compress-image.html">Compress Image</a> or <a href="/compress-id-photo.html">ID Photo</a> — they open HEIC too.',
+         '20~50KB 같은 정확한 범위나 증명사진 규격이 필요하면 <a href="/compress-image.html">사진 용량 줄이기</a>나 <a href="/compress-id-photo.html">증명사진</a>을 쓰세요. 두 도구도 HEIC를 그대로 열어요.'),
+        (">Convert to JPG</button>", ">JPG로 변환하기</button>"),
+        ("↓ Download all (ZIP)", "↓ 전체 다운로드 (ZIP)"),
+    ],
+    content="""
+      <h2>HEIC를 JPG로 바꾸는 방법</h2>
+      <ul>
+          <li><b>1. 사진 올리기.</b> HEIC·HEIF 파일을 끌어다 놓거나 클릭해서 고르세요. 여러 장을 한꺼번에 올려도 돼요.</li>
+          <li><b>2. 화질 고르기.</b> '높게'면 눈으로 보기엔 원본과 같아요. 제출처에 용량 제한이 있을 때만 용량 제한을 고르세요.</li>
+          <li><b>3. 바꾸고 받기.</b> 사진마다 같은 이름의 JPG가 생겨요. 여러 장은 ZIP 하나로 받을 수 있어요.</li>
+      </ul>
+      <h3>아이폰 사진이 HEIC인 이유</h3>
+      <p>아이폰은 iOS 11부터 카메라 포맷이 '고효율'로 되어 있으면 사진을 HEIC로 저장해요. 처음 설정이 고효율이라 대부분의 아이폰 사진이 HEIC예요. 같은 화질의 JPG보다 용량이 절반쯤이라 폰 저장 공간은 아껴 주지만, 아직 JPG만 받는 곳이 많아요. 원서 접수, 토익 사진 등록, 정부24, 사람인 같은 채용 사이트, 예전 버전 윈도우가 그래요. 파일을 거절하거나 "지원하지 않는 형식"이라고 나와요.</p>
+      <h3>이럴 때 JPG로 바꾸세요</h3>
+      <ul>
+          <li><b>"JPG, JPEG, PNG만 가능"이라고 적힌 업로드 화면.</b> 먼저 JPG로 바꾼 뒤 올리세요.</li>
+          <li><b>컴퓨터로 옮긴 아이폰 사진.</b> AirDrop, USB 케이블, 아이클라우드로 옮기면 원본 .HEIC 파일이 그대로 오는 경우가 많고, 윈도우는 따로 확장 프로그램을 깔아야 열려요.</li>
+          <li><b>HEIC를 못 여는 사람에게 보낼 때.</b> 상대 폰이나 프로그램이 HEIC를 못 열면 JPG로 보내세요.</li>
+      </ul>
+      <h3>화질과 용량, 빠지는 정보</h3>
+      <p>'높게(92%)'로 바꾼 JPG는 원본과 똑같아 보여요. HEIC가 압축을 더 잘해서 JPG가 HEIC보다 조금 커지는 게 보통이에요. 메일이나 메신저로 보낼 거라면 '보통(85%)'이나 '작게(75%)'가 가벼워요. 제출처가 1MB나 500KB 같은 제한을 두면 <b>용량 제한</b>에서 고르세요. 필요한 만큼만 화질을 낮추고, 화질 50%로도 넘을 때만 사진 크기를 줄여요. 촬영 위치 같은 카메라 정보는 JPG에 옮겨 담지 않아요.</p>
+      <h3>앞으로 찍는 사진을 JPG로</h3>
+      <p>아이폰 <b>설정 → 카메라 → 포맷</b>에서 <b>높은 호환성</b>을 고르면 새로 찍는 사진이 JPG로 저장돼요. 사파리에서 업로드할 사진을 고를 때는 아이폰이 알아서 JPG로 바꿔 주는 경우가 많아서, HEIC 문제는 주로 컴퓨터로 옮긴 파일에서 생겨요.</p>
+      <h3>함께 쓰면 좋은 도구</h3>
+      <p>원서 사진 규격(3×4cm, 3.5×4.5cm)이나 20~50KB 같은 범위를 맞춰야 하면 <a href="/ko/compress-id-photo.html">증명사진 크기 맞추기</a>나 <a href="/ko/compress-image.html">사진 용량 줄이기</a>에 HEIC 사진을 그대로 올리세요. 사진 여러 장을 PDF 하나로 내야 하면 <a href="/ko/jpg-to-pdf.html">JPG → PDF</a>가 편해요.</p>""",
+    faq_title="HEIC JPG 변환",
+    faq=[
+        ("HEIC를 JPG로 무료로 바꾸려면 어떻게 하나요?", "위에 HEIC 사진을 올리고 화질을 '높게'로 둔 채 JPG로 변환하기를 누르세요. 한 장씩 받거나 ZIP 하나로 받으면 돼요. 회원가입 없이 무료이고, 사진은 내 기기 밖으로 나가지 않아요."),
+        ("아이폰 사진이 원서 사이트에 안 올라가요.", "아이폰은 처음 설정이 HEIC 저장이라서, JPG·PNG만 받는 원서·채용·정부 사이트에서 거절돼요. JPG로 바꾸면 해결돼요. 용량 제한도 있으면 용량 제한에서 함께 고르세요."),
+        ("JPG로 바꾸면 화질이 떨어지나요?", "'높게(92%)'로 바꾸면 보통 화면에서는 차이가 안 보여요. HEIC가 압축을 더 잘해서 JPG가 HEIC보다 조금 커지는 게 보통이에요. 보낼 용도라면 '보통'이나 '작게'로 가볍게 만들 수 있어요."),
+        ("여러 장을 한 번에 바꿀 수 있나요?", "네. 한꺼번에 고르거나 끌어다 놓으면 돼요. 사진마다 같은 이름의 JPG가 생기고, 전체 다운로드(ZIP)로 한 번에 받을 수 있어요."),
+        ("촬영 날짜나 위치는 남나요?", "아니요. JPG에는 사진만 담기고 촬영 위치, 촬영 날짜 같은 카메라 정보는 빠져요. 업로드할 때는 오히려 안전하지만, 날짜가 필요하면 원본 HEIC도 함께 보관하세요."),
+        ("아이폰에서 처음부터 JPG로 찍으려면요?", "설정 → 카메라 → 포맷에서 '높은 호환성'을 고르세요. 그다음부터 찍는 사진은 JPG로 저장돼요. 이미 찍은 HEIC 사진은 여기서 바꾸면 돼요."),
+        ("프로그램을 설치해야 하나요?", "아니요. 이 페이지가 브라우저 안에서 바로 바꿔요. 처음 한 번만 변환 도구를 불러오느라 몇 초 더 걸려요. 윈도우·맥·휴대폰 어디서나 돼요."),
+        ("사진이 서버로 올라가나요?", "아니요. 사진은 브라우저 안에서 열고 바꿔요. 처음에 변환 프로그램만 내려받을 뿐, 사진은 내 기기 밖으로 나가지 않아요."),
     ],
 )
 
@@ -1684,7 +1749,7 @@ INDEX_EXTRA_CSS = """
 """
 
 ALLOWED_EN = {"PDF", "PDFs", "GIF", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
-              "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "GPS", "cm", "px"}
+              "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "HEIF", "GPS", "cm", "px", "iOS", "AirDrop", "USB"}
 
 
 def leftover_english(s):

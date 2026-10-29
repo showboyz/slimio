@@ -185,6 +185,7 @@ async function makeFixtures(browser) {
     return Array.from(new Uint8Array(await b.arrayBuffer()));
   }));
   fs.writeFileSync(path.join(TMP, "sig.png"), sig);
+  spawnSync("sips", ["-s", "format", "heic", path.join(TMP, "sig.png"), "--out", path.join(TMP, "sig.heic")], { stdio: "ignore" });
   // a 3-page text PDF with English and Korean, printed by Chrome like "Save as PDF"
   const para = "New sign-ups grew steadily this quarter. 이번 분기에는 신규 가입자가 꾸준히 늘었고 작성한 문서를 보강했다. ";
   await p.setContent(`<style>body{font:13pt/1.6 sans-serif}section{page-break-after:always}</style>` +
@@ -551,6 +552,50 @@ function toolTests() {
     // the HEIC page must hold the photo, not an empty frame: page 1 drawn as grey must not be near-white
     const gray = Buffer.from(render(r.bytes), "base64");
     return gray.length < 3000 ? `page 1 looks empty (${gray.length} bytes as PNG)` : null;
+  });
+  // iPhone HEIC photos (Chrome can't open them itself: lib.js fetches the decoder) on the other photo tools
+  const heic = (page, name, fn) => both(page, name, async (p) => (fs.existsSync(F("photo.heic")) ? fn(p) : null));
+  heic("heic-to-jpg.html", "HEIC photo → JPG, same size", async (p) => {
+    await p.setInputFiles("#images", F("photo.heic"));
+    await runTool(p, { done: "#result a[download]" });
+    const r = await download(p, "#result a[download]"), s = imageSize(r.bytes);
+    if (!s || s.type !== "jpeg") return "result is not a JPG";
+    if (r.name !== "photo.jpg") return `file is named ${r.name}, expected photo.jpg`;
+    return s.w === 1600 && s.h === 1200 ? null : `${s.w}×${s.h}, expected 1600×1200`;
+  });
+  heic("heic-to-jpg.html", "HEIC + phone photo under 200KB, ZIP of both", async (p) => {
+    await p.setInputFiles("#images", [F("photo.heic"), F("photo.jpg")]);
+    await select(p, "#target", "200KB");
+    await runTool(p, { done: "#dlzip" });
+    const warn = await p.$$eval("#result .warn", (a) => a.map((e) => e.textContent).join(" "));
+    if (warn) return "result warning: " + warn.trim();
+    const n = await p.$$eval("#result li a[download]", (a) => a.length);
+    if (n !== 2) return `${n} downloads, expected 2`;
+    const r = await download(p, "#dlzip");
+    return zipCount(r.bytes) === 2 ? null : `ZIP holds ${zipCount(r.bytes)} files`;
+  });
+  heic("compress-image.html", "iPhone HEIC photo", async (p) => {
+    await p.setInputFiles("#images", F("photo.heic"));
+    await photoResult(p);
+    const r = await download(p, "#result a[download]"), s = imageSize(r.bytes);
+    return s && s.type === "jpeg" && s.w === 1600 ? null : `result is ${s ? `${s.type} ${s.w}×${s.h}` : "not an image"}`;
+  });
+  heic("compress-id-photo.html", "iPhone HEIC photo", async (p) => {
+    await p.setInputFiles("#images", F("photo.heic"));
+    await photoResult(p);
+    const r = await download(p, "#result a[download]"), s = imageSize(r.bytes), want = PRESETS["id-3x4"];
+    return s && s.w === want[0] && s.h === want[1] ? null : `result is ${s ? `${s.w}×${s.h}` : "not an image"}, expected ${want.join("×")}`;
+  });
+  heic("jpg-to-pdf.html", "iPhone HEIC photo", async (p) => {
+    await p.setInputFiles("#images", [F("photo.heic"), F("photo2.jpg")]);
+    await runTool(p);
+    return pdfCheck((await download(p)).bytes, { pages: 2 });
+  });
+  heic("signature-image.html", "iPhone HEIC photo of a signature", async (p) => {
+    await p.click('.tab[data-mode="upload"]');
+    await p.setInputFiles("#sigfile", F("sig.heic"));
+    await runTool(p);
+    return imageSize((await download(p)).bytes) ? null : "result is not an image";
   });
   both("receipt-to-pdf.html", "6 phone photos under 1MB, one per page: pages are saved smaller", async (p) => {
     await p.setInputFiles("#images", Array(6).fill(F("photo.jpg")));
