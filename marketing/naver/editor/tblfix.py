@@ -62,22 +62,23 @@ def fix(win, draft):
                 if len(p) >= 4 and (text + '\n' + title).count(p) == 1 and len(r) == n:
                     cands.append((ci != 0, -min(len(p), 30), p, ci))
         if not cands: plan.append(None); continue
-        _, _, p, ci = sorted(cands)[0]
-        plan.append((p, ci, n))
+        plan.append([(p, ci, n) for _, _, p, ci in sorted(cands)[:3]])  # up to 3 cell texts to try
     print('tables', len(tables), 'plan', plan, flush=True)
     shots = []
     for i, pl in enumerate(plan, 1):
         if pl is None: print(i, 'SKIP no unique cell text'); continue
-        p, ci, n = pl
         if not guard(): print(i, 'STOP user is back'); break
-        subprocess.run('pbcopy', input=p, text=True)
-        k('hotkey', '--key', 'CmdOrCtrl+F'); time.sleep(0.7)
-        k('hotkey', '--key', 'CmdOrCtrl+V'); time.sleep(1.0)
-        k('press-key', '--key', 'Return'); time.sleep(0.8)  # a pasted search can sit at 0/1 without scrolling
-        m = re.search(r'전체 결과 (\d+)개 중 (\d+)개', sh('orca', 'computer', 'get-app-state', '--app', 'com.google.Chrome', '--window-id', W, '--json', '--no-screenshot').stdout)
-        closed = press(r'^버튼 검색 바 닫기$')
-        if not m or m.group(1) != '1' or m.group(2) != '1' or not closed:
-            print(i, 'SKIP find', m.group(0) if m else None, 'closed', closed, repr(p)); done(); continue
+        found = False
+        for p, ci, n in pl:
+            subprocess.run('pbcopy', input=p, text=True)
+            k('hotkey', '--key', 'CmdOrCtrl+F'); time.sleep(0.7)
+            k('hotkey', '--key', 'CmdOrCtrl+V'); time.sleep(1.2)
+            k('press-key', '--key', 'Return'); time.sleep(1.0)  # a pasted search can sit at 0/1 without scrolling
+            m = re.search(r'전체 결과 (\d+)개 중 (\d+)개', sh('orca', 'computer', 'get-app-state', '--app', 'com.google.Chrome', '--window-id', W, '--json', '--no-screenshot').stdout)
+            closed = press(r'^버튼 검색 바 닫기$')
+            if m and m.group(1) == '1' and m.group(2) == '1' and closed: found = True; break
+            print(i, 'find miss', m.group(0) if m else None, 'closed', closed, repr(p))
+        if not found: print(i, 'SKIP find'); done(); continue
         x = int(LEFT + (ci + 0.5) * WIDTH / n)
         k('click', '--x', str(x), '--y', str(MID_Y)); time.sleep(0.8)
         if '표 스타일' not in tree():
