@@ -192,7 +192,8 @@ async function makeFixtures(browser) {
   fs.writeFileSync(path.join(TMP, "text.pdf"), await p.pdf({ format: "A4" }));
   // issued certificates: one that needs a password to open, one that opens but has editing locked
   // (the password one has photos, so it's over the size targets and really goes to the server)
-  if (HAS_GS) for (const [name, lock, src] of [["password.pdf", "-sUserPassword=030301", "photo.pdf"], ["locked.pdf", "-dPermissions=-3904", "text.pdf"]])
+  if (HAS_GS) for (const [name, lock, src] of [["password.pdf", "-sUserPassword=030301", "photo.pdf"], ["locked.pdf", "-dPermissions=-3904", "text.pdf"],
+                                          ["password-text.pdf", "-sUserPassword=030301", "text.pdf"]])
     spawnSync("gs", ["-q", "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite", "-sOwnerPassword=owner", lock, "-dEncryptionR=3", "-dKeyLength=128",
       "-dPassThroughJPEGImages=true", "-sOutputFile=" + path.join(TMP, name), path.join(TMP, src)]);
   await p.close();
@@ -322,6 +323,12 @@ function toolTests() {
     await p.waitForFunction(() => document.querySelector("#error")?.offsetParent !== null || document.querySelector("#dl")?.offsetParent !== null, null, { timeout: 30000 });
     return (await p.$eval("#error", (e) => e.offsetParent !== null)) ? null : "no error message for a broken file";
   });
+  // Lock messages end with a link to Unlock PDF, in the page's language.
+  const unlockLink = async (p) => {
+    const h = await p.$eval("#error a.unlock-link", (a) => a.getAttribute("href")).catch(() => "");
+    const want = (p.url().includes("/ko/") ? "/ko/" : "/") + "unlock-pdf.html";
+    return h === want ? null : h ? "the Unlock PDF link goes to " + h : "no link to Unlock PDF";
+  };
   // A PDF that needs a password used to come back from the server as a blank page, shown as "−94%".
   const shownError = async (p) => {
     await p.waitForFunction(() => document.querySelector("#error")?.offsetParent !== null || document.querySelector("#dl")?.offsetParent !== null, null, { timeout: 60000 });
@@ -332,7 +339,8 @@ function toolTests() {
     p.expected = /422|password/i;
     await p.setInputFiles("#pdf", F("password.pdf")); await p.click("#go");
     const msg = await shownError(p);
-    return /needs a password|암호가 필요한/.test(msg) ? null : msg ? "message: " + msg : "a download was offered";
+    if (!/needs a password|암호가 필요한/.test(msg)) return msg ? "message: " + msg : "a download was offered";
+    return unlockLink(p);
   });
   // Editing-locked PDFs gave pdf-lib's English "is encrypted ... ignoreEncryption" and used up a turn.
   for (const [page, setup] of [
@@ -353,7 +361,7 @@ function toolTests() {
     if (!(await p.isVisible("#error")) && await p.isEnabled("#go")) await p.click("#go");
     const msg = await shownError(p);
     if (!/is locked|편집 제한이 걸린/.test(msg)) return msg ? "message: " + msg : "a download was offered";
-    return used ? "it used up one of the day's turns" : null;
+    return used ? "it used up one of the day's turns" : unlockLink(p);
   });
   // One bad file in a pick used to stop the rest of the pick from being added (and the list wasn't redrawn).
   both("merge.html", "a rejected file doesn't drop the rest of the pick", async (p) => {
@@ -465,6 +473,59 @@ function toolTests() {
     const r = await download(p);
     if (render(r.bytes) === render(fs.readFileSync(F("text.pdf")))) return "no watermark on page 1";
     return pdfCheck(r.bytes, { pages: 3, text: TEXT });
+  });
+  // Unlock PDF (qpdf in the browser). A wrong password is refused before a turn is used.
+  const unlocked = async (p, { pages = 3, text = TEXT } = {}) => {
+    const r = await download(p);
+    if (r.bytes.includes("/Encrypt")) return "the download is still encrypted";
+    if (!/_unlocked\.pdf$/.test(r.name)) return "file name " + r.name;
+    return pdfCheck(r.bytes, { pages, text });
+  };
+  both("unlock-pdf.html", "open password: wrong one refused for free, right one unlocks", async (p) => {
+    if (!HAS_GS) return null;
+    let used = 0;
+    p.on("request", (r) => { if (r.url().includes("/api/consume")) used++; });
+    await p.setInputFiles("#pdf", F("password-text.pdf"));
+    await p.waitForSelector("#pw", { state: "visible", timeout: 30000 });
+    await p.fill("#pw", "999999"); await p.click("#go");
+    const msg = await shownError(p);
+    if (!/doesn't open|열리지 않아요/.test(msg)) return msg ? "wrong password, message: " + msg : "wrong password gave a download";
+    if (used) return "a wrong password used up a turn";
+    await p.fill("#pw", "030301"); await runTool(p);
+    if (!/Removed|해제됨/.test(await p.textContent("#pwrow"))) return "result doesn't say the password was removed";
+    if (used !== 1) return `${used} turns used`;
+    return unlocked(p);
+  });
+  both("unlock-pdf.html", "print/copy lock: removed without a password", async (p) => {
+    if (!HAS_GS) return null;
+    await p.setInputFiles("#pdf", F("locked.pdf"));
+    await p.waitForFunction(() => !document.querySelector("#go").disabled, null, { timeout: 30000 });
+    if (await p.isVisible("#pw")) return "asks for a password";
+    if (!/printing|인쇄/.test(await p.textContent("#status"))) return "status: " + (await p.textContent("#status"));
+    await runTool(p);
+    if (!/Removed|해제됨/.test(await p.textContent("#lockrow"))) return "result doesn't say the lock was removed";
+    return unlocked(p);
+  });
+  both("unlock-pdf.html", "AES-256 password (made with the page's own qpdf)", async (p) => {
+    if (!HAS_GS) return null;
+    const enc = await p.evaluate(async (src) => {
+      await new Promise((ok, no) => { const s = document.createElement("script"); s.src = "/vendor/qpdf-wasm-0.3.0/qpdf.js?v=0.3.0"; s.onload = ok; s.onerror = no; document.head.append(s); });
+      const q = await window.Module({ locateFile: () => "/vendor/qpdf-wasm-0.3.0/qpdf.wasm?v=0.3.0" });
+      q.FS.writeFile("/in.pdf", new Uint8Array(src));
+      q.callMain(["--encrypt", "pass Word", "owner", "256", "--", "/in.pdf", "/out.pdf"]);
+      return Array.from(q.FS.readFile("/out.pdf"));
+    }, Array.from(fs.readFileSync(F("text.pdf"))));
+    await p.setInputFiles("#pdf", { name: "statement.pdf", mimeType: "application/pdf", buffer: Buffer.from(enc) });
+    await p.waitForSelector("#pw", { state: "visible", timeout: 30000 });
+    await p.fill("#pw", "pass Word"); await runTool(p);
+    return unlocked(p);
+  });
+  both("unlock-pdf.html", "a PDF without a lock says so", async (p) => {
+    await p.setInputFiles("#pdf", F("text.pdf"));
+    await p.waitForFunction(() => /no password and no lock|암호도 제한도 없는/.test(document.querySelector("#status").textContent), null, { timeout: 30000 }).catch(() => {});
+    const st = await p.textContent("#status");
+    if (!/no password and no lock|암호도 제한도 없는/.test(st)) return "status: " + st;
+    return (await p.isEnabled("#go")) ? "the unlock button is on" : null;
   });
   both("pdf-to-jpg.html", "3 images", async (p) => {
     await p.setInputFiles("#pdf", F("text.pdf")); await runTool(p);

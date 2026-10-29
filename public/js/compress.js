@@ -257,6 +257,7 @@ function updateLimit(remaining, limit) {
 function showError(msg) {
     errEl.textContent = msg;
     errEl.style.display = "block";
+    SlimIO.unlockLink(errEl);
     result.style.display = "none";
     log(msg);
     SlimIO.reportError("shown", msg);

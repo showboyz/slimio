@@ -27,6 +27,7 @@ TOOLS = {
     "add-page-numbers": ("/add-page-numbers.html", "🔢", ("Page Numbers", "Number every page of a PDF"), ("페이지 번호", "모든 페이지에 쪽번호")),
     "watermark": ("/watermark.html", "💧", ("Watermark PDF", "Stamp text on every page"), ("워터마크", "대외비 · 사본 문구 넣기")),
     "sign-pdf": ("/sign-pdf.html", "✍️", ("Sign PDF", "Put your signature on any page"), ("PDF 서명", "원하는 위치에 서명 · 도장")),
+    "unlock-pdf": ("/unlock-pdf.html", "🔓", ("Unlock PDF", "Remove a password you know"), ("PDF 비밀번호 해제", "아는 암호를 풀어 잠금 없는 사본으로")),
     "pdf-to-jpg": ("/pdf-to-jpg.html", "🖼️", ("PDF to JPG", "Convert pages to images"), ("PDF → JPG", "페이지를 이미지로 변환")),
     "jpg-to-pdf": ("/jpg-to-pdf.html", "📷", ("JPG to PDF", "Turn photos into one PDF"), ("JPG → PDF", "사진을 PDF 하나로 묶기")),
     "receipt-to-pdf": ("/receipt-to-pdf.html", "🧾", ("Receipts to PDF", "Receipts on A4 pages, numbered, under a size limit"), ("영수증 PDF", "A4에 모아 번호 붙이고 용량 맞추기")),
@@ -37,7 +38,7 @@ TOOLS = {
     "compress-image": ("/compress-image.html", "📸", ("Compress Image", "Shrink photos to any KB"), ("사진 용량 줄이기", "사진을 원하는 KB로")),
 }
 PDF_TOOLS = ["compress", "merge", "split", "delete-pages", "rotate", "organize", "add-page-numbers",
-             "watermark", "sign-pdf", "pdf-to-jpg", "jpg-to-pdf", "receipt-to-pdf"]
+             "watermark", "sign-pdf", "unlock-pdf", "pdf-to-jpg", "jpg-to-pdf", "receipt-to-pdf"]
 PHOTO_TOOLS = ["compress-id-photo", "us-visa-photo", "signature-image", "bank-exam", "compress-image"]
 
 # Feature banners: a tool from the *other* category, with a real example image.
@@ -72,6 +73,7 @@ PAGES = {
     "jpg-to-pdf.html": ("jpg-to-pdf", "id", ["compress", "merge", "sign-pdf"]),
     "receipt-to-pdf.html": ("receipt-to-pdf", "id", ["merge", "compress", "add-page-numbers"]),
     "sign-pdf.html": ("sign-pdf", "sig", ["compress", "merge", "signature-image"]),
+    "unlock-pdf.html": ("unlock-pdf", "id", ["compress", "merge", "sign-pdf"]),
     **{p: ("compress-image", "sig", ["compress-id-photo", "jpg-to-pdf", "signature-image"]) for p in SIZE_IMG},
     "compress-id-photo.html": ("compress-id-photo", "sig", ["signature-image", "compress-image", "jpg-to-pdf"]),
     "signature-image.html": ("signature-image", "id", ["sign-pdf", "compress-id-photo", "compress"]),
