@@ -2,7 +2,7 @@
 
 Scripts for posting the drafts in `marketing/naver/` through Naver's SmartEditor with `orca computer`, in a Chrome window of our own. They used to live only in a session scratchpad. macOS deleted them along with other old files in `/private/tmp` (2026-10-27), so they are kept here now.
 
-- `chunk.py <draft.html> <dir>`: splits a draft at each `<!--IMG:…-->` mark into `cN.html` and `cN.txt` paste chunks, and copies `setclip.js` into the folder.
+- `chunk.py <draft.html> <dir>`: splits a draft at each `<!--IMG:…-->` mark into `cN.html` and `cN.txt` paste chunks, and copies `setclip.js` into the folder. Tables get inline borders, a tinted header row and column widths that follow the text length, because the editor turns a bare table into borderless equal-width cells (it keeps inline `border`, `background-color`, `color`, `width %` and `text-align`; tested 2026-10-29).
 - `post.sh <win> <dir> <title> <small-img|-> <img1> [img2 …]`: types the title, then for each image uploads it with the editor's 사진 button (`img.sh`) and pastes the matching chunk as rich text (`setclip.js`). With a small-img name, `small.sh` sets that image to 작게 and centres it.
 - `finish11.sh <win> <day> <tag…>`: opens the 발행 panel, adds the tags (`tag1.py` stops on the first one that fails), schedules November `<day>` at 08:00 (`sched11.sh`), checks the panel, and then publishes. Pass tags as literal words. zsh does not split an unquoted `$TAGS`.
 - `guard.sh` before each step and `guard.sh done` after it: fails if the screen is locked or someone used the keyboard or mouse since the last step (120 s without input before the first one). It counts keyboard and mouse events only, because a plugged-in game controller resets the system idle time several times a second.
