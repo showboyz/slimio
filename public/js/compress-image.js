@@ -117,7 +117,7 @@ function schedule(delay) {
 }
 
 function setFiles(fileList) {
-     const picked = [...fileList].filter((f) => f.type.startsWith("image/") || /\.(heic|heif)$/i.test(f.name));
+     const picked = [...fileList].filter(SlimIO.isImage);
      if (!picked.length) { SlimIO.showError(SlimIO.t("Please choose image files (JPG, PNG, WebP…).")); return; }
      SlimIO.clearError();
      files = picked;
@@ -139,6 +139,7 @@ function setFiles(fileList) {
      schedule(0);
 }
 
+SlimIO.acceptHeic($("images"));   // computers: let the file dialog show HEIC files too (lib.js)
 drop.addEventListener("click", () => $("images").click());
 $("images").addEventListener("change", () => setFiles($("images").files));
 drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
@@ -151,23 +152,12 @@ drop.addEventListener("drop", (e) => {
 
 goBtn.addEventListener("click", run);
 
-// Decode with EXIF orientation applied. HEIC and other formats the browser can't
-// read end up in the catch.
+// Decode with EXIF orientation applied. iPhone HEIC photos go through the decoder in lib.js;
+// the drop box says "Opening HEIC photos…" meanwhile.
 async function loadImage(file) {
-     try {
-             if (window.createImageBitmap) return await createImageBitmap(file, { imageOrientation: "from-image" });
-     } catch (e) { /* fall back to <img> below */ }
-     const url = URL.createObjectURL(file);
-     try {
-             const img = new Image();
-             img.src = url;
-             await img.decode();
-             return img;
-     } catch (e) {
-             throw new Error(SlimIO.t("This image can't be opened in this browser (HEIC photos, for example). Save it as JPG and try again."));
-     } finally {
-             URL.revokeObjectURL(url);
-     }
+     const img = await SlimIO.openImage(file, drop.querySelector(".drop-or"));
+     if (!img) throw new Error(SlimIO.t("This image can't be opened in this browser. Save it as JPG and try again."));
+     return img;
 }
 
 // Resize choice: a preset key, a max side ("1920"), or [w, h] for a custom pixel size.

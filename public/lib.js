@@ -182,6 +182,58 @@ const SlimIO = (() => {
       : /Instagram/.test(ua) ? "instagram" : /FBAN|FBAV|FB_IAB/.test(ua) ? "facebook" : /\bLine\//.test(ua) ? "line"
       : /; wv\)/.test(ua) ? "webview" : "";
    const android = /Android/i.test(ua);
+
+   // iPhone HEIC/HEIF photos. Safari opens them itself; Chrome, Edge and Firefox can't, so a
+   // decoder (heic-to: about 650KB to download, 3MB unpacked) is fetched the first time one is needed.
+   // Photos copied to a computer often have no image type at all, so they also go by name, and the
+   // file dialog on computers is told to show them. Phones keep plain image/*: iPhones turn HEIC into
+   // JPG themselves unless the list names HEIC, and Android shows its photo picker only for image types.
+   function looksHeic(f) { return !!f && (/\.(heic|heif)$/i.test(f.name || "") || /^image\/hei[cf]/i.test(f.type)); }
+   function isImage(f) { return !!f && (/^image\//.test(f.type) || looksHeic(f)); }
+   const phone = /Android|iP(hone|ad|od)/.test(ua) || (/Mac/.test(navigator.platform) && navigator.maxTouchPoints > 1);
+   function acceptHeic(input) {
+      if (input && !phone && !/heic/.test(input.accept)) input.accept = (input.accept ? input.accept + "," : "") + ".heic,.heif";
+   }
+   const HEIC_LIB = "https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js";
+   let heicLib = null;
+   function loadHeic() {
+      if (!heicLib) heicLib = new Promise((resolve, reject) => {
+         const s = document.createElement("script");
+         s.src = HEIC_LIB;
+         s.onload = () => (window.HeicTo ? resolve(window.HeicTo) : reject(new Error("no decoder")));
+         s.onerror = () => { heicLib = null; s.remove(); reject(new Error(t("The HEIC photo decoder could not be loaded. Check your connection and try again."))); };
+         document.head.appendChild(s);
+      });
+      return heicLib;
+   }
+   // HEIF files say so in their first bytes: "ftyp" and a brand such as heic or mif1
+   async function sniffHeic(file) {
+      const s = String.fromCharCode(...new Uint8Array(await file.slice(0, 12).arrayBuffer()));
+      return s.slice(4, 8) === "ftyp" && ["heic", "heix", "hevc", "hevx", "heim", "heis", "mif1", "msf1"].includes(s.slice(8, 12));
+   }
+   // Open a photo with its EXIF rotation applied, so phone photos stand the right way up. Returns an
+   // ImageBitmap or <img> (release it with .close() when there is one), or null when the browser
+   // can't open the file and it isn't HEIC. `busy` (an element) says "Opening HEIC photos…" while the
+   // decoder works, and gets its text back when the last decode on it ends. A decoder that can't be
+   // downloaded throws, so the page can say so.
+   const busyText = new Map();
+   async function openImage(file, busy) {
+      try { if (window.createImageBitmap) return await createImageBitmap(file, { imageOrientation: "from-image" }); } catch (e) { /* <img> below */ }
+      const url = URL.createObjectURL(file);
+      try { const img = new Image(); img.src = url; await img.decode(); return img; } catch (e) { /* HEIC below */ } finally { URL.revokeObjectURL(url); }
+      if (!looksHeic(file) && !(await sniffHeic(file).catch(() => false))) return null;
+      if (busy) {
+         if (!busyText.has(busy)) busyText.set(busy, { n: 0, text: busy.textContent });
+         busyText.get(busy).n++;
+         busy.textContent = t("Opening HEIC photos…");
+      }
+      try { return await (await loadHeic())({ blob: file, type: "bitmap" }); }
+      catch (e) { if (e && e.message && heicLib === null) throw e; return null; }   // a failed download says so; a bad file is null
+      finally {
+         const b = busy && busyText.get(busy);
+         if (b && --b.n === 0) { busy.textContent = b.text; busyText.delete(busy); }
+      }
+   }
    function inAppNote(box) {
       // The Naver app on iPhone saves files fine (checked 2026-10-12), so no note there.
       if (!inApp || (inApp === "naver" && !android) || box.querySelector(".inapp")) return;
@@ -301,7 +353,7 @@ const SlimIO = (() => {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
       showError, clearError, log, isPdf, notPdf, lockedPdf, pdfError,
       refreshStatus, updateLimit, consume, bindProgress, track, event, reportError, trackDownload, inputAdded, apiHeaders, page2user,
-      reveal, inApp,
+      reveal, inApp, isImage, looksHeic, acceptHeic, openImage,
    };
 })();
 

@@ -86,18 +86,13 @@ $("sort-date").addEventListener("click", () => {
 });
 $("cover").addEventListener("change", () => { $("coverbox").hidden = !coverOn(); render(); });
 
-// HEIC (iPhone) photos copied to a computer often have no image type at all, so they go by name,
-// and the file dialog is told to show them. Phones keep plain image/*: iPhones turn HEIC into JPG
-// themselves unless the list names HEIC, and Android shows its photo picker only for image types.
-function looksHeic(f) { return /\.(heic|heif)$/i.test(f.name) || /^image\/hei[cf]/i.test(f.type); }
-const PHONE = /Android|iP(hone|ad|od)/.test(navigator.userAgent) || (/Mac/.test(navigator.platform) && navigator.maxTouchPoints > 1);
-if (!PHONE) $("images").accept = "image/*,.heic,.heif";
+SlimIO.acceptHeic($("images"));   // computers: let the file dialog show HEIC files too (lib.js)
 
 function addFiles(list) {
     SlimIO.clearError();
     let skipped = 0;
     for (const f of list) {
-        if (!f.type.startsWith("image/") && !looksHeic(f)) { skipped++; continue; }
+        if (!SlimIO.isImage(f)) { skipped++; continue; }
         items.push({ name: f.name, size: f.size, file: f, modified: f.lastModified || 0, date: "", shop: "", amount: "" });
     }
     render();
@@ -136,39 +131,8 @@ $("target").addEventListener("change", () => { $("krange").hidden = $("target").
 })();
 $("krange").hidden = $("target").value !== "custom";
 
-// Most browsers other than Safari can't open HEIC, so a decoder (about 650KB) is fetched the
-// first time one needs it.
-const HEIC_LIB = "https://cdn.jsdelivr.net/npm/heic-to@1.5.2/dist/iife/heic-to.js";
-let heicLib = null;
-function loadHeic() {
-    if (!heicLib) heicLib = new Promise((resolve, reject) => {
-        const s = document.createElement("script");
-        s.src = HEIC_LIB;
-        s.onload = () => (window.HeicTo ? resolve(window.HeicTo) : reject(new Error("no decoder")));
-        s.onerror = () => { heicLib = null; reject(new Error(SlimIO.t("The HEIC photo decoder could not be loaded. Check your connection and try again."))); };
-        document.head.appendChild(s);
-    });
-    return heicLib;
-}
-// HEIF files say so in their first bytes: "ftyp" and a brand such as heic or mif1
-async function isHeic(file) {
-    const b = new Uint8Array(await file.slice(0, 12).arrayBuffer());
-    const s = String.fromCharCode(...b);
-    return s.slice(4, 8) === "ftyp" && ["heic", "heix", "hevc", "hevx", "heim", "heis", "mif1", "msf1"].includes(s.slice(8, 12));
-}
-
-// Decoded with the EXIF rotation applied, so phone photos stand the right way up
-async function decode(file) {
-    try { if (window.createImageBitmap) return await createImageBitmap(file, { imageOrientation: "from-image" }); } catch (e) { /* <img> below */ }
-    const url = URL.createObjectURL(file);
-    try { const img = new Image(); img.src = url; await img.decode(); return img; } catch (e) { /* HEIC below */ } finally { URL.revokeObjectURL(url); }
-    if (!looksHeic(file) && !(await isHeic(file))) return null;
-    const label = goBtn.textContent;
-    goBtn.textContent = SlimIO.t("Opening HEIC photos…");
-    try { return await (await loadHeic())({ blob: file, type: "bitmap" }); }
-    catch (e) { if (e && e.message && heicLib === null) throw e; return null; }   // a failed download says so; a bad file is "Could not read"
-    finally { goBtn.textContent = label; }
-}
+// Decoded with the EXIF rotation applied, so phone photos stand the right way up; HEIC included (lib.js)
+function decode(file) { return SlimIO.openImage(file, goBtn); }
 
 function release(pic) {
     if (pic.close) pic.close();
