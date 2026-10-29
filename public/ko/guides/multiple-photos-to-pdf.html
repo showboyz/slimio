@@ -133,106 +133,104 @@
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>사진 여러 장을 PDF 하나로: 아이폰·갤럭시에서 만들고 200KB·1MB 용량까지 맞추기</h1>
       <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-10-16">2026년 10월 16일</time> · 9 분 분량</p>
-<p>서류를 휴대폰으로 찍어 제출하려는데 화면에 <b>"PDF 파일 1개, 최대 1MB"</b> 같은 조건이 붙어 있는 경우가 많아요. 휴대폰 기본 기능으로 사진을 PDF로 묶을 수는 있지만, 사진 한 장이 수 MB라서 PDF도 금방 커지고, <b>정해진 용량에 맞춰 주는 기능은 없어요</b>. 아이폰·갤럭시·컴퓨터에서 사진 여러 장을 PDF 하나로 만드는 방법을 공식 안내 기준으로 정리하고, 용량을 줄이면 글씨가 어디까지 읽히는지 직접 실험했어요. (2026년 10월 확인)</p>
+<p>제출 화면에 <b>"PDF 파일 1개, 최대 1MB"</b>처럼 조건이 적혀 있는데 서류는 휴대폰 사진으로만 있는 경우가 흔해요. 사진을 PDF로 묶는 기능은 휴대폰에 기본으로 있지만, 사진 한 장이 이미 몇 MB라 묶은 파일도 금세 커져요. 게다가 <b>"몇 KB 이하로" 맞춰 주는 기능은 기본 앱 어디에도 없어요</b>. 이 글은 아이폰·갤럭시·컴퓨터에서 여러 장을 한 PDF로 만드는 길을 공식 안내에 따라 정리하고, 용량을 얼마나 줄여야 글씨가 안 읽히기 시작하는지 직접 실험한 결과를 담았어요. (2026년 10월 확인)</p>
       <p class="cta-top"><a class="cta-btn" href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/multiple-photos-to-pdf">사진을 PDF 하나로 묶기 →</a><span>여러 장을 한 번에 올리고 200KB·1MB 같은 용량 제한을 골라요. 사진은 서버로 올라가지 않아요.</span></p>
 
-      <div class="callout">제출하는 곳의 안내(파일 형식·용량·장수)가 이 글과 다르면 <b>그쪽이 우선</b>이에요. 휴대폰 메뉴 이름은 기종과 운영체제 버전에 따라 조금 다를 수 있어요. 출처는 글 맨 아래에 있어요.</div>
+      <div class="callout">제출처 안내에 적힌 파일 형식·용량·장수가 이 글과 다르면 <b>제출처 기준을 따르세요</b>. 메뉴 이름은 휴대폰 기종이나 운영체제 버전마다 조금씩 달라요. 참고한 공식 문서는 맨 아래에 모아 두었어요.</div>
 
-      <h2>한눈에 보는 방법</h2>
+      <h2>방법별 비교</h2>
       <div class="table-wrap"><table>
-          <tr><th>방법</th><th>여러 장 묶기</th><th>용량 맞추기</th></tr>
-          <tr><td><b>아이폰 미리보기 앱</b> (iOS 26 이상)</td><td>PDF에 사진을 페이지로 추가</td><td>내보낼 때 '이미지 최적화'로 줄이기만 (KB 지정 안 됨)</td></tr>
-          <tr><td><b>아이폰 메모 앱 '문서 스캔'</b></td><td>종이 서류를 여러 장 찍어 PDF로</td><td>없음</td></tr>
-          <tr><td><b>갤럭시 '갤러리 어시스턴트'</b> (One UI 7.0 이상, 지원 기기)</td><td>사진 여러 장을 PDF로 저장</td><td>이미지 화질 원본·중간·낮음 (KB 지정 안 됨)</td></tr>
-          <tr><td><b>갤럭시 갤러리 '인쇄' → PDF</b></td><td>한 장씩 저장할 때 적합</td><td>없음</td></tr>
-          <tr><td><b>컴퓨터</b> (맥 '빠른 동작 > PDF 생성', 윈도우 'Microsoft Print to PDF')</td><td>가능</td><td>없음</td></tr>
-          <tr><td><b>SlimIO 사진→PDF</b> (브라우저)</td><td>여러 장 한 번에, ▲▼로 순서 변경</td><td><b>100KB~5MB 또는 직접 입력한 KB 이하로</b></td></tr>
+          <tr><th>어디서</th><th>무엇을 할 수 있나</th><th>KB 지정</th></tr>
+          <tr><td><b>SlimIO 사진→PDF</b> (브라우저)</td><td>여러 장을 한꺼번에 올리고 ▲▼로 순서 조정</td><td><b>100KB~5MB 중 선택, 또는 KB 직접 입력</b></td></tr>
+          <tr><td><b>아이폰 메모 앱 '문서 스캔'</b></td><td>종이를 연달아 찍어 바로 PDF로</td><td>안 됨</td></tr>
+          <tr><td><b>아이폰 미리보기 앱</b> (iOS 26부터)</td><td>PDF에 사진을 한 쪽씩 끼워 넣기</td><td>안 됨 (내보내기 옵션으로 작게만 가능)</td></tr>
+          <tr><td><b>갤럭시 갤러리 어시스턴트 앱</b> (One UI 7.0 이상 일부 기기)</td><td>고른 사진들을 PDF 한 파일로</td><td>안 됨 (화질만 원본·중간·낮음 중 선택)</td></tr>
+          <tr><td><b>갤럭시 갤러리의 인쇄 메뉴</b></td><td>사진을 PDF로 저장 (한 장씩 할 때 편함)</td><td>안 됨</td></tr>
+          <tr><td><b>컴퓨터</b> (맥 Finder 빠른 동작, 윈도우 Microsoft Print to PDF)</td><td>여러 장 묶기 가능</td><td>안 됨</td></tr>
       </table></div>
       <figure>
           <img src="/img/blog/photos-pdf-hero.jpg" width="1200" height="630" loading="lazy" alt="휴대폰 사진 3장(합계 11.3MB)을 SlimIO로 PDF 1개(199.9KB, 200KB 이하)로 묶은 결과. 3페이지, 사진 긴 변 1600픽셀" />
-          <figcaption>장당 약 3.8MB인 서류 사진 3장을 SlimIO에서 '200KB 이하'로 묶은 실제 결과예요. (가상 예시 서류)</figcaption>
+          <figcaption>한 장에 3.8MB쯤 되는 서류 사진 3장을 '200KB 이하'로 지정해 SlimIO에서 PDF 하나로 만든 결과 화면이에요. (가상 예시 서류)</figcaption>
       </figure>
 
       <h2>아이폰에서 사진을 PDF로 만들기</h2>
-      <p><b>종이 서류를 지금 찍는다면 '문서 스캔'</b>이 가장 깔끔해요. 메모 앱에서 메모를 열고 첨부 파일 버튼 → <b>문서 스캔</b>을 누른 뒤 서류에 카메라를 대면, 아이폰이 종이 테두리를 찾아 자동으로 찍어요. 여러 장을 이어서 찍고 완료를 누르면 메모 안에 <b>PDF로 저장</b>돼요. iOS 26부터 들어간 <b>미리보기 앱</b>에도 같은 '문서 스캔'이 있어서 바로 PDF를 만들 수 있어요.</p>
-      <p><b>이미 찍어 둔 사진이라면</b> 미리보기 앱으로 묶을 수 있지만 단계가 많아요.</p>
+      <p>아직 찍지 않은 종이 서류라면 <b>메모 앱의 문서 스캔</b>이 제일 깔끔해요. 메모 하나를 열어 첨부 버튼에서 <b>문서 스캔</b>을 고르고 카메라를 종이에 비추면, 아이폰이 종이 가장자리를 알아서 찾아 찍어요. 다음 장을 계속 찍은 뒤 완료하면 메모 안에 <b>PDF 형태로</b> 남아요. iOS 26에 새로 생긴 <b>미리보기 앱</b>에서도 같은 스캔으로 곧장 PDF를 만들 수 있어요.</p>
+      <p>사진 앱에 이미 있는 사진을 묶으려면 미리보기 앱으로도 되긴 하는데, 거쳐야 할 단계가 꽤 돼요.</p>
       <ol>
-          <li>사진 앱에서 사진을 고르고 공유 → <b>파일에 저장</b>으로 파일 앱에 옮겨요.</li>
-          <li>미리보기 앱에서 첫 사진을 열고, 파일 이름 옆 동작 메뉴 → <b>내보내기</b> → 포맷을 <b>PDF</b>로 골라 저장해요.</li>
-          <li>그 PDF를 열고 페이지 수를 눌러 썸네일을 띄운 뒤, 썸네일을 길게 눌러 <b>파일에서 삽입</b>으로 나머지 사진을 페이지로 넣어요. 썸네일을 길게 눌러 끌면 순서도 바꿀 수 있어요.</li>
+          <li>사진 앱에서 사진을 골라 공유 메뉴의 <b>파일에 저장</b>으로 파일 앱에 넣어 둬요.</li>
+          <li>미리보기 앱에서 첫 번째 사진을 열어요. 파일 이름 옆 동작 메뉴에서 <b>내보내기</b>를 고르고 포맷을 <b>PDF</b>로 바꿔 저장해요.</li>
+          <li>방금 만든 PDF를 열고 쪽수 표시를 눌러 썸네일 목록을 띄워요. 썸네일 하나를 길게 누르면 나오는 <b>파일에서 삽입</b>으로 나머지 사진을 한 쪽씩 붙여요. 순서는 썸네일을 꾹 눌러 끌어서 바꿔요.</li>
       </ol>
-      <p>미리보기 앱은 PDF를 내보낼 때 <b>'화면에 맞게 이미지 최적화'</b>, <b>'JPEG로 이미지 저장'</b>을 켜서 파일을 작게 만들 수 있어요. 다만 "500KB 이하"처럼 숫자를 정할 수는 없어서, 제출 용량에 맞는지는 저장한 뒤에 확인해야 해요.</p>
-      <p>사진이 많거나 용량 제한이 있다면 <b>사파리에서 <a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">SlimIO 사진→PDF</a></b>를 여는 게 빨라요. 사진 앱에서 여러 장을 한꺼번에 고르고 용량 제한을 정하면 끝이에요. 내려받은 PDF는 파일 앱의 <b>'다운로드' 폴더</b>에 저장돼요.</p>
+      <p>미리보기 앱에서 PDF를 내보낼 때 <b>'화면에 맞게 이미지 최적화'</b>와 <b>'JPEG로 이미지 저장'</b>을 켜면 파일이 가벼워져요. 하지만 목표 용량을 숫자로 넣는 칸은 없어서, 제출처 기준을 넘지 않았는지는 저장하고 나서 직접 봐야 해요.</p>
+      <p>장수가 많거나 KB 상한이 정해져 있다면 <b>사파리로 <a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">SlimIO 사진→PDF</a></b>를 쓰는 쪽이 빨라요. 사진 앱에서 여러 장을 한 번에 고르고 상한만 정하면 돼요. 받은 PDF는 파일 앱 <b>'다운로드' 폴더</b>에 들어가요.</p>
 
       <h2>갤럭시에서 사진을 PDF로 만들기</h2>
-      <p><b>여러 장을 묶을 때는 '갤러리 어시스턴트'</b>를 쓰면 돼요. 삼성이 만든 앱으로, 갤럭시 스토어에서 'Gallery Assistant'를 검색해 설치해요(굿락의 '편리한 갤럭시'에서도 설치 가능). 앱에서 <b>PDF로 저장</b> → 사진 선택 → 저장 순서이고, 페이지 크기(A3·A4·Letter), 세로·가로, 이미지 화질(원본·중간·낮음)을 고를 수 있어요. 삼성 안내 기준으로 <b>One UI 7.0 이상</b>에서 갤럭시 S24 이후 S 시리즈, 폴드7·플립7, A26·A36·A56 등 일부 기기만 지원해요.</p>
-      <p><b>앱 설치 없이</b>는 갤러리에서 사진을 열고 더보기(점 3개) → <b>인쇄</b> → 프린터 대신 <b>PDF</b>를 골라 저장하는 방법이 있어요. 삼성 멤버스 안내처럼 <b>한 장씩 저장할 때</b> 알맞은 방법이라, 여러 장을 한 파일로 묶기에는 불편해요.</p>
-      <p>만든 PDF는 사진이 아니라서 <b>갤러리에는 안 보여요</b>. 내 파일 앱에서 찾으세요. 지원 기기가 아니거나 용량 제한이 있다면 크롬·삼성 인터넷에서 <a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">SlimIO 사진→PDF</a>를 열고 갤러리 사진을 여러 장 고르면 돼요. 내려받은 PDF는 내 파일 앱의 '다운로드' 폴더에 있어요.</p>
+      <p>여러 장을 한 파일로 묶을 때는 삼성이 만든 <b>갤러리 어시스턴트(Gallery Assistant)</b> 앱이 편해요. 갤럭시 스토어에서 이름으로 찾아 설치하거나, 굿락의 '편리한 갤럭시'를 통해서도 받을 수 있어요. 앱의 <b>PDF로 저장</b>을 누르고 사진을 고른 뒤 저장하면 되고, 그 과정에서 용지(A3·A4·Letter), 방향(세로·가로), 이미지 화질(원본·중간·낮음)을 정할 수 있어요. 지원 범위는 삼성 안내상 <b>One UI 7.0 이상</b>의 일부 기기로, 갤럭시 S24부터의 S 시리즈와 폴드7·플립7, A26·A36·A56 등이 해당돼요.</p>
+      <p>따로 앱을 깔기 싫다면 갤러리에서 사진을 띄우고 점 3개 메뉴의 <b>인쇄</b>를 누른 다음, 프린터 자리에서 <b>PDF</b>를 골라 저장하는 길도 있어요. 삼성 멤버스 안내에서도 이 방법은 <b>사진 한 장을 PDF로 바꿀 때</b> 쓰는 걸로 소개돼서, 여러 장을 한 파일에 담기에는 번거로워요.</p>
+      <p>이렇게 만든 PDF는 사진 파일이 아니라서 <b>갤러리 목록에는 나타나지 않아요</b>. 내 파일 앱에서 찾아야 해요. 기기가 지원 목록에 없거나 KB 상한을 맞춰야 한다면 크롬이나 삼성 인터넷으로 <a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">SlimIO 사진→PDF</a>를 열어 갤러리 사진을 여러 장 고르세요. 내려받은 파일은 내 파일 앱 '다운로드' 폴더에 있어요.</p>
 
       <h2>컴퓨터에서는</h2>
-      <p>맥은 Finder에서 사진을 여러 개 선택하고 Control-클릭 → <b>빠른 동작 → PDF 생성</b>을 고르면 고른 순서대로 PDF 하나가 만들어져요. 윈도우는 사진을 인쇄할 때 프린터를 <b>Microsoft Print to PDF</b>로 고르면 PDF로 저장돼요. 둘 다 용량을 정해 줄이는 기능은 없어요.</p>
+      <p>맥에서는 Finder에서 사진 여러 개를 선택한 상태로 Control-클릭하고 <b>빠른 동작</b>의 <b>PDF 생성</b>을 고르면, 선택한 순서대로 한 PDF가 생겨요. 윈도우에서는 사진을 인쇄하면서 프린터를 <b>Microsoft Print to PDF</b>로 지정하면 PDF 파일로 저장돼요. 두 방법 모두 결과 용량을 정해 주지는 못해요.</p>
 
       <h2>휴대폰 사진으로 만든 PDF는 왜 클까</h2>
-      <p>사진을 PDF로 묶는 기능은 대부분 <b>사진을 그대로 PDF 안에 넣어요</b>. 그래서 PDF 용량이 넣은 사진 용량의 합과 거의 같아요. 이번 실험에 쓴 사진은 휴대폰 사진 크기(3024×4032픽셀)로 장당 약 3.8MB였고, 3장을 그대로 묶으니 <b>11.3MB</b>였어요. 제출 화면이 1MB까지만 받는다면 10분의 1 아래로 줄여야 하는 셈이에요.</p>
-      <p>PDF 용량을 줄이는 방법은 결국 두 가지예요. 사진을 <b>JPG 화질을 낮춰 다시 저장</b>하거나, <b>픽셀 수(가로·세로 크기)를 줄이는</b> 거예요. 화질을 낮추면 글자 가장자리가 지저분해지고, 픽셀을 줄이면 작은 글씨가 뭉개져요. 그래서 "얼마나 줄여도 읽히는지"가 중요해요.</p>
+      <p>사진을 PDF로 바꿔 주는 기능 대부분은 <b>사진 파일을 손대지 않고 그대로 PDF 안에 담아요</b>. 그러니 PDF 용량은 들어간 사진 용량을 다 더한 값과 거의 같아요. 이번 실험 사진은 휴대폰 카메라와 같은 3024×4032픽셀로 한 장에 3.8MB 안팎이었고, 3장을 그대로 담았더니 <b>11.3MB</b>가 됐어요. 1MB까지만 받는 제출 화면이라면 원래의 10분의 1보다 작게 만들어야 하는 거예요.</p>
+      <p>PDF를 가볍게 만드는 수단은 사실상 두 가지예요. 하나는 사진을 <b>더 낮은 JPG 품질로 다시 저장</b>하는 것, 다른 하나는 <b>사진의 가로·세로 픽셀 수 자체를 줄이는</b> 것이에요. 품질을 내리면 글자 테두리가 지저분해지고, 픽셀을 줄이면 작은 글자가 뭉개져요. 그래서 핵심은 "어디까지 줄여도 읽을 수 있느냐"예요.</p>
 
       <h2>직접 실험: 용량을 줄이면 글씨는 어디까지 읽힐까</h2>
-      <p>가상 서류 3장(재직증명서·거래명세서·수료증)을 책상 위에서 휴대폰으로 찍은 것처럼 만든 사진(3024×4032픽셀, 장당 약 3.8MB)으로 SlimIO 사진→PDF의 용량 제한을 바꿔 가며 PDF를 만들었어요. SlimIO는 제한에 맞을 때까지 먼저 JPG 화질을 낮추고, 그래도 크면 사진의 픽셀 크기를 줄여요.</p>
+      <p>재직증명서·거래명세서·수료증 예시 3장을 책상에 놓고 휴대폰으로 찍은 것처럼 만든 사진(3024×4032픽셀, 장당 3.8MB 안팎)을 준비했어요. 이 3장을 SlimIO 사진→PDF에 넣고 용량 상한만 바꿔 가며 PDF를 만들었어요. SlimIO는 상한에 들어갈 때까지 JPG 품질부터 낮추고, 그걸로 모자라면 사진의 픽셀 크기를 줄여요.</p>
       <div class="table-wrap"><table>
-          <tr><th>용량 제한 (사진 3장)</th><th>만들어진 PDF</th><th>사진 긴 변</th><th>작은 글씨(약 8pt)</th></tr>
-          <tr><td>제한 없음</td><td>11.3MB</td><td>4032px (원본)</td><td>선명</td></tr>
-          <tr><td>1MB 이하</td><td>953KB</td><td>2000px</td><td>선명</td></tr>
-          <tr><td>500KB 이하</td><td>489KB</td><td>2000px</td><td>선명</td></tr>
-          <tr><td>300KB 이하</td><td>297KB</td><td>2000px</td><td>읽힘</td></tr>
-          <tr><td>200KB 이하</td><td>200KB</td><td>1600px</td><td>읽힘</td></tr>
-          <tr><td>100KB 이하</td><td>98KB</td><td>1024px</td><td>흐림 (본문은 읽힘)</td></tr>
+          <tr><th>사진 3장, 고른 상한</th><th>제한 없음</th><th>1MB</th><th>500KB</th><th>300KB</th><th>200KB</th><th>100KB</th></tr>
+          <tr><td><b>결과 PDF</b></td><td>11.3MB</td><td>953KB</td><td>489KB</td><td>297KB</td><td>200KB</td><td>98KB</td></tr>
+          <tr><td><b>사진 긴 변</b></td><td>4032px (원본)</td><td>2000px</td><td>2000px</td><td>2000px</td><td>1600px</td><td>1024px</td></tr>
+          <tr><td><b>약 8pt 작은 글씨</b></td><td>선명</td><td>선명</td><td>선명</td><td>읽힘</td><td>읽힘</td><td>흐림 (본문은 읽힘)</td></tr>
       </table></div>
       <figure>
           <img src="/img/blog/photos-pdf-limits-ko.jpg" width="900" height="801" loading="lazy" alt="같은 서류 사진의 작은 글씨를 용량 제한별로 비교: 원본·1MB·200KB(3장)는 읽히고, 100KB(3장)는 흐리고, 200KB에 10장을 넣으면 거의 읽을 수 없음" />
-          <figcaption>재직증명서 맨 아래의 작은 글씨(약 8pt)를 같은 배율로 확대했어요. 사진 3장은 200KB까지 읽혔고, 200KB에 10장을 넣으면 거의 읽을 수 없었어요. (가상 예시 서류)</figcaption>
+          <figcaption>재직증명서 아래쪽에 있는 약 8pt 글씨를 똑같은 배율로 키워 비교했어요. 3장일 때는 200KB에서도 읽을 수 있었지만, 같은 200KB에 10장을 담으니 거의 알아볼 수 없었어요. (가상 예시 서류)</figcaption>
       </figure>
-      <p>장수를 바꿔 보면 차이가 더 커요. 같은 사진을 1·5·10장 넣었을 때 사진 긴 변은 이렇게 됐어요.</p>
+      <p>넣는 장수를 바꾸면 차이가 더 뚜렷해요. 같은 사진을 1·3·5·10장씩 담았을 때 사진 긴 변이 몇 픽셀까지 줄었는지 정리했어요.</p>
       <div class="table-wrap"><table>
-          <tr><th>용량 제한</th><th>1장</th><th>3장</th><th>5장</th><th>10장</th></tr>
-          <tr><td><b>200KB 이하</b></td><td>2000px</td><td>1600px</td><td>1280px</td><td>819px</td></tr>
-          <tr><td><b>500KB 이하</b></td><td>2000px</td><td>2000px</td><td>2000px</td><td>1280px</td></tr>
-          <tr><td><b>1MB 이하</b></td><td>2000px</td><td>2000px</td><td>2000px</td><td>2000px</td></tr>
+          <tr><th>장수</th><th>200KB 이하</th><th>500KB 이하</th><th>1MB 이하</th></tr>
+          <tr><td><b>1장</b></td><td>2000px</td><td>2000px</td><td>2000px</td></tr>
+          <tr><td><b>3장</b></td><td>1600px</td><td>2000px</td><td>2000px</td></tr>
+          <tr><td><b>5장</b></td><td>1280px</td><td>2000px</td><td>2000px</td></tr>
+          <tr><td><b>10장</b></td><td>819px</td><td>1280px</td><td>2000px</td></tr>
       </table></div>
-      <p>정리하면 <b>사진 긴 변이 1,280픽셀 이상이면 작은 글씨까지</b> 읽혔고, 1,024픽셀에서는 작은 글씨가 흐려져 본문 정도만 편하게 읽혔고, 819픽셀에서는 작은 글씨를 읽을 수 없었어요. 이 사진 기준으로는 <b>200KB면 5장, 500KB면 10장</b> 정도가 넉넉한 한계예요. SlimIO는 사진이 1,000픽셀 아래로 줄어들면 결과 화면에서 "작은 글씨는 읽기 어려울 수 있어요"라고 알려 줘요.</p>
-      <p>다만 사진마다 결과가 달라요. 어두운 곳에서 찍어 <b>자글자글한 점(노이즈)이 많거나 글씨가 빽빽하면</b> 같은 제한에서 더 많이 줄어들어요. 노이즈를 일부러 많이 넣은 다른 예시 사진 3장은 200KB 제한에서 긴 변 655픽셀까지 줄었어요.</p>
+      <p>결과를 묶어 보면, 긴 변이 <b>1,280픽셀 이상 남아 있을 때는 작은 글씨까지</b> 읽을 수 있었어요. 1,024픽셀이 되자 작은 글씨는 흐려지고 본문 정도만 무리 없이 읽혔고, 819픽셀에서는 작은 글씨를 알아볼 수 없었어요. 이 예시 사진으로는 <b>200KB에 5장, 500KB에 10장</b>쯤이 여유 있게 넣을 수 있는 선이에요. 사진이 1,000픽셀 아래로 내려가면 SlimIO 결과 화면에 "작은 글씨는 읽기 어려울 수 있어요"라는 안내가 나와요.</p>
+      <p>물론 사진에 따라 결과는 달라져요. 어두운 데서 찍어 화면이 자글자글하거나(노이즈) 글씨가 촘촘한 서류는 같은 상한에서 더 작게 줄어들어요. 일부러 노이즈를 잔뜩 넣은 다른 예시 3장으로 해 보니 200KB에서 긴 변이 655픽셀까지 내려갔어요.</p>
 
       <h2>같은 용량에서 더 선명하게 만드는 요령</h2>
-      <p><b>1. 종이만 나오게 찍거나 스캔 기능을 쓰세요.</b> 책상과 그림자까지 나온 사진보다, 종이만 하얗게 나온 스캔본이 같은 용량에서 훨씬 깨끗해요. 흰 배경은 JPG로 아주 작게 저장되기 때문에 그만큼 글씨에 용량을 더 쓸 수 있어요. 아이폰 메모 앱의 '문서 스캔'처럼 종이 테두리를 잘라 주는 기능으로 찍으면 좋아요.</p>
+      <p><b>1. 종이만 담기도록 찍거나 스캔 기능을 쓰세요.</b> 책상 무늬와 그림자까지 들어간 사진보다 종이 부분만 하얗게 남긴 스캔본이 같은 용량에서 훨씬 깔끔하게 나와요. 하얀 바탕은 JPG에서 용량을 거의 차지하지 않아서, 남는 용량을 글자에 쓸 수 있거든요. 메모 앱 문서 스캔처럼 종이 가장자리를 잘라 주는 기능이 좋아요.</p>
       <figure>
           <img src="/img/blog/photos-pdf-scan-ko.jpg" width="900" height="322" loading="lazy" alt="같은 서류를 100KB 이하 PDF로 만들었을 때 비교: 책상까지 나온 사진은 작은 글씨가 흐리고, 종이만 나온 스캔본은 또렷함" />
-          <figcaption>둘 다 3장을 100KB 이하로 만든 결과예요(사진 긴 변 1024px로 같음). 종이만 나온 스캔본 쪽이 작은 글씨가 또렷해요. (가상 예시 서류)</figcaption>
+          <figcaption>두 결과 모두 3장을 100KB 이하로 만든 거예요. 사진 긴 변도 1024px로 같아요. 그런데 종이만 담긴 스캔본 쪽 작은 글씨가 더 또렷해요. (가상 예시 서류)</figcaption>
       </figure>
-      <p><b>2. 꼭 필요한 장만 넣으세요.</b> 위 표처럼 장수가 늘면 장당 쓸 수 있는 용량이 줄어요. 빈 뒷면, 같은 내용을 두 번 찍은 사진은 빼세요.</p>
-      <p><b>3. 밝은 곳에서 찍으세요.</b> 어두우면 노이즈가 생기고, 노이즈는 용량을 많이 차지해요. 그림자가 지지 않게 창가나 조명 아래에서 찍으면 같은 용량에서도 더 선명해요.</p>
-      <p><b>4. 제한보다 살짝 여유를 두세요.</b> 사이트마다 1KB를 1,000바이트로 세기도 하고 1,024바이트로 세기도 해요. SlimIO는 1KB를 1,000바이트로 계산해서 어느 쪽으로 세도 통과하게 맞춰요.</p>
-      <p><b>5. 파일을 여러 개 올릴 수 있다면 나눠 올리세요.</b> "파일당 1MB, 최대 3개"처럼 개수 제한이 따로 있으면, 한 PDF에 다 넣는 것보다 나눠서 넣는 게 더 선명해요.</p>
-      <p>이미 만든 PDF가 크다면 <a href="/ko/" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/">PDF 용량 줄이기</a>나 <a href="/ko/compress-pdf-to-1mb.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/compress-pdf-to-1mb.html">PDF 1MB로 줄이기</a>로 줄일 수 있어요. 아이폰·맥 기본 기능으로 PDF를 줄였을 때의 결과는 <a href="/ko/guides/iphone-mac-pdf-size.html">아이폰·맥에서 PDF 용량 줄이기</a>에 비교해 뒀어요.</p>
+      <p><b>2. 꼭 내야 하는 장만 담으세요.</b> 앞의 표에서 보듯 장수가 많아질수록 한 장에 돌아가는 용량이 줄어요. 아무것도 없는 뒷면이나 똑같이 두 번 찍은 사진은 빼세요.</p>
+      <p><b>3. 밝은 곳에서 찍으세요.</b> 빛이 부족하면 노이즈가 끼고, 노이즈는 의외로 용량을 많이 먹어요. 창가나 조명 밑에서 그림자 없이 찍으면 같은 상한에서도 결과가 더 깨끗해요.</p>
+      <p><b>4. 상한에 딱 맞추지 말고 조금 남겨 두세요.</b> 1KB를 1,000바이트로 계산하는 사이트도, 1,024바이트로 계산하는 사이트도 있어요. SlimIO는 1,000바이트 기준으로 맞춰서 두 계산법 어느 쪽으로 재도 넘지 않아요.</p>
+      <p><b>5. 첨부 칸이 여러 개라면 나눠 담으세요.</b> 예를 들어 "1MB 이하 파일 3개까지"라고 되어 있다면, 서류를 한 PDF에 몰아넣기보다 세 파일로 나누는 편이 장마다 더 선명하게 남아요.</p>
+      <p>이미 만들어 둔 PDF가 무겁다면 <a href="/ko/" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/">PDF 용량 줄이기</a>나 <a href="/ko/compress-pdf-to-1mb.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/compress-pdf-to-1mb.html">PDF 1MB로 줄이기</a>에 넣어 보세요. 아이폰·맥 기본 기능으로 줄였을 때 어떤 차이가 나는지는 <a href="/ko/guides/iphone-mac-pdf-size.html">아이폰·맥에서 PDF 용량 줄이기</a>에서 비교했어요.</p>
 
       <h2>SlimIO로 사진 여러 장을 PDF 하나로</h2>
       <ol>
-          <li><a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">사진→PDF</a>를 열고 사진을 <b>여러 장 한 번에</b> 고르세요. 휴대폰에서는 앨범에서 바로 고를 수 있어요. 사진은 서버로 올라가지 않고 브라우저 안에서만 처리돼요.</li>
-          <li>목록의 <b>▲ ▼</b> 버튼으로 페이지 순서를 맞추고, 필요 없는 사진은 ✕로 빼요.</li>
-          <li><b>PDF 용량 제한</b>에서 제출 화면에 적힌 숫자를 골라요. 목록에 없으면 '직접 입력'에 KB로 넣어요.</li>
-          <li><b>PDF로 변환하기</b>를 누르고 결과 화면에서 PDF 용량과 사진 크기를 확인한 뒤 다운로드해요.</li>
+          <li><a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">사진→PDF</a> 페이지에서 사진을 <b>한 번에 여러 장</b> 선택해요. 휴대폰이라면 앨범에서 곧바로 고를 수 있어요. 사진은 서버로 보내지 않고 브라우저 안에서만 처리해요.</li>
+          <li>목록 옆 <b>▲ ▼</b> 버튼으로 쪽 순서를 정리하고, 빼야 할 사진은 ✕를 눌러 지워요.</li>
+          <li>제출 화면에 적힌 숫자를 <b>PDF 용량 제한</b> 목록에서 골라요. 맞는 값이 없으면 '직접 입력'을 고르고 KB 단위로 적어요.</li>
+          <li><b>PDF로 변환하기</b>를 누른 뒤, 결과 화면에서 PDF 용량과 사진 크기를 확인하고 내려받아요.</li>
       </ol>
-      <p>옆으로 저장된 휴대폰 사진도 바로 세워서 넣어요. 사진 한 장이 PDF 한 페이지가 되고, 페이지 크기는 사진 비율 그대로라 여백이 생기지 않아요. 용량 제한을 '제한 없음'으로 두면 사진을 다시 압축하지 않고 원래 화질 그대로 넣어요.</p>
+      <p>휴대폰에서 옆으로 누워 저장된 사진도 바로 세워서 넣어요. 사진 한 장이 PDF 한 쪽이 되고, 쪽 크기를 사진 비율에 맞춰서 여백이 생기지 않아요. 상한을 '제한 없음'으로 두면 사진을 다시 압축하지 않고 원래 화질 그대로 담아요.</p>
 
       <h2>출처</h2>
       <ul>
-          <li>Apple iPhone 사용 설명서, "iPhone 카메라를 사용하여 메모 앱에서 텍스트 및 문서 스캔하기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iph653f28965/ios" rel="noopener">support.apple.com</a></li>
-          <li>Apple iPhone 사용 설명서, "iPhone의 미리보기 앱에서 텍스트 및 문서 스캔하기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iphd81075862/ios" rel="noopener">support.apple.com</a></li>
-          <li>Apple iPhone 사용 설명서, "iPhone의 미리보기 앱에서 PDF 페이지 추가, 삭제, 회전, 이동 또는 자르기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iphbf4977cff/ios" rel="noopener">support.apple.com</a></li>
-          <li>Apple iPhone 사용 설명서, "iPhone의 미리보기 앱에서 PDF 및 이미지를 내보내거나 압축하기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iph61c20afe1/ios" rel="noopener">support.apple.com</a></li>
-          <li>Apple iPhone 사용 설명서, "iPhone에서 다운로드한 파일 찾기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iphc9cd7266c/ios" rel="noopener">support.apple.com</a></li>
-          <li>Apple Mac 사용 설명서, "Mac에서 여러 파일을 PDF로 결합하기" — <a href="https://support.apple.com/ko-kr/guide/mac-help/mchl21ac2368/mac" rel="noopener">support.apple.com</a></li>
-          <li>Samsung Members, "Gallery Assistant (갤러리 어시스턴트)" (Gallery Assistant 담당, 2026년 7월 수정) — <a href="https://r1.community.samsung.com/t5/camcyclopedia/gallery-assistant-%EA%B0%A4%EB%9F%AC%EB%A6%AC-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8/ba-p/36825939" rel="noopener">r1.community.samsung.com</a></li>
-          <li>Samsung Members, "[팁] 사진을 PDF 로 저장" (2026년 3월) — <a href="https://r1.community.samsung.com/t5/%EA%B0%A4%EB%9F%AD%EC%8B%9C-s/%ED%8C%81-%EC%82%AC%EC%A7%84%EC%9D%84-pdf-%EB%A1%9C-%EC%A0%80%EC%9E%A5/td-p/37197674" rel="noopener">r1.community.samsung.com</a></li>
-          <li>삼성전자서비스, "휴대폰에 저장된 사진 인쇄하는 방법이 궁금합니다." — <a href="https://www.samsungsvc.co.kr/solution/37484" rel="noopener">samsungsvc.co.kr</a></li>
+          <li>Apple iPhone 사용 설명서 — "iPhone 카메라를 사용하여 메모 앱에서 텍스트 및 문서 스캔하기" (<a href="https://support.apple.com/ko-kr/guide/iphone/iph653f28965/ios" rel="noopener">support.apple.com</a>)</li>
+          <li>Apple iPhone 사용 설명서 — "iPhone의 미리보기 앱에서 텍스트 및 문서 스캔하기" (<a href="https://support.apple.com/ko-kr/guide/iphone/iphd81075862/ios" rel="noopener">support.apple.com</a>)</li>
+          <li>Apple iPhone 사용 설명서 — 미리보기 앱에서 PDF 쪽을 추가·삭제·회전·이동하거나 자르는 방법 (<a href="https://support.apple.com/ko-kr/guide/iphone/iphbf4977cff/ios" rel="noopener">support.apple.com</a>)</li>
+          <li>Apple iPhone 사용 설명서 — 미리보기 앱에서 PDF와 이미지를 내보내거나 압축하는 방법 (<a href="https://support.apple.com/ko-kr/guide/iphone/iph61c20afe1/ios" rel="noopener">support.apple.com</a>)</li>
+          <li>Apple iPhone 사용 설명서 — "iPhone에서 다운로드한 파일 찾기" (<a href="https://support.apple.com/ko-kr/guide/iphone/iphc9cd7266c/ios" rel="noopener">support.apple.com</a>)</li>
+          <li>Apple Mac 사용 설명서 — "Mac에서 여러 파일을 PDF로 결합하기" (<a href="https://support.apple.com/ko-kr/guide/mac-help/mchl21ac2368/mac" rel="noopener">support.apple.com</a>)</li>
+          <li>Samsung Members — "Gallery Assistant (갤러리 어시스턴트)" (Gallery Assistant 담당, 2026년 7월 수정) (<a href="https://r1.community.samsung.com/t5/camcyclopedia/gallery-assistant-%EA%B0%A4%EB%9F%AC%EB%A6%AC-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8/ba-p/36825939" rel="noopener">r1.community.samsung.com</a>)</li>
+          <li>Samsung Members — "[팁] 사진을 PDF 로 저장" (2026년 3월) (<a href="https://r1.community.samsung.com/t5/%EA%B0%A4%EB%9F%AD%EC%8B%9C-s/%ED%8C%81-%EC%82%AC%EC%A7%84%EC%9D%84-pdf-%EB%A1%9C-%EC%A0%80%EC%9E%A5/td-p/37197674" rel="noopener">r1.community.samsung.com</a>)</li>
+          <li>삼성전자서비스 — "휴대폰에 저장된 사진 인쇄하는 방법이 궁금합니다." (<a href="https://www.samsungsvc.co.kr/solution/37484" rel="noopener">samsungsvc.co.kr</a>)</li>
       </ul>
       <div class="cta-box">
           <div><b>무료로 해 보기</b><p>여러 장을 한 번에 올리고 200KB·1MB 같은 용량 제한을 골라요. 사진은 서버로 올라가지 않아요.</p></div>
@@ -269,9 +267,9 @@
       <h2>함께 보면 좋은 가이드</h2>
       <div class="guide-list">
           <a class="guide-card" href="/ko/guides/iphone-mac-pdf-size.html" data-umami-event="guide-related" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="iphone-mac-pdf-size"><b>아이폰·맥에서 PDF 용량 줄이기: 기본 기능 직접 비교해 봤어요</b><small>맥 미리보기의 '파일 크기 줄이기', 아이폰 단축어의 'PDF 파일 크기 최적화', SlimIO를 같은 PDF 3개로 직접 비교했어요. 용량이 얼마나 줄었는지, 글자와 화질은 어떻게 됐는지, 언제 무엇을 쓰면 되는지 정리했어요.</small></a>
+          <a class="guide-card" href="/ko/guides/phone-scan-to-pdf.html" data-umami-event="guide-related" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="phone-scan-to-pdf"><b>휴대폰으로 서류 스캔해서 PDF 만들기: 아이폰 메모·갤럭시 문서 스캔·구글 드라이브, 용량 제한까지</b><small>스캐너 없이 휴대폰 기본 기능으로 종이 서류를 PDF로 만드는 방법을 아이폰(메모·파일·미리보기), 갤럭시(카메라 문서 스캔, One UI 8.5 PDF 저장), 구글 드라이브별로 정리했어요. 기기마다 결과가 PDF인지 사진인지가 달라요. 같은 서류 3장을 컬러·회색·흑백으로 만들어 용량을 비교했고, 1MB 같은 제출 제한에 맞추는 법도 담았어요.</small></a>
           <a class="guide-card" href="/ko/guides/mail-attachment-size-limit.html" data-umami-event="guide-related" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="mail-attachment-size-limit"><b>메일·카톡 첨부파일 용량 제한 총정리: 네이버 10MB·다음 25MB·지메일 25MB, 넘으면 어떻게 될까</b><small>네이버·다음·카카오메일·지메일·아웃룩·회사 메일·카카오톡의 첨부 용량 한도와, 한도를 넘으면 생기는 일(대용량 첨부 30일·드라이브 링크)을 각 서비스 고객센터 기준으로 정리했어요. 36MB 서류 PDF를 10MB·5MB·2MB·1MB로 줄여 작은 글씨가 어떻게 남는지도 직접 비교했어요.</small></a>
-          <a class="guide-card" href="/ko/guides/pdf-stamp-seal.html" data-umami-event="guide-related" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="pdf-stamp-seal"><b>PDF에 도장·직인 넣는 법: 흰 배경 없이, 무료로 (이름 도장 만들기까지)</b><small>견적서·위임장·동의서 PDF에 도장이나 회사 직인을 넣는 방법이에요. 종이에 찍은 도장 사진의 흰 배경을 지우는 이유와 잘 찍는 법, 적당한 크기, 도장이 없을 때 이름 도장 만들기, 도장 이미지의 효력과 주의할 점까지 법령 원문 기준으로 정리했어요.</small></a>
-          <a class="guide-card" href="/ko/guides/pdf-compression-explained.html" data-umami-event="guide-related" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="pdf-compression-explained"><b>PDF 용량 줄이기 원리: 글자는 선명하게, 용량만 줄이는 법</b><small>PDF가 왜 무거운지, 압축하면 무엇이 바뀌고 무엇이 그대로인지, 글자를 선명하게 두면서 100KB·500KB·1MB 같은 정해진 용량에 맞추는 방법을 원리부터 정리했어요.</small></a>
+          <a class="guide-card" href="/ko/guides/gov24-pdf-save.html" data-umami-event="guide-related" data-umami-event-guide="ko/multiple-photos-to-pdf" data-umami-event-to="gov24-pdf-save"><b>정부24 서류 PDF로 저장하기: 전자증명서 받는 법, 암호 6자리·진본 표시·합치기 주의</b><small>주민등록등본·졸업증명서 같은 정부24 서류를 PDF 파일로 받아 제출하는 방법이에요. 전자문서지갑 전자증명서로 받는 순서, 다운로드할 때 정하는 6자리 암호, '진본'과 '미검증' 표시의 차이, PC 인쇄 화면에서 PDF로 저장할 때 막히는 경우, 합치거나 줄이기 전에 알아둘 점을 공식 안내 기준으로 정리했어요.</small></a>
       </div>
 </section>
 

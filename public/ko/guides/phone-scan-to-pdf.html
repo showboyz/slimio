@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>휴대폰 스캔 PDF 만들기 — 아이폰 메모 스캔, 갤럭시 문서 스캔, 구글 드라이브 스캔과 컬러·흑백 용량 비교 | SlimIO</title>
+<meta name="description" content="스캐너 없이 휴대폰 기본 기능으로 종이 서류를 PDF로 만드는 방법을 아이폰(메모·파일·미리보기), 갤럭시(카메라 문서 스캔, One UI 8.5 PDF 저장), 구글 드라이브별로 정리했어요. 기기마다 결과가 PDF인지 사진인지가 달라요. 같은 서류 3장을 컬러·회색·흑백으로 만들어 용량을 비교했고, 1MB 같은 제출 제한에 맞추는 법도 담았어요." />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/ko/guides/phone-scan-to-pdf.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="휴대폰 스캔 PDF 만들기 — 아이폰 메모 스캔, 갤럭시 문서 스캔, 구글 드라이브 스캔과 컬러·흑백 용량 비교 | SlimIO" />
+<meta property="og:description" content="스캐너 없이 휴대폰 기본 기능으로 종이 서류를 PDF로 만드는 방법을 아이폰(메모·파일·미리보기), 갤럭시(카메라 문서 스캔, One UI 8.5 PDF 저장), 구글 드라이브별로 정리했어요. 기기마다 결과가 PDF인지 사진인지가 달라요. 같은 서류 3장을 컬러·회색·흑백으로 만들어 용량을 비교했고, 1MB 같은 제출 제한에 맞추는 법도 담았어요." />
+<meta property="og:url" content="https://pdfslimio.com/ko/guides/phone-scan-to-pdf.html" />
+<meta property="og:image" content="https://pdfslimio.com/img/blog/scan-pdf-hero.jpg" />
+<link rel="stylesheet" href="/style.css?v=12b6b8eb" />
+<script defer src="/guide.js?v=94e3324c"></script>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
+<meta name="google-adsense-account" content="ca-pub-5339352429300786" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "휴대폰으로 서류 스캔해서 PDF 만들기: 아이폰 메모·갤럭시 문서 스캔·구글 드라이브, 용량 제한까지",
+  "description": "스캐너 없이 휴대폰 기본 기능으로 종이 서류를 PDF로 만드는 방법을 아이폰(메모·파일·미리보기), 갤럭시(카메라 문서 스캔, One UI 8.5 PDF 저장), 구글 드라이브별로 정리했어요. 기기마다 결과가 PDF인지 사진인지가 달라요. 같은 서류 3장을 컬러·회색·흑백으로 만들어 용량을 비교했고, 1MB 같은 제출 제한에 맞추는 법도 담았어요.",
+  "datePublished": "2026-10-29",
+  "dateModified": "2026-10-29",
+  "inLanguage": "ko",
+  "author": {
+    "@type": "Organization",
+    "name": "SlimIO",
+    "url": "https://pdfslimio.com/ko/about.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "SlimIO",
+    "url": "https://pdfslimio.com/"
+  },
+  "mainEntityOfPage": "https://pdfslimio.com/ko/guides/phone-scan-to-pdf.html",
+  "image": "https://pdfslimio.com/img/blog/scan-pdf-hero.jpg"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "SlimIO",
+      "item": "https://pdfslimio.com/ko/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "가이드",
+      "item": "https://pdfslimio.com/ko/guides/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "휴대폰으로 서류 스캔해서 PDF 만들기: 아이폰 메모·갤럭시 문서 스캔·구글 드라이브, 용량 제한까지",
+      "item": "https://pdfslimio.com/ko/guides/phone-scan-to-pdf.html"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "아이폰 메모 앱으로 스캔하면 어떤 파일이 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PDF예요. Apple 안내에 '메모에서 문서는 PDF로 저장됩니다'라고 나와 있어요. 여러 장을 이어서 찍으면 한 PDF 안에 페이지로 들어가고, 메모에서 스캔을 열어 공유하면 메일에 첨부하거나 파일 앱에 저장할 수 있어요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "갤럭시 카메라로 스캔했는데 PDF가 안 보여요.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "카메라의 '문서 및 텍스트 스캔'은 보정한 결과를 갤러리에 사진으로 저장해요. One UI 8.5 이상의 일부 기종은 문서 스캔에서 'PDF로 저장'을 누르면 내 파일 앱에 PDF로 저장돼요. 그 기능이 없다면 구글 드라이브 스캔을 쓰거나, 스캔한 사진 여러 장을 PDF 하나로 묶으면 돼요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "흑백으로 스캔하면 용량이 줄어드나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "색만 빼서는 거의 안 줄었어요. 같은 서류 3장이 컬러 2.40MB, 회색 2.39MB였어요. 종이 바탕을 하얗게 정리한 흑백 문서는 1.24MB로 절반이 됐어요. 대신 빨간 도장이나 직인 색이 사라지니, 색이 중요한 서류는 컬러로 만들고 용량을 따로 줄이세요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "스캔한 PDF가 1MB를 넘어요.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "아직 사진 상태라면 SlimIO 사진→PDF에서 'PDF 용량 제한'을 1MB로 골라 묶으세요. 컬러 3장 2.40MB가 656.1KB가 됐고 손글씨도 읽혔어요. 이미 PDF라면 PDF 1MB로 줄이기에 넣으면 돼요."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "스캔한 문서가 비뚤거나 그림자가 져요.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "어두운 책상에 흰 종이를 놓고, 휴대폰 그림자가 생기지 않게 밝은 곳에서 위에서 찍으세요. 네 귀퉁이가 다 보여야 테두리를 잘 찾아요. 아이폰은 찍은 뒤 회전과 페이지 자르기로 고칠 수 있어요."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <a class="brand" href="/ko/"><span class="logo">📄</span> SlimIO</a>
+           <div class="nav-links">
+               <a href="/ko/">PDF 압축</a>
+               <a href="/ko/#tools">전체 도구</a>
+               <a href="/ko/guides/">가이드</a>
+               <a href="/guides/" class="lang-switch"><img src="/img/flag-us.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />English guides</a>
+           </div>
+      </nav>
+</div>
+
+<main class="content article">
+      <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
+      <h1>휴대폰으로 서류 스캔해서 PDF 만들기: 아이폰 메모·갤럭시 문서 스캔·구글 드라이브, 용량 제한까지</h1>
+      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-10-29">2026년 10월 29일</time> · 7 분 분량</p>
+<p>"서류를 스캔해서 PDF로 올려 주세요"라는 안내를 받으면 스캐너가 없어도 괜찮아요. 아이폰과 갤럭시에는 종이를 반듯하게 펴서 찍어 주는 스캔 기능이 기본으로 들어 있어요. 다만 <b>기기마다 결과물이 달라요</b>. 아이폰 메모 앱은 PDF를 만들고, 갤럭시 카메라는 사진을 만들어요. 이 차이를 모르면 "PDF로 내라는데 사진만 있다"에서 막혀요. 기기별 방법을 Apple·삼성전자·Google 공식 안내 기준으로 정리하고, 스캔 색 설정에 따라 PDF 용량이 얼마나 달라지는지 직접 비교했어요. (2026년 10월 확인)</p>
+      <p class="cta-top"><a class="cta-btn" href="/ko/jpg-to-pdf.html?target=1MB" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/phone-scan-to-pdf">스캔한 사진을 PDF 하나로 →</a><span>갤럭시처럼 스캔이 사진으로 저장됐다면 여러 장을 PDF 한 파일로 묶고 1MB 같은 용량 제한에 맞춰요. 파일은 서버로 올라가지 않아요.</span></p>
+
+      <div class="callout">제출하는 곳에 파일 형식·용량·장수 안내가 있으면 <b>그 안내가 우선</b>이에요. 메뉴 이름은 운영체제 버전과 기종에 따라 조금 다를 수 있어요. 이미 찍어 둔 사진 여러 장을 PDF로 묶는 방법은 <a href="/ko/guides/multiple-photos-to-pdf.html">사진 여러 장을 PDF 하나로</a>에 따로 정리했어요.</div>
+
+      <h2>기기별 스캔 기능과 결과 파일</h2>
+      <div class="table-wrap"><table>
+          <tr><th>방법</th><th>결과</th><th>메모</th></tr>
+          <tr><td><b>아이폰 메모 앱 '문서 스캔'</b></td><td>PDF (여러 장 = 한 파일)</td><td>회전·필터·페이지 자르기 가능</td></tr>
+          <tr><td><b>아이폰 파일 앱 '문서 스캔'</b></td><td>고른 폴더에 바로 저장</td><td>메모를 거치지 않아요</td></tr>
+          <tr><td><b>아이폰 미리보기 앱</b> (iOS 26 이상)</td><td>PDF</td><td>자르기·회전·색 조절</td></tr>
+          <tr><td><b>갤럭시 카메라 '문서 및 텍스트 스캔'</b></td><td>갤러리에 사진</td><td>여러 장이면 사진도 여러 장</td></tr>
+          <tr><td><b>갤럭시 문서 스캔 'PDF로 저장'</b> (One UI 8.5 이상 일부 기종)</td><td>내 파일 앱에 PDF</td><td>여러 장을 한 PDF로</td></tr>
+          <tr><td><b>구글 드라이브 스캔</b> (안드로이드·아이폰)</td><td>PDF (안드로이드는 JPG도 선택)</td><td>드라이브 계정 필요</td></tr>
+      </table></div>
+
+      <figure>
+          <img src="/img/blog/scan-pdf-routes-ko.jpg" width="1200" height="654" loading="lazy" alt="아이폰 메모, 갤럭시 카메라, 구글 드라이브의 문서 스캔 순서와 결과 파일을 세 칸으로 정리한 그림" />
+          <figcaption>세 가지 길의 순서와 결과. 아이폰 메모와 구글 드라이브는 PDF, 갤럭시 카메라는 갤러리 사진이에요.</figcaption>
+      </figure>
+
+      <h2>아이폰: 메모·파일·미리보기</h2>
+      <p><b>메모 앱</b>이 가장 많이 쓰는 방법이에요.</p>
+      <ol>
+          <li>메모를 열고 첨부 버튼을 탭한 다음 <b>'문서 스캔'</b>을 탭해요.</li>
+          <li>자동 모드면 종이를 비추는 순간 알아서 찍혀요. 직접 찍으려면 셔터 버튼이나 음량 버튼을 누르고, 결과를 보고 '다시 찍기' 또는 '스캔 항목 유지'를 골라요.</li>
+          <li>다음 장을 이어서 찍고 끝나면 저장해요.</li>
+          <li>메모 안의 스캔을 열면 동작 메뉴에서 PDF를 복사·공유하거나 이름을 바꿀 수 있어요. 공유로 메일에 첨부하거나 파일 앱에 저장하면 돼요.</li>
+      </ol>
+      <p>찍은 뒤에도 왼쪽·오른쪽으로 회전, 필터, 페이지 자르기로 고칠 수 있어요(필터와 페이지 자르기는 스캔한 문서에서만 돼요). iOS 26부터는 스캔할 때 플래시나 이미지 필터 같은 옵션도 고를 수 있어요.</p>
+      <p>메모에 남길 필요가 없다면 <b>파일 앱</b>에서 더 보기 버튼 → '문서 스캔'으로 찍고, 저장할 위치를 골라 '저장'을 누르면 원하는 폴더에 바로 들어가요. iOS 26 이상에서는 <b>미리보기</b> 앱으로도 문서를 스캔해서 PDF를 만들 수 있고, 썸네일을 탭해 자르기·회전·색 조절을 할 수 있어요.</p>
+
+      <h2>갤럭시: 카메라 문서 스캔과 PDF 저장</h2>
+      <p>갤럭시는 <b>카메라 앱</b>에 문서 스캔이 들어 있어요. 삼성전자서비스 안내 기준으로, 카메라 설정의 <b>장면별 최적 촬영 → 문서 및 텍스트 스캔</b>을 켜 두면 문서를 비출 때 스캔 버튼이 나오고, 누르면 문서를 보정해 촬영한 결과를 <b>갤러리에 저장</b>해요. 결과는 사진이에요.</p>
+      <p><b>One UI 8.5 이상</b>에서는 문서 스캔 결과를 사진으로 둘지, 여러 장을 합친 <b>PDF로 '내 파일' 앱</b>에 저장할지 고를 수 있어요(삼성전자 지능형 문서 스캐너 안내). 문서가 화면의 20% 이상을 차지하고 네 귀퉁이가 모두 보여야 인식돼요. 삼성 멤버스의 카메라 기능 안내 글(삼성 운영자 작성)에는 이 기능이 갤럭시 S25·S26 시리즈, S25 엣지, Z 폴드7·8, Z 플립7·8 등에서 되고, 필터는 클린·내추럴·흑백음영·흑백, 해상도는 기본·높음·낮음 세 가지라고 나와 있어요. 해상도가 높을수록 이미지 용량도 커져요.</p>
+      <p>PDF 저장이 없는 기종이라면 두 가지 길이 있어요.</p>
+      <ul>
+          <li><b>삼성 노트:</b> 스캔한 사진을 노트에 넣은 뒤 더 보기 → 파일로 저장 → PDF를 고르면 노트가 PDF로 저장돼요.</li>
+          <li><b>사진을 PDF로 묶기:</b> 갤러리의 스캔 사진 여러 장을 <a href="/ko/jpg-to-pdf.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">SlimIO 사진→PDF</a>에 한 번에 올리면 순서대로 한 PDF가 돼요.</li>
+      </ul>
+
+      <h2>기종 상관없이: 구글 드라이브 스캔</h2>
+      <p>구글 드라이브 앱에도 스캔이 있어서 아이폰·갤럭시 어디서나 같은 방법으로 쓸 수 있어요. Google 고객센터 안내 기준으로 스캔한 문서는 <b>검색 가능한 PDF</b>로 저장돼요.</p>
+      <ul>
+          <li>안드로이드: 오른쪽 아래 카메라를 탭하고 수동 또는 자동으로 찍어요. 필터에서 회색 톤 이미지를 만들 수 있고, '추가'로 다음 페이지를 찍어요. 저장할 때 .pdf와 .jpg 중에 골라요.</li>
+          <li>아이폰: 추가 버튼을 탭한 다음 '스캔' 또는 카메라 아이콘을 탭해요.</li>
+      </ul>
+      <p>파일이 구글 드라이브에 저장되니 로그인이 필요하고, 제출할 때는 드라이브에서 내려받거나 공유해서 올리면 돼요.</p>
+
+      <h2>컬러·회색·흑백, PDF 용량 비교</h2>
+      <p>스캔할 때 고르는 색 설정이 용량에 얼마나 영향을 주는지 실험했어요. 누가 봐도 예시인 '참가 동의서' 3쪽을 휴대폰 스캔처럼 만들고(종이 결·그림자·노이즈 포함, 장당 2480×3508픽셀), 같은 서류를 세 가지 색으로 바꿔 SlimIO 사진→PDF의 '제한 없음'으로 묶었어요.</p>
+      <div class="table-wrap"><table>
+          <tr><th>3쪽 PDF</th><th>용량</th><th>보이는 차이</th></tr>
+          <tr><td><b>컬러 그대로</b></td><td>2.40MB</td><td>종이 색과 그림자까지 남아요</td></tr>
+          <tr><td><b>회색</b></td><td>2.39MB</td><td>색만 빠지고 용량은 거의 같아요</td></tr>
+          <tr><td><b>흑백 문서</b> (바탕을 하얗게)</td><td><b>1.24MB</b></td><td>절반이 됐지만 빨간 도장이 회색으로</td></tr>
+      </table></div>
+      <figure>
+          <img src="/img/blog/scan-pdf-size-ko.jpg" width="1200" height="939" loading="lazy" alt="같은 예시 동의서를 컬러, 회색, 흑백 문서로 만든 첫 페이지 비교와 PDF 용량 2.40MB, 2.39MB, 1.24MB" />
+          <figcaption>같은 예시 서류 3장. 용량을 줄인 건 색을 빼는 것보다 종이 바탕을 하얗게 정리하는 쪽이었어요. (가상 예시 서류, 휴대폰과 앱마다 결과는 달라요)</figcaption>
+      </figure>
+      <p>사진 압축(JPG)은 밝기 차이보다 색 정보를 더 적게 저장해서, 색만 빼는 건 용량에 큰 영향이 없어요. 용량을 차지하는 건 종이 결, 그림자, 노이즈 같은 <b>바탕의 잔무늬</b>예요. 스캔 앱의 흑백 문서 필터처럼 바탕을 하얗게 날리면 그 잔무늬가 사라져서 줄어들어요. 그러니 글자만 있는 서류는 흑백 문서 필터가 유리하고, 도장·직인·서명 색을 보여 줘야 하는 서류는 컬러로 찍은 뒤 용량을 맞추는 게 안전해요.</p>
+
+      <h2>"1MB 이하"처럼 제한이 있을 때</h2>
+      <p>학교·기관 사이트는 첨부 한 개에 1MB, 2MB 같은 제한을 두는 경우가 많아요. 스캔 결과가 어떤 형태인지에 따라 방법이 달라요.</p>
+      <ul>
+          <li><b>사진 상태(갤럭시 카메라 스캔 등):</b> <a href="/ko/jpg-to-pdf.html?target=1MB" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="/ko/jpg-to-pdf.html">사진→PDF(1MB 이하)</a>에 여러 장을 순서대로 넣으면 PDF 전체가 1MB 안에 들어가게 사진을 줄여 묶어요. 위 컬러 3장(2.40MB)은 <b>656.1KB</b>가 됐어요. 사진의 긴 변을 2000픽셀로 줄여 다시 저장했는데, 확대해 보니 손글씨 이름과 전화번호가 또렷했어요.</li>
+          <li><b>이미 PDF(아이폰 메모 스캔, 드라이브 스캔):</b> <a href="/ko/compress-pdf-to-1mb.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="/ko/compress-pdf-to-1mb.html">PDF 1MB로 줄이기</a>에 넣으면 돼요. 스캔 PDF는 글자도 사진으로 들어 있어서 용량을 줄이면 글자도 함께 흐려질 수 있어요. 왜 그런지는 <a href="/ko/guides/pdf-compression-explained.html">PDF 용량 줄이기 원리</a>에 정리했어요.</li>
+      </ul>
+      <figure>
+          <img src="/img/blog/scan-pdf-tool-ko.jpg" width="800" height="1567" loading="lazy" alt="SlimIO 사진→PDF 결과 화면: 이미지 3장, PDF 크기 656.1KB, 제한 1MB 이하 통과" style="max-width:360px;display:block;margin:0 auto" />
+          <figcaption>컬러 3장을 '1MB 이하'로 묶은 결과. 파일은 브라우저 안에서만 처리돼요.</figcaption>
+      </figure>
+      <p>아이폰에서 기본 기능만으로 PDF를 줄였을 때의 결과는 <a href="/ko/guides/iphone-mac-pdf-size.html">아이폰·맥에서 PDF 용량 줄이기</a>에 비교해 뒀어요. 메일로 보낼 때의 첨부 한도는 <a href="/ko/guides/mail-attachment-size-limit.html">메일 첨부파일 용량 제한</a>을 보세요.</p>
+
+      <h2>스캔이 잘 되는 촬영 요령</h2>
+      <ul>
+          <li><b>바탕:</b> 어두운 책상 위에 흰 종이를 놓으면 테두리를 잘 찾아요.</li>
+          <li><b>빛:</b> 휴대폰과 손 그림자가 종이에 지지 않게 밝은 곳에서, 위에서 수평으로 찍어요.</li>
+          <li><b>구도:</b> 네 귀퉁이가 화면 안에 모두 들어오게 해요. 갤럭시 PDF 스캔은 문서가 화면의 20% 이상이어야 해요.</li>
+          <li><b>반사:</b> 코팅된 종이나 사진은 플래시를 끄고 찍어요.</li>
+          <li><b>확인:</b> 저장하기 전에 확대해서 작은 글씨와 도장이 읽히는지 봐요. 흐리면 그 장만 다시 찍어요.</li>
+      </ul>
+
+      <h2>출처</h2>
+      <ul>
+          <li>Apple 지원, "iPhone 또는 iPad의 메모 앱에서 문서 스캔하기" (2026년 2월) — <a href="https://support.apple.com/ko-kr/108963" rel="noopener">support.apple.com</a></li>
+          <li>Apple iPhone 사용 설명서, "iPhone 카메라를 사용하여 메모 앱에서 텍스트 및 문서 스캔하기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iph653f28965/ios" rel="noopener">support.apple.com</a></li>
+          <li>Apple iPhone 사용 설명서(iOS 27), 메모 앱 첨부 파일 보기·편집 — <a href="https://support.apple.com/ko-kr/guide/iphone/iph8958dd125/27/ios/27" rel="noopener">support.apple.com</a></li>
+          <li>Apple iPhone 사용 설명서, "iPhone의 미리보기 앱에서 텍스트 및 문서 스캔하기" — <a href="https://support.apple.com/ko-kr/guide/iphone/iphd81075862/ios" rel="noopener">support.apple.com</a></li>
+          <li>삼성전자서비스, 카메라 문서 스캔 기능 안내 (2026년 9월) — <a href="https://www.samsungsvc.co.kr/solution/23374" rel="noopener">samsungsvc.co.kr</a></li>
+          <li>Samsung, Galaxy AI 지능형 문서 스캐너 (One UI 8.5, 2026년 4월) — <a href="https://www.samsung.com/de/support/mobile-devices/galaxy-smartphone-galaxy-ai-intelligenter-dokumentenscanner/" rel="noopener">samsung.com</a></li>
+          <li>Samsung Members CamCyclopedia, "문서 스캔" (삼성 운영자 작성, 2026년 9월 수정) — <a href="https://r1.community.samsung.com/t5/camcyclopedia/%EB%AC%B8%EC%84%9C-%EC%8A%A4%EC%BA%94/ba-p/36754882" rel="noopener">r1.community.samsung.com</a></li>
+          <li>삼성전자서비스, 삼성 노트 파일로 저장 안내 — <a href="https://www.samsungsvc.co.kr/solution/38425" rel="noopener">samsungsvc.co.kr</a></li>
+          <li>Samsung US, scan documents with the camera and save as PDF in Samsung Notes — <a href="https://www.samsung.com/us/support/answer/ANS10003696/" rel="noopener">samsung.com</a></li>
+          <li>Google 드라이브 고객센터, "문서 스캔하기" — <a href="https://support.google.com/drive/answer/3145835?hl=ko" rel="noopener">support.google.com</a></li>
+      </ul>
+      <div class="cta-box">
+          <div><b>무료로 해 보기</b><p>갤럭시처럼 스캔이 사진으로 저장됐다면 여러 장을 PDF 한 파일로 묶고 1MB 같은 용량 제한에 맞춰요. 파일은 서버로 올라가지 않아요.</p></div>
+          <a class="cta-btn" href="/ko/jpg-to-pdf.html?target=1MB" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/phone-scan-to-pdf">스캔한 사진을 PDF 하나로 →</a>
+      </div>
+      <div class="cta-sticky"><a class="cta-btn" href="/ko/jpg-to-pdf.html?target=1MB" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/phone-scan-to-pdf">스캔한 사진을 PDF 하나로 →</a><button type="button" aria-label="닫기">✕</button></div>
+</main>
+
+<section class="faq">
+      <h2>자주 묻는 질문</h2>
+      <details>
+          <summary>아이폰 메모 앱으로 스캔하면 어떤 파일이 되나요?</summary>
+          <p>PDF예요. Apple 안내에 '메모에서 문서는 PDF로 저장됩니다'라고 나와 있어요. 여러 장을 이어서 찍으면 한 PDF 안에 페이지로 들어가고, 메모에서 스캔을 열어 공유하면 메일에 첨부하거나 파일 앱에 저장할 수 있어요.</p>
+      </details>
+      <details>
+          <summary>갤럭시 카메라로 스캔했는데 PDF가 안 보여요.</summary>
+          <p>카메라의 '문서 및 텍스트 스캔'은 보정한 결과를 갤러리에 사진으로 저장해요. One UI 8.5 이상의 일부 기종은 문서 스캔에서 'PDF로 저장'을 누르면 내 파일 앱에 PDF로 저장돼요. 그 기능이 없다면 구글 드라이브 스캔을 쓰거나, 스캔한 사진 여러 장을 PDF 하나로 묶으면 돼요.</p>
+      </details>
+      <details>
+          <summary>흑백으로 스캔하면 용량이 줄어드나요?</summary>
+          <p>색만 빼서는 거의 안 줄었어요. 같은 서류 3장이 컬러 2.40MB, 회색 2.39MB였어요. 종이 바탕을 하얗게 정리한 흑백 문서는 1.24MB로 절반이 됐어요. 대신 빨간 도장이나 직인 색이 사라지니, 색이 중요한 서류는 컬러로 만들고 용량을 따로 줄이세요.</p>
+      </details>
+      <details>
+          <summary>스캔한 PDF가 1MB를 넘어요.</summary>
+          <p>아직 사진 상태라면 SlimIO 사진→PDF에서 'PDF 용량 제한'을 1MB로 골라 묶으세요. 컬러 3장 2.40MB가 656.1KB가 됐고 손글씨도 읽혔어요. 이미 PDF라면 PDF 1MB로 줄이기에 넣으면 돼요.</p>
+      </details>
+      <details>
+          <summary>스캔한 문서가 비뚤거나 그림자가 져요.</summary>
+          <p>어두운 책상에 흰 종이를 놓고, 휴대폰 그림자가 생기지 않게 밝은 곳에서 위에서 찍으세요. 네 귀퉁이가 다 보여야 테두리를 잘 찾아요. 아이폰은 찍은 뒤 회전과 페이지 자르기로 고칠 수 있어요.</p>
+      </details>
+</section>
+
+<section class="content related">
+      <h2>함께 보면 좋은 가이드</h2>
+      <div class="guide-list">
+          <a class="guide-card" href="/ko/guides/mail-attachment-size-limit.html" data-umami-event="guide-related" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="mail-attachment-size-limit"><b>메일·카톡 첨부파일 용량 제한 총정리: 네이버 10MB·다음 25MB·지메일 25MB, 넘으면 어떻게 될까</b><small>네이버·다음·카카오메일·지메일·아웃룩·회사 메일·카카오톡의 첨부 용량 한도와, 한도를 넘으면 생기는 일(대용량 첨부 30일·드라이브 링크)을 각 서비스 고객센터 기준으로 정리했어요. 36MB 서류 PDF를 10MB·5MB·2MB·1MB로 줄여 작은 글씨가 어떻게 남는지도 직접 비교했어요.</small></a>
+          <a class="guide-card" href="/ko/guides/multiple-photos-to-pdf.html" data-umami-event="guide-related" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="multiple-photos-to-pdf"><b>사진 여러 장을 PDF 하나로: 아이폰·갤럭시에서 만들고 200KB·1MB 용량까지 맞추기</b><small>휴대폰 사진 여러 장을 PDF 한 파일로 묶는 방법을 아이폰(미리보기·메모 스캔), 갤럭시(갤러리 어시스턴트·인쇄), 컴퓨터별로 정리했어요. 사진 3장(11.3MB)을 1MB·200KB·100KB로 줄여 글씨가 어디까지 읽히는지 직접 비교했고, 같은 용량에서 더 선명하게 만드는 요령도 담았어요.</small></a>
+          <a class="guide-card" href="/ko/guides/iphone-mac-pdf-size.html" data-umami-event="guide-related" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="iphone-mac-pdf-size"><b>아이폰·맥에서 PDF 용량 줄이기: 기본 기능 직접 비교해 봤어요</b><small>맥 미리보기의 '파일 크기 줄이기', 아이폰 단축어의 'PDF 파일 크기 최적화', SlimIO를 같은 PDF 3개로 직접 비교했어요. 용량이 얼마나 줄었는지, 글자와 화질은 어떻게 됐는지, 언제 무엇을 쓰면 되는지 정리했어요.</small></a>
+          <a class="guide-card" href="/ko/guides/pdf-compression-explained.html" data-umami-event="guide-related" data-umami-event-guide="ko/phone-scan-to-pdf" data-umami-event-to="pdf-compression-explained"><b>PDF 용량 줄이기 원리: 글자는 선명하게, 용량만 줄이는 법</b><small>PDF가 왜 무거운지, 압축하면 무엇이 바뀌고 무엇이 그대로인지, 글자를 선명하게 두면서 100KB·500KB·1MB 같은 정해진 용량에 맞추는 방법을 원리부터 정리했어요.</small></a>
+      </div>
+</section>
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div class="foot-links"><a href="/ko/guides/">가이드</a> · <a href="/ko/about.html">서비스 소개</a> · <a href="/ko/terms.html">이용약관</a> · <a href="/ko/privacy.html">개인정보처리방침</a> · <a href="/ko/contact.html">문의하기</a></div>
+              <div>© 2026 SlimIO · 무료 PDF 도구</div>
+              <div>브라우저에서 처리 · 회원가입 없음</div>
+          </div>
+      </footer>
+</div>
+</body>
+</html>

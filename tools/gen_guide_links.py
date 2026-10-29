@@ -31,25 +31,28 @@ E_SIG = ["signature-image-for-online-forms", "india-exam-photo-signature-size", 
 E_PHOTO = ["kb-pixels-cm-dpi-explained", "india-exam-photo-signature-size", "us-visa-photo-requirements"]
 K_PDF = ["pdf-compression-explained", "iphone-mac-pdf-size", "mail-attachment-size-limit"]
 K_DOC = ["multiple-photos-to-pdf", "pdf-compression-explained", "mail-attachment-size-limit"]
-K_VISA = ["us-visa-photo-size", "china-visa-photo", "passport-photo-online"]
+K_VISA = ["us-visa-photo-size", "china-visa-photo", "india-visa-photo", "passport-photo-online"]
 
 GUIDES = {
     "en": {
         "default_pdf": E_PDF,
         "sign-pdf.html": E_SIG, "signature-image.html": ["ssc-signature-photo-size", *E_SIG],
         "bank-exam-photo-signature.html": ["india-exam-photo-signature-size", "ssc-signature-photo-size", "ugc-net-photo-signature-size", "signature-image-for-online-forms"],
-        "us-visa-photo.html": ["us-visa-photo-requirements", "kb-pixels-cm-dpi-explained", "india-exam-photo-signature-size"],
-        "compress-id-photo.html": E_PHOTO,
+        "us-visa-photo.html": ["us-visa-photo-requirements", "india-e-visa-photo-requirements", "kb-pixels-cm-dpi-explained"],
+        "compress-id-photo.html": [*E_PHOTO, "india-e-visa-photo-requirements"],
         **{p: E_PHOTO for p in gen_related.SIZE_IMG},
     },
     "ko": {
         "default_pdf": K_DOC,
         **{p: K_PDF for p in gen_related.SIZE_PDF}, "compress-pdf-for-email.html": ["mail-attachment-size-limit", "pdf-compression-explained", "iphone-mac-pdf-size"],
-        "sign-pdf.html": ["pdf-stamp-seal", "pdf-compression-explained", "mail-attachment-size-limit"],
+        "sign-pdf.html": ["pdf-sign-free", "pdf-stamp-seal", "pdf-compression-explained"],
+        "merge.html": ["gov24-pdf-save", "multiple-photos-to-pdf", "pdf-compression-explained"],
+        "jpg-to-pdf.html": ["phone-scan-to-pdf", "multiple-photos-to-pdf", "pdf-compression-explained"],
+        "receipt-to-pdf.html": ["phone-scan-to-pdf", "multiple-photos-to-pdf", "mail-attachment-size-limit"],
         "signature-image.html": ["pdf-stamp-seal", "exam-application-photo-size", "resume-photo-size"],
         "us-visa-photo.html": K_VISA,
-        "compress-id-photo.html": ["exam-application-photo-size", "passport-photo-online", "resume-photo-size",
-                                   "university-application-photo", "driver-license-photo", "kuksiwon-photo"],
+        "compress-id-photo.html": ["exam-application-photo-size", "passport-photo-online", "mobile-id-photo", "resume-photo-size",
+                                   "university-application-photo", "driver-license-photo", "kuksiwon-photo", "youth-id-photo"],
         "compress-image.html": ["exam-application-photo-size", "computer-certificate-photo-size", "language-test-photo"],
         "compress-image-to-20kb.html": ["exam-application-photo-size", "resume-photo-size", "computer-certificate-photo-size"],
         "compress-image-to-50kb.html": ["exam-application-photo-size", "university-application-photo", "kuksiwon-photo"],

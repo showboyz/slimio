@@ -1,6 +1,6 @@
 {
  "/": [
-  "0b2743d41238bd2e",
+  "4954f84dd077984b",
   "2026-10-29"
  ],
  "/about.html": [
@@ -16,8 +16,8 @@
   "2026-10-28"
  ],
  "/compress-id-photo.html": [
-  "615cead88cdcc64d",
-  "2026-10-27"
+  "cef05c26bfc0e242",
+  "2026-10-29"
  ],
  "/compress-image-to-100kb.html": [
   "bdd155be7399dc0e",
@@ -80,12 +80,16 @@
   "2026-10-27"
  ],
  "/guides/": [
-  "762afba9f162a7a8",
-  "2026-10-28"
+  "8d4482ad7bd83e0e",
+  "2026-10-29"
  ],
  "/guides/compress-pdf-without-losing-quality.html": [
   "ca27eb57d689f282",
   "2026-10-18"
+ ],
+ "/guides/india-e-visa-photo-requirements.html": [
+  "e67560b65dc75a91",
+  "2026-10-29"
  ],
  "/guides/india-exam-photo-signature-size.html": [
   "d508bc34083669a0",
@@ -120,7 +124,7 @@
   "2026-10-27"
  ],
  "/ko/": [
-  "eca15cfa81c1d52c",
+  "02cb0d8bad8599ba",
   "2026-10-29"
  ],
  "/ko/about.html": [
@@ -132,8 +136,8 @@
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "064d3fb1a6d33075",
-  "2026-10-27"
+  "a9b89f86a1b0c989",
+  "2026-10-29"
  ],
  "/ko/compress-image-to-100kb.html": [
   "e4dff29fe85a3da0",
@@ -196,76 +200,100 @@
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "367ed8cc72b905ea",
-  "2026-10-21"
+  "09311c77d5dd5451",
+  "2026-10-29"
  ],
  "/ko/guides/china-visa-photo.html": [
-  "1b40386d6a80fe0b",
-  "2026-10-21"
+  "f9ae777028f2d817",
+  "2026-10-29"
  ],
  "/ko/guides/computer-certificate-photo-size.html": [
-  "c1491ddda31ef752",
-  "2026-10-20"
+  "1ea3cde8cd40176d",
+  "2026-10-29"
  ],
  "/ko/guides/driver-license-photo.html": [
   "643b66be9cbbf621",
   "2026-10-18"
  ],
  "/ko/guides/exam-application-photo-size.html": [
-  "7ddef01efc0b992d",
-  "2026-10-21"
+  "b9185ec634a5bb36",
+  "2026-10-29"
+ ],
+ "/ko/guides/gov24-pdf-save.html": [
+  "536d5d1def69b55d",
+  "2026-10-29"
+ ],
+ "/ko/guides/india-visa-photo.html": [
+  "14647a3a8135efe2",
+  "2026-10-29"
  ],
  "/ko/guides/iphone-mac-pdf-size.html": [
-  "cfa3cc20f0a47d82",
-  "2026-10-18"
+  "156fd2c03efba564",
+  "2026-10-29"
  ],
  "/ko/guides/kuksiwon-photo.html": [
   "c905c2151e4856a0",
   "2026-10-21"
  ],
  "/ko/guides/language-test-photo.html": [
-  "a41a4c55ea38259f",
-  "2026-10-21"
+  "ece17ebee5b6b9d3",
+  "2026-10-29"
  ],
  "/ko/guides/mail-attachment-size-limit.html": [
-  "a29f59d911ab6ec4",
-  "2026-10-18"
+  "7ecf6fc8f3c2c645",
+  "2026-10-29"
+ ],
+ "/ko/guides/mobile-id-photo.html": [
+  "86ac232a381c70c8",
+  "2026-10-29"
  ],
  "/ko/guides/multiple-photos-to-pdf.html": [
-  "f055723b9e4aa998",
-  "2026-10-18"
+  "9cdc74f3606369bb",
+  "2026-10-29"
  ],
  "/ko/guides/passport-photo-online.html": [
-  "0a8b54bbf2ca8fb7",
-  "2026-10-20"
+  "ad9d43e3bf582947",
+  "2026-10-29"
  ],
  "/ko/guides/pdf-compression-explained.html": [
   "7215d825bc404457",
   "2026-10-18"
  ],
+ "/ko/guides/pdf-sign-free.html": [
+  "ac54191be58d128c",
+  "2026-10-29"
+ ],
  "/ko/guides/pdf-stamp-seal.html": [
-  "1a999c9077f3b69c",
-  "2026-10-18"
+  "fe185576f6ccb803",
+  "2026-10-29"
+ ],
+ "/ko/guides/phone-scan-to-pdf.html": [
+  "c88aa39099a72771",
+  "2026-10-29"
  ],
  "/ko/guides/resume-photo-size.html": [
   "2418b922b100fe84",
   "2026-10-21"
  ],
  "/ko/guides/university-application-photo.html": [
-  "f255d44d84ccf9d3",
-  "2026-10-20"
+  "0a19880b5ee2c683",
+  "2026-10-29"
  ],
  "/ko/guides/us-visa-photo-size.html": [
-  "9d06383b5202751e",
-  "2026-10-18"
+  "942bcf16b1b4b52e",
+  "2026-10-29"
+ ],
+ "/ko/guides/youth-id-photo.html": [
+  "15418c8a0ac9076d",
+  "2026-10-29"
  ],
  "/ko/jpg-to-pdf.html": [
-  "477dae371f431b4c",
-  "2026-10-27"
+  "0b1e794ff5a6902a",
+  "2026-10-29"
  ],
  "/ko/merge.html": [
-  "d4db67ae86064e42",
-  "2026-10-27"
+  "30cc8c1c62645639",
+  "2026-10-29"
  ],
  "/ko/organize.html": [
   "b457604cee1a3782",
@@ -280,16 +308,16 @@
   "2026-10-11"
  ],
  "/ko/receipt-to-pdf.html": [
-  "6b79579d791da5eb",
-  "2026-10-27"
+  "8827ca9b65126146",
+  "2026-10-29"
  ],
  "/ko/rotate.html": [
   "6ce14163a245a5ad",
   "2026-10-27"
  ],
  "/ko/sign-pdf.html": [
-  "2561ce4db4d3556b",
-  "2026-10-27"
+  "ffd8d0a04f8b255c",
+  "2026-10-29"
  ],
  "/ko/signature-image.html": [
   "eaf40282fa63f1b5",
@@ -304,8 +332,8 @@
   "2026-09-29"
  ],
  "/ko/us-visa-photo.html": [
-  "5446338ce8473df9",
-  "2026-10-27"
+  "a5d412e11b466cf0",
+  "2026-10-29"
  ],
  "/ko/watermark.html": [
   "b22d03e4e4dd7210",
@@ -352,8 +380,8 @@
   "2026-09-29"
  ],
  "/us-visa-photo.html": [
-  "9e2adb5687b1920c",
-  "2026-10-27"
+  "ae0ad9b5a6f27363",
+  "2026-10-29"
  ],
  "/watermark.html": [
   "38c4bc61369027d3",
