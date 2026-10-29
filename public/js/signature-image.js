@@ -86,21 +86,11 @@ function drawnSignature() {
 let uploaded = null;   // decoded image, before cleanup
 let decoding = null;   // a big phone photo takes a moment; the button waits for it
 
+// iPhone HEIC photos go through the decoder in lib.js; the button says "Opening HEIC photos…" meanwhile
 async function decode(f) {
-     try {
-             if (window.createImageBitmap) return await createImageBitmap(f, { imageOrientation: "from-image" });
-     } catch (e) { /* fall back to <img> below */ }
-     const url = URL.createObjectURL(f);
-     try {
-             const img = new Image();
-             img.src = url;
-             await img.decode();
-             return img;
-     } catch (e) {
-             throw new Error(SlimIO.t("This image can't be opened in this browser (HEIC photos, for example). Save it as JPG and try again."));
-     } finally {
-             URL.revokeObjectURL(url);
-     }
+     const img = await SlimIO.openImage(f, $("pickimg").firstChild);
+     if (!img) throw new Error(SlimIO.t("This image can't be opened in this browser. Save it as JPG and try again."));
+     return img;
 }
 
 // Paper becomes transparent and the result is cropped to the ink. Brightness is judged
@@ -232,6 +222,7 @@ function dilate(mask, W, H, r) {
      return out;
 }
 
+SlimIO.acceptHeic($("sigfile"));   // computers: let the file dialog show HEIC files too (lib.js)
 $("pickimg").addEventListener("click", () => $("sigfile").click());
 $("sigfile").addEventListener("change", async () => {
      const f = $("sigfile").files[0];

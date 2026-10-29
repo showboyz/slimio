@@ -1,11 +1,11 @@
 {
  "/": [
-  "039e082d93e7bbe3",
+  "e7c64222c01bd037",
   "2026-10-29"
  ],
  "/about.html": [
-  "1f8f42d8c5dd09df",
-  "2026-10-27"
+  "43ee273fd60721dc",
+  "2026-10-29"
  ],
  "/add-page-numbers.html": [
   "dc277c3eb8e66efa",
@@ -16,28 +16,28 @@
   "2026-10-28"
  ],
  "/compress-id-photo.html": [
-  "cef05c26bfc0e242",
+  "ec7cbfd2d72888dd",
   "2026-10-29"
  ],
  "/compress-image-to-100kb.html": [
-  "bdd155be7399dc0e",
-  "2026-10-27"
+  "828d4a2421b9f0bc",
+  "2026-10-29"
  ],
  "/compress-image-to-200kb.html": [
-  "41a255e98a923ad3",
-  "2026-10-27"
+  "d9906e7056cf4d84",
+  "2026-10-29"
  ],
  "/compress-image-to-20kb.html": [
-  "b442b97673a72617",
-  "2026-10-27"
+  "c301d83f1873cd38",
+  "2026-10-29"
  ],
  "/compress-image-to-50kb.html": [
-  "031dcc96fde3596c",
-  "2026-10-27"
+  "d1496718891c6518",
+  "2026-10-29"
  ],
  "/compress-image.html": [
-  "a5e0fd64d77a585f",
-  "2026-10-27"
+  "8ce87432ea6c88f9",
+  "2026-10-29"
  ],
  "/compress-pdf-for-email.html": [
   "700df16ceca01388",
@@ -119,45 +119,49 @@
   "8d87a19f96467d96",
   "2026-10-18"
  ],
+ "/heic-to-jpg.html": [
+  "d2c7a519fe09ab96",
+  "2026-10-29"
+ ],
  "/jpg-to-pdf.html": [
-  "1c643d39db11055f",
-  "2026-10-27"
+  "a34ff6c854bdeb2a",
+  "2026-10-29"
  ],
  "/ko/": [
-  "9755caf839187e7b",
+  "70e27406b90a505e",
   "2026-10-29"
  ],
  "/ko/about.html": [
-  "5cd419c598fe7372",
-  "2026-10-27"
+  "ac95ceee64a3cd43",
+  "2026-10-29"
  ],
  "/ko/add-page-numbers.html": [
   "9e166fa632e3785a",
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "a9b89f86a1b0c989",
+  "75ac57679b80d3f9",
   "2026-10-29"
  ],
  "/ko/compress-image-to-100kb.html": [
-  "e4dff29fe85a3da0",
-  "2026-10-27"
+  "4665cfb2f02a2178",
+  "2026-10-29"
  ],
  "/ko/compress-image-to-200kb.html": [
-  "88500f792d3906ee",
-  "2026-10-27"
+  "3886f5e04d3ad568",
+  "2026-10-29"
  ],
  "/ko/compress-image-to-20kb.html": [
-  "fff9a060db9c9ff1",
-  "2026-10-27"
+  "dedb9c71dd545c70",
+  "2026-10-29"
  ],
  "/ko/compress-image-to-50kb.html": [
-  "f13885775223da54",
-  "2026-10-27"
+  "0efc765278fb65bd",
+  "2026-10-29"
  ],
  "/ko/compress-image.html": [
-  "b8f81d7b863ae5eb",
-  "2026-10-27"
+  "00f76a8f0b283545",
+  "2026-10-29"
  ],
  "/ko/compress-pdf-for-email.html": [
   "3478467f0c7eb49d",
@@ -220,7 +224,7 @@
   "2026-10-29"
  ],
  "/ko/guides/gov24-pdf-save.html": [
-  "536d5d1def69b55d",
+  "bf77dfdef50faa39",
   "2026-10-29"
  ],
  "/ko/guides/india-visa-photo.html": [
@@ -232,8 +236,8 @@
   "2026-10-29"
  ],
  "/ko/guides/kuksiwon-photo.html": [
-  "c905c2151e4856a0",
-  "2026-10-21"
+  "767426ea8c53b85d",
+  "2026-10-29"
  ],
  "/ko/guides/language-test-photo.html": [
   "ece17ebee5b6b9d3",
@@ -287,8 +291,12 @@
   "15418c8a0ac9076d",
   "2026-10-29"
  ],
+ "/ko/heic-to-jpg.html": [
+  "96c029e7ff937860",
+  "2026-10-29"
+ ],
  "/ko/jpg-to-pdf.html": [
-  "0b1e794ff5a6902a",
+  "49e8c72e84bb7f0d",
   "2026-10-29"
  ],
  "/ko/merge.html": [
@@ -336,7 +344,7 @@
   "2026-10-29"
  ],
  "/ko/us-visa-photo.html": [
-  "a5d412e11b466cf0",
+  "bb27291d1eb2b5c8",
   "2026-10-29"
  ],
  "/ko/watermark.html": [
@@ -388,7 +396,7 @@
   "2026-10-29"
  ],
  "/us-visa-photo.html": [
-  "ae0ad9b5a6f27363",
+  "b76e2d1749e72578",
   "2026-10-29"
  ],
  "/watermark.html": [

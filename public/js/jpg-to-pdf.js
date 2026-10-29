@@ -48,13 +48,14 @@ function escapeHtml(s) {
 async function addFiles(list) {
     SlimIO.clearError();
     for (const f of list) {
-        if (!f.type.startsWith("image/")) { SlimIO.showError(SlimIO.t("Please choose image files (JPG, PNG, WebP…).")); return; }
+        if (!SlimIO.isImage(f)) { SlimIO.showError(SlimIO.t("Please choose image files (JPG, PNG, WebP…).")); return; }
         items.push({ name: f.name, size: f.size, file: f });
         render();
      }
     SlimIO.refreshStatus();
 }
 
+SlimIO.acceptHeic($("images"));   // computers: let the file dialog show HEIC files too (lib.js)
 drop.addEventListener("click", () => $("images").click());
 $("images").addEventListener("change", (e) => addFiles(e.target.files));
 drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
@@ -171,12 +172,8 @@ async function fitToLimit(limit) {
     }
 }
 
-// Decoded with the EXIF rotation applied, so phone photos stand the right way up
-async function decode(file) {
-    try { if (window.createImageBitmap) return await createImageBitmap(file, { imageOrientation: "from-image" }); } catch (e) { /* <img> below */ }
-    const url = URL.createObjectURL(file);
-    try { const img = new Image(); img.src = url; await img.decode(); return img; } catch (e) { return null; } finally { URL.revokeObjectURL(url); }
-}
+// Decoded with the EXIF rotation applied, so phone photos stand the right way up; HEIC included (lib.js)
+function decode(file) { return SlimIO.openImage(file, goBtn); }
 
 function draw(img, side) {
     const s = Math.min(1, side / Math.max(img.width, img.height));

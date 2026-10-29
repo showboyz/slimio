@@ -50,7 +50,7 @@
         {"@type": "Question", "name": "Are my photos uploaded to a server?", "acceptedAnswer": {"@type": "Answer", "text": "No. Compression happens entirely in your browser, so your photos never leave your device."}},
         {"@type": "Question", "name": "Does compressing remove location data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Photos are re-encoded, which drops EXIF metadata such as GPS location, camera model and date taken."}},
         {"@type": "Question", "name": "Can I make an ID or passport photo the right size?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The 3×4 cm and 3.5×4.5 cm presets crop the photo to the right shape — drag the frame to choose what's kept — and scale it to the pixel size most forms ask for."}},
-        {"@type": "Question", "name": "Why won't my iPhone photo open?", "acceptedAnswer": {"@type": "Answer", "text": "iPhone photos are often HEIC files, which many browsers can't open. Share the photo as JPG, or set Camera → Formats → Most Compatible on the iPhone, and try again."}}
+        {"@type": "Question", "name": "Do iPhone HEIC photos work?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Add them as they are: HEIC photos are opened right in your browser and saved as JPG. The first one takes a few seconds longer while the decoder loads. To turn many HEIC photos into JPG without changing their size, use HEIC to JPG."}}
       ]
 }
 </script>
@@ -105,7 +105,7 @@
            <div class="drop" id="drop">
                <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
                <div class="drop-title">Drop images here</div>
-               <div class="drop-or">or click to browse (JPG, PNG, WebP…)</div>
+               <div class="drop-or">or click to browse (JPG, PNG, HEIC…)</div>
                <div class="drop-sub">Images never leave your device. Location data (EXIF) is removed.</div>
            </div>
 
@@ -258,8 +258,8 @@
           <p>Yes. The 3×4 cm and 3.5×4.5 cm presets crop the photo to the right shape — drag the frame to choose what's kept — and scale it to the pixel size most forms ask for.</p>
       </details>
       <details>
-          <summary>Why won't my iPhone photo open?</summary>
-          <p>iPhone photos are often HEIC files, which many browsers can't open. Share the photo as JPG, or set Camera → Formats → Most Compatible on the iPhone, and try again.</p>
+          <summary>Do iPhone HEIC photos work?</summary>
+          <p>Yes. Add them as they are: HEIC photos are opened right in your browser and saved as JPG. The first one takes a few seconds longer while the decoder loads. To turn many HEIC photos into JPG without changing their size, use HEIC to JPG.</p>
       </details>
 </section>
 
@@ -318,6 +318,7 @@
           <a class="tcard" href="/us-visa-photo.html"><span class="ico">🇺🇸</span><span class="tx"><b>US Visa Photo</b><small>600×600 for the DS-160, under 240KB</small></span></a>
           <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
           <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>Bank Exam Documents</b><small>IBPS / SBI photo, signature, thumb, declaration</small></span></a>
+          <a class="tcard" href="/heic-to-jpg.html"><span class="ico">🔁</span><span class="tx"><b>HEIC to JPG</b><small>iPhone photos as JPG, many at once</small></span></a>
       </div>
       <p class="more-sub">Compress a photo to a set size</p>
       <div class="sizes"><a href="/compress-image-to-20kb.html" title="Compress photo to 20KB">20KB</a><a href="/compress-image-to-50kb.html" title="Compress photo to 50KB">50KB</a><a href="/compress-image-to-100kb.html" title="Compress photo to 100KB">100KB</a><a href="/compress-image-to-200kb.html" title="Compress photo to 200KB">200KB</a></div>
@@ -336,8 +337,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-<script defer src="/lib.js?v=3624c59a"></script>
+<script defer src="/lib.js?v=26ace182"></script>
 <script defer src="/js/specs.js?v=c011b942"></script>
-<script type="module" src="/js/compress-image.js?v=645a12d2"></script>
+<script type="module" src="/js/compress-image.js?v=cab45f24"></script>
 </body>
 </html>

@@ -36,10 +36,11 @@ TOOLS = {
     "us-visa-photo": ("/us-visa-photo.html", "🇺🇸", ("US Visa Photo", "600×600 for the DS-160, under 240KB"), ("미국 비자 사진", "DS-160용 600×600 · 240KB")),
     "bank-exam": ("/bank-exam-photo-signature.html", "🏦", ("Bank Exam Documents", "IBPS / SBI photo, signature, thumb, declaration"), ("인도 은행 시험 서류", "IBPS / SBI 사진·서명·지문·서약문")),
     "compress-image": ("/compress-image.html", "📸", ("Compress Image", "Shrink photos to any KB"), ("사진 용량 줄이기", "사진을 원하는 KB로")),
+    "heic-to-jpg": ("/heic-to-jpg.html", "🔁", ("HEIC to JPG", "iPhone photos as JPG, many at once"), ("HEIC → JPG", "아이폰 사진을 JPG로, 여러 장 한 번에")),
 }
 PDF_TOOLS = ["compress", "merge", "split", "delete-pages", "rotate", "organize", "add-page-numbers",
              "watermark", "sign-pdf", "unlock-pdf", "pdf-to-jpg", "jpg-to-pdf", "receipt-to-pdf"]
-PHOTO_TOOLS = ["compress-id-photo", "us-visa-photo", "signature-image", "bank-exam", "compress-image"]
+PHOTO_TOOLS = ["compress-id-photo", "us-visa-photo", "signature-image", "bank-exam", "compress-image", "heic-to-jpg"]
 
 # Feature banners: a tool from the *other* category, with a real example image.
 FEATURES = {
@@ -79,6 +80,7 @@ PAGES = {
     "signature-image.html": ("signature-image", "id", ["sign-pdf", "compress-id-photo", "compress"]),
     "bank-exam-photo-signature.html": ("bank-exam", "id", ["signature-image", "compress-id-photo", "compress"]),
     "us-visa-photo.html": ("us-visa-photo", "sig", ["signature-image", "compress-id-photo", "jpg-to-pdf"]),
+    "heic-to-jpg.html": ("heic-to-jpg", "id", ["compress-image", "jpg-to-pdf", "compress-id-photo"]),
 }
 
 EN_TEXT = {"next": "Next, you might want to…", "more": "More free tools", "pdf": "PDF tools", "photo": "Photo &amp; signature tools",

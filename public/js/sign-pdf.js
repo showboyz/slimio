@@ -343,21 +343,11 @@ async function typedSignature() {
 
 let uploaded = null;   // decoded image, before background removal
 
+// iPhone HEIC photos go through the decoder in lib.js; the button says "Opening HEIC photos…" meanwhile
 async function decode(f) {
-     try {
-             if (window.createImageBitmap) return await createImageBitmap(f, { imageOrientation: "from-image" });
-     } catch (e) { /* fall back to <img> below */ }
-     const url = URL.createObjectURL(f);
-     try {
-             const img = new Image();
-             img.src = url;
-             await img.decode();
-             return img;
-     } catch (e) {
-             throw new Error(SlimIO.t("This image can't be opened in this browser (HEIC photos, for example). Save it as JPG and try again."));
-     } finally {
-             URL.revokeObjectURL(url);
-     }
+     const img = await SlimIO.openImage(f, $("pickimg"));
+     if (!img) throw new Error(SlimIO.t("This image can't be opened in this browser. Save it as JPG and try again."));
+     return img;
 }
 
 // Near-white pixels become transparent (with a soft edge), then crop to the ink.
@@ -431,6 +421,7 @@ function showUpload() {
      $("upimg").src = uploaded ? uploadCanvas().toDataURL("image/png") : "";
 }
 
+SlimIO.acceptHeic($("sigfile"));   // computers: let the file dialog show HEIC files too (lib.js)
 $("pickimg").addEventListener("click", () => $("sigfile").click());
 $("sigfile").addEventListener("change", async () => {
      const f = $("sigfile").files[0];

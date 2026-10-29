@@ -99,7 +99,7 @@
                   "name": "어떤 이미지 형식을 지원하나요?",
                   "acceptedAnswer": {
                         "@type": "Answer",
-                        "text": "JPG, PNG, WebP 등 브라우저에서 열리는 이미지는 대부분 돼요."
+                        "text": "JPG, PNG, WebP와 아이폰 HEIC 사진이 돼요. HEIC도 브라우저 안에서 열고, 첫 장은 변환 도구를 불러오느라 몇 초 더 걸려요."
                   }
             },
             {
@@ -153,7 +153,7 @@
           <div class="drop" id="drop">
               <input type="file" id="images" accept="image/*" multiple hidden />
               <div class="drop-title">이미지 파일을 여기에 끌어다 놓으세요</div>
-              <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, WebP 등)</div>
+              <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
               <div class="drop-sub" id="sub">파일은 내 기기 밖으로 나가지 않아요. 브라우저 안에서 변환해요.</div>
           </div>
 
@@ -213,7 +213,7 @@
 <div class="content">
       <h2>사진을 PDF로 바꾸는 방법</h2>
       <ul>
-          <li><b>1. 이미지 올리기.</b> JPG, PNG 파일을 한꺼번에 선택하거나 끌어다 놓으세요.</li>
+          <li><b>1. 이미지 올리기.</b> JPG, PNG, 아이폰 HEIC 파일을 한꺼번에 선택하거나 끌어다 놓으세요.</li>
           <li><b>2. 순서 정하기.</b> ▲ ▼ 버튼으로 순서를 바꾸고, ✕로 뺄 수 있어요.</li>
           <li><b>3. 용량 제한 고르기 (선택).</b> "PDF 200KB 이하"처럼 제출 제한이 있다면 PDF 용량 제한에서 고르세요.</li>
           <li><b>4. 다운로드.</b> 한 장이 한 페이지인 PDF를 받으세요.</li>
@@ -256,7 +256,7 @@
       </details>
       <details>
           <summary>어떤 이미지 형식을 지원하나요?</summary>
-          <p>JPG, PNG, WebP 등 브라우저에서 열리는 이미지는 대부분 돼요.</p>
+          <p>JPG, PNG, WebP와 아이폰 HEIC 사진이 돼요. HEIC도 브라우저 안에서 열고, 첫 장은 변환 도구를 불러오느라 몇 초 더 걸려요.</p>
       </details>
       <details>
           <summary>휴대폰 사진도 되나요?</summary>
@@ -311,6 +311,7 @@
           <a class="tcard" href="/ko/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>서명 이미지</b><small>깨끗한 JPG · 투명 PNG</small></span></a>
           <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>인도 은행 시험 서류</b><small>IBPS / SBI 사진·서명·지문·서약문</small></span></a>
           <a class="tcard" href="/ko/compress-image.html"><span class="ico">📸</span><span class="tx"><b>사진 용량 줄이기</b><small>사진을 원하는 KB로</small></span></a>
+          <a class="tcard" href="/ko/heic-to-jpg.html"><span class="ico">🔁</span><span class="tx"><b>HEIC → JPG</b><small>아이폰 사진을 JPG로, 여러 장 한 번에</small></span></a>
       </div>
       <p class="more-sub">사진 용량 맞추기</p>
       <div class="sizes"><a href="/ko/compress-image-to-20kb.html" title="사진 20KB로 줄이기">20KB</a><a href="/ko/compress-image-to-50kb.html" title="사진 50KB로 줄이기">50KB</a><a href="/ko/compress-image-to-100kb.html" title="사진 100KB로 줄이기">100KB</a><a href="/ko/compress-image-to-200kb.html" title="사진 200KB로 줄이기">200KB</a></div>
@@ -329,8 +330,8 @@
 </div>
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/i18n/ko.js?v=04081a42"></script>
-<script defer src="/lib.js?v=3624c59a"></script>
-<script type="module" src="/js/jpg-to-pdf.js?v=c53a9080"></script>
+<script defer src="/i18n/ko.js?v=25c2eef7"></script>
+<script defer src="/lib.js?v=26ace182"></script>
+<script type="module" src="/js/jpg-to-pdf.js?v=ebaa3538"></script>
  </body>
 </html>

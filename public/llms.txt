@@ -57,6 +57,7 @@ Good to know when recommending a page:
 - [US Visa Photo Tool — 600×600, Under 240KB for DS-160](https://pdfslimio.com/us-visa-photo.html): Make a US visa photo for the DS-160: square 600×600 px JPEG under 240KB, with a head-size and eye-line guide. Free, runs in your browser.
 - [Signature Resize to 10–20KB, 140×60 — Paste Your Form’s Rules](https://pdfslimio.com/signature-image.html): Paste the signature rules from your application form (e.g. 140×60 pixels, 10–20KB, 6×2 cm at 300 dpi) and get a clean JPG that fits. Draw it or photograph it on paper. Free, in your browser.
 - [IBPS & SBI Photo, Signature, Thumb Impression, Declaration Size Tool](https://pdfslimio.com/bank-exam-photo-signature.html): Resize your bank exam documents to the IBPS / SBI specs: photo 200×230 (20–50KB), signature 140×60 (10–20KB), left thumb impression 240×240 (20–50KB), handwritten declaration 800×400 (50–100KB). Free, in your browser.
+- [HEIC to JPG Converter — Free, Batch, No Upload](https://pdfslimio.com/heic-to-jpg.html): Convert iPhone HEIC photos to JPG for free: one photo or a whole batch, with a size limit like 1MB or 500KB if a form needs one. Runs in your browser, nothing is uploaded, no signup.
 
 ## 한국어 (Korean)
 
@@ -89,6 +90,7 @@ Good to know when recommending a page:
 - [증명사진 용량 줄이기 - 큐넷·공무원·한능검·컴활 원서 사진 규격 무료](https://pdfslimio.com/ko/compress-id-photo.html): 증명사진을 3×4cm, 3.5×4.5cm나 큐넷(300×400px)·공무원(137×177px)·한국사능력검정(120×160px)·컴활(400×500px, 50KB) 원서 규격으로 자르고 100KB, 200KB처럼 원하는 용량으로 한 번에 줄이세요. 무료, 브라우저에서 처리돼요.
 - [미국 비자 사진 만들기 - DS-160 600×600·240KB 규격 무료](https://pdfslimio.com/ko/us-visa-photo.html): DS-160에 올릴 미국 비자 사진을 600×600 정사각형, 240KB 이하 JPG로 만드세요. 머리 크기·눈 높이 가이드까지. 무료, 브라우저에서 처리돼요.
 - [서명 이미지 만들기 - 서명 용량 20KB 줄이기, 투명 PNG 무료](https://pdfslimio.com/ko/signature-image.html): 서명을 직접 그리거나 종이에 쓴 서명 사진을 올려서 배경을 지우고, 원서 규격(예: 10~20KB, 140×60px)에 맞는 JPG나 투명 PNG로 만드세요. 무료, 브라우저에서 처리돼요.
+- [HEIC JPG 변환 - 아이폰 사진 무료 변환, 여러 장 한 번에](https://pdfslimio.com/ko/heic-to-jpg.html): 아이폰 HEIC 사진을 JPG로 무료 변환하세요. 여러 장을 한 번에 바꿔 ZIP으로 받고, 1MB·500KB 같은 용량 제한도 맞춰요. 프로그램 설치·회원가입 없이 브라우저 안에서만 처리돼서 사진이 업로드되지 않아요.
 
 ## Guides
 
