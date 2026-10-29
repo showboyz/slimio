@@ -46,6 +46,7 @@ GUIDES = {
         "default_pdf": K_DOC,
         **{p: K_PDF for p in gen_related.SIZE_PDF}, "compress-pdf-for-email.html": ["mail-attachment-size-limit", "pdf-compression-explained", "iphone-mac-pdf-size"],
         "sign-pdf.html": ["pdf-sign-free", "pdf-stamp-seal", "pdf-compression-explained"],
+        "unlock-pdf.html": ["gov24-pdf-save", "pdf-compression-explained", "mail-attachment-size-limit"],
         "merge.html": ["gov24-pdf-save", "multiple-photos-to-pdf", "pdf-compression-explained"],
         "jpg-to-pdf.html": ["phone-scan-to-pdf", "multiple-photos-to-pdf", "pdf-compression-explained"],
         "receipt-to-pdf.html": ["phone-scan-to-pdf", "multiple-photos-to-pdf", "mail-attachment-size-limit"],

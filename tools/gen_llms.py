@@ -11,7 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from gen_ko import PAGES, EN_ONLY, SIZE_PAGES, ROOT, SITE, en_path, ko_path
 
 PDF_TOOLS = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
-             "add-page-numbers.html", "watermark.html", "sign-pdf.html", "pdf-to-jpg.html", "jpg-to-pdf.html", "receipt-to-pdf.html"]
+             "add-page-numbers.html", "watermark.html", "sign-pdf.html", "unlock-pdf.html", "pdf-to-jpg.html", "jpg-to-pdf.html", "receipt-to-pdf.html"]
 PHOTO_TOOLS = ["compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
                "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
                "us-visa-photo.html", "signature-image.html", "bank-exam-photo-signature.html"]

@@ -69,15 +69,24 @@ const SlimIO = (() => {
    }
 
    // Issued certificates often come with an open password or with editing locked. pdf-lib won't
-   // touch either ("is encrypted") and pdf.js asks for the password, so say it in plain words.
+   // touch either ("is encrypted") and pdf.js asks for the password, so say it in plain words,
+   // and showError() adds a link to Unlock PDF, which takes the lock off.
+   const LOCKED = ["This PDF needs a password to open. Take the password off with Unlock PDF (you'll need to know it), then add the unlocked copy.",
+      "This PDF is locked (a password or an editing lock), so it can't be changed here. Take the lock off with Unlock PDF, then add the unlocked copy."];
    function lockedPdf(e, name) {
       const m = String((e && e.message) || e || "");
-      const msg = (e && e.name === "PasswordException") || /password/i.test(m)
-         ? t("This PDF needs a password to open. Open it with the password, save a copy without one, and add that copy.")
-         : /is encrypted/i.test(m)
-         ? t("This PDF is locked (a password or an editing lock), so it can't be changed here. Submit it as it is, or get a copy without the lock.")
+      const msg = (e && e.name === "PasswordException") || /password/i.test(m) ? t(LOCKED[0])
+         : /is encrypted/i.test(m) ? t(LOCKED[1])
          : "";
       return msg && name ? `“${name}”: ${msg}` : msg;
+   }
+   function unlockLink(el) {
+      if (!el || el.querySelector(".unlock-link") || !LOCKED.some((k) => el.textContent.includes(t(k)))) return;
+      const a = document.createElement("a");
+      a.className = "unlock-link";
+      a.href = (lang === "ko" ? "/ko/" : "/") + "unlock-pdf.html";
+      a.textContent = t("Unlock PDF →");
+      el.append(" ", a);
    }
    function pdfError(key, e, vars) {
       return lockedPdf(e, vars && vars.name) || t(key, { ...vars, msg: e.message });
@@ -88,6 +97,7 @@ const SlimIO = (() => {
       if (!el) return;
       el.textContent = msg;
       el.style.display = "block";
+      unlockLink(el);
       log(msg);
       reportError("shown", msg);
    }
@@ -299,7 +309,7 @@ const SlimIO = (() => {
 
    return {
       $, t, pages, lang, debug, formatSize, base64ToBytes, toBlob, download,
-      showError, clearError, log, isPdf, notPdf, lockedPdf, pdfError,
+      showError, clearError, log, isPdf, notPdf, lockedPdf, unlockLink, pdfError,
       refreshStatus, updateLimit, consume, bindProgress, track, event, reportError, trackDownload, inputAdded, apiHeaders, page2user,
       reveal, inApp,
    };

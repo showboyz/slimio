@@ -42,6 +42,7 @@ const MIME = {
     ".txt": "text/plain; charset=utf-8",
     ".webp": "image/webp",
     ".ico": "image/x-icon",
+    ".wasm": "application/wasm",   // qpdf for Unlock PDF (public/vendor)
 };
 
 // Daily free uses, counted per browser (a random ID the page keeps in localStorage and sends

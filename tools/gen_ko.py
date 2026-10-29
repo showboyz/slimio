@@ -26,7 +26,7 @@ SIZE_PAGES = ["compress-pdf-to-50kb.html", "compress-pdf-to-100kb.html", "compre
               "compress-pdf-to-2mb.html", "compress-pdf-for-email.html"]
 PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
-         "sign-pdf.html", "receipt-to-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
+         "sign-pdf.html", "unlock-pdf.html", "receipt-to-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
          "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
          "us-visa-photo.html", "signature-image.html"] + SIZE_PAGES
 
@@ -188,6 +188,7 @@ KO["index.html"] = dict(
         ("<h3>Page Numbers</h3><p>Number every page of a PDF</p>", "<h3>페이지 번호</h3><p>모든 페이지에 쪽번호</p>"),
         ("<h3>Watermark PDF</h3><p>Stamp text on every page</p>", "<h3>워터마크</h3><p>대외비 · 사본 문구 넣기</p>"),
         ("<h3>Sign PDF</h3><p>Draw, type or upload a signature</p>", "<h3>PDF 서명</h3><p>그리기 · 이름 · 도장으로 서명</p>"),
+        ("<h3>Unlock PDF</h3><p>Remove a password you know</p>", "<h3>PDF 비밀번호 해제</h3><p>아는 암호를 풀어 잠금 없는 사본으로</p>"),
         ("<h3>Compress Image</h3><p>Shrink JPG and PNG photos to any size</p>", "<h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p>"),
         ("<h3>ID Photo</h3><p>Crop to passport or ID size, under the KB limit</p>", "<h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p>"),
         ("<h3>US Visa Photo</h3><p>600×600 for the DS-160, under 240KB</p>", "<h3>미국 비자 사진</h3><p>DS-160용 600×600 · 240KB 이하</p>"),
@@ -1226,6 +1227,59 @@ KO["compress-image-to-200kb.html"] = dict(
         ("색이 바뀌지는 않나요?", "아니요. 색은 그대로이고, 용량을 줄이려고 아주 세밀한 부분만 조금 줄어들어요."),
         ("투명 배경을 유지할 수 있나요?", "저장 형식에서 WebP를 고르세요. JPG는 투명 배경을 지원하지 않아서 흰색으로 바뀌어요."),
         ("사진이 서버로 올라가나요?", "아니요. 모든 처리가 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
+    ],
+)
+
+KO["unlock-pdf.html"] = dict(
+    title="PDF 비밀번호 해제 - PDF 암호 풀기 무료, 업로드 없이 | SlimIO",
+    desc="열 때 암호를 묻는 PDF, 인쇄·복사가 막힌 PDF의 잠금을 무료로 풀어요. 알고 있는 암호를 넣으면 암호 없는 같은 PDF로 저장돼요. 휴대폰·아이폰에서도 되고, 파일과 암호는 서버로 올라가지 않아요.",
+    keywords="PDF 비밀번호 해제, PDF 암호 해제, PDF 비밀번호 풀기, PDF 암호 풀기, PDF 암호 제거, PDF 보안 해제, PDF 인쇄 제한 해제, PDF 비밀번호 해제 모바일, PDF 비밀번호 해제 아이폰",
+    short="PDF 비밀번호 해제 | SlimIO",
+    app_name="SlimIO PDF 비밀번호 해제",
+    app_desc="알고 있는 암호를 넣어 PDF의 열기 암호와 인쇄·복사·편집 제한을 푸는 무료 도구. 브라우저에서 처리돼 파일과 암호가 업로드되지 않아요.",
+    features=["PDF 열기 암호 해제", "인쇄·복사·편집 제한 해제", "글자·화질 그대로", "브라우저에서 처리 (업로드 없음)", "회원가입 없음"],
+    h1="PDF 비밀번호 해제,<br /><b>내용은 그대로.</b>",
+    lead="알고 있는 암호를 넣으면 암호 없는 같은 PDF로 저장해요. 인쇄·복사 제한도 함께 풀려요. 무료로, 설치 없이 브라우저에서 바로.",
+    ui=[
+        ('<a href="/unlock-pdf.html">Unlock PDF</a>', '<a href="/unlock-pdf.html">PDF 비밀번호 해제</a>'),
+        ("The file and the password never leave your device — the lock is removed in your browser.", "파일과 암호는 내 기기 밖으로 나가지 않아요. 브라우저 안에서 잠금을 풀어요."),
+        ('<label for="pw">Password</label>', '<label for="pw">암호</label>'),
+        ('<input type="checkbox" id="showpw" /> Show password</label>', '<input type="checkbox" id="showpw" /> 암호 보이기</label>'),
+        ("Bank, card and government PDFs usually open with a date of birth or a number named in the email or text that came with them.",
+         "카드사·은행 명세서는 보통 생년월일 6자리나 주민등록번호 앞자리, 정부24 전자증명서는 내려받을 때 직접 정한 6자리 숫자예요. 함께 받은 문자·메일 안내를 확인하세요."),
+        (">Unlock PDF</button>", ">PDF 비밀번호 해제</button>"),
+        ("<span>Open password</span>", "<span>열기 암호</span>"),
+        ("<span>Print, copy &amp; edit locks</span>", "<span>인쇄·복사·편집 제한</span>"),
+        ("<span>File size</span>", "<span>파일 크기</span>"),
+        ("This PDF has a digital signature. Unlocking rewrites the file, so a signature check will no longer show it as valid. If the place you submit to checks the signature, send the original, or download the document again without a password.",
+         "전자서명이 들어 있는 PDF예요. 암호를 풀면 파일이 다시 저장돼서 서명 확인(전자증명서의 '진본' 표시 등)을 통과하지 못해요. 제출처가 진본 여부를 확인한다면 원본을 내거나, 암호를 '미설정'으로 골라 다시 내려받으세요."),
+        ("↓ Download unlocked PDF", "↓ 해제된 PDF 다운로드"),
+    ],
+    content="""
+      <h2>PDF 비밀번호 해제하는 방법</h2>
+      <p>카드 명세서, 급여명세서, 정부24에서 내려받은 증명서처럼 열 때마다 암호를 묻는 PDF가 많아요. 그런데 회사·학교 제출 사이트나 합치기·압축 도구는 암호 걸린 파일을 받지 않는 경우가 많아요. 이 도구는 알고 있는 암호를 넣으면 암호 없는 사본을 만들어 줘요. 내 서류나 나에게 온 파일에 쓰는 도구예요.</p>
+      <ul>
+          <li><b>1. PDF 올리기.</b> 파일을 끌어다 놓거나 눌러서 고르세요. 어떤 잠금이 걸렸는지 먼저 알려 줘요.</li>
+          <li><b>2. 암호 입력.</b> 파일을 열 때 넣는 암호를 입력하세요. 암호 없이 열리고 인쇄·복사만 막힌 파일은 암호가 필요 없어요.</li>
+          <li><b>3. 다운로드.</b> 해제된 사본을 받으세요. 원본은 지우지 말고 함께 보관하세요.</li>
+      </ul>
+      <h3>어떤 암호를 넣어야 하나요?</h3>
+      <p>카드사·은행 명세서는 보통 생년월일 6자리나 주민등록번호 앞자리로 열려요. 메일이나 문자에 어떤 번호로 열리는지 안내가 함께 와요. 정부24 전자증명서는 내려받을 때 직접 정한 6자리 숫자예요. 그 숫자를 잊었다면 찾을 방법이 없어서, 암호를 '미설정'으로 골라 다시 내려받는 편이 빨라요.</p>
+      <h3>잠금은 두 종류예요</h3>
+      <p><b>열기 암호</b>는 파일을 아예 못 열게 막아요. 이 도구에 입력하는 게 이 암호예요. <b>권한 암호</b>는 파일은 열리지만 인쇄, 텍스트 복사, 편집을 막아요. 이런 파일은 합치기·서명·압축 도구에서도 거절되는 경우가 많아요. 두 가지 모두 풀 수 있고, 파일을 올리면 어떤 잠금인지 먼저 알려 줘요.</p>
+      <h3>내용은 다시 그리지 않아요</h3>
+      <p>암호화만 걷어 내고 페이지·글꼴·사진은 그대로 옮겨요. 그래서 글자도 그대로 선택되고, 화질도 용량도 거의 같아요. 해제한 뒤 용량을 줄이려면 <a href="/ko/">PDF 압축</a>을, 여러 서류를 하나로 내야 하면 <a href="/ko/merge.html">PDF 합치기</a>를 쓰세요.</p>
+      <h3>암호를 모르면 풀 수 없어요</h3>
+      <p>이 도구는 암호를 추측하거나 깨지 않아요. 암호를 모른다면 파일을 보낸 곳에 물어보세요.</p>
+      <h3>'진본' 표시가 있는 전자증명서</h3>
+      <p>정부24 전자증명서처럼 전자서명이 들어 있는 PDF는 원본 파일 그대로일 때만 '진본'으로 확인돼요. 암호를 풀면 파일이 다시 저장되기 때문에 서명 확인을 통과하지 못해요. 제출처가 진본 여부를 확인한다면 원본을 내거나, 처음부터 암호를 '미설정'으로 골라 다시 내려받으세요.</p>""",
+    faq_title="PDF 비밀번호 해제",
+    faq=[
+        ("PDF 비밀번호는 어떻게 해제하나요?", "PDF를 올리고 파일을 열 때 쓰는 암호를 입력한 뒤 'PDF 비밀번호 해제'를 누르세요. 암호 없는 같은 PDF가 저장돼서 바로 제출하거나 첨부할 수 있어요."),
+        ("암호를 모르는 PDF도 풀 수 있나요?", "아니요. 이 도구는 암호를 추측하거나 깨지 않아요. 파일을 보낸 곳에 물어보세요. 카드사·은행 명세서는 보통 메일이나 문자에 어떤 번호로 열리는지 적혀 있어요."),
+        ("휴대폰이나 아이폰에서도 되나요?", "네. 앱 설치 없이 휴대폰 브라우저(사파리, 크롬, 삼성 인터넷)에서 바로 돼요. 받은 파일은 보통 아이폰은 '파일' 앱의 다운로드 폴더, 갤럭시는 '내 파일'의 다운로드 폴더에 저장돼요."),
+        ("파일이나 암호가 서버로 올라가나요?", "아니요. 브라우저 안에서 잠금을 풀기 때문에 PDF도 암호도 서버로 보내지 않아요."),
+        ("해제하면 PDF 내용이 바뀌나요?", "암호화만 없어지고 페이지·글자·사진은 그대로예요. 다만 전자서명이 있는 PDF는 서명 확인('진본' 표시)을 통과하지 못하게 돼요."),
     ],
 )
 
