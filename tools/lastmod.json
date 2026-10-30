@@ -1,15 +1,15 @@
 {
  "/": [
-  "e7c64222c01bd037",
-  "2026-10-29"
+  "38e44d2371abaf02",
+  "2026-10-30"
  ],
  "/about.html": [
-  "43ee273fd60721dc",
-  "2026-10-29"
+  "c19bf2363436c000",
+  "2026-10-30"
  ],
  "/add-page-numbers.html": [
-  "dc277c3eb8e66efa",
-  "2026-10-27"
+  "c1c1245a5efd3895",
+  "2026-10-30"
  ],
  "/bank-exam-photo-signature.html": [
   "096ffb406d901c9b",
@@ -40,48 +40,48 @@
   "2026-10-30"
  ],
  "/compress-pdf-for-email.html": [
-  "700df16ceca01388",
-  "2026-10-27"
+  "4b3049a4595e3998",
+  "2026-10-30"
  ],
  "/compress-pdf-to-100kb.html": [
-  "8e6421493e1fb896",
-  "2026-10-27"
+  "83cafab4c708b00a",
+  "2026-10-30"
  ],
  "/compress-pdf-to-1mb.html": [
-  "cb5f5cc0929ad367",
-  "2026-10-27"
+  "5c0035f29bd6a8b6",
+  "2026-10-30"
  ],
  "/compress-pdf-to-200kb.html": [
-  "e8cb94cf2904f55b",
-  "2026-10-27"
+  "c58e035fb288ccfc",
+  "2026-10-30"
  ],
  "/compress-pdf-to-2mb.html": [
-  "bc5ab896bd7986ff",
-  "2026-10-27"
+  "e26220f192454f2c",
+  "2026-10-30"
  ],
  "/compress-pdf-to-300kb.html": [
-  "572e46f7d1d19083",
-  "2026-10-27"
+  "a00c570141050bb1",
+  "2026-10-30"
  ],
  "/compress-pdf-to-500kb.html": [
-  "d46579c24a9140ba",
-  "2026-10-27"
+  "2f47a56f3f6abafa",
+  "2026-10-30"
  ],
  "/compress-pdf-to-50kb.html": [
-  "7d12b07ce09753bc",
-  "2026-10-27"
+  "8d89f39b3a400847",
+  "2026-10-30"
  ],
  "/contact.html": [
   "43a780c125c77399",
   "2026-10-09"
  ],
  "/delete-pages.html": [
-  "8bb14238b051bc98",
-  "2026-10-27"
+  "657fdbe6271732a3",
+  "2026-10-30"
  ],
  "/guides/": [
-  "8d4482ad7bd83e0e",
-  "2026-10-29"
+  "6ed43dd95a6d3dcb",
+  "2026-10-30"
  ],
  "/guides/compress-pdf-without-losing-quality.html": [
   "ca27eb57d689f282",
@@ -98,6 +98,10 @@
  "/guides/kb-pixels-cm-dpi-explained.html": [
   "7d92524d1bc9f912",
   "2026-10-18"
+ ],
+ "/guides/pdf-size-test.html": [
+  "0d284eea63658e95",
+  "2026-10-30"
  ],
  "/guides/reduce-pdf-size-iphone-mac.html": [
   "ce37fffb54ad2136",
@@ -124,16 +128,16 @@
   "2026-10-29"
  ],
  "/jpg-to-pdf.html": [
-  "a34ff6c854bdeb2a",
-  "2026-10-29"
+  "bb709340341cc9a8",
+  "2026-10-30"
  ],
  "/ko/": [
-  "70e27406b90a505e",
-  "2026-10-29"
+  "fa6c7d7418062783",
+  "2026-10-30"
  ],
  "/ko/about.html": [
-  "ac95ceee64a3cd43",
-  "2026-10-29"
+  "0fb842055cd9ed62",
+  "2026-10-30"
  ],
  "/ko/add-page-numbers.html": [
   "9e166fa632e3785a",
@@ -168,32 +172,32 @@
   "2026-10-27"
  ],
  "/ko/compress-pdf-to-100kb.html": [
-  "c1cb9bff1b7eb1b2",
-  "2026-10-27"
+  "936c0bdd6856d4ce",
+  "2026-10-30"
  ],
  "/ko/compress-pdf-to-1mb.html": [
-  "43099d490ad5a119",
-  "2026-10-27"
+  "ad48507e88f6c10c",
+  "2026-10-30"
  ],
  "/ko/compress-pdf-to-200kb.html": [
-  "2b9c4ddd65e90dcb",
-  "2026-10-27"
+  "7d57fb0d442743f0",
+  "2026-10-30"
  ],
  "/ko/compress-pdf-to-2mb.html": [
-  "ba5da167a0ca5818",
-  "2026-10-27"
+  "4170bf73c9bf9230",
+  "2026-10-30"
  ],
  "/ko/compress-pdf-to-300kb.html": [
-  "1b50d010cdcadc06",
-  "2026-10-27"
+  "70c4d7645c58bfc4",
+  "2026-10-30"
  ],
  "/ko/compress-pdf-to-500kb.html": [
-  "4b6063d29a88d7a4",
-  "2026-10-27"
+  "d861e0c9ec056bd0",
+  "2026-10-30"
  ],
  "/ko/compress-pdf-to-50kb.html": [
-  "fbb95a705fcb833f",
-  "2026-10-27"
+  "c1b698aeacffa441",
+  "2026-10-30"
  ],
  "/ko/contact.html": [
   "d08040c004f8ad6d",
@@ -204,8 +208,8 @@
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "09311c77d5dd5451",
-  "2026-10-29"
+  "8f309aacb009a290",
+  "2026-10-30"
  ],
  "/ko/guides/china-visa-photo.html": [
   "f9ae777028f2d817",
@@ -266,6 +270,10 @@
  "/ko/guides/pdf-sign-free.html": [
   "ac54191be58d128c",
   "2026-10-29"
+ ],
+ "/ko/guides/pdf-size-test.html": [
+  "7a3d6481da6bdf11",
+  "2026-10-30"
  ],
  "/ko/guides/pdf-stamp-seal.html": [
   "fe185576f6ccb803",
@@ -352,28 +360,28 @@
   "2026-10-27"
  ],
  "/merge.html": [
-  "9bc30912e7a3ef0d",
-  "2026-10-27"
+  "40e3f2e357664340",
+  "2026-10-30"
  ],
  "/organize.html": [
-  "fdbd84e52d0a2ddb",
-  "2026-10-27"
+  "4fb7fae626a47942",
+  "2026-10-30"
  ],
  "/pdf-to-jpg.html": [
-  "390d8528d7234e87",
-  "2026-10-27"
+  "44e2645e7af5dff0",
+  "2026-10-30"
  ],
  "/privacy.html": [
   "8e38698cf37586e0",
   "2026-10-11"
  ],
  "/receipt-to-pdf.html": [
-  "8bc08608e69f46a1",
-  "2026-10-27"
+  "9229ed90cf5ef981",
+  "2026-10-30"
  ],
  "/rotate.html": [
-  "c4882bcc6b923301",
-  "2026-10-27"
+  "ec81ca34c76d30cd",
+  "2026-10-30"
  ],
  "/sign-pdf.html": [
   "6555db77255544c4",
@@ -384,23 +392,23 @@
   "2026-10-28"
  ],
  "/split.html": [
-  "1a5c9beaff3385c8",
-  "2026-10-27"
+  "2338f0f70e0582f4",
+  "2026-10-30"
  ],
  "/terms.html": [
   "0a3a5a2b616ed1f0",
   "2026-09-29"
  ],
  "/unlock-pdf.html": [
-  "e127da22635be67c",
-  "2026-10-29"
+  "84df123d14c5fea5",
+  "2026-10-30"
  ],
  "/us-visa-photo.html": [
   "a5d42a5bf68764c8",
   "2026-10-30"
  ],
  "/watermark.html": [
-  "38c4bc61369027d3",
-  "2026-10-27"
+  "f046a5ff231f594d",
+  "2026-10-30"
  ]
 }

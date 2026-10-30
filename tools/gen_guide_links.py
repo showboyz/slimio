@@ -26,10 +26,10 @@ TOOL_ANCHOR = "<!-- more-tools:start -->"
 HOME_ANCHOR = "<!-- pricing -->"
 
 # page -> guide slugs, in the order shown. Pages not listed here get no block.
-E_PDF = ["compress-pdf-without-losing-quality", "reduce-pdf-size-iphone-mac", "kb-pixels-cm-dpi-explained"]
+E_PDF = ["pdf-size-test", "compress-pdf-without-losing-quality", "reduce-pdf-size-iphone-mac", "kb-pixels-cm-dpi-explained"]
 E_SIG = ["signature-image-for-online-forms", "india-exam-photo-signature-size", "ugc-net-photo-signature-size"]
 E_PHOTO = ["kb-pixels-cm-dpi-explained", "india-exam-photo-signature-size", "us-visa-photo-requirements"]
-K_PDF = ["pdf-compression-explained", "iphone-mac-pdf-size", "mail-attachment-size-limit"]
+K_PDF = ["pdf-size-test", "pdf-compression-explained", "iphone-mac-pdf-size", "mail-attachment-size-limit"]
 K_DOC = ["multiple-photos-to-pdf", "pdf-compression-explained", "mail-attachment-size-limit"]
 K_VISA = ["us-visa-photo-size", "china-visa-photo", "india-visa-photo", "passport-photo-online"]
 

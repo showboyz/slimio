@@ -1,0 +1,42 @@
+{
+ "date": "2026-10-30",
+ "input": {
+  "bytes": 3781587,
+  "pages": 3
+ },
+ "pdf": {
+  "50kb": {
+   "bytes": 47636,
+   "mode": "images",
+   "dpi": 40
+  },
+  "100kb": {
+   "bytes": 97859,
+   "mode": "images",
+   "dpi": 50
+  },
+  "200kb": {
+   "bytes": 190736,
+   "mode": "images",
+   "dpi": 72
+  },
+  "300kb": {
+   "bytes": 286923,
+   "mode": "images",
+   "dpi": 90
+  },
+  "500kb": {
+   "bytes": 348300,
+   "mode": "kept"
+  },
+  "1mb": {
+   "bytes": 769644,
+   "mode": "images",
+   "dpi": 108
+  },
+  "2mb": {
+   "bytes": 1835527,
+   "mode": "kept"
+  }
+ }
+}
