@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+/* clip.html with window.SPEC set by render.mjs : 1080×1920 short built from a JSON list of scenes (see README.md).
+   Key content stays between y=180 and y=1450: Naver Clip covers the bottom with the caption and the right edge with buttons. */
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1920px;overflow:hidden;font-family:"Apple SD Gothic Neo",-apple-system,sans-serif;background:#111;color:#fff;position:relative}
+.bg{position:absolute;inset:0}
+.top{position:absolute;left:0;right:0;top:250px;text-align:center}
+em{font-style:normal}
+.tag{display:inline-block;color:#111;font-weight:900;font-size:40px;padding:10px 30px;border-radius:999px}
+.sc{position:absolute;left:70px;right:70px;top:420px;opacity:0;text-align:center}
+.cap{font-size:96px;font-weight:900;line-height:1.16;letter-spacing:-3px}
+.cap em,.big em{font-style:normal}
+.sub{font-size:46px;font-weight:700;color:#e7e5e4;margin-top:36px;line-height:1.45}
+.st{font-size:58px;font-weight:900;letter-spacing:-1px;margin-bottom:40px}
+.row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.1);border-radius:26px;padding:30px 38px;margin:20px 0;opacity:0;text-align:left;gap:24px}
+.row b{font-size:42px;color:#d6d3d1;font-weight:700;flex:none}
+.row span{font-size:52px;font-weight:900;text-align:right}
+.big .pre{font-size:52px;font-weight:700;color:#e7e5e4}
+.big .n{font-size:150px;font-weight:900;letter-spacing:-4px;margin:30px 0;line-height:1.05}
+.big .post{font-size:50px;font-weight:700;line-height:1.45}
+.shot{text-align:center}
+.shot .frame{display:inline-block;border-radius:30px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.6);position:relative;background:#fff}
+.shot img{display:block;max-width:720px;max-height:980px}
+.shot .lab{position:absolute;left:0;right:0;top:0;color:#111;font-weight:900;font-size:34px;padding:10px}
+.shot .note{font-size:40px;font-weight:700;margin-top:34px;color:#e7e5e4}
+.end{position:absolute;inset:0;opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:300px;color:#111}
+.end .a{font-size:84px;font-weight:900;line-height:1.2;letter-spacing:-2px}
+.end .b{font-size:48px;font-weight:700;margin-top:36px;line-height:1.55}
+.end .c{margin-top:64px;background:#111;font-size:66px;font-weight:900;padding:22px 48px;border-radius:26px}
+.end .d{margin-top:30px;font-size:40px;font-weight:700}
+.foot{position:absolute;left:0;right:0;top:1520px;text-align:center;font-size:34px;color:#a8a29e}
+</style></head><body><div class="bg" id="bg"></div><div class="top"><span class="tag" id="tag"></span></div><div id="stage"></div>
+<div class="foot" id="foot"></div>
+<script>
+const $=id=>document.getElementById(id);
+const A=(el,kf,start,dur,easing='cubic-bezier(.2,.8,.2,1)')=>el.animate(kf,{delay:start*1000,duration:dur*1000,fill:'forwards',easing});
+const em=(s,c)=>s.replace(/\*(.+?)\*/g,`<em style="color:${c}">$1</em>`);
+window.ready=Promise.resolve(window.SPEC).then(S=>{
+  const C=S.accent||'#facc15';
+  $('bg').style.background=`radial-gradient(circle at 50% 35%, ${S.bg2||'#3f3a36'} 0%, ${S.bg||'#1c1917'} 72%)`;
+  $('tag').textContent=S.tag; $('tag').style.background=C; $('foot').textContent=S.foot||'';
+  let t=0.2; const out=[];
+  for(const s of S.scenes){
+    const d=document.createElement('div'); d.className='sc';
+    if(s.type==='hook') d.innerHTML=`<div class="cap">${em(s.lines.join('<br>'),C)}</div>`+(s.sub?`<div class="sub">${em(s.sub,C)}</div>`:'');
+    if(s.type==='specs') d.innerHTML=`<div class="st">${em(s.title,C)}</div>`+s.rows.map(r=>`<div class="row"><b>${r[0]}</b><span>${em(r[1],C)}</span></div>`).join('');
+    if(s.type==='big') d.innerHTML=`<div class="big"><div class="pre">${em(s.pre||'',C)}</div><div class="n" style="color:${C}">${s.big}</div><div class="post">${em(s.post||'',C)}</div></div>`;
+    if(s.type==='shot') d.innerHTML=`<div class="shot"><div class="frame"><img src="${s.img}"><div class="lab" style="background:${C}">${s.label||'실제 화면'}</div></div>${s.note?`<div class="note">${em(s.note,C)}</div>`:''}</div>`;
+    if(s.type==='end'){ d.className='end'; d.style.background=C; d.innerHTML=`<div class="a">${s.a}</div><div class="b">${s.b||''}</div><div class="c" style="color:${C}">pdfslimio.com</div><div class="d">${s.d||'블로그 · 문서·사진 생활 꿀팁'}</div>`; }
+    if(s.type==='shot') d.style.top='350px';
+    $('stage').appendChild(d);
+    const dur=s.dur;
+    if(s.type==='end'){ A(d,[{opacity:0,transform:'scale(1.06)'},{opacity:1,transform:'none'}],t,.5); A($('foot'),[{opacity:1},{opacity:0}],t-.1,.2); }
+    else {
+      A(d,[{opacity:0,transform:'translateY(50px)'},{opacity:1,transform:'none'}],t,.45);
+      A(d,[{opacity:1},{opacity:0}],t+dur-.3,.3);
+      if(s.type==='specs') [...d.querySelectorAll('.row')].forEach((r,i)=>A(r,[{opacity:0,transform:'translateX(-60px)'},{opacity:1,transform:'none'}],t+.5+i*.55,.4));
+      if(s.type==='big') A(d.querySelector('.n'),[{transform:'scale(.6)'},{transform:'scale(1)'}],t+.25,.5,'cubic-bezier(.3,1.6,.5,1)');
+    }
+    t+=dur;
+  }
+  window.total=t;
+  document.getAnimations().forEach(a=>a.pause());
+  window.seek=x=>document.getAnimations().forEach(a=>{a.currentTime=x*1000;});
+  return t;
+});
+</script></body></html>
