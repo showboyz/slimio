@@ -73,7 +73,11 @@ function showResult(r, label) {
      if (r.method === "original") note.textContent = SlimIO.t("Your PDF is already under {size} — no compression needed.", { size: label });
      else if (!r.fits) note.textContent = SlimIO.t("This is the smallest we could make it. To get under {size}, remove pages you don't need or split the file into parts.", { size: label });
      else if (r.method === "server") note.textContent = SlimIO.t("Pages kept as they are — only the images inside were compressed, so any text stays sharp and selectable.");
-     else {
+     else if (r.fit < 1) {   // photo-sized pages (42×56 in): dpi says nothing, pixels do
+             note.textContent = SlimIO.t("To reach {size}, pages were converted to images of up to {px} px on the long side. The text is no longer selectable.", { size: label, px: r.px }) +
+                     (r.px < 1000 ? SlimIO.t(" Small print may be hard to read — removing pages you don't need will give a sharper result.") : "");
+             if (r.px < 1000) note.className = "note warn";
+     } else {
              const dpi = Math.round(r.scale * 72);
              note.textContent = SlimIO.t("To reach {size}, pages were converted to images at about {dpi} dpi. The text is no longer selectable.", { size: label, dpi }) +
                      (dpi < 50 ? SlimIO.t(" Small print may be hard to read — removing pages you don't need will give a sharper result.") : "");

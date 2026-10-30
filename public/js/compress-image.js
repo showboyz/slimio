@@ -10,7 +10,8 @@ const prog = SlimIO.bindProgress("prog");
 const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 600], "bank-photo": [200, 230],
      "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160], "upsc-photo": [450, 600],
      "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300],
-     "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472], "kr-kuksiwon": [413, 531] };
+     "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472], "kr-kuksiwon": [413, 531],
+     "uk-eta": [600, 750] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
 // KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
@@ -19,10 +20,13 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
 // centres' online form): JPEG 354×472 to 420×560 px and 40–120KB — 354×472 is the size the head
 // rules are measured on, and the KB range goes into the custom fields since the list doesn't have it;
 // KUKSIWON (health licensing exams: nurses, care workers, ...): JPG, at least 276×354 px (3.5×4.5cm at
-// 200 dpi), no KB limit, and the photo goes on the licence, so 3.5×4.5 at 300 dpi and best quality).
+// 200 dpi), no KB limit, and the photo goes on the licence, so 3.5×4.5 at 300 dpi and best quality;
+// UK ETA (gov.uk photo guidance for online applications): JPG, at least 600×750 px, 50KB to 6MB — "no limit"
+// and the KB targets below 50KB come out too small at that size, so 50–500KB.
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "300KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
-     "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB" };
+     "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB",
+     "uk-eta": "50-500KB" };
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {

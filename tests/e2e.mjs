@@ -473,6 +473,9 @@ function toolTests() {
     await select(p, "#style", "tiled"); await runTool(p);
     const r = await download(p);
     if (render(r.bytes) === render(fs.readFileSync(F("text.pdf")))) return "no watermark on page 1";
+    // the mark is one image for all pages; a "100KB 이하" copy must still fit (it once added 76KB)
+    const grew = r.bytes.length - fs.statSync(F("text.pdf")).size;
+    if (grew > 25000) return `the watermark added ${KB(grew)}`;
     return pdfCheck(r.bytes, { pages: 3, text: TEXT });
   });
   // Unlock PDF (qpdf in the browser). A wrong password is refused before a turn is used.
@@ -749,6 +752,11 @@ function toolTests() {
     const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));
     return err || (v === "custom 40 120" ? null : `the size limit is "${v}", expected custom 40–120`);
   });
+  both("compress-id-photo.html", "UK ETA picks 600×750, 50–500KB", async (p) => {
+    const err = await photo(p, { resize: "uk-eta" });
+    const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));
+    return err || (v === "custom 50 500" ? null : `the size limit is "${v}", expected custom 50–500`);
+  });
   both("compress-id-photo.html", "made without a button, follows the zoom", async (p) => {
     await p.setInputFiles("#images", F("photo.jpg"));
     await photoResult(p);
@@ -794,6 +802,9 @@ function toolTests() {
       { ratio: [2.75, 3.75], min: 3, max: 300 }],
     ["compress-id-photo.html", "사진 크기는 400 x 500 픽셀로 변경되며 1 : 1.25 비율로 맞춰주셔야 사진이 정상적으로 보입니다. 파일은 50kbyte를 초과할 수 없습니다.", { w: 400, h: 500, max: 50 }],
     ["compress-id-photo.html", "크기: 가로 115~235픽셀, 세로 150~315픽셀 형식: PNG 파일 권장(JPG, GIF, PNG 파일 가능) 용량: 500KB 이하", { w: 235, h: 315, max: 500 }],
+    // HSK test centre: the maximum has a note in brackets; a 177×236 photo has to be padded up to 50KB
+    ["compress-id-photo.html", "사이즈 : 3X4 cm(177X236픽셀), 파일의 크기는 50KB 이상 1024KB(1MB) 이하, jpg, jpeg", { w: 177, h: 236, min: 50, max: 1024 }],
+    ["compress-id-photo.html", "JPG, at least 600 pixels wide and 750 pixels tall, at least 50KB and no more than 6MB", { w: 600, h: 750, min: 50, max: 6000 }],
   ];
   for (const [page, text, want] of PASTED) both(page, `pasted rules "${text.slice(0, 24)}…"`, async (p) => {
     const fold = await p.$("details.specs:not([open]) > summary");   // Korean ID photo page: folded into one line

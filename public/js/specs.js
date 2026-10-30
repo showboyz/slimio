@@ -6,6 +6,7 @@
 window.SlimSpecs = (() => {
      const NUM = "(\\d+(?:\\.\\d+)?)";
      const KB = "\\s*(kbytes?|kb|k\\.b\\.|kilobytes?|mb)";
+     const PAREN = "(?:\\s*\\([^)]{0,20}\\))?";   // "1024KB(1MB) 이하" (HSK): a note in brackets before 이하
      const toKB = (n, unit) => (/^mb/i.test(unit) ? parseFloat(n) * 1000 : parseFloat(n));
      // Korean notices: "200KB 이하", "가로 3.5㎝", "300 X 400 픽셀"
      const norm = (text) => text.toLowerCase().replace(/\s+/g, " ").replace(/㎝/g, "cm").replace(/㎜/g, "mm")
@@ -22,11 +23,11 @@ window.SlimSpecs = (() => {
              }
              if (maxKB === null) {
                      const max = new RegExp("(?:not exceed(?:ing)?|not more than|no more than|less than|under|below|upto|up to|maximum(?: of)?|max\\.?|within|<=?)\\s*(?:size )?(?:of )?" + NUM + KB);
-                     if ((m = t.match(max)) || (m = t.match(new RegExp(NUM + KB + "\\s*(?:이하|미만|이내|까지)")))) maxKB = toKB(m[1], m[2]);
+                     if ((m = t.match(max)) || (m = t.match(new RegExp(NUM + KB + PAREN + "\\s*(?:이하|미만|이내|까지)")))) maxKB = toKB(m[1], m[2]);
              }
              if (minKB === null) {
                      const min = new RegExp("(?:at least|not less than|minimum(?: of)?|min\\.?|more than|above)\\s*(?:size )?(?:of )?" + NUM + KB);
-                     if ((m = t.match(min)) || (m = t.match(new RegExp(NUM + KB + "\\s*(?:이상|초과)")))) minKB = toKB(m[1], m[2]);
+                     if ((m = t.match(min)) || (m = t.match(new RegExp(NUM + KB + PAREN + "\\s*(?:이상|초과)")))) minKB = toKB(m[1], m[2]);
              }
              if (maxKB === null && minKB === null && (m = t.match(new RegExp("\\b" + NUM + KB)))) maxKB = toKB(m[1], m[2]);   // "make it 20 kb"
              return { minKB, maxKB };
@@ -50,6 +51,9 @@ window.SlimSpecs = (() => {
              // "width 140px, height 110px" / "width: 140 pixels and height: 110 pixels"
              // A range ("가로 115~235픽셀, 세로 150~315픽셀", KPC/ITQ) gives its largest size: the most detail that passes.
              const side = (word) => t.match(new RegExp("(?:" + word + ")\\s*(?:of|:|=|-)?\\s*(?:\\d+(?:\\.\\d+)?\\s*(?:~|-|–|to)\\s*)?(\\d+(?:\\.\\d+)?)\\s*(px|pixels?|cm|mm)?"));
+             // "at least 600 pixels wide and 750 pixels tall" (UK visa/ETA photo guidance)
+             const wt = t.match(/(\d+)\s*(?:px|pixels?)\s*wide\s*(?:and|,|by|x)?\s*(\d+)\s*(?:px|pixels?)\s*(?:tall|high)/);
+             if (wt) pairs.push({ a: parseFloat(wt[1]), b: parseFloat(wt[2]), unit: "px", role: "" });
              const w1 = side("width|가로"), h1 = side("height|세로");
              if (w1 && h1) pairs.push({ a: parseFloat(w1[1]), b: parseFloat(h1[1]), unit: (w1[2] || h1[2] || "px").replace(/s$/, ""), role: "" });
 

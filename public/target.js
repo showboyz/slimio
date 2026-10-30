@@ -67,11 +67,18 @@ const SlimTarget = (() => {
          const qualities = QUALITIES.filter((q) => q >= floor);
          const last = si === LADDER.length - 1;
          const perQ = qualities.map(() => []);
+         let minFit = 1, px = 0;
          for (let p = 1; p <= n; p++) {
             const page = await src.getPage(p);
             const base = page.getViewport({ scale: 1 });
             sizes[p - 1] = { w: base.width, h: base.height };
-            const vp = page.getViewport({ scale });
+            // Photo PDFs (our JPG→PDF, many scan apps) have pages as big as the photo in points
+            // (3024×4032 pt = 42×56 in): the ladder's scales would upscale them (×1.5 → 4536 px).
+            // Such pages are drawn as if their long side were A3's 1190 pt.
+            const fit = Math.min(1, 1190 / Math.max(base.width, base.height));
+            const vp = page.getViewport({ scale: scale * fit });
+            minFit = Math.min(minFit, fit);
+            px = Math.max(px, Math.ceil(Math.max(vp.width, vp.height)));
             const canvas = document.createElement("canvas");
             canvas.width = Math.max(1, Math.ceil(vp.width));
             canvas.height = Math.max(1, Math.ceil(vp.height));
@@ -87,7 +94,7 @@ const SlimTarget = (() => {
             const est = perQ[qi].reduce((a, b) => a + b.length, 0) + 600 * n + 1024;
             if (est > target * 1.02 && !(last && qi === qualities.length - 1)) continue;
             const bytes = await buildPdf(sizes, perQ[qi]);
-            const res = { bytes, scale, quality: qualities[qi] };
+            const res = { bytes, scale, quality: qualities[qi], fit: minFit, px };
             if (!smallest || bytes.length < smallest.bytes.length) smallest = res;
             if (bytes.length <= target) return { ...res, fits: true };
          }
@@ -128,7 +135,7 @@ const SlimTarget = (() => {
 
       onStatus && onStatus(SlimIO.t("Converting pages to images to reach the target…"));
       const r = await viaRaster(data, target, onProgress);
-      const raster = { bytes: r.bytes, method: "raster", fits: r.fits, scale: r.scale, quality: r.quality };
+      const raster = { bytes: r.bytes, method: "raster", fits: r.fits, scale: r.scale, quality: r.quality, fit: r.fit, px: r.px };
       if (!best || raster.fits || raster.bytes.length < best.bytes.length) best = raster;
       return best;
    }

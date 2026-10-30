@@ -12,7 +12,7 @@ let file = null;
 
 // How the watermark gets drawn. Latin text uses vector Helvetica. Anything
 // Helvetica can't encode (Korean, Japanese, Arabic…) is rendered by the browser,
-// which already has fonts for it, into a transparent PNG — no font download.
+// which already has fonts for it, into an image (embedMark) — no font download.
 // "size" works like a font size in both cases.
 async function makeDrawer(doc, text, colorName) {
      const font = await doc.embedFont(StandardFonts.HelveticaBold);
@@ -26,19 +26,22 @@ async function makeDrawer(doc, text, colorName) {
              };
      } catch (e) { /* not Latin: draw it as an image */ }
 
-     const px = 240;
-     const css = `bold ${px}px "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", sans-serif`;
+     // 240px letters, but a long phrase gets smaller letters so the image stays about 800px wide. A diagonal mark
+     // on A4 is about 10 inches long, so that is 80 dpi: plenty for a pale mark, and the file stays small.
+     const cssFont = (px) => `bold ${px}px "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Noto Sans CJK KR", sans-serif`;
      const canvas = document.createElement("canvas");
      const ctx = canvas.getContext("2d");
+     ctx.font = cssFont(240);
+     const px = Math.max(48, Math.min(240, Math.floor((240 * 800) / ctx.measureText(text).width)));
+     const css = cssFont(px);
      ctx.font = css;
      canvas.width = Math.ceil(ctx.measureText(text).width + px / 4);
      canvas.height = Math.ceil(px * 1.25);
      ctx.font = css;   // resizing a canvas resets its drawing state
-     ctx.fillStyle = CSS_COLORS[colorName];
+     ctx.fillStyle = "#000";
      ctx.textBaseline = "middle";
      ctx.fillText(text, px / 8, canvas.height / 2);
-     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-     const img = await doc.embedPng(new Uint8Array(await blob.arrayBuffer()));   // embedded once, reused on every page
+     const img = await embedMark(doc, canvas, colorName);
      const ratio = canvas.width / canvas.height;
      return {
              width: (size) => size * 1.25 * ratio,
@@ -46,6 +49,44 @@ async function makeDrawer(doc, text, colorName) {
              draw: (page, x, y, size, angle, opacity) =>
                      page.drawImage(img, { x, y, width: size * 1.25 * ratio, height: size * 1.25, opacity, rotate: degrees(angle) }),
      };
+}
+
+// The text drawn on a canvas as an image of one flat colour with the letters in its soft mask. A PNG
+// through embedPng kept the letter edges in the colour channels too and pdf-lib deflates without a PNG
+// predictor: "아르바이트 지원 서류 제출용 (2026.11)" added 76KB to a 3KB PDF, too much for a "100KB 이하"
+// upload. Here the colour channels are all one value (they pack to almost nothing) and the mask rows
+// are stored as differences from the row above (PNG "Up" predictor), which suits letters.
+async function embedMark(doc, canvas, colorName) {
+     const { width: w, height: h } = canvas;
+     const px = canvas.getContext("2d").getImageData(0, 0, w, h).data;
+     const mask = new Uint8Array((w + 1) * h);
+     for (let y = 0; y < h; y++) {
+             const row = y * (w + 1);
+             mask[row] = 2;   // PNG filter "Up"
+             for (let x = 0; x < w; x++) {
+                     const a = px[(y * w + x) * 4 + 3], above = y ? px[((y - 1) * w + x) * 4 + 3] : 0;
+                     mask[row + 1 + x] = (a - above) & 255;
+             }
+     }
+     const [r, g, b] = CSS_COLORS[colorName].match(/\d+/g).map(Number);
+     const flat = new Uint8Array(w * h * 3);
+     for (let i = 0; i < flat.length; i += 3) { flat[i] = r; flat[i + 1] = g; flat[i + 2] = b; }
+     const ctx = doc.context;
+     const smask = ctx.register(ctx.flateStream(mask, {
+             Type: "XObject", Subtype: "Image", Width: w, Height: h, ColorSpace: "DeviceGray", BitsPerComponent: 8,
+             DecodeParms: { Predictor: 15, Colors: 1, BitsPerComponent: 8, Columns: w },
+     }));
+     const image = ctx.flateStream(flat, {
+             Type: "XObject", Subtype: "Image", Width: w, Height: h, ColorSpace: "DeviceRGB", BitsPerComponent: 8, SMask: smask,
+     });
+     // drawImage wants a PDFImage: embed a 1×1 PNG, then put our image object in its place
+     const one = document.createElement("canvas");
+     one.width = one.height = 1;
+     const blob = await new Promise((resolve) => one.toBlob(resolve, "image/png"));
+     const img = await doc.embedPng(new Uint8Array(await blob.arrayBuffer()));
+     await img.embed();
+     ctx.assign(img.ref, image);
+     return img;
 }
 
 function setFile(f) {

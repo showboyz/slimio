@@ -770,6 +770,7 @@ KO["compress-image.html"] = dict(
         (">Passport photo 3.5×4.5 cm (413×531px)<", ">여권사진 3.5×4.5cm (413×531px)<"),
         (">US visa 600×600 px (square)<", ">미국 비자 600×600px (정사각형)<"),
         (">China visa photo 354×472 px (40–120KB)<", ">중국 비자 354×472px (40~120KB)<"),
+        (">UK ETA photo 600×750 px (50KB+)<", ">영국 ETA 600×750px (50KB 이상)<"),
         (">Bank exam photo 200×230 px (IBPS / SBI)<", ">인도 은행 시험 사진 200×230px (IBPS / SBI)<"),
         (">Korea Q-Net exam photo 300×400 px<", ">큐넷 자격시험 300×400px<"),
         (">Korea civil service exam 137×177 px<", ">공무원 시험 원서 137×177px<"),
@@ -973,6 +974,7 @@ KO["compress-id-photo.html"] = dict(
          f'<button type="button" class="preset" data-resize="kr-jobkorea"{ID_EV("kr-jobkorea")}><b>잡코리아</b><small>103×132</small></button>'
          f'<button type="button" class="preset" data-resize="kr-saramin"{ID_EV("kr-saramin")}><b>사람인</b><small>100×140</small></button>'
          f'<button type="button" class="preset" data-resize="cn-visa"{ID_EV("cn-visa")}><b>중국 비자</b><small>354×472</small></button>'
+         f'<button type="button" class="preset" data-resize="uk-eta"{ID_EV("uk-eta")}><b>영국 ETA</b><small>600×750</small></button>'
          '</div>\n'
          '           <details class="specs" id="pastebox">'),
         ('<label for="specs">📋 원서의 사진 규격 붙여넣기 <small>(선택)</small></label>\n               <textarea id="specs"',
@@ -1028,6 +1030,7 @@ KO["compress-id-photo.html"] = dict(
           <li><b>운전면허 갱신·재발급 (안전운전 통합민원)</b> → 3.5×4.5cm, 413×531px 권장, JPG 500KB 이하. <a href="/ko/compress-id-photo.html?resize=passport">여권 규격으로 열기</a> · <a href="/ko/guides/driver-license-photo.html">운전면허 사진 규격</a></li>
           <li><b>대입 수시·정시 원서 (진학어플라이·유웨이어플라이)</b> → 3개월 이내 반명함 3×4cm, JPG. 수능 응시원서는 여권용 3.5×4.5cm. <a href="/ko/compress-id-photo.html?resize=id-3x4">3×4 규격으로 열기</a> · <a href="/ko/guides/university-application-photo.html">대입 원서 사진 규격</a></li>
           <li><b>중국 비자 (중국비자신청서비스센터 온라인 신청)</b> → JPG 354×472~420×560px, 40~120KB, 흰색 배경. 머리 위치 기준을 재는 354×472px로 맞춰요. <a href="/ko/compress-id-photo.html?resize=cn-visa">중국 비자 규격으로 열기</a> · <a href="/ko/guides/china-visa-photo.html">중국 비자 사진 규격</a></li>
+          <li><b>영국 ETA (전자여행허가, 온라인 신청)</b> → JPG, 가로 600·세로 750px 이상, 50KB~6MB, 밝은 단색 배경. 그 크기로 맞추고 50KB 아래로 내려가지 않게 저장해요. <a href="/ko/compress-id-photo.html?resize=uk-eta">영국 ETA 규격으로 열기</a></li>
       </ul>
       <h3>이력서 사진 규격 (잡코리아·사람인)</h3>
       <p>위의 <b>잡코리아</b>·<b>사람인</b> 버튼을 누르면 취업 사이트가 안내하는 픽셀로 맞춰져요.</p>
@@ -1801,7 +1804,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "GIF", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "HEIF", "GPS", "cm", "px", "iOS", "AirDrop", "USB"}
 
 
