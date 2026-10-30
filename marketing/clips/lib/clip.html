@@ -28,6 +28,11 @@ em{font-style:normal}
 .end .b{font-size:48px;font-weight:700;margin-top:36px;line-height:1.55}
 .end .c{margin-top:64px;background:#111;font-size:66px;font-weight:900;padding:22px 48px;border-radius:26px}
 .end .d{margin-top:30px;font-size:40px;font-weight:700}
+/* recap: the closing scene since 2026-10-30 (owner: the old 'end' slate with the big pdfslimio.com read like an ad).
+   Same background as the other scenes, the post's key numbers as a checklist, one small line pointing to the linked post. */
+.row.chk{justify-content:flex-start}
+.row.chk span{text-align:left;font-size:48px}
+.rnote{font-size:38px;font-weight:700;color:#a8a29e;margin-top:44px;opacity:0}
 .foot{position:absolute;left:0;right:0;top:1520px;text-align:center;font-size:34px;color:#a8a29e}
 </style></head><body><div class="bg" id="bg"></div><div class="top"><span class="tag" id="tag"></span></div><div id="stage"></div>
 <div class="foot" id="foot"></div>
@@ -46,6 +51,7 @@ window.ready=Promise.resolve(window.SPEC).then(S=>{
     if(s.type==='specs') d.innerHTML=`<div class="st">${em(s.title,C)}</div>`+s.rows.map(r=>`<div class="row"><b>${r[0]}</b><span>${em(r[1],C)}</span></div>`).join('');
     if(s.type==='big') d.innerHTML=`<div class="big"><div class="pre">${em(s.pre||'',C)}</div><div class="n" style="color:${C}">${s.big}</div><div class="post">${em(s.post||'',C)}</div></div>`;
     if(s.type==='shot') d.innerHTML=`<div class="shot"><div class="frame"><img src="${s.img}"><div class="lab" style="background:${C}">${s.label||'실제 화면'}</div></div>${s.note?`<div class="note">${em(s.note,C)}</div>`:''}</div>`;
+    if(s.type==='recap') d.innerHTML=`<div class="st">${em(s.title||'한 번에 정리',C)}</div>`+s.rows.map(r=>`<div class="row chk"><span><em style="color:${C}">✓</em> ${em(r,C)}</span></div>`).join('')+(s.note?`<div class="rnote">${em(s.note,C)}</div>`:'');
     if(s.type==='end'){ d.className='end'; d.style.background=C; d.innerHTML=`<div class="a">${s.a}</div><div class="b">${s.b||''}</div><div class="c" style="color:${C}">pdfslimio.com</div><div class="d">${s.d||'블로그 · 문서·사진 생활 꿀팁'}</div>`; }
     if(s.type==='shot') d.style.top='350px';
     $('stage').appendChild(d);
@@ -53,7 +59,9 @@ window.ready=Promise.resolve(window.SPEC).then(S=>{
     if(s.type==='end'){ A(d,[{opacity:0,transform:'scale(1.06)'},{opacity:1,transform:'none'}],t,.5); A($('foot'),[{opacity:1},{opacity:0}],t-.1,.2); }
     else {
       A(d,[{opacity:0,transform:'translateY(50px)'},{opacity:1,transform:'none'}],t,.45);
-      A(d,[{opacity:1},{opacity:0}],t+dur-.3,.3);
+      if(s.type!=='recap') A(d,[{opacity:1},{opacity:0}],t+dur-.3,.3);   // the recap stays to the last frame
+      if(s.type==='recap'){ [...d.querySelectorAll('.row')].forEach((r,i)=>A(r,[{opacity:0,transform:'translateX(-60px)'},{opacity:1,transform:'none'}],t+.4+i*.45,.4));
+        const n=d.querySelector('.rnote'); if(n) A(n,[{opacity:0},{opacity:1}],t+.5+d.querySelectorAll('.row').length*.45,.4); }
       if(s.type==='specs') [...d.querySelectorAll('.row')].forEach((r,i)=>A(r,[{opacity:0,transform:'translateX(-60px)'},{opacity:1,transform:'none'}],t+.5+i*.55,.4));
       if(s.type==='big') A(d.querySelector('.n'),[{transform:'scale(.6)'},{transform:'scale(1)'}],t+.25,.5,'cubic-bezier(.3,1.6,.5,1)');
     }
