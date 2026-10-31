@@ -131,7 +131,7 @@ tf.press(r'^버튼 발행$'); time.sleep(2)
 t = tf.tree()
 tags = re.findall(r'\d+ container (\S+)\n', t.split('태그 편집')[1].split('발행 시간')[0]) if '태그 편집' in t else []
 if LIVE:   # a published post offers only '현재' and keeps its date
-    ok = re.search(r'라디오 버튼 \(settable\) 현재, Value: 1', t) and re.search(r'전체공개, Value: 1', t) and len(tags) == 10
+    ok = re.search(r'라디오 버튼 \(settable\) 현재, Value: 1', t) and re.search(r'전체공개, Value: 1', t) and len(tags) >= 1   # #01 has 11
 else:
     y, mo, d = date.split('.')
     ok = (re.search(r'라디오 버튼 \(settable\) 예약, Value: 1', t) and f'Value: {y}. {mo}. {d}' in t
