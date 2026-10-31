@@ -49,38 +49,44 @@ tf.press(r'^버튼 검색 바 닫기$'); time.sleep(1)
 if not (m and m.group(1) == '1'): fail(f'find {bottom!r}: {m and m.group(0)}')
 
 def layout():
-    # (line, kind, text) for pictures, link badges and text blocks, in tree order
-    out = []
+    # (element, kind, text) for linked pictures and text blocks, in tree order. After a reload a picture is only a bare
+    # 'container' line with its '텍스트, Value: 링크' badge inside, so a badge stands for its picture (the line above it).
+    out, prev = [], None
     for l in tf.tree().splitlines():
-        mm = re.match(r'\s*(\d+) (이미지|텍스트, Value: |container, Text: )(.*)$', l)
+        mm = re.match(r'\s*(\d+) (.*)$', l)
         if not mm: continue
-        kind, val = mm.group(2), mm.group(3).replace('﻿', '').strip()
-        if kind == '이미지': out.append((mm.group(1), 'img', val))
-        elif val == '링크': out.append((mm.group(1), 'link', ''))
-        elif val and val not in ('AI 활용 설정', '사진 설명을 입력하세요.', '추가할 컴포넌트를 선택하세요.', '도움말', '대표') \
-                and not val.startswith('사진 컴포넌트') and '사진 설명을 입력하세요' not in val:
-            out.append((mm.group(1), 'text', val))
+        i, rest = mm.group(1), mm.group(2)
+        if rest == '텍스트, Value: 링크': out.append((prev, 'pic', ''))
+        else:
+            m2 = re.match(r'(텍스트, Value: |container, Text: )(.*)$', rest)
+            val = m2.group(2).replace('\ufeff', '').strip() if m2 else ''
+            if m2 and val and val not in ('AI 활용 설정', '사진 설명을 입력하세요.', '추가할 컴포넌트를 선택하세요.', '도움말', '대표') \
+                    and not val.startswith('사진 컴포넌트') and '사진 설명을 입력하세요' not in val:
+                out.append((i, 'text', val))
+        prev = i if rest == 'container' else prev
     return out
 L = layout()
-links = sum(1 for x in L if x[1] == 'link')
+links = sum(1 for x in L if x[1] == 'pic')
 j = next((i for i, x in enumerate(L) if x[1] == 'text' and flat(x[2]).startswith(flat(bottom))), None)
 if j is None: fail('출처 block not in the tree')
 if links != 2: fail(f'{links} link badges (expected the two buttons)')
-# right before the 출처 block: [img, link] (the end button), and before that a text block
-if not (j >= 3 and L[j - 1][1] == 'link' and L[j - 2][1] == 'img' and L[j - 3][1] == 'text'):
-    fail(f'no linked picture right before 출처: {[x[1] for x in L[max(0, j - 4):j + 1]]}')
-img = L[j - 2][0]
+# right before the 출처 block: the linked picture (the end button), and before that a text block
+if not (j >= 2 and L[j - 1][1] == 'pic' and L[j - 1][0] and L[j - 2][1] == 'text'):
+    fail(f'no linked picture right before 출처: {[x[1] for x in L[max(0, j - 3):j + 1]]}')
+img = L[j - 1][0]
 tf.sh('python3', f'{tf.T}/c.py', W, '-', 'click', '--element-index', img); tf.done(); time.sleep(0.8)
 t = tf.tree()
 if not tf.idx(t, r'^버튼 사진 교체$'): fail('picture not selected')
+# selecting renumbers the tree: the picture's own 삭제 sits between its 링크 badge and the 출처 line
 rs = t.splitlines()
-p = next(x for x, l in enumerate(rs) if re.match(rf'\s*{img} 이미지', l))
-d = next((re.match(r'\s*(\d+)', l).group(1) for l in rs[p:p + 25] if re.search(r'\d+ 버튼 삭제$', l)), None)
+q = next((x for x, l in enumerate(rs) if re.search(r'^\s*\d+ 텍스트, Value: ', l) and flat(re.sub(r'^\s*\d+ 텍스트, Value: ', '', l)).startswith(flat(bottom))), None)
+b = max((x for x, l in enumerate(rs[:q or 0]) if l.strip().endswith('텍스트, Value: 링크')), default=None)
+d = next((re.match(r'\s*(\d+)', l).group(1) for l in rs[b:q] if re.search(r'\d+ 버튼 삭제$', l)), None) if q and b else None
 if not d: fail('no 삭제 on the picture')
 tf.sh('orca', 'computer', 'click', '--app', 'com.google.Chrome', '--window-id', W, '--element-index', d, '--no-screenshot'); tf.done(); time.sleep(1.5)
 L = layout()
 j = next((i for i, x in enumerate(L) if x[1] == 'text' and flat(x[2]).startswith(flat(bottom))), None)
-links = sum(1 for x in L if x[1] == 'link')
+links = sum(1 for x in L if x[1] == 'pic')
 if j is None or links != 1 or L[j - 1][1] != 'text': fail(f'after 삭제: links {links}, before 출처 {[x[1] for x in L[max(0, (j or 0) - 2):(j or 0) + 1]]}')
 log(n, 'end button removed')
 
