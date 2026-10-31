@@ -11,7 +11,7 @@ FROM_BODY = len(sys.argv) > 5 and sys.argv[5] in ('from-body', 'from-panel')   #
 FROM_PANEL = len(sys.argv) > 5 and sys.argv[5] == 'from-panel'   # body in, publish panel open
 tf.W = W
 HERE = os.path.dirname(os.path.abspath(__file__))
-IMG = os.path.join(HERE, '../../public/img/blog/')
+IMG = os.path.normpath(os.path.join(HERE, '../../public/img/blog')) + '/'   # the 폴더로 이동 field won't take '..'
 src = open(draft).read()
 title = re.search(r'제목: (.*)', src).group(1).strip()
 tags = [t.strip() for t in re.search(r'태그: (.*)', src).group(1).split(',') if t.strip()]
