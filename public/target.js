@@ -61,23 +61,30 @@ const SlimTarget = (() => {
       const src = await pdfjsLib.getDocument({ data }).promise;
       const n = src.numPages;
       const sizes = [];
+      // Photo PDFs (our JPG→PDF, many scan apps) have pages as big as the photo in points
+      // (3024×4032 pt = 42×56 in): the ladder's scales would upscale them (×1.5 → 4536 px).
+      // Such pages are drawn as if their long side were A3's 1190 pt, never above 1 px per pt,
+      // and get two sharper steps first (3570 and 2678 px on the long side) so a 2MB target
+      // keeps more of the photo than a 500KB one.
+      const fits = [];
+      for (let p = 1; p <= n; p++) {
+         const base = (await src.getPage(p)).getViewport({ scale: 1 });
+         sizes[p - 1] = { w: base.width, h: base.height };
+         fits[p - 1] = Math.min(1, 1190 / Math.max(base.width, base.height));
+      }
+      const minFit = Math.min(...fits);
+      const ladder = minFit < 1 ? [[3, 0.6], [2.25, 0.6], ...LADDER] : LADDER;
       let smallest = null;
-      for (let si = 0; si < LADDER.length; si++) {
-         const [scale, floor] = LADDER[si];
+      for (let si = 0; si < ladder.length; si++) {
+         const [scale, floor] = ladder[si];
          const qualities = QUALITIES.filter((q) => q >= floor);
-         const last = si === LADDER.length - 1;
+         const last = si === ladder.length - 1;
          const perQ = qualities.map(() => []);
-         let minFit = 1, px = 0;
+         let px = 0;
          for (let p = 1; p <= n; p++) {
             const page = await src.getPage(p);
-            const base = page.getViewport({ scale: 1 });
-            sizes[p - 1] = { w: base.width, h: base.height };
-            // Photo PDFs (our JPG→PDF, many scan apps) have pages as big as the photo in points
-            // (3024×4032 pt = 42×56 in): the ladder's scales would upscale them (×1.5 → 4536 px).
-            // Such pages are drawn as if their long side were A3's 1190 pt.
-            const fit = Math.min(1, 1190 / Math.max(base.width, base.height));
-            const vp = page.getViewport({ scale: scale * fit });
-            minFit = Math.min(minFit, fit);
+            const fit = fits[p - 1];
+            const vp = page.getViewport({ scale: fit < 1 ? Math.min(scale * fit, 1) : scale });
             px = Math.max(px, Math.ceil(Math.max(vp.width, vp.height)));
             const canvas = document.createElement("canvas");
             canvas.width = Math.max(1, Math.ceil(vp.width));
@@ -88,7 +95,7 @@ const SlimTarget = (() => {
             await page.render({ canvasContext: ctx, viewport: vp }).promise;
             for (let qi = 0; qi < qualities.length; qi++) perQ[qi].push(await jpeg(canvas, qualities[qi]));
             canvas.width = canvas.height = 0;   // free memory early
-            onProgress && onProgress((si + p / n) / LADDER.length);
+            onProgress && onProgress((si + p / n) / ladder.length);
          }
          for (let qi = 0; qi < qualities.length; qi++) {
             const est = perQ[qi].reduce((a, b) => a + b.length, 0) + 600 * n + 1024;
