@@ -13,7 +13,10 @@ from tblfix_sched import go, wait_for, leave_unsaved, log, drafts, EDITOR, NAVER
 sys.path.insert(0, NAVER); sys.path.insert(0, os.path.join(NAVER, '../tistory'))
 import cta, banners
 tf.W = W = sys.argv[1]
-n, date, hh = int(sys.argv[2]), sys.argv[3], int(sys.argv[4])
+n = int(sys.argv[2])
+LIVE = sys.argv[3] == 'live'   # ctains.py <win> <NN> live <logNo> : a published post, edited through PostUpdateForm
+date, hh = (None, None) if LIVE else (sys.argv[3], int(sys.argv[4]))
+logno = sys.argv[4] if LIVE else None
 draft = [f for f in os.listdir(NAVER) if re.match(rf'{n:02d}-.*\.html$', f)][0]
 src = open(os.path.join(NAVER, draft)).read()
 title = re.search(r'제목: (.*)', src).group(1).strip()
@@ -43,17 +46,27 @@ def clear_leftovers():   # a stopped run can leave the find bar open or Chrome's
         elif '사이트에서 나가시겠습니까' in tf.tree(): tf.press(r'^버튼 나가기$'); time.sleep(3)
         else: return
 clear_leftovers()
-go(EDITOR); tf.done(); time.sleep(3)
-clear_leftovers(); time.sleep(1)
-t = wait_for(r'예약 발행 \d+ 건', 30) or ''
-if not t: fail('editor did not open')
-if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
-tf.press(r'^버튼 예약 발행 \d+ 건'); time.sleep(1.5)
-when = f'{date} {hh:02d}:00'
-item = [l for l in tf.tree().splitlines() if re.search(rf'\d+ 버튼 .* {re.escape(when)}$', l)]
-if len(item) != 1: fail(f'list item {len(item)}')
-if re.match(rf'\s*\d+ 버튼 (.*) {re.escape(when)}$', item[0]).group(1).strip() != title: fail('the post at that time is not draft ' + draft)
-tf.press(rf'^버튼 .* {re.escape(when)}$'); time.sleep(5)
+def public():
+    import urllib.request
+    return urllib.request.urlopen(urllib.request.Request(f'https://blog.naver.com/PostView.naver?blogId=todayz777&logNo={logno}',
+                                                         headers={'User-Agent': 'Mozilla/5.0'})).read().decode()
+if LIVE:
+    pub_date = re.search(r'se_publishDate[^>]*>([^<]*)', public()).group(1)
+    go(f'https://blog.naver.com/PostUpdateForm.naver?blogId=todayz777&logNo={logno}'); tf.done(); time.sleep(3)
+    clear_leftovers(); time.sleep(1)
+    when = 'live ' + logno
+else:
+  go(EDITOR); tf.done(); time.sleep(3)
+  clear_leftovers(); time.sleep(1)
+  t = wait_for(r'예약 발행 \d+ 건', 30) or ''
+  if not t: fail('editor did not open')
+  if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
+  tf.press(r'^버튼 예약 발행 \d+ 건'); time.sleep(1.5)
+  when = f'{date} {hh:02d}:00'
+  item = [l for l in tf.tree().splitlines() if re.search(rf'\d+ 버튼 .* {re.escape(when)}$', l)]
+  if len(item) != 1: fail(f'list item {len(item)}')
+  if re.match(rf'\s*\d+ 버튼 (.*) {re.escape(when)}$', item[0]).group(1).strip() != title: fail('the post at that time is not draft ' + draft)
+  tf.press(rf'^버튼 .* {re.escape(when)}$'); time.sleep(5)
 t = wait_for(rf'텍스트, Value: {re.escape(title)}', 20)
 if not t: fail('post did not load')
 
@@ -115,14 +128,24 @@ if ja.count('pdfslimio') != jb.count('pdfslimio') or any(b.startswith('http') fo
     fail(f"link text appeared in the post: pdfslimio {jb.count('pdfslimio')} -> {ja.count('pdfslimio')}")
 if not tf.guard(): log(n, 'STOP owner busy for 3 h (post left open, not saved)'); sys.exit(2)
 tf.press(r'^버튼 발행$'); time.sleep(2)
-t = tf.tree(); y, mo, d = date.split('.')
+t = tf.tree()
 tags = re.findall(r'\d+ container (\S+)\n', t.split('태그 편집')[1].split('발행 시간')[0]) if '태그 편집' in t else []
-ok = (re.search(r'라디오 버튼 \(settable\) 예약, Value: 1', t) and f'Value: {y}. {mo}. {d}' in t
-      and re.search(rf'시간 선택, Value: {hh:02d}', t) and re.search(r'분 선택, Value: 00', t)
-      and re.search(r'전체공개, Value: 1', t) and len(tags) == 10)
+if LIVE:   # a published post offers only '현재' and keeps its date
+    ok = re.search(r'라디오 버튼 \(settable\) 현재, Value: 1', t) and re.search(r'전체공개, Value: 1', t) and len(tags) == 10
+else:
+    y, mo, d = date.split('.')
+    ok = (re.search(r'라디오 버튼 \(settable\) 예약, Value: 1', t) and f'Value: {y}. {mo}. {d}' in t
+          and re.search(rf'시간 선택, Value: {hh:02d}', t) and re.search(r'분 선택, Value: 00', t)
+          and re.search(r'전체공개, Value: 1', t) and len(tags) == 10)
 if not ok: fail(f'panel check, tags {len(tags)}')
 b = [l.split()[0] for l in t.splitlines() if re.match(r'\s*\d+ 버튼 발행$', l)]
 tf.sh('orca', 'computer', 'click', '--app', 'com.google.Chrome', '--window-id', W, '--element-index', b[-1], '--no-screenshot')
 tf.done(); time.sleep(5)
-home = re.search(r'주소창 및 검색창, Value: blog\.naver\.com/todayz777(,|$)', tf.tree(), re.M)
+home = re.search(r'주소창 및 검색창, Value: blog\.naver\.com/todayz777' + (rf'/{logno}' if LIVE else '') + r'(,|$|\?)', tf.tree(), re.M)
+if LIVE:   # the public post: one picture link to the tool, same date
+    time.sleep(3); page = public()
+    imgl = len(re.findall(r'data-linktype="img"[^>]*pdfslimio|pdfslimio[^"]*"[^>]*data-linktype="img"', page))
+    nd = re.search(r'se_publishDate[^>]*>([^<]*)', page).group(1)
+    log(n, f'public page: picture links {imgl}, date {nd} (was {pub_date})' + ('' if imgl == 1 and nd == pub_date else '  CHECK'))
+    home = imgl == 1 and nd == pub_date   # after an edit Naver shows PostView, not the blog home
 log(n, 'SAVED' if home else 'CHECK: 발행 clicked but did not return to the blog home', when)

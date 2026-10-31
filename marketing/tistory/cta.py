@@ -49,7 +49,8 @@ def plan(src):
     top = max(count.values()); main = next(page(u) for _, u in links if count[page(u)] == top)
     n, url = next((n, u) for n, u in links if page(u) == main)
     # step out of a summary box, list or table, then past a picture right after the block
-    for opener, closer in (('<div', '</div>'), ('<blockquote', '</blockquote>'), ('<ul', '</ul>'), ('<ol', '</ol>'), ('<table', '</table>')):
+    for opener, closer in (('<div', '</div>'), ('<blockquote', '</blockquote>'), ('<ul', '</ul>'), ('<ol', '</ol>'), ('<table', '</table>'),
+                           ('<p', '</p>')):   # a <p> of several <br> lines (step lists): not between its lines (#06, 2026-11-01)
         start = max((k for k in range(n + 1) if rows[k].lstrip().startswith(opener)), default=None)
         if start is not None and not any(closer in rows[k] for k in range(start, n)):
             n = next(k for k in range(n, len(rows)) if closer in rows[k])
