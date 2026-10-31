@@ -1,0 +1,100 @@
+<!--
+티스토리 글 #14 — PDF 비밀번호 해제 (암호를 아는 내 PDF의 열기 암호·인쇄/복사 제한 풀기, 명세서·증명서, 진본/전자서명 주의)
+제목: 🔓 PDF 비밀번호 해제·암호 풀기, 명세서·증명서 PDF 4개로 실험한 결과 (인쇄 제한·진본 주의)
+태그: pdf 비밀번호 해제, pdf 암호 해제, pdf 비밀번호 풀기, pdf 암호 풀기, pdf 암호제거, pdf파일 비밀번호 해제, pdf 비밀번호 해제 프로그램, pdf 인쇄 잠금 해제, pdf 보안 해제, pdf 복사방지 해제
+카테고리: 문서·사진 꿀팁
+근거: (모두 2026-10-31 확인) ① 전자문서지갑 자주묻는 질문 https://dpaper.kr/bbs/faq/BbsFaqList.do?pageIndex=6 — 다운로드 때 묻는 6자리 숫자는 열람할 때 넣는 암호로 '임의로' 정함, 잊으면 기존 비밀번호 확인 불가 → 다시 다운로드, 필요 없으면 '미설정', '진본' 마크는 Adobe Acrobat Reader(진본검증 플러그인)에서만 정상 표시·다른 곳은 '미검증', 특정 증명서는 발급기관 요청으로 열람용만 되고 출력이 안 될 수 있음, 받은 파일 위치 안드로이드 '내파일'·아이폰 '파일' ② Adobe Acrobat 도움말 'PDF에서 암호 제거' https://helpx.adobe.com/kr/acrobat/desktop/protect-documents/protect-with-passwords/remove-passwords-from-pdfs.html (2025-11-05 업데이트) — '문서 열기 암호'·'권한 암호' 이름, 권한 암호 제거 때 권한 암호 입력 ③ Adobe '3단계만으로 PDF 암호 해제' https://www.adobe.com/kr/acrobat/how-to/unlock-pdf.html — [도구] > [보호] > [암호화] > [보안 제거], "비밀번호 없이 임의로 PDF 암호 해제를 시도하는 것은 불가능합니다"(본문엔 뜻만 씀), 플랜 Acrobat Standard ₩19,700/월·Pro ₩30,300/월(부가세 포함) ④ Apple 'Mac용 미리보기에서 PDF를 암호로 보호하기' https://support.apple.com/ko-kr/guide/preview/prvw587dd90f/mac — '문서를 열려면 암호 필요', 권한은 '소유자 암호'로 관리. 미리보기로 암호를 '제거'하는 단계는 공식 문서에 없어서 쓰지 않음 ⑤ SlimIO PDF 비밀번호 해제(/ko/unlock-pdf.html) 동작은 우리 코드(public/js/unlock-pdf.js) 기준: 브라우저 안 qpdf(WebAssembly), 잠금 종류를 먼저 알려 줌, 틀린 암호는 횟수 차감 없음, 암호를 추측하지 않음, /ByteRange 있으면 진본 경고. 카드사·은행·통신사 명세서 암호 규칙과 급여명세서 암호 규칙은 공식 출처가 없어 본문에 쓰지 않음(도구 화면 안내 문구 '생년월일 6자리…'가 캡처에 보임 — 네이버 #46 때부터 사장님 확인 중)
+수요: 다음 자동완성(2026-10-31) 'pdf 비밀번호 해제'(pdf 비밀번호 해제 프로그램·pdf파일 비밀번호 해제), 'pdf 암호 해제'(pdf파일 암호해제), 'pdf 비밀번호'(pdf 비밀번호 풀기), 'pdf 암호'(pdf 암호제거 프로그램·pdf 암호 풀기·pdf 암호제거·pdf 파일 암호풀기), 'pdf 보안 해제'(pdf파일 보안 해제), 'pdf 인쇄'(pdf 인쇄 잠금 해제), 'pdf 복사 방지 해제'(pdf 복사방지 해제). 'pdf 인쇄 제한 해제'는 자동완성 없음
+실험: 새 가상 문서 2개를 만들고(scratchpad r1031t/t13/pdf/bill.html·cert.html, 'SAMPLE 예시' 워터마크, Chrome PDF) 저장소의 qpdf WebAssembly를 로컬에서 돌려 잠금(scripts/qpdf.cjs): ① phone_bill.pdf '휴대폰 요금 명세서(예시)' 2쪽, AES-256 열기 암호 Bill1031 + 인쇄·복사·편집 금지, 166.3KB ② employment_cert.pdf '재직증명서(예시)' 1쪽, 암호 없이 열리고 인쇄만 금지(AES-128), 139.6KB ③ e_cert_signed.pdf = ②에 pyHanko로 자체 서명 테스트 인증서 전자서명 추가(인쇄 금지 유지), 146.9KB, pyHanko 검사 intact=True ④ cert.pdf 잠금 없는 원본 131.2KB. 라이브 https://pdfslimio.com/ko/unlock-pdf.html?notrack, headless Chrome 폭 400px(scripts/unlock.mjs): ① '열 때 암호가 필요한 PDF예요…' → 소문자 bill1031 → '이 암호로는 PDF가 열리지 않아요. 확인하고 다시 입력해 주세요. 대문자·소문자와 띄어쓰기도 구분해요.'(오늘 남은 횟수 20/20 그대로) → Bill1031 → 열기 암호 해제됨·제한 해제됨(인쇄, 텍스트 복사, 편집)·157.5KB(19/20), 결과 파일 'File is not encrypted', 2쪽, gs txtwrite로 글자 그대로 추출 ② '암호 없이 열리지만 사용 제한(인쇄)이 걸린 PDF예요…' → 암호 입력칸 없이 해제 → 열기 암호 없음·제한 해제됨(인쇄)·132.3KB, 글자 그대로 ③ ②와 같은 안내 → 해제 → 137.5KB + 전자서명 경고 문구 표시, 해제본을 pyHanko로 검사하니 intact=False·modification=OTHER(원본은 intact=True·NONE) ④ '암호도 제한도 없는 PDF예요. 그대로 쓰시면 돼요.' → 해제 버튼 비활성. ①은 두 번 돌려 숫자 같음
+이미지: pdf-password-hero.jpg(새 대표 — 왼쪽 청록 띠에 세 경우 카드, 오른쪽 밝은 회색 바탕 제목; 네이버 #46의 남색 다크·자물쇠 그림과 다른 배치), pdf-password-tool-ko.jpg(새 — 라이브 도구 실제 화면 두 장: 틀린 암호 안내·해제 결과, 실험 ①), pdf-password-sign-ko.jpg(새 — 실험 ③ 실제 화면 + pyHanko 서명 검사 결과 정리). 네이버 #46 이미지는 쓰지 않음
+예약: 미정 — 2026-11-03 08:00 예정
+대표이미지: pdf-password-hero.jpg
+-->
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/pdf-password-hero.jpg" alt="PDF 비밀번호 해제 세 가지 경우: 열기 암호 걸린 명세서는 내가 아는 암호로 해제, 인쇄·복사만 막힌 PDF는 암호 입력 없이 해제, 전자서명 들어간 증명서는 원본 그대로" width="760"></p>
+
+<p>대출 서류, 보험금 청구, 회사 제출용으로 <b>휴대폰 요금 명세서나 재직증명서 PDF</b>를 올리려는데, 파일이 잠겨 있어서 막힌 적 있으세요? 🔐 열 때마다 비밀번호를 묻거나, 열리긴 하는데 <b>인쇄 버튼이 안 눌리는</b> 경우도 있죠.</p>
+
+<p>그런데 잠금을 무작정 풀면 안 되는 PDF도 있어요. 그래서 이번엔 <b>성격이 다른 가상 PDF 4개</b>를 만들어서 하나씩 풀어 보고, 결과 파일까지 검사해 봤어요. 미리 말씀드리면, 이 글은 <b>암호를 이미 아는 내 서류</b>를 위한 글이에요. 🙋</p>
+
+<div style="background:#f0fdfa;border-left:4px solid #0f766e;padding:14px 16px;border-radius:8px;margin:18px 0;">
+<b>⏱ 3줄 요약</b><br>
+1️⃣ 잠금은 <b>열기 암호</b>(열 때 묻는 것)와 <b>권한 암호</b>(인쇄·복사 막기) 두 종류. 열기 암호는 그 암호를 알아야 풀려요<br>
+2️⃣ 전자서명이 든 증명서는 풀면 <b>서명 검사가 깨져요</b>(실험으로 확인). 진본이 필요하면 원본을 내세요<br>
+3️⃣ 내 PDF라면 <a href="https://pdfslimio.com/ko/unlock-pdf.html">PDF 비밀번호 해제</a>에 올리고 → 암호 입력 → 잠금 없는 사본 다운로드! 🎉
+</div>
+
+<h2>🧭 먼저, 내 PDF는 어떤 잠금일까?</h2>
+
+<p>프로그램마다 부르는 이름이 달라서 헷갈려요. Adobe Acrobat 도움말과 맥 미리보기 사용 설명서에 나오는 이름을 나란히 놓으면 이래요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">증상</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">Acrobat 이름</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">맥 미리보기 이름</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">열 때 암호 입력창</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>문서 열기 암호</b></td><td style="padding:10px;border:1px solid #e5e7eb;">문서를 열려면 암호 필요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">열리지만 인쇄·복사·편집 안 됨</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>권한 암호</b></td><td style="padding:10px;border:1px solid #e5e7eb;">소유자 암호</td></tr>
+</table>
+
+<p>두 잠금이 <b>한 파일에 같이</b> 걸려 있기도 해요. 그리고 Acrobat 안내도 PDF 암호는 비밀번호를 알고 있어야 제거할 수 있다고 적고 있어요. 모르는 암호를 대신 알아내 주는 방법은 이 글에 없어요. 🙅</p>
+
+<h2>🧾 서류별로 암호는 어디서 찾을까?</h2>
+
+<ul>
+  <li>💳 <b>카드·통신 요금 명세서</b>: 회사마다 규칙이 달라요. 명세서가 온 <b>메일 본문이나 문자</b>에 어떤 번호로 열리는지 적혀 있는지 먼저 보세요</li>
+  <li>💼 <b>급여명세서</b>: 회사가 정한 규칙이라 <b>인사·급여 담당자</b>에게 물어보는 게 가장 확실해요</li>
+  <li>🏛 <b>정부24 전자증명서</b>: 전자문서지갑에서 내려받을 때 <b>내가 직접 정한 6자리</b>예요. 잊어버리면 확인할 방법이 없어서 다시 내려받아야 하고, 그때 <b>'미설정'</b>을 누르면 암호 없이 받을 수 있어요</li>
+</ul>
+
+<p>⚠️ 전자문서지갑 안내에는 이런 내용도 있어요. 어떤 증명서는 <b>발급기관 요청으로 열람용으로만</b> 내려받아지고 출력이 안 될 수 있대요. 이건 일부러 막아 둔 거라, 풀어서 인쇄하려 하기보다 <b>발급기관이 정한 방법</b>으로 제출하는 게 맞아요.</p>
+
+<h2>🧪 가상 PDF 4개로 직접 풀어 봤어요</h2>
+
+<p>제가 만든 무료 도구 <b>SlimIO PDF 비밀번호 해제</b>로 실험했어요. PDF도 암호도 <b>브라우저 안에서만</b> 쓰이고 서버로 가지 않아요. 문서는 모두 'SAMPLE 예시' 워터마크를 넣은 가상 문서예요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">넣은 파일</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">도구가 알려 준 것</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">결과</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">① 요금 명세서 2쪽<br>열기 암호 + 인쇄·복사 금지</td><td style="padding:10px;border:1px solid #e5e7eb;">열 때 암호가 필요한 PDF</td><td style="padding:10px;border:1px solid #e5e7eb;">166.3KB → <b>157.5KB</b><br>두 잠금 모두 해제</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">② 재직증명서 1쪽<br>인쇄만 금지</td><td style="padding:10px;border:1px solid #e5e7eb;">사용 제한(인쇄)이 걸린 PDF</td><td style="padding:10px;border:1px solid #e5e7eb;">139.6KB → <b>132.3KB</b><br>암호 입력 없이 해제</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">③ ②에 전자서명 추가</td><td style="padding:10px;border:1px solid #e5e7eb;">②와 같음</td><td style="padding:10px;border:1px solid #e5e7eb;">해제 + <b>진본 경고</b></td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">④ 잠금 없는 PDF</td><td style="padding:10px;border:1px solid #e5e7eb;">암호도 제한도 없는 PDF</td><td style="padding:10px;border:1px solid #e5e7eb;">해제 버튼이 꺼져 있음</td></tr>
+</table>
+
+<p>①번에서는 일부러 <b>대문자 하나를 소문자로</b> 바꿔 넣어 봤어요. "대문자·소문자와 띄어쓰기도 구분해요"라는 안내가 나왔고, 하루 무료 횟수(20번)는 줄지 않았어요. 맞는 암호를 넣었을 때만 1번이 빠졌어요. 받은 파일은 다른 프로그램으로 다시 열어 보니 <b>암호 없이 열렸고</b>, 2쪽 그대로에 글자도 그대로 검색·복사됐어요.</p>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/pdf-password-tool-ko.jpg" alt="SlimIO PDF 비밀번호 해제 실제 화면: 대문자 하나 틀린 암호에 다시 입력 안내, 맞는 암호로 열기 암호와 인쇄·복사·편집 제한이 해제되어 157.5KB" width="700"></p>
+
+<p>④번처럼 <b>애초에 잠금이 없는 파일</b>도 있어요. 업로드가 막히는 이유가 암호가 아니라 용량이나 파일 형식일 수도 있으니, 잠금 여부부터 확인하면 헛걸음을 줄일 수 있어요.</p>
+
+<h2>✍️ 전자서명 PDF는 왜 풀면 안 될까?</h2>
+
+<p>③번이 이 글에서 가장 보여 드리고 싶었던 실험이에요. 재직증명서(예시)에 <b>테스트용 전자서명</b>을 넣고 인쇄를 막은 다음, 잠금을 풀었어요. 도구가 바로 "서명 확인(전자증명서의 '진본' 표시 등)을 통과하지 못해요"라고 경고했어요.</p>
+
+<p>정말 그런지 오픈소스 서명 검사 도구(pyHanko)로 두 파일을 비교했어요. 원본은 <b>"서명 뒤 바뀐 곳 없음"</b>, 해제본은 <b>"서명 뒤에 파일이 바뀜"</b>으로 나왔어요. 내용은 한 글자도 안 바뀌었는데, 파일을 새로 저장하는 순간 서명이 지키던 부분이 달라진 거예요.</p>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/pdf-password-sign-ko.jpg" alt="전자서명을 넣은 가상 재직증명서를 해제한 실제 화면의 경고 문구와, 서명 검사 결과 원본은 intact True, 해제한 사본은 intact False" width="700"></p>
+
+<p>그래서 정부24 전자증명서처럼 진본 확인을 하는 서류는 <b>풀지 말고 원본 그대로</b> 내세요. 암호가 번거로우면 처음부터 '미설정'으로 다시 받으면 돼요. 참고로 전자문서지갑 안내에 따르면 '진본' 마크는 진본검증 플러그인을 깐 <b>Adobe Acrobat Reader</b>에서만 제대로 보이고, 다른 뷰어에서는 '미검증'으로 보일 수 있어요. 미검증 표시가 곧 위조라는 뜻은 아니에요.</p>
+
+<h2>💳 Acrobat으로 풀 때와 비교하면</h2>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;"></th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">Adobe Acrobat</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">SlimIO</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>비용</b></td><td style="padding:10px;border:1px solid #e5e7eb;">Standard 월 19,700원부터 (부가세 포함)</td><td style="padding:10px;border:1px solid #e5e7eb;">무료</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>메뉴</b></td><td style="padding:10px;border:1px solid #e5e7eb;">도구 → 보호 → 암호화 → 보안 제거</td><td style="padding:10px;border:1px solid #e5e7eb;">파일 올리기 → 암호 입력</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>모르는 열기 암호</b></td><td style="padding:10px;border:1px solid #e5e7eb;">불가</td><td style="padding:10px;border:1px solid #e5e7eb;">불가</td></tr>
+</table>
+
+<p>이미 Acrobat을 쓰고 있다면 그걸로 충분해요. 한두 장 때문에 구독하기 부담스럽다면 브라우저 쪽이 가벼워요.</p>
+
+<h2>🙋 자주 묻는 질문</h2>
+
+<p><b>Q. 휴대폰에서도 풀 수 있어요?</b><br>👉 네, 앱 설치 없이 휴대폰 브라우저에서 돼요. 받은 파일은 보통 아이폰은 '파일' 앱, 갤럭시는 '내 파일'의 다운로드 폴더에서 찾을 수 있어요.</p>
+
+<p><b>Q. 풀고 나서 합치거나 줄여도 되나요?</b><br>👉 네. 해제한 사본은 <a href="https://pdfslimio.com/ko/merge.html">PDF 합치기</a>나 <a href="https://pdfslimio.com/ko/">PDF 압축</a>에 바로 넣을 수 있어요. 용량 맞추는 요령은 <a href="https://ddoua.tistory.com/9">PDF 용량 줄이기 글</a>에 정리해 두었어요.</p>
+
+<p><b>Q. 풀린 파일은 어떻게 관리해요?</b><br>👉 암호 없는 사본은 누가 받든 바로 열려요. 제출이 끝나면 다운로드 폴더에 남은 사본은 지우고, 원본은 따로 보관하세요.</p>
+
+<hr>
+
+<p>정리하면 <b>열기 암호는 아는 암호로</b>, <b>인쇄 제한은 내 서류일 때만</b>, <b>진본 서류는 원본 그대로</b>예요. 이 세 가지만 지키면 PDF 잠금 때문에 제출이 늦어질 일은 없을 거예요. 바로 해 보려면 <a href="https://pdfslimio.com/ko/unlock-pdf.html">PDF 비밀번호 해제</a>로 가세요! 🔓✨</p>
+
+<p style="color:#888;font-size:13px;">출처: 전자문서지갑 자주묻는 질문(다운로드 암호 6자리·미설정·진본 표시·열람용 증명서), Adobe Acrobat 도움말 'PDF에서 암호 제거', Adobe 'PDF 암호 해제' 안내(메뉴·플랜 가격), Apple 'Mac용 미리보기에서 PDF를 암호로 보호하기'. 2026년 10월 31일 확인 기준이고, 명세서 암호 규칙은 회사마다 달라서 받은 안내를 꼭 확인하세요. 실험 문서와 서명은 모두 가상·테스트용이에요. SlimIO는 제가 직접 만든 무료 도구예요. 필요한 기능이 있으면 댓글로 알려 주세요! 🛠</p>

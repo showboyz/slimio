@@ -1,0 +1,118 @@
+<!--
+티스토리 글 #13 — HEIC → JPG (아이폰·갤럭시 HEIC 사진이 원서·관공서 사이트에 안 올라갈 때, PC에서 heic 파일 열기)
+제목: 📸 HEIC JPG 변환 3가지 방법, 아이폰·갤럭시 사진이 안 올라갈 때와 PC에서 heic 파일 열기
+태그: heic jpg 변환, heic 파일 열기, 갤럭시 heic jpg 변환, 아이폰 heic사진 jpg변환, 아이폰 사진 jpg 변환, heic jpg 변환 프로그램, heic 파일 변환, heic 뷰어, 아이폰 사진 확장자 변경, 높은 호환성
+카테고리: 문서·사진 꿀팁
+근거: (모두 2026-10-31 확인) ① Apple 지원 'Apple 기기에서 HEIF 또는 HEVC 미디어 사용하기' https://support.apple.com/ko-kr/116944 — HEIF 캡처 기기 iPhone 7 이후, 설정 → 카메라 → 포맷 → '높은 호환성'이면 새 사진·동영상이 JPEG·H.264, '고효율성'으로 돌아갈 수 있음, 이 설정은 HEIF로 캡처할 수 있는 기기에만 있음, Apple은 HEIF·HEVC 캡처를 권장(본문 인용 "캡처할 것을 권장" 한 구절만), AirDrop·메시지·이메일 공유 시 받는 기기가 지원 안 하면 JPEG로 공유될 수 있음, USB로 PC에 가져오면 JPEG로 변환될 수 있고 설정 → 앱 → 사진 → '원본 유지'면 변환 안 됨, Mac 사진·미리보기 파일 > 내보내기 → JPEG/PNG. 사용자가 말한 '호환성 우선'은 공식 메뉴 이름이 아니라서 본문에 '높은 호환성'이 맞다고 씀. 아이폰 기본값이 고효율성이라는 공식 문장은 없어서 '기본값'이라고 쓰지 않음 ② 삼성전자서비스 '갤럭시 와이드4, HEIF 파일로 촬영된 사진을 JPG 파일로 변환하고 싶어요' https://www.samsungsvc.co.kr/solution/23323 (2025-12-30 게시) — 카메라 설정 → 사진 형식 → 고효율 사진 끄면 이후 JPG로 저장될 수 있음, 기존 HEIF는 갤러리 → 공유 → 삼성 노트 → 노트에 추가된 사진 → 더보기(⋮) → 이미지 저장 → 갤러리에 JPG, "HEIF 사진을 JPG 파일로 바로 변환하는 기능은 제공되지 않아요", 메뉴는 모델·버전마다 다를 수 있음 ③ Microsoft Store 'HEIF 이미지 확장' https://apps.microsoft.com/detail/9pmmsr1cgpwg — .heic·.heif를 보려면 HEVC Video Extensions 패키지도 설치해야 함, 가격 무료 / 'HEVC Video Extensions' https://apps.microsoft.com/detail/9nmzlz57r3t7 — ₩1,200 (스토어 API 표시 가격) ④ SlimIO HEIC→JPG 페이지(우리 도구 동작): 브라우저 안에서 변환, JPG에 촬영 위치·날짜 같은 카메라 정보는 안 옮김. 갤럭시 갤러리가 아이폰 HEIC를 여는지는 공식 안내에서 확인하지 못해서 본문에 그렇게 씀
+수요: 다음 자동완성(2026-10-31) 'heic jpg 변환'(heic jpg 변환 프로그램·갤럭시 heic jpg 변환·아이폰 heic사진 jpg변환), 'heic 파일'(열기·변환 프로그램·변환·보기·휴대폰 사진파일 heic 파일 변환), 'heic'(확장자 heic·heic 뷰어·핸드폰 사진 jpg heic·heic to jpg), '아이폰 사진 jpg'(아이폰 사진 jpg 변환), '갤럭시 heic'(갤럭시 heic jpg 변환), '아이폰 사진 확장자'(아이폰 사진 확장자 변경)
+실험: 얼굴 없는 가상 사진 3장을 새로 그려(scratchpad r1031t/t13/scripts/gen.mjs, 카메라 노이즈) sips로 HEIC 저장: IMG_3101 '통장 사본(예시)' 책상 사진 3024×4032 2.77MB, IMG_3102 노을 산 5712×4284(24MP) 5.66MB, IMG_3103 라테 4032×3024 2.48MB(크기는 도구 화면 표기). 라이브 https://pdfslimio.com/ko/heic-to-jpg.html?notrack, headless Chrome 폭 400px(scripts/heic.mjs): ① IMG_3101 높게 92%·원래 크기·500KB 이하 → 473.9KB, 2622×3496, 2.6초, 100% 확대해도 글씨 또렷 ② IMG_3102 높게 92%·원래 크기·제한 없음 → 6.63MB(HEIC 5.66MB보다 커짐), 5712×4284 ③ 3장 작게 75%·긴 쪽 1280px·제한 없음 → 65.4KB(960×1280)·31.4KB·74.6KB(1280×960), 합계 171.4KB, ZIP 1개, 1280px 통장 사진도 글씨 읽힘 ④ IMG_3101.HEIC 이름만 IMG_3101.jpg로 바꾼 파일: file 명령으로 'HEIF Image HEVC'(속은 그대로), 도구에 넣으니 ①과 바이트까지 같은 진짜 JPEG(473.9KB) — 두 번 돌려도 같은 결과
+이미지: heic-convert-hero.jpg(새 대표 — 주황 그라데이션, 왼쪽 업로드 창 HEIC ✕ → JPG ✓, 실험 ① 숫자), heic-convert-devices-ko.jpg(새 — 아이폰·갤럭시·윈도우·맥 공식 안내 정리 그림, 실제 화면 아님), heic-convert-tool-ko.jpg(새 — 라이브 도구 실제 화면 두 장, 실험 ①·③, 밝은 주황 틀). 네이버 #45 이미지는 쓰지 않음
+예약: 미정 — 2026-11-02 08:00 예정
+대표이미지: heic-convert-hero.jpg
+-->
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/heic-convert-hero.jpg" alt="원서 사진 첨부 창에서 IMG_3101.HEIC는 지원하지 않는 형식으로 거절되고, JPG로 바꾼 IMG_3101.jpg(2.77MB에서 473.9KB)는 첨부된 모습" width="760"></p>
+
+<p>원서 접수 마감 날 밤, 사진 첨부 버튼을 눌렀더니 <b>"JPG, PNG 파일만 가능합니다"</b>라는 문구가 뜨고 휴대폰에서 옮긴 사진이 안 올라간 적 있으세요? 😓 파일 이름을 보면 끝이 <b>.HEIC</b>로 되어 있을 거예요.</p>
+
+<p>이 HEIC 때문에 막히는 장면은 생각보다 다양해요.</p>
+
+<ul>
+  <li>🏛 관공서·학교·회사 지원 사이트가 <b>HEIC를 아예 고르지 못하게</b> 할 때</li>
+  <li>🤖 아이폰 친구가 보낸 사진, 또는 <b>내 갤럭시로 찍은 사진</b>이 다른 곳에서 안 열릴 때</li>
+  <li>🖥 회사 윈도우 PC에서 <b>heic 파일 열기</b>부터 안 될 때</li>
+</ul>
+
+<p>공식 안내(Apple·삼성전자서비스·Microsoft Store)로 기기별 해결법을 정리하고, 가상 사진 3장으로 <b>JPG 변환 실험</b>도 해 봤어요. 🔬</p>
+
+<div style="background:#fff7ed;border-left:4px solid #ea580c;padding:14px 16px;border-radius:8px;margin:18px 0;">
+<b>⏱ 3줄 요약</b><br>
+1️⃣ 확장자 이름만 .jpg로 고치면 <b>속은 그대로 HEIC</b>예요. 진짜로 변환해야 해요<br>
+2️⃣ 아이폰은 카메라 포맷 <b>'높은 호환성'</b>, 갤럭시는 <b>'고효율 사진' 끄기</b>로 앞으로 찍을 사진을 JPG로<br>
+3️⃣ 이미 찍은 사진은 <a href="https://pdfslimio.com/ko/heic-to-jpg.html">HEIC JPG 변환</a>에 넣고, 원서용이면 용량 제한까지 골라서 받기! 🎉
+</div>
+
+<h2>🔍 확장자만 바꾸면 안 될까?</h2>
+
+<p>'아이폰 사진 확장자 변경'은 다음 자동완성에도 뜨는 검색어예요. 파일 이름 끝 HEIC를 jpg로 고치면 끝날 것 같거든요. 그래서 직접 확인해 봤어요.</p>
+
+<p>IMG_3101.HEIC를 복사해서 이름만 <b>IMG_3101.jpg</b>로 바꾼 다음, 맥 터미널의 file 명령으로 파일 속을 읽어 봤어요. 결과는 <b>"HEIF Image HEVC"</b>. 이름표만 바뀌었고 내용물은 여전히 HEIC예요. 사이트가 이름이 아니라 파일 내용을 확인한다면 거절될 수 있고, 받아 줘도 담당자 PC에서 안 열릴 수 있어요.</p>
+
+<p>💡 이름을 바꾸는 건 변환이 아니에요. 아래 방법처럼 <b>JPG로 다시 저장</b>해야 진짜 JPG가 돼요.</p>
+
+<h2>🗺 내 상황에 맞는 방법 고르기</h2>
+
+<p>방법은 크게 세 갈래예요. <b>폰 카메라 설정</b>을 바꾸거나, <b>기기에 있는 기능</b>(삼성 노트·미리보기·윈도우 확장)을 쓰거나, <b>브라우저에서 변환</b>하는 거예요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">이런 상황이면</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">이렇게 하세요</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">아이폰, 다음 사진부터 JPG로</td><td style="padding:10px;border:1px solid #e5e7eb;">카메라 포맷 <b>높은 호환성</b></td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">갤럭시, 다음 사진부터 JPG로</td><td style="padding:10px;border:1px solid #e5e7eb;">카메라 <b>고효율 사진 끄기</b></td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">갤럭시에 이미 있는 HEIF 한두 장</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>삼성 노트</b>를 거쳐 이미지 저장</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">윈도우 PC에서 보기만</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>HEIF 이미지 확장</b> + HEVC 확장</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">맥에서 한 장</td><td style="padding:10px;border:1px solid #e5e7eb;">미리보기 <b>파일 → 내보내기</b></td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">원서용 용량 제한, 여러 장</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>브라우저 변환</b> (설치 없음)</td></tr>
+</table>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/heic-convert-devices-ko.jpg" alt="기기별 HEIC 해결법 정리: 아이폰 높은 호환성, 갤럭시 고효율 사진 끄기와 삼성 노트 이미지 저장, 윈도우 HEIF 이미지 확장과 HEVC 확장, 맥 파일 내보내기 JPEG" width="700"></p>
+
+<h2>📱 아이폰: 메뉴 이름은 '높은 호환성'이에요</h2>
+
+<p>흔히 '호환성 우선'이라고 부르지만, Apple 안내에 나오는 실제 이름은 <b>'높은 호환성'</b>이에요. <b>설정 → 카메라 → 포맷</b>에 들어가면 '고효율성'과 '높은 호환성' 두 가지가 있어요. 높은 호환성을 고르면 그 뒤로 찍는 사진은 JPEG로 남아요.</p>
+
+<ul>
+  <li>📷 <b>새 사진만 바뀌어요.</b> 앨범에 있던 HEIC는 그대로라 따로 변환해야 해요</li>
+  <li>💾 Apple은 저장 공간을 아끼는 HEIF 쪽으로 <b>"캡처할 것을 권장"</b>한다고 적어 두었어요. 원서 사진을 찍는 날만 바꿨다가 돌려놔도 돼요</li>
+  <li>📲 iPhone 7 이후처럼 HEIF로 찍을 수 있는 기기에만 이 메뉴가 보여요</li>
+</ul>
+
+<p>PC로 옮길 때도 볼 곳이 있어요. 케이블로 PC에 가져오면 JPEG로 바뀌어 들어올 수 있는데, <b>설정 → 앱 → 사진</b>에서 <b>'원본 유지'</b>가 골라져 있으면 HEIC 그대로 넘어와요. AirDrop·메시지·이메일로 보낼 때도 받는 기기가 HEIF를 모르면 JPEG로 보내질 수 있다고 해요. 그래서 같은 사진이 어떤 날은 JPG, 어떤 날은 HEIC로 오는 거예요. 😅</p>
+
+<h2>🤖 갤럭시: 갤럭시도 HEIC를 만들어요</h2>
+
+<p>'갤럭시 heic jpg 변환'이 자동완성에 따로 뜨는 이유가 있어요. 갤럭시 카메라에도 <b>'고효율 사진'</b> 설정이 있어서, 켜 두면 갤럭시 사진도 HEIF로 저장돼요. 삼성전자서비스 안내(갤럭시 와이드4 기준, 모델마다 메뉴 위치는 조금 달라요)는 이래요.</p>
+
+<ol>
+  <li><b>앞으로 찍을 사진</b>: 카메라 앱 → 설정 → 사진 형식 → 고효율 사진 <b>끄기</b></li>
+  <li><b>이미 찍은 사진</b>: 갤러리에서 사진 선택 → 공유 → <b>삼성 노트</b> → 노트에 들어간 사진 선택 → 더보기(⋮) → <b>이미지 저장</b> → 갤러리에 JPG가 생겨요</li>
+</ol>
+
+<p>삼성 안내에는 HEIF를 JPG로 '바로' 바꾸는 기능은 없다고 적혀 있어요. 그래서 노트 앱을 한 번 거치는 거예요. 한두 장은 이걸로 충분하지만, 여러 장이면 꽤 번거로워요. 그리고 아이폰에서 받은 HEIC를 갤럭시 갤러리가 바로 여는지는 <b>공식 안내에서 확인하지 못했어요</b>. 안 열린다면 아래 브라우저 방법을 쓰세요.</p>
+
+<h2>🖥 윈도우 PC: heic 파일 열기(뷰어)</h2>
+
+<p>윈도우에서 HEIC를 '보기만' 하려면 Microsoft Store의 <b>HEIF 이미지 확장</b>(무료)을 쓰면 돼요. 그런데 스토어 설명을 끝까지 읽으면 .heic 사진을 보려면 <b>HEVC Video Extensions</b>도 설치해야 한다고 나와요. 이건 스토어 가격이 <b>₩1,200</b>이에요(10월 31일 확인). 회사 PC처럼 설치가 막혀 있다면 보기 대신 바로 JPG로 바꾸는 게 빨라요.</p>
+
+<h2>🧪 직접 해 봤어요: 설치 없이 브라우저에서 바꾸기</h2>
+
+<p>제가 만든 무료 도구 <b>SlimIO</b>의 HEIC JPG 변환으로 실험했어요. 프로그램 설치나 회원가입이 없고, 사진은 <b>내 브라우저 안에서만</b> 바뀌어서 서버로 올라가지 않아요. 휴대폰 브라우저에서도, PC에서도 쓸 수 있어요. 아래 화면은 휴대폰 폭으로 연 실제 화면이고, 실험 사진은 얼굴이 없는 가상 사진 3장이에요. 📷</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">실험</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">설정</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">결과</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">통장 사본 사진 1장<br>HEIC 2.77MB</td><td style="padding:10px;border:1px solid #e5e7eb;">높게 92%<br><b>500KB 이하</b></td><td style="padding:10px;border:1px solid #e5e7eb;"><b>473.9KB</b>, 2622×3496</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">노을 산 1장 (24MP)<br>HEIC 5.66MB</td><td style="padding:10px;border:1px solid #e5e7eb;">높게 92%<br>제한 없음</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>6.63MB</b> (오히려 커짐)</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">3장 한꺼번에<br>합계 10.92MB</td><td style="padding:10px;border:1px solid #e5e7eb;">작게 75%<br>긴 쪽 1280px</td><td style="padding:10px;border:1px solid #e5e7eb;">3장 <b>171.4KB</b>, ZIP 1개</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">이름만 .jpg로 바꾼 파일</td><td style="padding:10px;border:1px solid #e5e7eb;">첫 줄과 같게</td><td style="padding:10px;border:1px solid #e5e7eb;">첫 줄과 똑같은 진짜 JPG</td></tr>
+</table>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/heic-convert-tool-ko.jpg" alt="SlimIO HEIC JPG 변환 실제 화면 두 장: 통장 사본 HEIC 2.77MB를 500KB 이하로 바꿔 473.9KB, HEIC 3장 10.92MB를 작게 75% 긴 쪽 1280px로 바꿔 171.4KB" width="700"></p>
+
+<ul>
+  <li>📈 <b>제한 없이 바꾸면 커질 수 있어요.</b> 24MP 사진은 5.66MB가 6.63MB가 됐어요. HEIC가 원래 압축을 잘하는 형식이라 그래요. 사이트에 용량 제한이 적혀 있으면 꼭 같이 고르세요</li>
+  <li>🔎 <b>500KB로 줄여도 글씨는 또렷했어요.</b> 통장 사본 사진을 원래 크기로 확대해 봐도 계좌번호 숫자가 깨끗하게 읽혔어요. 1280px로 줄인 65.4KB 파일도 글씨는 읽혔어요</li>
+  <li>✅ <b>이름만 바꾼 파일도 구제돼요.</b> 위에서 실험한 IMG_3101.jpg를 넣었더니 HEIC 원본을 넣었을 때와 바이트까지 같은 JPG가 나왔어요</li>
+</ul>
+
+<h2>🙋 자주 묻는 질문</h2>
+
+<p><b>Q. heic jpg 변환 프로그램을 꼭 깔아야 하나요?</b><br>👉 아니에요. 맥은 미리보기, 갤럭시는 삼성 노트로 되고, 기기 상관없이 브라우저 변환도 돼요. 회사 PC처럼 설치가 막힌 곳이면 브라우저 쪽이 편해요.</p>
+
+<p><b>Q. 사진 찍은 날짜·위치도 같이 넘어가요?</b><br>👉 SlimIO로 바꾼 JPG에는 촬영 위치·날짜 같은 카메라 정보가 담기지 않아요. 제출용으로는 깔끔하지만, 앨범 정리에 날짜가 필요하면 HEIC 원본은 지우지 말고 두세요.</p>
+
+<p><b>Q. 원서에 넣을 증명사진이에요.</b><br>👉 HEIC를 따로 바꿀 필요 없이 <a href="https://pdfslimio.com/ko/compress-id-photo.html">증명사진 크기 맞추기</a>에 HEIC 그대로 넣으면 규격 자르기와 용량까지 한 번에 돼요. 시험별 사진 규격은 <a href="https://ddoua.tistory.com/11">시험 원서 사진 규격 글</a>, KB 맞추는 요령은 <a href="https://ddoua.tistory.com/7">증명사진 용량 줄이기 글</a>에 정리해 두었어요.</p>
+
+<hr>
+
+<p>정리하면, <b>다음 사진은 폰 설정으로</b>, <b>이미 찍은 사진은 진짜 변환으로</b>예요. 이름만 바꾸는 지름길은 없어요. 마감 전에 한 번 미리 올려 보시고, 안 되면 <a href="https://pdfslimio.com/ko/heic-to-jpg.html">HEIC JPG 변환</a>으로 1분 안에 해결하세요! 🍀</p>
+
+<p style="color:#888;font-size:13px;">출처: Apple 지원 'Apple 기기에서 HEIF 또는 HEVC 미디어 사용하기', 삼성전자서비스 'HEIF 파일로 촬영된 사진을 JPG 파일로 변환하고 싶어요', Microsoft Store 'HEIF 이미지 확장'·'HEVC Video Extensions' 상품 설명. 2026년 10월 31일 확인 기준이고, 메뉴 이름과 가격은 기종·버전·시기에 따라 달라질 수 있어요. 실험 사진은 모두 얼굴 없는 가상 사진이에요. SlimIO는 제가 직접 만든 무료 도구예요. 필요한 기능이 있으면 댓글로 알려 주세요! 🛠</p>

@@ -1,0 +1,139 @@
+<!--
+티스토리 글 #19 — 사진 여러 장을 PDF 하나로 (휴대폰 사진·스캔 사진, 순서, 300KB·1MB·5MB, 글씨 실험)
+제목: 📸 사진 pdf 변환, 핸드폰 사진 여러 장을 PDF 하나로 (300KB·1MB·5MB 글씨 실험)
+태그: 사진 pdf 변환, 핸드폰 사진 pdf, 휴대폰 사진 pdf, 사진을 pdf로 변환, 사진 여러장 pdf, 스캔사진을 pdf로 변환하기, jpg pdf 변환, 아이폰 사진 pdf 변환, 갤럭시 사진 pdf 변환, pdf 용량 줄이기
+카테고리: 문서·사진 꿀팁
+근거: Apple iPhone 사용 설명서 '미리보기 앱에서 PDF 및 이미지를 내보내거나 압축하기'(https://support.apple.com/ko-kr/guide/iphone/iph61c20afe1/ios — iOS 27판: 이미지를 열고 내보내기 → 포맷 PDF, '화면에 맞게 이미지 최적화(PDF)'·'JPEG로 이미지 저장(PDF)'·'텍스트 삽입(PDF)'=OCR / iOS 26판 https://support.apple.com/ko-kr/guide/iphone/iph61c20afe1/26/ios/26 은 슬라이더로 파일 크기만), '미리보기 앱에서 PDF 페이지 추가, 삭제, 회전, 이동 또는 자르기'(https://support.apple.com/ko-kr/guide/iphone/iphbf4977cff/ios — 썸네일 길게 터치 → '파일에서 삽입'으로 PDF·이미지 삽입, 썸네일을 끌어 이동), Apple Mac 사용 설명서 '여러 파일을 PDF로 결합하기'(https://support.apple.com/ko-kr/guide/mac-help/mchl21ac2368/mac — Control-클릭 → 빠른 동작 → PDF 생성, "사용자가 선택한 순서와 동일하게"), 삼성 멤버스 'Gallery Assistant (갤러리 어시스턴트)' 담당자 글(https://r1.community.samsung.com/t5/camcyclopedia/gallery-assistant-%EA%B0%A4%EB%9F%AC%EB%A6%AC-%EC%96%B4%EC%8B%9C%EC%8A%A4%ED%84%B4%ED%8A%B8/ba-p/36825939, 2026-07-29 수정 — 갤럭시 스토어 또는 굿락 '편리한 갤럭시'로 설치, 'PDF로 저장' 페이지 크기 A3·A4·Letter·세로/가로·이미지 화질 원본/중간/낮음, One UI 7.0 이상·S24~S26·폴드7·플립7·A26/A36/A56 등 지원 기기만, 갤러리 더보기에서 바로 들어가기는 One UI 8.5부터) — 모두 2026-10-31 확인. SlimIO 동작은 코드로 확인: public/js/jpg-to-pdf.js(원본 합계가 제한 안이면 그대로, 넘으면 긴 변 2000px부터 화질·크기 낮춤, 1000px 아래면 경고), public/target.js(사진 크기 페이지는 3571·2678px 단계 먼저, 1px/pt 넘지 않음), ko/compress-pdf-for-email.html 화면 문구 '파일은 저장되지 않아요. 압축 직후 삭제돼요.'(서버 Ghostscript 먼저, 안 되면 브라우저). 아이폰 파일 앱 'PDF 생성'은 공식 설명서(파일 및 폴더 구성하기 iphab82e0798)에서 확인 못 해서 안 씀. 삼성서비스 사진 인쇄 안내(samsungsvc 37484)에는 'PDF로 저장'이 안 나와서 인쇄→PDF도 안 씀
+수요: 다음 자동완성 '사진 pdf'(사진 pdf 변환·사진 pdf 변환 어플·사진 pdf파일 변환·휴대폰 사진 pdf·핸드폰 사진 pdf·갤럭시 사진 pdf·아이폰 사진 pdf·갤럭시 사진 pdf 변환·아이폰 사진 pdf 변환), '사진 pdf 변환'(사진 파일 pdf변환), '사진을 pdf'(사진을 pdf로 변환·사진을 pdf파일로 변환하기·스캔사진을 pdf로 변환하기), 'jpg pdf'(jpg pdf 변환·jpg pdf 무료변환·jpg파일 pdf로 변환), 'pdf 용량'(pdf 용량 줄이기). '사진 여러장 pdf'·'사진 pdf로 만들기'·'사진 pdf 용량'·'사진 pdf 합치기'는 자동완성 없음('사진 여러장'은 카톡·인스타·콜라주 쪽), '핸드폰 사진 pdf'는 자기 자신만
+실험: 가상 서류 4장(모두 SAMPLE·예시 표시, 얼굴·실제 정보 없음, scratchpad r1031t/t19/scripts/docs.mjs·make_inputs.mjs) — 활동 계획서(손글씨, 회색 책상 휴대폰 사진 3024×4032, 도구 표시 3.00MB) · 봉사활동 확인서(복합기 스캔 300dpi 2480×3508, 445.4KB) · 성적증명서(나무 책상 휴대폰 사진 3024×4032, 2.60MB) · 카드 영수증(휴대폰 사진, 픽셀은 4032×3024로 눕히고 EXIF 방향 6, 2.77MB). 실제 https://pdfslimio.com/ko/jpg-to-pdf.html?notrack (Playwright headless, 폭 400, scripts/j2p.mjs): 이름순으로 올린 뒤 ▲로 계획서→확인서→성적→영수증 순서로 바꿈(PDF에서 순서·영수증 세로 확인). 제한 없음 8.69MB / 5MB 1.22MB(긴 변 2000px) / 2MB 1.22MB(2000px) / 1MB 974.2KB(2000px) / 500KB 479.4KB(2000px) / 300KB 291.1KB(1600px) / 100KB 96.3KB(819px, 작은 글씨 경고). 추가: 영수증 빼고 3장 300KB → 292.9KB(2000px), 스캔+영수증 2장(합계 약 3.2MB) 5MB → 3.09MB '원래 화질 그대로'. 같은 8.69MB PDF를 https://pdfslimio.com/ko/compress-pdf-for-email.html?notrack 에 넣음(scripts/email.mjs): 5MB 3.25MB(3571px) / 2MB 1.49MB(3571px, 다시 해도 같음) / 1MB 904.5KB(2678px) / 500KB 437.9KB(1786px) / 300KB 277.0KB(1488px) — 서버 압축으로는 안 맞아서 모두 브라우저에서 이미지로 바꾼 결과. 글씨 판정: 모든 PDF를 pdf.js로 1px/pt로 그려 같은 자리를 잘라 비교(scripts/crops.mjs, out/sheetA·B·C.jpg) — 성적증명서 각주(약 7pt)는 2000px 선명·1600px 읽힘(번짐)·819px 못 읽음, 크게 찍은 영수증 숫자는 819px에서도 읽힘, 스캔본 각주는 300KB까지 깨끗·100KB 뭉개짐. 2단계 1MB(2678px)·2MB(3571px)는 사진→PDF 1MB(2000px)보다 눈에 띄게 또렷, 500KB·300KB에서는 두 방법이 거의 같음
+이미지: photos-pdf-tistory-hero.jpg(새 대표 이미지 1200×630, 보라 그라데이션, 실험 서류 4장 썸네일 번호 1~4 → PDF 1개·4쪽, 5MB·1MB·300KB 실제 결과 칩), photos-pdf-tistory-zoom-ko.jpg(새 — 성적증명서 각주를 제한 없음·1MB·300KB·100KB로 같은 배율 비교 + 100KB 영수증 숫자), photos-pdf-tistory-2step-ko.jpg(새 — 실제 PDF 압축 화면 2MB 결과 캡처 + 사진→PDF 1MB vs PDF 압축 1MB·2MB 확대 비교), photos-pdf-tistory-tool-ko.jpg(새 — 실제 사진→PDF 화면: 순서 바꾼 목록, 300KB 이하, 291.1KB·1600px 결과). 네이버 #4·#31 이미지·서류와 다른 서류·색·배치
+예약: 미정 — 2026-11-08 08:00 예정
+대표이미지: photos-pdf-tistory-hero.jpg
+-->
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/photos-pdf-tistory-hero.jpg" alt="휴대폰 사진 3장과 스캔 1장을 PDF 하나로 묶고 5MB, 1MB, 300KB 제한으로 만든 실제 결과" width="760"></p>
+
+<p>제출 페이지에 <b>"첨부는 PDF 1개, 용량은 ○MB 이하"</b>라고 적혀 있으면 손이 멈추죠. 서류는 휴대폰으로 찍어 두었는데, 사진 몇 장만 모아도 금방 몇 MB가 넘어가니까요. 😮‍💨</p>
+
+<p>그래서 직접 <b>실험</b>해 봤어요. 휴대폰으로 찍은 서류 3장과 복합기로 스캔한 1장을 PDF 하나로 묶고, 용량 제한을 <b>5MB부터 100KB까지</b> 바꿔 가며 글씨가 어디까지 살아남는지 확대해서 봤어요.</p>
+
+<p>페이지 순서 맞추는 법과 휴대폰 기본 기능으로 할 때 알아 둘 점도 담았어요. 📎</p>
+
+<div style="background:#f5f3ff;border-left:4px solid #7c3aed;padding:14px 16px;border-radius:8px;margin:18px 0;">
+<b>⏱ 3줄 요약</b><br>
+1️⃣ 사진 4장(묶으면 8.69MB)을 <b>300KB 이하 PDF 하나</b>로 만들어도 7pt 작은 글씨까지 읽혔어요<br>
+2️⃣ <b>100KB</b>까지 내리면 작은 글씨는 못 읽어요. 크게 찍은 영수증 숫자만 버텼어요<br>
+3️⃣ 1MB 이상 쓸 수 있다면 <b>'제한 없음'으로 만든 뒤 PDF 압축</b>을 한 번 더 하는 쪽이 더 또렷했어요
+</div>
+
+<h2>🧪 실험 재료: 휴대폰 사진 3장 + 스캔 1장</h2>
+
+<p>"계획서와 증빙을 한 파일로 내세요" 같은 상황을 떠올리며 만든 <b>가상 서류</b>예요. 모두 SAMPLE·예시 표시가 있어요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">쪽</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">서류 (예시)</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">어떻게 만든 파일</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">크기</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">1</td><td style="padding:10px;border:1px solid #e5e7eb;">활동 계획서 (손글씨)</td><td style="padding:10px;border:1px solid #e5e7eb;">휴대폰, 회색 책상, 조금 어두운 곳</td><td style="padding:10px;border:1px solid #e5e7eb;">3.00MB</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">2</td><td style="padding:10px;border:1px solid #e5e7eb;">봉사활동 확인서</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>복합기 스캔</b> (300dpi)</td><td style="padding:10px;border:1px solid #e5e7eb;">445.4KB</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">3</td><td style="padding:10px;border:1px solid #e5e7eb;">성적증명서</td><td style="padding:10px;border:1px solid #e5e7eb;">휴대폰, 나무 책상</td><td style="padding:10px;border:1px solid #e5e7eb;">2.60MB</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">4</td><td style="padding:10px;border:1px solid #e5e7eb;">카드 영수증</td><td style="padding:10px;border:1px solid #e5e7eb;">휴대폰, <b>옆으로 누운 채 저장된</b> 사진</td><td style="padding:10px;border:1px solid #e5e7eb;">2.77MB</td></tr>
+</table>
+
+<p>휴대폰 사진은 3024×4032픽셀에 3MB 안팎이고, 스캔본은 그 6분의 1 정도예요. 책상 무늬나 그림자 없이 하얀 종이만 있어서 가볍게 저장돼요. 네 장을 그대로 묶으니 <b>PDF가 8.69MB</b>였어요.</p>
+
+<h2>📊 300KB·1MB·5MB… 제한별로 만들어 봤어요</h2>
+
+<p>제가 만든 무료 도구 <b>SlimIO</b>의 <a href="https://pdfslimio.com/ko/jpg-to-pdf.html">사진→PDF</a>에서 'PDF 용량 제한'만 바꿔 가며 같은 4장을 넣었어요. 글씨는 성적증명서 맨 아래 <b>약 7pt 각주</b>로 판정했어요. 제일 작아서 가장 먼저 무너지는 글씨예요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">용량 제한</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">나온 PDF</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">사진 긴 변</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">7pt 각주</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">제한 없음</td><td style="padding:10px;border:1px solid #e5e7eb;">8.69MB</td><td style="padding:10px;border:1px solid #e5e7eb;">원본 그대로</td><td style="padding:10px;border:1px solid #e5e7eb;">기준</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>5MB</b> 이하</td><td style="padding:10px;border:1px solid #e5e7eb;">1.22MB</td><td style="padding:10px;border:1px solid #e5e7eb;">2000px</td><td style="padding:10px;border:1px solid #e5e7eb;">✅ 잘 읽힘</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">2MB 이하</td><td style="padding:10px;border:1px solid #e5e7eb;">1.22MB</td><td style="padding:10px;border:1px solid #e5e7eb;">2000px</td><td style="padding:10px;border:1px solid #e5e7eb;">✅ 잘 읽힘</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>1MB</b> 이하</td><td style="padding:10px;border:1px solid #e5e7eb;">974.2KB</td><td style="padding:10px;border:1px solid #e5e7eb;">2000px</td><td style="padding:10px;border:1px solid #e5e7eb;">✅ 잘 읽힘</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">500KB 이하</td><td style="padding:10px;border:1px solid #e5e7eb;">479.4KB</td><td style="padding:10px;border:1px solid #e5e7eb;">2000px</td><td style="padding:10px;border:1px solid #e5e7eb;">✅ 읽힘</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>300KB</b> 이하</td><td style="padding:10px;border:1px solid #e5e7eb;">291.1KB</td><td style="padding:10px;border:1px solid #e5e7eb;">1600px</td><td style="padding:10px;border:1px solid #e5e7eb;">🟡 읽힘 (확대하면 번짐)</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">100KB 이하</td><td style="padding:10px;border:1px solid #e5e7eb;">96.3KB</td><td style="padding:10px;border:1px solid #e5e7eb;">819px</td><td style="padding:10px;border:1px solid #e5e7eb;">❌ 못 읽음</td></tr>
+</table>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/photos-pdf-tistory-zoom-ko.jpg" alt="같은 서류 사진 4장을 제한 없음, 1MB, 300KB, 100KB로 만든 PDF에서 7pt 각주를 같은 배율로 확대한 비교" width="700"></p>
+
+<p>표를 보면서 제가 놀란 점은 세 가지예요.</p>
+
+<ul>
+  <li>🤔 <b>5MB를 골랐는데 1.22MB?</b> 사진을 다시 저장할 때는 긴 변을 2000px까지만 쓰게 만들어 뒀어요. A4 서류의 작은 글씨까지 읽히는 크기라 용량을 꽉 채우지 않아요. 원본 합계가 제한보다 작으면 아예 손대지 않아요(스캔본+영수증 약 3.2MB를 5MB로 → "원래 화질 그대로" 3.09MB).</li>
+  <li>📉 <b>300KB가 경계</b>예요. 1600px로 줄면서 받침 많은 글자가 살짝 번졌지만 문서확인번호까지 읽혔어요.</li>
+  <li>🧾 <b>100KB에서도 영수증은 읽혔어요.</b> 각주는 뭉개졌는데 승인번호·금액은 보였어요. 화면 가득 크게 찍어서 글자가 컸던 덕분이에요. 중요한 건 <b>글자가 사진 안에서 몇 픽셀로 찍혔느냐</b>예요.</li>
+</ul>
+
+<p>스캔본(봉사활동 확인서)의 비슷한 크기 각주는 300KB에서도 깨끗했고, 100KB에서는 짐작만 되는 정도였어요. 이럴 때 도구가 "작은 글씨는 읽기 어려울 수 있어요"라고 노란 안내를 띄워 줘요.</p>
+
+<h2>✨ 1MB 넘게 쓸 수 있다면: 2단계로 더 선명하게</h2>
+
+<p>제한이 1MB·2MB·5MB처럼 넉넉하면, 남는 용량을 화질에 쓰는 방법이 있어요.</p>
+
+<ol>
+  <li>사진→PDF에서 <b>'제한 없음'</b>으로 PDF를 만들어요 (이번엔 8.69MB)</li>
+  <li>그 PDF를 <a href="https://pdfslimio.com/ko/compress-pdf-for-email.html">PDF 용량 줄이기(메일 첨부용)</a>에 넣고 목표 용량을 골라요</li>
+</ol>
+
+<p>얼마 전 이 압축 도구를 손봐서, 사진으로 만든 페이지는 1MB·2MB 같은 큰 목표에서 디테일을 더 남겨요. 같은 8.69MB PDF로 돌려 본 결과예요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">목표</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">2단계 결과</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">페이지 긴 변</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">사진→PDF 한 번에</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">5MB</td><td style="padding:10px;border:1px solid #e5e7eb;">3.25MB</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>3571px</b></td><td style="padding:10px;border:1px solid #e5e7eb;">1.22MB · 2000px</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">2MB</td><td style="padding:10px;border:1px solid #e5e7eb;">1.49MB</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>3571px</b></td><td style="padding:10px;border:1px solid #e5e7eb;">1.22MB · 2000px</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">1MB</td><td style="padding:10px;border:1px solid #e5e7eb;">904.5KB</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>2678px</b></td><td style="padding:10px;border:1px solid #e5e7eb;">974.2KB · 2000px</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">500KB</td><td style="padding:10px;border:1px solid #e5e7eb;">437.9KB</td><td style="padding:10px;border:1px solid #e5e7eb;">1786px</td><td style="padding:10px;border:1px solid #e5e7eb;">479.4KB · 2000px</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">300KB</td><td style="padding:10px;border:1px solid #e5e7eb;">277.0KB</td><td style="padding:10px;border:1px solid #e5e7eb;">1488px</td><td style="padding:10px;border:1px solid #e5e7eb;">291.1KB · 1600px</td></tr>
+</table>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/photos-pdf-tistory-2step-ko.jpg" alt="PDF 용량 줄이기 화면에서 8.69MB가 2MB 목표로 1.49MB가 된 결과와, 1MB·2MB 결과의 각주 확대 비교" width="700"></p>
+
+<p>솔직하게 정리하면 이래요.</p>
+
+<ul>
+  <li>👍 <b>1MB 이상</b>: 2단계가 확실히 또렷했어요. 2MB 결과는 확대해도 원본과 거의 구분이 안 됐어요</li>
+  <li>🤝 <b>500KB 이하</b>: 두 방법이 눈으로는 거의 같았어요. 이때는 사진→PDF 한 번으로 충분해요</li>
+  <li>⚠️ 압축 도구는 PDF를 <b>서버에서 먼저 압축</b>해 보고(저장하지 않고 압축 직후 삭제), 안 맞으면 브라우저에서 페이지를 이미지로 바꿔요. 이번 결과는 모두 브라우저 쪽이었어요</li>
+</ul>
+
+<h2>🔃 페이지 순서, 누운 사진은 이렇게</h2>
+
+<p>사진→PDF에서는 <b>목록 번호가 곧 페이지 번호</b>예요. 저는 일부러 파일 이름 순서(IMG_4821 → IMG_4822 → scan0001 → IMG_4825)로 올린 뒤, ▲ 버튼만 눌러서 계획서 → 확인서 → 성적증명서 → 영수증 순서로 바꿨어요. 필요 없는 장은 ✕로 빼면 돼요.</p>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/photos-pdf-tistory-tool-ko.jpg" alt="SlimIO 사진→PDF 화면 - 순서를 바꾼 4장 목록, 300KB 이하 선택, 291.1KB와 긴 변 1600px 결과" width="420"></p>
+
+<p>영수증 사진은 일부러 까다롭게 만들었어요. 휴대폰 사진 중에는 픽셀은 누운 채 저장되고 "세워서 보여 줘"라는 <b>방향 정보</b>만 붙은 파일이 있거든요. 결과 PDF를 열어 보니 영수증이 <b>똑바로 서 있었어요.</b> ✅</p>
+
+<p>💡 제출 안내에 순서가 있다면(예: 신청서 → 증빙) 그대로 맞추고, 변환 전에 1번이 신청서인지 확인하세요.</p>
+
+<h2>📱 앱 없이 휴대폰 기능만으로는?</h2>
+
+<p>기본 기능으로도 묶을 수 있어요. 공식 안내로 확인한 방법만 적을게요.</p>
+
+<ul>
+  <li><b>갤럭시</b>: 삼성 앱 <b>갤러리 어시스턴트</b>(갤럭시 스토어나 굿락의 '편리한 갤럭시'에서 설치)의 'PDF로 저장'. 페이지 크기 A3·A4·Letter와 화질 원본·중간·낮음을 고를 수 있어요. 삼성 멤버스 안내 글 기준 One UI 7.0 이상의 일부 기기(S24 이후 S 시리즈, 폴드7·플립7 등)만 돼요</li>
+  <li><b>아이폰</b>: iOS 26 이상 <b>미리보기</b> 앱에서 사진을 PDF로 내보낸 뒤, 썸네일을 길게 눌러 '파일에서 삽입'으로 다음 사진을 붙여요. 순서는 썸네일을 끌어서 바꿔요. iOS 27 설명서에는 PDF로 내보낼 때 이미지를 줄이는 옵션과 <b>'텍스트 삽입'</b>(사진 속 글자를 검색되게 하는 기능)도 있어요</li>
+  <li><b>맥</b>: Finder에서 사진을 고르고 Control-클릭 → 빠른 동작 → PDF 생성. Apple 설명서에 파일이 "선택한 순서와 동일하게" 들어간다고 나와 있어서, 순서대로 클릭하면 돼요</li>
+</ul>
+
+<p>세 방법 모두 <b>"300KB 이하"처럼 숫자를 넣는 칸은 없어요.</b> 화질을 낮출 수는 있지만 몇 KB가 됐는지는 저장한 뒤에 확인해야 해요.</p>
+
+<h2>💡 작은 글씨를 살리는 4가지</h2>
+
+<p><b>1. 서류가 화면을 꽉 채우게 찍어요.</b> 영수증 숫자가 100KB에서 버틴 이유예요. 줌 대신 휴대폰을 가까이 가져가요.<br>
+<b>2. 가능하면 스캔해요.</b> 같은 A4인데 스캔본은 445.4KB, 휴대폰 사진은 2.6~3.0MB였어요. 처음부터 가벼우면 잃는 게 적어요.<br>
+<b>3. 장수를 줄여요.</b> 영수증을 빼고 3장만 300KB로 만들었더니 사진 긴 변이 1600px에서 <b>2000px</b>로 커졌어요(292.9KB). 빈 뒷면이나 겹치는 사진부터 빼세요.<br>
+<b>4. 올리기 전에 제일 작은 글씨를 확대해 봐요.</b> 각주, 날짜, 승인번호가 읽히면 통과예요.</p>
+
+<h2>🙋 자주 묻는 질문</h2>
+
+<p><b>Q. PDF 페이지를 A4 크기로 맞춰야 하나요?</b><br>👉 SlimIO는 사진 비율 그대로 사진 한 장이 한 쪽이 돼서, 영수증처럼 모양이 다른 사진도 잘리지 않아요. 제출처가 A4 페이지를 꼭 요구한다면 페이지 크기를 고를 수 있는 갤러리 어시스턴트(A4 선택)가 맞아요.</p>
+
+<p><b>Q. 서류 사진이 서버로 올라가나요?</b><br>👉 사진→PDF는 브라우저 안에서만 변환해요. 2단계 압축은 서버를 거쳤다가 바로 삭제되니, 민감한 서류라면 사진→PDF 한 번으로 끝내세요.</p>
+
+<hr>
+
+<p>이번 실험에서는 <b>300KB까지는 한 번에</b> 충분했고, 100KB처럼 빡빡하면 장수부터 줄이고, 1MB 이상이면 2단계가 더 또렷했어요. 바로 해 보려면 <a href="https://pdfslimio.com/ko/jpg-to-pdf.html?target=300KB">사진→PDF (300KB 이하로 열기)</a>를, 이미 만든 PDF가 크다면 <a href="https://ddoua.tistory.com/9">PDF 용량 줄이기 글</a>을 참고하세요. 🍀</p>
+
+<p style="color:#888;font-size:13px;">출처: Apple iPhone 사용 설명서(미리보기 앱에서 PDF 및 이미지 내보내기·압축 iOS 26·27, PDF 페이지 추가·이동), Apple Mac 사용 설명서(여러 파일을 PDF로 결합하기), 삼성 멤버스 「Gallery Assistant (갤러리 어시스턴트)」 담당자 안내 글(2026년 7월 수정). 2026년 10월 31일 확인 기준이고, 메뉴 이름은 기종과 버전에 따라 다를 수 있어요. 실험 서류는 모두 가상 예시이고 결과는 사진마다 달라질 수 있어요. SlimIO는 제가 직접 만든 무료 도구예요. 필요한 기능이 있으면 댓글로 알려 주세요! 🛠</p>

@@ -1,0 +1,117 @@
+<!--
+티스토리 글 #17 — PDF 합치기 (PDF 파일 하나로: 순서 바꾸기·잠긴 PDF·합친 뒤 용량)
+제목: 📎 PDF 파일 하나로 합치기 무료: 순서 바꾸기, 잠긴 PDF, 합친 뒤 2MB 넘을 때
+태그: pdf 합치기, pdf파일 합치기, pdf파일 하나로 합치기, 무료 pdf파일 합치기, pdf문서 합치기, pdf 병합, pdf파일 합치기 사이트, pdf 합치기 프로그램, pdf 병합 사이트, pdf 비밀번호 해제
+카테고리: 문서·사진 꿀팁
+근거: Apple Mac 사용 설명서 「Mac에서 여러 파일을 PDF로 결합하기」(support.apple.com/ko-kr/guide/mac-help/mchl21ac2368/mac — Finder에서 선택 → Control-클릭 → 빠른 동작 > PDF 생성, "파일이 사용자가 선택한 순서와 동일하게 PDF에 나타납니다", 첫 번째 파일 이름과 비슷한 이름으로 생성), 「Mac용 미리보기에서 PDF 통합하기」(support.apple.com/ko-kr/guide/preview/prvw43696/mac — 사이드바 썸네일 드래그, 변경사항 자동 저장 → 파일 > 복제 먼저), iPhone 사용 설명서 「iPhone의 미리보기 앱에서 PDF 페이지 추가, 삭제, 회전, 이동 또는 자르기」(support.apple.com/ko-kr/guide/iphone/iphbf4977cff/ios — iOS 26·27판, 썸네일 길게 터치 → 파일에서 삽입, 길게 터치 후 드래그로 이동), Microsoft Learn 「Microsoft Edge의 PDF 읽기 프로그램」(learn.microsoft.com/ko-kr/deployedge/microsoft-edge-pdf — 기능 목록: 보기·인쇄, 양식 채우기, 목차, 페이지 보기, 수동 입력, 강조, 텍스트 메모, 소리 내어 읽기 등, 합치기 없음), 삼성전자서비스 「삼성 노트 사용 방법이 궁금합니다」(samsungsvc.co.kr/solution/38425 — 파일로 저장(PDF 등)은 있으나 PDF 합치기 안내 없음), 삼성 멤버스 커뮤니티 노트 담당자(Moderator) 답변 2026-04-21(r1.community.samsung.com …/td-p/37720220 — 'PDF 가져오기'가 '노트 생성' 버튼 길게 누르기로 바뀜), SlimIO 합치기 페이지 FAQ(개수 제한 없음, 하루 20회, 워터마크 없음, 브라우저 안 처리)·비밀번호 해제 페이지(열기 암호/권한 암호, 전자서명 PDF는 해제 후 서명 확인 불가)·1MB 압축 페이지 FAQ(글자 유지 단계는 서버로 보내고 끝나면 삭제) — 모두 2026-10-31 확인. 다음 자동완성의 '알pdf 합치기'·'한pdf 병합'은 이름만 언급하고 제품 설명은 안 함
+수요: 다음 자동완성(2026-10-31) 'pdf 합치기' → pdf파일 합치기 | pdf문서 합치기 | 무료 pdf파일 합치기 | pdf파일 하나로 합치기 | 알pdf 합치기 | 알pdf 파일 합치기 | pdf 합치기 프로그램 다운로드 | pdf 합치기 프로그램 | pdf 파일 합치기 프로그램 | pdf파일 합치기 사이트 / 'pdf 병합' → pdf 병합 사이트 | pdf 병합 프로그램 | 한pdf 병합 | 알pdf 병합 | pdf파일 병합 / 'pdf파일 하나로 합치기'·'무료 pdf파일 합치기'는 그 말 그대로만 뜸 / 'pdf 합치기 아이폰·갤럭시·용량·순서·비밀번호·모바일'은 다음 자동완성 없음
+실험: 직접 만든 가상 정산 서류 4개(scratchpad r1031t/t17/in): 01_출장비정산서.pdf(글자 1쪽 68.9KB, Ghostscript로 권한 암호만 — 열리지만 인쇄·복사·편집 막힘), 02_카드이용내역.pdf(글자 2쪽 57.0KB, 열기 암호 850315), 03_식당영수증_사진.pdf·04_숙박영수증_사진.pdf(3024×4032 사진 1쪽씩 1022.0KB·1.00MB). 실제 pdfslimio.com/ko/merge.html?notrack(휴대폰 폭 400px, scripts/run_merge.mjs)에 4개 한꺼번에 → 사진 2개만 목록에 들어가고 "암호나 편집 제한이 걸린 PDF라 여기서 고칠 수 없어요. PDF 비밀번호 해제에서 잠금을 풀고, 풀린 파일을 올려 주세요." + 링크(정산서만 따로 넣어도 같은 안내 — 두 개가 동시에 거절되면 안내는 마지막 파일 하나만 보임). unlock-pdf.html?notrack: 정산서 "암호 없이 열리지만 사용 제한(인쇄, 텍스트 복사, 편집)이 걸린 PDF예요" → 암호 없이 해제 69.0KB / 카드 내역 "열 때 암호가 필요한 PDF예요" → 850315 → 57.1KB, 파일명 *_unlocked.pdf. 같은 합치기 화면에 사본 2개 추가 → 목록 3·4번(끝)에 붙음 → ▲ 네 번으로 정산서→카드→식당→숙박 → 파일 4개·5쪽·2.12MB(2,225,837바이트, 네 파일 합 2,226,904바이트), 받은 이름 slimio_merged.pdf, pdf.js로 쪽 순서·글자 추출 확인. 이어서 compress-pdf-to-1mb.html?notrack 목표 1MB 이하 → 546.8KB(559,884바이트), 글자 추출 결과 압축 전과 같음, 영수증 확대해도 금액 또렷
+이미지: pdf-merge-ts-hero.jpg(새, 파랑 #2563eb — 서류 목록 4줄 → PDF 한 장 그림, 얼굴 없음), pdf-merge-ts-locked-ko.jpg(새 — 실제 화면 3장: 잠긴 2개 빠진 합치기 목록, 권한 암호 해제, 열기 암호 해제), pdf-merge-ts-size-ko.jpg(새 — 실제 화면 3장: 사본이 끝에 붙은 목록, ▲ 뒤 합친 결과 2.12MB, 1MB 압축 546.8KB + 파일 크기 막대). 네이버 #21 이미지(pdf-merge-hero/ba/tool, 분홍)와 다른 색·구성·예시 서류
+예약: 미정 — 2026-11-06 08:00 예정
+대표이미지: pdf-merge-ts-hero.jpg
+-->
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/pdf-merge-ts-hero.jpg" alt="정산 서류 4개를 순서대로 PDF 한 파일로 합치는 그림, 2.12MB를 546.8KB로 줄인 결과" width="760"></p>
+
+<p>출장을 다녀와서 경비 정산을 하려는데 경영지원팀에서 이렇게 말하더라고요. <b>"정산서랑 증빙은 PDF 한 파일로 올려 주세요."</b> 😮 제 손에 있는 건 정산서 PDF, 카드사에서 받은 이용내역 PDF, 휴대폰으로 찍은 영수증 PDF 두 장. 파일이 네 개예요.</p>
+
+<p>다음에서 'pdf 합치기'를 검색하면 '알pdf 합치기', 'pdf 합치기 프로그램 다운로드'가 같이 떠요. 설치형 프로그램을 쓰는 분이 그만큼 많다는 뜻이죠. 그런데 회사 PC라 설치가 막혀 있거나, 휴대폰에서 바로 끝내고 싶을 때도 있잖아요. 그래서 <b>설치 없이</b> 합치는 방법을 실제로 해 보면서 정리했어요. 해 보니 버튼 누르는 것보다 <b>중간에 막히는 지점</b>을 아는 게 더 중요했어요. 📝</p>
+
+<div style="background:#eff6ff;border-left:4px solid #2563eb;padding:14px 16px;border-radius:8px;margin:18px 0;">
+<b>⏱ 3줄 요약</b><br>
+1️⃣ 합치기는 <b>순서</b>가 전부예요. 나중에 추가한 파일은 맨 아래로 가니까 ▲▼로 맞추세요<br>
+2️⃣ 목록에 안 들어가는 파일은 대개 <b>잠긴 PDF</b>예요. 잠금을 푼 사본을 넣으면 돼요<br>
+3️⃣ 합친 용량은 <b>각 파일을 더한 값</b>이에요. 제한을 넘으면 <a href="https://pdfslimio.com/ko/merge.html">PDF 합치기</a> 다음에 한 번만 줄이세요 🎉
+</div>
+
+<h2>🧭 내 기기에 합치기 기능이 있을까?</h2>
+
+<p>프로그램부터 찾기 전에 기본 기능으로 되는지 보세요. 제조사 공식 설명서를 열어서 확인한 내용이에요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">기기</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">기본 기능</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">알아 둘 점</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>맥</b></td><td style="padding:10px;border:1px solid #e5e7eb;">Finder 빠른 동작 → PDF 생성</td><td style="padding:10px;border:1px solid #e5e7eb;">고른 순서대로 붙어요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>아이폰</b></td><td style="padding:10px;border:1px solid #e5e7eb;">미리보기 앱 → 파일에서 삽입</td><td style="padding:10px;border:1px solid #e5e7eb;">iOS 26·27 설명서에 있어요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>윈도우</b></td><td style="padding:10px;border:1px solid #e5e7eb;">엣지 PDF 뷰어엔 합치기 없음</td><td style="padding:10px;border:1px solid #e5e7eb;">설치형 프로그램이나 웹 도구</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>갤럭시</b></td><td style="padding:10px;border:1px solid #e5e7eb;">합치기 버튼은 공식 안내에서 못 찾았어요</td><td style="padding:10px;border:1px solid #e5e7eb;">브라우저 도구가 간단해요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>어디서나</b></td><td style="padding:10px;border:1px solid #e5e7eb;">브라우저 합치기 도구</td><td style="padding:10px;border:1px solid #e5e7eb;">설치·가입 없이 바로</td></tr>
+</table>
+
+<h2>🧾 직접 해 봤어요: 정산 서류 4개를 한 파일로</h2>
+
+<p>위 상황 그대로 가상 서류를 만들어서, 제가 직접 만든 무료 도구 <b>SlimIO</b>의 <a href="https://pdfslimio.com/ko/merge.html">PDF 합치기</a>에 휴대폰 화면 크기로 넣어 봤어요. 준비한 파일은 이렇게 네 개예요.</p>
+
+<ul>
+  <li>📄 <b>출장비 정산서</b> (글자 1쪽) — 회사 양식이라 인쇄·복사가 막힌 파일</li>
+  <li>💳 <b>카드 이용내역</b> (글자 2쪽) — 열 때 암호를 묻는 파일</li>
+  <li>🍲 <b>식당 영수증</b> 사진 PDF (1쪽)</li>
+  <li>🏨 <b>숙박 영수증</b> 사진 PDF (1쪽)</li>
+</ul>
+
+<p>네 개를 한꺼번에 골랐는데… 목록에는 <b>영수증 두 개만</b> 들어왔어요. 😅 그 아래에 "암호나 편집 제한이 걸린 PDF라 여기서 고칠 수 없어요"라는 안내와 비밀번호 해제로 가는 링크가 떴고요. 잠긴 두 파일이 빠진 거예요.</p>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/pdf-merge-ts-locked-ko.jpg" alt="잠긴 PDF 2개가 합치기 목록에서 빠진 화면과, 권한 암호·열기 암호를 각각 푼 결과 화면" width="700"></p>
+
+<h2>🔒 잠긴 PDF가 안 들어갈 때</h2>
+
+<p>PDF 잠금은 두 종류예요. 둘 다 '잠긴 파일'처럼 보이지만 푸는 방법이 달라요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">종류</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">이런 파일</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">푸는 법</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>열기 암호</b></td><td style="padding:10px;border:1px solid #e5e7eb;">열 때마다 암호 창이 떠요 (명세서 등)</td><td style="padding:10px;border:1px solid #e5e7eb;">아는 암호를 넣고 잠금 없는 사본 만들기</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>권한 암호</b></td><td style="padding:10px;border:1px solid #e5e7eb;">열리긴 하는데 인쇄·복사·편집이 막혀요</td><td style="padding:10px;border:1px solid #e5e7eb;">암호 입력 없이 제한만 풀기</td></tr>
+</table>
+
+<p>실험에서는 <a href="https://pdfslimio.com/ko/unlock-pdf.html">PDF 비밀번호 해제</a>로 하나씩 풀었어요. 정산서는 올리자마자 '암호 없이 열리지만 사용 제한이 걸린 PDF'라고 알려 줬고, 버튼만 누르니 제한이 풀렸어요(68.9KB → 69.0KB). 카드 이용내역은 예시 암호 850315를 넣자 바로 열렸어요(57.0KB → 57.1KB). 잠금만 걷어 내는 거라 용량도 내용도 거의 그대로예요.</p>
+
+<div style="background:#fffbeb;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:8px;margin:16px 0;">
+💡 명세서 암호는 카드사·은행마다 달라요. 메일이나 문자에 어떤 번호로 열리는지 같이 안내돼요. <b>암호를 모르면</b> 어떤 도구로도 풀 수 없으니 보낸 곳에 물어보세요. 또 전자서명이 든 PDF(진본 확인이 되는 전자증명서 같은 것)는 잠금을 풀면 파일이 다시 저장돼서 서명 확인을 통과하지 못해요. 이런 서류는 원본 그대로 내야 하는지 먼저 확인하세요.
+</div>
+
+<h2>🔃 순서 바꾸기: 나중에 넣은 파일은 맨 아래로</h2>
+
+<p>잠금 푼 사본 두 개를 같은 화면에 추가했더니 목록 <b>3번, 4번</b>으로 붙었어요. 새로 고른 파일은 늘 끝에 들어가요. 정산 규정 순서(정산서 → 카드 내역 → 영수증)에 맞추려고 정산서의 ▲를 두 번, 카드 내역의 ▲를 두 번 눌렀어요. 잘못 넣은 파일은 ✕로 빼면 되고요.</p>
+
+<ul>
+  <li>🔢 파일 이름 앞에 01_, 02_처럼 번호를 붙여 두면 목록에서 헷갈리지 않아요</li>
+  <li>📋 제출처가 순서를 정해 줬다면 그대로, 없다면 신청서·정산서 같은 <b>본 서류를 맨 앞</b>에 두세요</li>
+  <li>🔍 합친 뒤에는 첫 장과 마지막 장만이라도 열어서 확인하세요</li>
+</ul>
+
+<h2>📦 합쳤더니 용량이 커졌을 때</h2>
+
+<p>순서를 맞추고 합치니 <b>파일 4개, 5쪽, 2.12MB</b>가 나왔어요. 네 파일을 더한 값이 2,226,904바이트, 합친 파일이 2,225,837바이트로 거의 같아요. 합치기는 페이지를 이어 붙일 뿐 <b>줄여 주지는 않는다</b>는 뜻이에요. 그 대신 화질도 그대로고, 정산서와 카드 내역의 글자도 그대로 선택됐어요.</p>
+
+<p>무게를 나눠 보면 글자 서류 두 개는 합쳐도 126KB인데, 영수증 사진 PDF는 하나에 1MB 안팎이었어요. 업로드 칸이 '1MB 이하'라면 합친 파일을 한 번만 줄이면 돼요. 같은 파일을 <a href="https://pdfslimio.com/ko/compress-pdf-to-1mb.html">PDF 1MB로 줄이기</a>에 넣었더니 <b>2.12MB → 546.8KB</b>가 됐어요. 쪽 순서와 글자는 그대로이고 영수증 사진만 작아졌는데, 확대해도 금액이 또렷했어요. ✅</p>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/pdf-merge-ts-size-ko.jpg" alt="사본이 목록 끝에 붙은 화면, 순서를 맞춰 합친 결과 2.12MB, 1MB 목표로 줄인 546.8KB 결과와 파일별 크기 막대" width="700"></p>
+
+<p>⚠️ 파일마다 따로 줄이고 합치는 것보다 <b>합친 뒤 한 번</b> 줄이는 게 편해요. 업로드 제한은 결국 마지막에 내는 파일 하나에 걸리니까, 그 파일 크기만 맞추면 되거든요. 참고로 합치기와 비밀번호 해제는 브라우저 안에서만 처리되고, 압축은 글자를 살리는 단계에서 파일을 서버로 보냈다가 끝나면 바로 지워요.</p>
+
+<h2>📱 아이폰·갤럭시에서 합치기</h2>
+
+<p><b>아이폰</b>은 iPhone 사용 설명서(iOS 26·27)에 나온 <b>미리보기</b> 앱으로 돼요. 맨 앞에 둘 PDF를 미리보기로 열고 → 썸네일 보기 → 썸네일을 길게 터치 → <b>파일에서 삽입</b>을 누른 뒤 붙일 PDF를 고르면 돼요. 들어간 페이지 위치는 썸네일을 길게 눌러 메뉴가 뜰 때 위아래로 끌어서 옮겨요.</p>
+
+<p><b>갤럭시</b>는 삼성전자서비스의 삼성 노트 안내에 'PDF로 저장'은 있지만 여러 PDF를 합치는 방법은 찾지 못했어요. 삼성 노트의 'PDF 가져오기'도 2026년 4월 업데이트 뒤 '노트 생성' 버튼을 길게 누르는 방식으로 바뀌었다고 삼성 멤버스 노트 담당자가 답했을 만큼 메뉴가 자주 바뀌어요. 그래서 갤럭시는 크롬이나 삼성 인터넷으로 브라우저 도구를 여는 게 제일 덜 헤매요. 위 실험 화면도 휴대폰 폭(400px)으로 찍은 거예요. 📲</p>
+
+<h2>💻 맥·윈도우 PC에서 합치기</h2>
+
+<p><b>맥</b>은 Finder에서 합칠 파일을 <b>넣고 싶은 순서대로</b> Command-클릭으로 하나씩 고른 뒤, Control-클릭 → 빠른 동작 → PDF 생성을 누르면 끝이에요. Apple 설명서에 고른 순서 그대로 들어간다고 적혀 있고, 새 파일 이름은 처음 고른 파일 이름을 따라가요. 미리보기 앱에서 한 PDF의 썸네일을 다른 PDF 사이드바로 끌어 넣는 방법도 있는데, 이건 바뀐 내용이 원본에 자동 저장돼요. 먼저 파일 → 복제로 사본을 만들어 두세요.</p>
+
+<p><b>윈도우</b>의 기본 PDF 뷰어인 엣지에는 보기·인쇄, 양식 채우기, 필기, 강조, 소리 내어 읽기 같은 기능이 있지만 Microsoft 기능 안내에 합치기는 없어요. 알PDF·한PDF 같은 설치형 프로그램을 써도 되고, 가끔 한 번 합칠 거라면 브라우저 도구가 빨라요.</p>
+
+<h2>🙋 자주 묻는 질문</h2>
+
+<p><b>Q. 무료로 몇 개까지 합칠 수 있어요?</b><br>👉 SlimIO 합치기는 개수 제한이 없고, 회원가입 없이 하루 20회까지 무료예요. 결과 파일에 워터마크도 안 붙어요. 아주 큰 파일을 많이 넣으면 기기 사양에 따라 느려질 수 있어요.</p>
+
+<p><b>Q. 합치면 화질이 떨어지나요?</b><br>👉 합치기만 해서는 안 떨어져요. 실험에서도 용량이 더한 값 그대로였고 글자도 선택됐어요. 화질이 바뀌는 건 용량을 줄일 때예요.</p>
+
+<p><b>Q. 받은 파일 이름이 이상해요</b><br>👉 slimio_merged.pdf로 저장돼요. '김샘플_10월출장정산.pdf'처럼 바꿔서 내면 받는 쪽도 찾기 쉬워요.</p>
+
+<p><b>Q. 사진(JPG)도 같이 넣을 수 있나요?</b><br>👉 합치기는 PDF끼리만 돼요. 사진은 <a href="https://pdfslimio.com/ko/jpg-to-pdf.html">JPG → PDF</a>에서 먼저 PDF로 만든 다음 넣으세요. 실험의 영수증도 사진 한 장짜리 PDF였어요.</p>
+
+<hr>
+
+<p>합친 파일을 더 작게 만들어야 한다면 <a href="https://ddoua.tistory.com/9">PDF 용량 줄이기 글</a>에서 원리부터 볼 수 있어요. 정산서에 도장까지 찍어야 한다면 <a href="https://ddoua.tistory.com/12">PDF 도장 찍기 글</a>도 같이 보세요. 서류 제출, 한 파일로 깔끔하게 끝내세요! 📎✨</p>
+
+<p style="color:#888;font-size:13px;">출처: Apple 「Mac에서 여러 파일을 PDF로 결합하기」·「Mac용 미리보기에서 PDF 통합하기」·「iPhone의 미리보기 앱에서 PDF 페이지 추가, 삭제, 회전, 이동 또는 자르기」, Microsoft Learn 「Microsoft Edge의 PDF 읽기 프로그램」, 삼성전자서비스 「삼성 노트 사용 방법이 궁금합니다」, 삼성 멤버스 커뮤니티 노트 담당자 답변(2026년 4월). 2026년 10월 31일 확인 기준이고 메뉴 이름은 기기와 버전에 따라 다를 수 있어요. 실험 서류·암호·금액은 모두 가상 예시예요. SlimIO는 제가 직접 만든 무료 도구예요. 필요한 기능이 있으면 댓글로 알려 주세요! 🛠</p>
