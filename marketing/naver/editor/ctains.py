@@ -1,6 +1,7 @@
-# ctains.py <win> <NN> <YYYY.MM.DD> <HH> : put the two SlimIO button pictures (banners.py) into the reserved post of draft NN,
-# with the tool link on each, at the marketing/WRITING.md spots (tistory/cta.py plan): box 1 before the heading that
-# ends the section first linking the tool (or before the first heading), box 2 before the closing 출처/※ line. Saves with the schedule unchanged.
+# ctains.py <win> <NN> <YYYY.MM.DD> <HH> : put the SlimIO button picture (banners.py) into the reserved post of draft NN,
+# with the tool link on it, at the marketing/WRITING.md spot (tistory/cta.py plan): before the heading that ends the
+# section first linking the tool (or before the first heading). One per post (owner, 2026-10-31: posts are short, keep
+# room for ads). Saves with the schedule unchanged.
 # How the caret gets there (2026-10-31): Chrome find (Cmd+F) for the start of the block that follows the spot, the
 # orange match located in a screenshot (hl.cjs) and clicked, then Cmd+Left. Clicking a far-away element misses, closing
 # the find bar doesn't move the editor's caret, and Alt+Up/Cmd+Down stop at component edges, so none of those are used.
@@ -27,11 +28,12 @@ def blocks(t):
 # where: the block after each spot, as the text Chrome find will look for
 head, rows, main, url, a, end = cta.plan(src)
 if main not in cta.TOOLS: sys.exit(f'{n}: no button copy for {main}')
-first, last = banners.files(main)
+first = banners.file(main)
 def start_of(k):
     r = next(rows[j] for j in range(k, len(rows)) if rows[j].strip() and not rows[j].lstrip().startswith('<!--'))
     return ' '.join(tf.plain(r).split())[:24].strip()
-spots = [(first, start_of(a + 1)), (last, start_of(end))]
+spots = [(first, start_of(a + 1))]
+bottom = start_of(end)   # the 출처 line: finding it scrolls the whole post into the editor's view
 log(n, draft, main, url, [s for _, s in spots])
 
 if not tf.guard(): log(n, 'STOP owner busy for 3 h'); sys.exit(2)
@@ -69,7 +71,7 @@ def caret_before(text):
     k('hotkey', '--key', 'CmdOrCtrl+Left'); time.sleep(0.4)
 
 # the editor draws the lower part only once it has been scrolled to: find the last spot first, then take the blocks
-subprocess.run('pbcopy', input=spots[1][1], text=True)
+subprocess.run('pbcopy', input=bottom, text=True)
 k('hotkey', '--key', 'CmdOrCtrl+F'); time.sleep(0.7); k('hotkey', '--key', 'CmdOrCtrl+V'); time.sleep(1.2)
 k('press-key', '--key', 'Return'); time.sleep(1.5); tf.press(r'^버튼 검색 바 닫기$'); time.sleep(1)
 t = tf.tree()

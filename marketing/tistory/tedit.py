@@ -17,16 +17,22 @@ src = open(draft).read()
 title = re.search(r'제목: (.*)', src).group(1).strip()
 body = re.sub(r'^<!--.*?-->\s*', '', src, flags=re.S).strip() + '\n'
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import cta
-if cta.EYEBROW not in body or cta.EYEBROW_END not in body:   # marketing/WRITING.md: every post gets the two buttons
-    sys.exit(f'{draft}: no SlimIO button boxes - run python3 marketing/tistory/cta.py {draft} first')
+if body.count(cta.EYEBROW) != 1 or cta.EYEBROW_END in body:   # marketing/WRITING.md: one button per post
+    sys.exit(f'{draft}: not exactly one SlimIO button box - run python3 marketing/tistory/cta.py {draft} first')
 
 def need(ok, why):
     if not ok: print('FAIL', why, flush=True); sys.exit(1)
 def log(*a): print(time.strftime('%H:%M:%S'), *a, flush=True)
 
 def leave_prompt():
-    # the editor asks Chrome's 'leave site?' when we navigate away; nothing of ours is saved half-way, so leave
-    if '사이트에서 나가시겠습니까' in tf.tree(): tf.press(r'^버튼 나가기$'); time.sleep(3)
+    # the editor asks Chrome's 'leave site?' when we navigate away; nothing of ours is saved half-way, so leave.
+    # A stopped run can also leave Chrome's find bar or a menu open over the page.
+    for _ in range(4):
+        t = tf.tree()
+        if '사이트에서 나가시겠습니까' in t: tf.press(r'^버튼 나가기$'); time.sleep(3)
+        elif tf.idx(t, r'^버튼 검색 바 닫기$'): tf.press(r'^버튼 검색 바 닫기$'); time.sleep(0.5)
+        elif not re.search(r'^0 표준 윈도우', t, re.M): tf.sh('bash', f'{tf.T}/k.sh', W, 'press-key', '--key', 'Escape'); tf.done(); time.sleep(0.5)
+        else: return
 leave_prompt()
 go(f'https://ddoua.tistory.com/manage/newpost/{pid}?type=post'); tf.done(); time.sleep(2)
 leave_prompt(); time.sleep(2)
@@ -95,7 +101,7 @@ def snippets():
     text = re.sub(r'<div style="margin:36px auto.*?</div>', '', body, flags=re.S)   # not the boxes' own lines
     paras = [tf.plain(p) for p in re.findall(r'<p[^>]*>(.*?)</p>', text, re.S)]
     paras = [p for p in paras if len(p) > 25]
-    return [paras[0][:20], paras[-1][:20], cta.EYEBROW, cta.EYEBROW_END]
+    return [paras[0][:20], paras[-1][:20], cta.EYEBROW]
 def check_saved():
     leave_prompt()
     go(f'https://ddoua.tistory.com/manage/newpost/{pid}?type=post'); tf.done(); time.sleep(2)
@@ -103,6 +109,7 @@ def check_saved():
     l = next((l for l in tf.tree().splitlines() if '글 내용 입력' in l), '')
     if not l: return 'reopened in HTML mode, counts not checked'
     n = {s: l.count(s) for s in snippets()}
+    n[cta.EYEBROW_END] = l.count(cta.EYEBROW_END) + 1   # must be gone (0 + 1 == 1)
     need(all(v == 1 for v in n.values()), f'saved body is not the draft once: {n}')
     return 'saved body checked once each'
 if LIVE:
@@ -111,7 +118,7 @@ if LIVE:
                                                          headers={'User-Agent': 'Mozilla/5.0'})).read().decode()
     art = re.search(r'contents_style">(.*?)<!-- System - START -->', page, re.S)   # the article, not the meta tags
     art = art.group(1) if art else ''
-    need(len(re.findall(r'margin:\s*36px auto', art)) == 2 and cta.EYEBROW in art, 'the public page does not show both buttons')
+    need(len(re.findall(r'margin:\s*36px auto', art)) == 1 and cta.EYEBROW_END not in art, 'the public page does not show exactly one button')
     text = ' '.join(tf.plain(art).split())
     need(all(text.count(' '.join(s.split())) == 1 for s in snippets()), 'the public page has the body more than once')
     log('SAVED live', title[:30], f'https://ddoua.tistory.com/{pid}', check_saved())

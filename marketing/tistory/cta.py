@@ -1,11 +1,12 @@
-# cta.py <draft.html…> : put two big SlimIO buttons in a Tistory draft, so the way to the site doesn't hang on a text link.
-# The post's main tool is the one it links to most (first one on a tie). Box 1 goes at the end of the section with the
-# first link to it, or before the first heading when that is near the end; box 2 goes before the 출처 line (or at the end).
-# A draft that already has the boxes is left alone. --print shows where they'd go without writing.
+# cta.py <draft.html…> : put one big SlimIO button in a Tistory draft, so the way to the site doesn't hang on a text link.
+# The post's main tool is the one it links to most (first one on a tie). The box goes at the end of the section with the
+# first link to it, or before the first heading when that is near the end. Only one: the posts are short and the end of
+# a post is kept for ads (owner, 2026-10-31). A draft with a second box from the first version loses it; a draft that
+# already has the box is otherwise left alone. --print shows what would change without writing.
 import re, sys, collections
 
 EYEBROW = '무료 · 설치 없이 · 회원가입 없이'
-EYEBROW_END = '이 글에서 직접 써 본 도구'
+EYEBROW_END = '이 글에서 직접 써 본 도구'   # the end box of the first version (2026-10-31), now removed
 TOOLS = {   # page → (headline, button); wording follows each page's own h1/title
     'ko/compress-id-photo.html': ('📷 사진 규격 맞추고 용량까지 한 번에', '사진 용량 줄이러 가기 →'),
     'ko/signature-image.html': ('✍️ 서명 이미지, 투명 PNG로 규격에 딱', '서명 이미지 만들기 →'),
@@ -67,13 +68,16 @@ def plan(src):
     return head, rows, main, url, n, end
 
 def apply(src):
-    if EYEBROW in src: return src, 'already has the boxes'
+    if EYEBROW_END in src:   # first version: drop the end box
+        out = re.sub(r'\n?<div style="margin:36px auto[^\n]*\n<p[^\n]*>' + re.escape(EYEBROW_END) + r'</p>\n.*?</div>\n?', '\n', src, count=1, flags=re.S)
+        return out, 'end box removed'
+    if EYEBROW in src: return src, 'already has the box'
     p = plan(src)
     if not p: return src, 'no tool link'
     head, rows, main, url, n, end = p
     headline, button = TOOLS[main]
-    out = rows[:n + 1] + [box(url, EYEBROW, headline, button)] + rows[n + 1:end] + [box(url, EYEBROW_END, headline, button)] + rows[end:]
-    return head + '\n'.join(out), f'{main} box1 after line {n + 1}/{len(rows)}, box2 before line {end + 1}'
+    out = rows[:n + 1] + [box(url, EYEBROW, headline, button)] + rows[n + 1:]
+    return head + '\n'.join(out), f'{main} box after line {n + 1}/{len(rows)}'
 
 if __name__ == '__main__':
     dry = '--print' in sys.argv

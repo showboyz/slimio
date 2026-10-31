@@ -18,8 +18,8 @@ tags = [t.strip() for t in re.search(r'태그: (.*)', src).group(1).split(',') i
 hero = re.search(r'대표이미지: (\S+)', src).group(1)
 body = re.sub(r'^<!--.*?-->\s*', '', src, flags=re.S).strip() + '\n'
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import cta
-if cta.EYEBROW not in body or cta.EYEBROW_END not in body:   # marketing/WRITING.md: every post gets the two buttons
-    sys.exit(f'{draft}: no SlimIO button boxes - run python3 marketing/tistory/cta.py {draft} first')
+if body.count(cta.EYEBROW) != 1 or cta.EYEBROW_END in body:   # marketing/WRITING.md: one button per post
+    sys.exit(f'{draft}: not exactly one SlimIO button box - run python3 marketing/tistory/cta.py {draft} first')
 y, mo, d = (int(x) for x in date.split('-'))
 
 def need(ok, why):
