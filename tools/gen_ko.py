@@ -1313,8 +1313,8 @@ KO["unlock-pdf.html"] = dict(
         ("The file and the password never leave your device — the lock is removed in your browser.", "파일과 암호는 내 기기 밖으로 나가지 않아요. 브라우저 안에서 잠금을 풀어요."),
         ('<label for="pw">Password</label>', '<label for="pw">암호</label>'),
         ('<input type="checkbox" id="showpw" /> Show password</label>', '<input type="checkbox" id="showpw" /> 암호 보이기</label>'),
-        ("Bank, card and government PDFs usually open with a date of birth or a number named in the email or text that came with them.",
-         "카드사·은행 명세서는 보통 생년월일 6자리나 주민등록번호 앞자리, 정부24 전자증명서는 내려받을 때 직접 정한 6자리 숫자예요. 함께 받은 문자·메일 안내를 확인하세요."),
+        ("The open password depends on who sent the file. Check the email or text that came with it.",
+         "열기 암호는 파일을 보낸 곳마다 달라요. 정부24 전자증명서는 내려받을 때 직접 정한 6자리 숫자예요. 함께 받은 문자·메일 안내를 확인하세요."),
         (">Unlock PDF</button>", ">PDF 비밀번호 해제</button>"),
         ("<span>Open password</span>", "<span>열기 암호</span>"),
         ("<span>Print, copy &amp; edit locks</span>", "<span>인쇄·복사·편집 제한</span>"),
@@ -1332,7 +1332,7 @@ KO["unlock-pdf.html"] = dict(
           <li><b>3. 다운로드.</b> 해제된 사본을 받으세요. 원본은 지우지 말고 함께 보관하세요.</li>
       </ul>
       <h3>어떤 암호를 넣어야 하나요?</h3>
-      <p>카드사·은행 명세서는 보통 생년월일 6자리나 주민등록번호 앞자리로 열려요. 메일이나 문자에 어떤 번호로 열리는지 안내가 함께 와요. 정부24 전자증명서는 내려받을 때 직접 정한 6자리 숫자예요. 그 숫자를 잊었다면 찾을 방법이 없어서, 암호를 '미설정'으로 골라 다시 내려받는 편이 빨라요.</p>
+      <p>열기 암호는 파일을 보낸 곳마다 달라서, 메일이나 문자에 어떤 번호로 열리는지 안내가 함께 오는지 먼저 확인하세요. 정부24 전자증명서는 내려받을 때 직접 정한 6자리 숫자예요. 그 숫자를 잊었다면 찾을 방법이 없어서, 암호를 '미설정'으로 골라 다시 내려받는 편이 빨라요.</p>
       <h3>잠금은 두 종류예요</h3>
       <p><b>열기 암호</b>는 파일을 아예 못 열게 막아요. 이 도구에 입력하는 게 이 암호예요. <b>권한 암호</b>는 파일은 열리지만 인쇄, 텍스트 복사, 편집을 막아요. 이런 파일은 합치기·서명·압축 도구에서도 거절되는 경우가 많아요. 두 가지 모두 풀 수 있고, 파일을 올리면 어떤 잠금인지 먼저 알려 줘요.</p>
       <h3>내용은 다시 그리지 않아요</h3>
