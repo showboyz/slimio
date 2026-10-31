@@ -18,7 +18,7 @@ done, failed = [], []
 for date, hh, n, title in jobs:
     r = subprocess.run(['python3', f'{HERE}/ctains.py', W, str(n), date, hh], capture_output=True, text=True)
     last = (r.stdout.strip().splitlines() or [''])[-1]
-    print(time.strftime('%H:%M:%S'), f'#{n}', date, hh, '|', last[-120:], flush=True)
+    print(time.strftime('%H:%M:%S'), f'#{n}', date, hh, f'rc={r.returncode}', '|', last[-120:], flush=True)
     if r.returncode == 2: print('STOP owner busy', flush=True); break
     (done if 'SAVED' in last or 'already has' in last else failed).append(n)
 print('saved/had', len(done), done, '| failed', failed, flush=True)

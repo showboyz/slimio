@@ -35,7 +35,14 @@ spots = [(first, start_of(a + 1)), (last, start_of(end))]
 log(n, draft, main, url, [s for _, s in spots])
 
 if not tf.guard(): log(n, 'STOP owner busy for 3 h'); sys.exit(2)
-go(EDITOR); tf.done(); time.sleep(4)
+def clear_leftovers():   # a stopped run can leave the find bar open or Chrome's 'leave site?' over unsaved edits
+    for _ in range(3):
+        if tf.press(r'^버튼 검색 바 닫기$'): time.sleep(0.5)
+        elif '사이트에서 나가시겠습니까' in tf.tree(): tf.press(r'^버튼 나가기$'); time.sleep(3)
+        else: return
+clear_leftovers()
+go(EDITOR); tf.done(); time.sleep(3)
+clear_leftovers(); time.sleep(1)
 t = wait_for(r'예약 발행 \d+ 건', 30) or ''
 if not t: fail('editor did not open')
 if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
@@ -78,7 +85,8 @@ for path, nxt in spots:
                           and not any(l.strip().endswith(u) for u in ('AI 활용 설정', '사진 설명을 입력하세요.', ', Value: 링크'))]
     i = next((j for j, l in enumerate(seq) if l.endswith('이미지 ' + name)), None)
     flat = lambda x: re.sub(r'\s+', '', x)   # the tree puts spaces around bold words
-    if i is None or i + 1 >= len(seq) or flat(nxt) not in flat(seq[i + 1]): fail(f'{name} is not right before {nxt!r}')
+    nb = re.sub(r'^\d+ (container, Text: |텍스트, Value: )', '', seq[i + 1]) if i is not None and i + 1 < len(seq) else ''
+    if i is None or not flat(nb).startswith(flat(nxt)): fail(f'{name} is not right before {nxt!r}: {nb[:40]!r}')   # else a split
     # select the picture itself, then its own link field
     e = tf.idx(t, rf'^이미지 {re.escape(name)}$')
     tf.sh('python3', f'{tf.T}/c.py', W, '-', 'click', '--element-index', e); tf.done(); time.sleep(0.8)
@@ -97,9 +105,12 @@ for path, nxt in spots:
     log(n, name, 'in and linked')
 
 after = blocks(tf.tree())
-if after != before:
-    import difflib
-    fail(f'text blocks changed: {len(before)} -> {len(after)} ' + ' | '.join(l[:60] for l in difflib.unified_diff(before, after, lineterm='', n=0) if l[:1] in '+-')[:600])
+# the tree groups the same paragraphs differently once a picture is in (one container or three, long ones cut with
+# '...'), so blocks can't be compared one to one. What can go wrong is a split paragraph (checked above, at each
+# picture) or the link pasted as text: the text must mention pdfslimio as often as before, and no block may be a URL.
+jb, ja = ''.join(before), ''.join(after)
+if ja.count('pdfslimio') != jb.count('pdfslimio') or any(b.startswith('http') for b in after):
+    fail(f"link text appeared in the post: pdfslimio {jb.count('pdfslimio')} -> {ja.count('pdfslimio')}")
 if not tf.guard(): log(n, 'STOP owner busy for 3 h (post left open, not saved)'); sys.exit(2)
 tf.press(r'^버튼 발행$'); time.sleep(2)
 t = tf.tree(); y, mo, d = date.split('.')
