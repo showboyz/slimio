@@ -19,6 +19,12 @@ TOOLS = {   # page → (headline, button); wording follows each page's own h1/ti
     'ko/compress-pdf-for-email.html': ('📧 메일 첨부 한도에 맞게 PDF 줄이기', '메일용 PDF 줄이러 가기 →'),
     'ko/receipt-to-pdf.html': ('🧾 사진 여러 장을 A4 PDF 하나로', '영수증 PDF 만들러 가기 →'),
     'ko/pdf-to-jpg.html': ('🖼️ PDF를 JPG 이미지로, 선명하게', 'PDF JPG로 바꾸러 가기 →'),
+    'ko/compress-image.html': ('🖼️ 사진 용량 줄이기, 화질은 그대로', '사진 용량 줄이러 가기 →'),
+    'ko/compress-image-to-50kb.html': ('📉 사진을 50KB 이하로', '사진 50KB로 줄이러 가기 →'),
+    'ko/compress-pdf-to-2mb.html': ('📄 PDF를 2MB 이하로, 글자는 선명하게', 'PDF 2MB로 줄이러 가기 →'),
+    'ko/add-page-numbers.html': ('🔢 PDF에 페이지 번호 한 번에 넣기', '페이지 번호 넣으러 가기 →'),
+    'ko/organize.html': ('🗂️ PDF 페이지 순서, 보면서 바꾸기', 'PDF 순서 바꾸러 가기 →'),
+    'ko/split.html': ('✂️ PDF에서 필요한 페이지만 나누기', 'PDF 나누러 가기 →'),
 }
 
 def box(url, eyebrow, headline, button):
@@ -34,9 +40,9 @@ def box(url, eyebrow, headline, button):
 def plan(src):
     head = re.match(r'^<!--.*?-->\s*', src, re.S); head = head.group(0) if head else ''
     rows = src[len(head):].split('\n')
-    links = [(n, m.group(1)) for n, l in enumerate(rows) for m in re.finditer(r'<a href="(https://pdfslimio\.com/([^"#]*))"', l)
+    links = [(n, m.group(1)) for n, l in enumerate(rows) for m in re.finditer(r'<a href="(https://pdfslimio\.com/([^"]*))"', l)
              if '/guides/' not in m.group(1) and '/img/' not in m.group(1)]
-    page = lambda u: u.split('pdfslimio.com/')[1].split('?')[0]
+    page = lambda u: re.split(r'[?#]', u.split('pdfslimio.com/')[1])[0]
     count = collections.Counter(page(u) for _, u in links)
     if not count: return None
     top = max(count.values()); main = next(page(u) for _, u in links if count[page(u)] == top)
@@ -51,7 +57,11 @@ def plan(src):
     if k < len(rows) and re.match(r'\s*<p style="text-align:center;?"><img ', rows[k]): n = k
     # rather at the end of that section, so an experiment and its results stay together
     n = next((k - 1 for k in range(n + 1, len(rows)) if rows[k].lstrip().startswith('<h2')), n)
-    end = next((k for k in range(len(rows) - 1, -1, -1) if re.match(r'\s*<p style="color:#888[^"]*">\s*출처', rows[k])), len(rows))
+    # box 2 goes above the closing 출처 / ※ lines (Tistory '<p style="color:#888…">출처', Naver '<p>출처:')
+    end = k = len(rows)
+    while k > 0 and (not rows[k - 1].strip() or re.match(r'\s*<p[^>]*>\s*(출처|※)', rows[k - 1])):
+        k -= 1
+        if rows[k].strip(): end = k
     if end - n < 12:   # the first link is near the end: put box 1 up front instead, just before the first heading
         n = next(k for k, l in enumerate(rows) if l.lstrip().startswith('<h2')) - 1
     return head, rows, main, url, n, end
