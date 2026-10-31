@@ -109,8 +109,11 @@ if LIVE:
     time.sleep(4)
     page = urllib.request.urlopen(urllib.request.Request(f'https://ddoua.tistory.com/{pid}?t={int(time.time())}',
                                                          headers={'User-Agent': 'Mozilla/5.0'})).read().decode()
-    need(len(re.findall(r'margin:\s*36px auto', page)) == 2 and cta.EYEBROW in page, 'the public page does not show both buttons')
-    need(all(page.count(s) == 1 for s in snippets()[:2]), 'the public page has the body more than once')
+    art = re.search(r'contents_style">(.*?)<!-- System - START -->', page, re.S)   # the article, not the meta tags
+    art = art.group(1) if art else ''
+    need(len(re.findall(r'margin:\s*36px auto', art)) == 2 and cta.EYEBROW in art, 'the public page does not show both buttons')
+    text = ' '.join(tf.plain(art).split())
+    need(all(text.count(' '.join(s.split())) == 1 for s in snippets()), 'the public page has the body more than once')
     log('SAVED live', title[:30], f'https://ddoua.tistory.com/{pid}', check_saved())
 else:
     rows = tf.tree().splitlines()

@@ -15,9 +15,9 @@
   - 문구는 사이트에 실제로 적힌 말만 써요.
 - **티스토리:** `python3 marketing/tistory/cta.py <원고>`를 실행하면 HTML 상자 2개가 들어가요.
   - `tnew.py`(새 예약)와 `tedit.py`(예약 글 고치기)는 상자가 없는 원고를 올리지 않아요.
-- **네이버:** 편집기가 우리 HTML 상자를 지우니 같은 모양의 그림에 링크를 걸어요.
-  - `python3 marketing/naver/ctamark.py <원고>`를 실행해요. 그림 자리 `<!--IMG:cta-<도구>.png-->`·`<!--IMG:cta-<도구>-end.png-->`와 `버튼링크:` 머리줄이 들어가요.
-  - `newpost.py`가 그림을 올리고 그 링크를 걸어요. 표시가 없는 원고는 올리지 않아요.
+- **네이버:** 편집기가 우리 HTML 상자를 지우니 같은 모양의 그림(`marketing/naver/cta/`)에 링크를 걸어요. 원고에는 따로 표시하지 않아요.
+  - `newpost.py`가 글을 예약한 뒤 `editor/ctains.py`로 같은 두 자리에 그림을 넣고 링크를 걸어요(예약 시간은 그대로). 버튼 그림이 없는 도구로 연결하는 원고는 올리지 않아요.
+  - 이미 예약된 글은 `editor/ctarun.py <창> <예약 목록>`으로 한꺼번에 넣어요.
 - **새 도구로 연결하는 글이면** 먼저 할 일이 있어요.
   - `marketing/tistory/cta.py`의 `TOOLS`에 그 페이지의 제목과 버튼 문구를 넣어요. 문구는 페이지의 h1·title에서 가져와요.
   - 그다음 `python3 marketing/naver/banners.py`로 네이버 그림(`marketing/naver/cta/`)을 다시 만들어요.

@@ -1,8 +1,9 @@
 # newpost.py <win> <NN> <YYYY-MM-DD> <HH> <chunkdir> : post draft NN as a new post scheduled for that date at HH:00.
 # Reads the title, tags and images from the draft, builds the paste chunks (chunk.py), opens a new post in the editor,
 # pastes it (post.sh), sets tall or '작게' images small (small.sh), checks that the title, every image and the last
-# paragraph made it in, then schedules it with the tags (finish.sh, which checks the panel before 발행).
-# Anything that fails leaves the editor without saving.
+# paragraph made it in, then schedules it with the tags (finish.sh, which checks the panel before 발행), and then puts
+# the two SlimIO button pictures in with their link (ctains.py, schedule kept). A draft whose main tool has no button
+# picture is refused. Anything that fails leaves the editor without saving.
 import glob, os, re, subprocess, sys, time
 import tblfix as tf
 from tblfix_sched import go, wait_for, leave_unsaved, log, NAVER, EDITOR
@@ -24,6 +25,12 @@ last = tf.plain(re.findall(r'<p>(.*?)</p>', src, flags=re.S)[-1])[:40]
 
 def fail(why): log(n, 'FAIL', why); leave_unsaved(); tf.done(); sys.exit(1)
 if len(tags) != 10: sys.exit(f'{n}: {len(tags)} tags')
+# marketing/WRITING.md: every post gets the two SlimIO buttons; ctains.py puts them in once the post is scheduled
+sys.path.insert(0, NAVER); sys.path.insert(0, os.path.join(NAVER, '../tistory'))
+import cta, banners
+p = cta.plan(src)
+if not p or p[2] not in cta.TOOLS or not all(os.path.exists(f) for f in banners.files(p[2])):
+    sys.exit(f'{n}: no SlimIO button for this draft (link a tool page; new tool: add it to tistory/cta.py TOOLS, run banners.py)')
 tf.sh('python3', f'{tf.T}/chunk.py', draft, nb)
 if len(glob.glob(f'{nb}/c*.html')) != len(imgs): sys.exit(f'{n}: chunks do not match images')
 if not tf.guard(): log(n, 'STOP owner busy for 3 h'); sys.exit(2)
@@ -50,3 +57,7 @@ print(r.stdout[-800:], r.stderr[-300:], flush=True)
 if 'CHECK OK' not in r.stdout: fail('finish.sh panel check')
 home = re.search(r'주소창 및 검색창, Value: blog\.naver\.com/todayz777(,|$)', tf.tree(), re.M)
 log(n, f'SCHEDULED {date} {hh}:00' if home else 'CHECK: 발행 clicked but did not return to the blog home')
+if home:   # the two buttons, with the schedule kept
+    r = tf.sh('python3', f'{tf.T}/ctains.py', W, str(n), date.replace('-', '.'), str(hh)); tf.done()
+    print(r.stdout[-400:], r.stderr[-300:], flush=True)
+    log(n, 'buttons in' if 'SAVED' in r.stdout else 'CHECK: buttons not in - run ctains.py again')
