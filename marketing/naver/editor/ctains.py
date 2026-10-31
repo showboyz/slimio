@@ -1,6 +1,6 @@
 # ctains.py <win> <NN> <YYYY.MM.DD> <HH> : put the two SlimIO button pictures (banners.py) into the reserved post of draft NN,
-# with the tool link on each, at the spots ctamark.py would mark: box 1 before the heading that ends the section first
-# linking the tool (or before the first heading), box 2 before the closing 출처/※ line. Saves with the schedule unchanged.
+# with the tool link on each, at the marketing/WRITING.md spots (tistory/cta.py plan): box 1 before the heading that
+# ends the section first linking the tool (or before the first heading), box 2 before the closing 출처/※ line. Saves with the schedule unchanged.
 # How the caret gets there (2026-10-31): Chrome find (Cmd+F) for the start of the block that follows the spot, the
 # orange match located in a screenshot (hl.cjs) and clicked, then Cmd+Left. Clicking a far-away element misses, closing
 # the find bar doesn't move the editor's caret, and Alt+Up/Cmd+Down stop at component edges, so none of those are used.
@@ -47,7 +47,6 @@ if re.match(rf'\s*\d+ 버튼 (.*) {re.escape(when)}$', item[0]).group(1).strip()
 tf.press(rf'^버튼 .* {re.escape(when)}$'); time.sleep(5)
 t = wait_for(rf'텍스트, Value: {re.escape(title)}', 20)
 if not t: fail('post did not load')
-if '이미지 cta-' in t: log(n, 'already has buttons'); leave_unsaved(); tf.done(); sys.exit(0)
 
 def caret_before(text):
     subprocess.run('pbcopy', input=text, text=True)
@@ -66,7 +65,10 @@ def caret_before(text):
 subprocess.run('pbcopy', input=spots[1][1], text=True)
 k('hotkey', '--key', 'CmdOrCtrl+F'); time.sleep(0.7); k('hotkey', '--key', 'CmdOrCtrl+V'); time.sleep(1.2)
 k('press-key', '--key', 'Return'); time.sleep(1.5); tf.press(r'^버튼 검색 바 닫기$'); time.sleep(1)
-before = blocks(tf.tree())
+t = tf.tree()
+# after a reload the editor no longer shows picture file names; but no post had a picture link before the buttons
+if re.search(r'텍스트, Value: 링크$', t, re.M): log(n, 'already has buttons'); leave_unsaved(); tf.done(); sys.exit(0)
+before = blocks(t)
 for path, nxt in spots:
     name = os.path.basename(path)
     if not tf.guard(): log(n, 'STOP owner busy for 3 h (post left open, not saved)'); sys.exit(2)
