@@ -26,13 +26,16 @@
    "dpi": 90
   },
   "500kb": {
-   "bytes": 348300,
-   "mode": "kept"
+   "bytes": 489249,
+   "mode": "kept",
+   "dpi": 100,
+   "date": "2026-11-01"
   },
   "1mb": {
-   "bytes": 769644,
-   "mode": "images",
-   "dpi": 108
+   "bytes": 788533,
+   "mode": "kept",
+   "dpi": 120,
+   "date": "2026-11-01"
   },
   "2mb": {
    "bytes": 1835527,

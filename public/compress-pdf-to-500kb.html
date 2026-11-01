@@ -235,8 +235,8 @@
 <!-- measured:start -->
 <div class="content measured">
       <h2>We tested it: what 500KB did to a 3-page scan</h2>
-      <p>On 30 October 2026 we ran one made-up 3-page scan (3.61 MB) through every size page. At 500KB it came out at <b>340.1KB</b>: pages kept, pictures recompressed. Text: sharp.</p>
-      <p>At 500KB the result was only 340.1KB. SlimIO kept the three pages as they are and recompressed the pictures inside, so nothing was turned into a lower-resolution image, and it came out sharper than the 300KB result. When the pages fit without being rebuilt, SlimIO leaves them alone.</p>
+      <p>We ran one made-up 3-page scan (3.61 MB) through every size page on 30 October 2026, and through this one again on 1 November 2026 after a change to the tool. At 500KB it now comes out at <b>477.8KB</b>: pages kept, pictures recompressed at 100 dpi. Text: sharp.</p>
+      <p>At 500KB the result was 477.8KB. SlimIO kept the three pages as they are and brought the pictures inside down to 100 dpi, so no page was turned into an image, and the text is cleaner than in the 300KB result. Until 1 November SlimIO went straight to 72 dpi here (340.1KB), which left the letters with blocky edges although 100 dpi fit.</p>
       <p>See all seven sizes side by side, with a picture of each: <a href="/guides/pdf-size-test.html">We compressed one scanned PDF to 50KB, 100KB, 200KB, 300KB, 500KB, 1MB and 2MB</a>.</p>
 </div>
 <!-- measured:end -->
