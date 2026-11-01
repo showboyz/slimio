@@ -208,18 +208,43 @@ async function handle(req, res) {
              // With a size target of 1MB or more, ebook's fixed 150dpi throws away detail the
              // limit has room for (a 38MB phone-photo PDF came out 1.9MB for a 10MB limit).
              // Start at 300dpi and step down only while it's too big; file size grows roughly
-             // with dpi², so one estimate usually lands it. Below 150dpi -> plain ebook as before.
-             let dpi = null;
+             // with dpi², so one estimate usually lands it. Below 150dpi -> plain ebook, then 150
+             // and 100dpi. Those two aren't estimates: they divide the usual 300dpi scan evenly and
+             // gs then averages pixels, which packs far tighter (a 6MB two-page scan: 100dpi 114KB,
+             // 110dpi 185KB, 130dpi 241KB).
+             let dpi = null, done = false;
+             const even = async () => {
+                for (const res of [150, 100]) {
+                   await gs({ level: "ebook", res }, tmpIn, tmpOut);
+                   const n = fs.statSync(tmpOut).size;
+                   if (n <= target) return res;
+                   if (n > 2.5 * target) break;   // 100dpi keeps at least ~40% of 150dpi's size: no use
+                }
+                return null;   // the last try stays in tmpOut
+             };
              if (target >= 1e6 && level === "ebook" && jpg === undefined) {
                 let res = 300;
                 for (let i = 0; i < 2 && res > 150; i++) {
                    await gs({ level, res }, tmpIn, tmpOut);
                    const n = fs.statSync(tmpOut).size;
-                   if (n <= target) { dpi = res; break; }
+                   if (n <= target) { dpi = res; done = true; break; }
                    res = Math.floor((res * Math.sqrt(target / n) * 0.95) / 10) * 10;
                 }
+                // ebook leaves 150–225dpi pictures as they are: a 3.6MB 200dpi scan stayed 3.8MB, so
+                // 1MB turned its pages into images (751KB, 108dpi) though 100dpi made 489KB.
+                if (!done) {
+                   await gs({ level }, tmpIn, tmpOut);
+                   done = true;
+                   if (fs.statSync(tmpOut).size > target) dpi = await even();
+                }
+             } else if (target > 0 && level === "screen" && jpg === undefined) {
+                // Below 1MB the page asks for screen, whose 72dpi smudged that 6MB scan's small print
+                // (93KB for a 500KB limit) though 150dpi (211KB) fit it. Screen only when 150 and
+                // 100dpi don't fit; not above 150, where the steps for 1MB and up end.
+                dpi = await even();
+                done = dpi !== null;
              }
-             if (dpi === null) await gs({ level, jpg }, tmpIn, tmpOut);
+             if (!done) await gs({ level, jpg }, tmpIn, tmpOut);
              const outBuf = fs.readFileSync(tmpOut);
              consume(u);   // only a finished compression counts
              sendJson(

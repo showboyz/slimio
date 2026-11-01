@@ -12,7 +12,7 @@
 //   npm test -- --pages       only the sitemap page checks
 //   npm test -- --mobile      run the tools at phone size (390×844, touch) instead of desktop
 //   npm test -- --live        after a deploy: the server-compression tests and the page checks
-//                             against https://pdfslimio.com (uses 5 of the day's operations;
+//                             against https://pdfslimio.com (uses 6 of the day's operations;
 //                             analytics are blocked, so nothing is counted as a visit)
 import { chromium } from "playwright-core";
 import { spawn, spawnSync } from "child_process";
@@ -405,6 +405,17 @@ function toolTests() {
     await p.setInputFiles("#pdf", F("photo.pdf")); await runTool(p);
     const r = await download(p), lim = kbRange(t.toUpperCase());
     if (r.bytes.length > lim.max) return `result ${KB(r.bytes.length)} is over ${t}`;
+    return pdfCheck(r.bytes, { pages: 2 });
+  });
+  // Below 1MB the server went straight to 72 dpi, which smudged a scan's small print though
+  // 150 dpi fit the limit.
+  both("compress-pdf-to-500kb.html", "keeps 150 dpi when 500KB has room", async (p) => {
+    let dpi = null;
+    p.on("response", async (r) => { if (r.url().includes("/api/compress")) dpi = (await r.json().catch(() => ({}))).dpi || 72; });
+    await p.setInputFiles("#pdf", F("photo.pdf")); await runTool(p);
+    const r = await download(p);
+    if (r.bytes.length > 500e3) return `result ${KB(r.bytes.length)} is over 500KB`;
+    if (dpi !== 150) return `server went down to ${dpi} dpi though 500KB had room (result ${KB(r.bytes.length)})`;
     return pdfCheck(r.bytes, { pages: 2 });
   });
   both("compress-pdf-for-email.html", "keeps more than 150 dpi when 10MB has room", async (p) => {
@@ -824,7 +835,7 @@ function toolTests() {
     if (r.bytes.length > want.max * 1000 || r.bytes.length < (want.min || 0) * 1024) return `${KB(r.bytes.length)} is outside ${want.min || 0}–${want.max}KB`;
     return null;
   });
-  const live =["/ sharp mode", "/ko/ sharp mode", "/compress-pdf-to-1mb.html"];
+  const live =["/ sharp mode", "/ko/ sharp mode", "/compress-pdf-to-1mb.html", "/compress-pdf-to-500kb.html keeps"];
   return T.filter((t) => (!filters.length || filters.some((f) => t.name.includes(f))) && (!LIVE || live.some((l) => t.name.startsWith(l))));
 }
 
