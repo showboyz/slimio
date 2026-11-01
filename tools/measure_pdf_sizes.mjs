@@ -1,10 +1,11 @@
 // Measures what the seven size pages really do to one made-up phone-scan PDF (3 pages, ~3.6MB).
-// Usage: node tools/measure_pdf_sizes.mjs <output dir>   -> scan3.pdf, out-<size>.pdf, result.json
+// Usage: node tools/measure_pdf_sizes.mjs <output dir> [scan3.pdf]   -> scan3.pdf, out-<size>.pdf, result.json
+// With a scan3.pdf it measures that file again (the published numbers come from one file) instead of making a new one.
 // Then turn result.json into tools/measured.json (bytes, mode images|kept, dpi) and run tools/gen_measured.py.
 import { chromium } from "playwright-core";
 import { spawn, spawnSync } from "child_process";
 import fs from "fs";
-const ROOT = new URL("..", import.meta.url).pathname, PORT = 3195, BASE = `http://127.0.0.1:${PORT}`, OUT = process.argv[2] || ".";
+const ROOT = new URL("..", import.meta.url).pathname, PORT = 3195, BASE = `http://127.0.0.1:${PORT}`, OUT = process.argv[2] || ".", REUSE = process.argv[3];
 const server = spawn("node", [ROOT + "/server/server.cjs"], { env: { ...process.env, PORT: String(PORT), HOST: "127.0.0.1", DAILY_LIMIT: "100000", IP_DAILY_LIMIT: "100000" }, stdio: "ignore" });
 for (let i = 0; i < 50; i++) { try { if ((await fetch(BASE + "/")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 200)); }
 function imageSize(b) { for (let i = 2; i < b.length - 9;) { if (b[i] !== 0xff) { i++; continue; } const m = b[i + 1], len = b.readUInt16BE(i + 2); if (m >= 0xc0 && m <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(m)) return { w: b.readUInt16BE(i + 7), h: b.readUInt16BE(i + 5) }; i += 2 + len; } }
@@ -42,8 +43,12 @@ const scanPage = (n) => fx.evaluate(async (n) => {
   const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.85 });
   return Array.from(new Uint8Array(await b.arrayBuffer()));
 }, n);
-const pages = []; for (let i = 0; i < 3; i++) pages.push(Buffer.from(await scanPage(i)));
-const input = jpegPdf(pages); fs.writeFileSync(OUT + "/scan3.pdf", input); fs.writeFileSync(OUT + "/scan3-p1.jpg", pages[0]);
+let input;
+if (REUSE) { input = fs.readFileSync(REUSE); if (REUSE !== OUT + "/scan3.pdf") fs.writeFileSync(OUT + "/scan3.pdf", input); }
+else {
+  const pages = []; for (let i = 0; i < 3; i++) pages.push(Buffer.from(await scanPage(i)));
+  input = jpegPdf(pages); fs.writeFileSync(OUT + "/scan3.pdf", input); fs.writeFileSync(OUT + "/scan3-p1.jpg", pages[0]);
+}
 console.log("input", input.length);
 const result = { input: { bytes: input.length, pages: 3 }, pdf: {} };
 for (const t of ["50kb", "100kb", "200kb", "300kb", "500kb", "1mb", "2mb"]) {
