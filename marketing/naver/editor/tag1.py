@@ -5,10 +5,12 @@ def tree(): return run("get-app-state","--restore-window")["result"]["snapshot"]
 def front(): return subprocess.run(["osascript","-e",'tell application "System Events" to get name of first application process whose frontmost is true'],capture_output=True,text=True).stdout.strip()
 t=tree()
 if re.search(r"\d+ container "+re.escape(tag)+r"\n",t): print("already",tag); sys.exit()
-c=re.search(r"(\d+) 콤보 상자 \(settable\)[^\n]*Placeholder: 태그 입력",t).group(1)
-run("click","--element-index",c); time.sleep(0.4)
-t=run("get-app-state")["result"]["snapshot"]["treeText"]
-if "콤보 상자 (settable)" not in t.split("focused UI element is")[-1]: print("FAIL focus",tag); sys.exit(1)
+for attempt in range(3):   # the click sometimes doesn't focus the field the first time (2026-11-02, 5th tag)
+    c=re.search(r"(\d+) 콤보 상자 \(settable\)[^\n]*Placeholder: 태그 입력",t).group(1)
+    run("click","--element-index",c); time.sleep(0.4 + attempt * 0.6)
+    t=run("get-app-state")["result"]["snapshot"]["treeText"]
+    if "콤보 상자 (settable)" in t.split("focused UI element is")[-1]: break
+else: print("FAIL focus",tag); sys.exit(1)
 c=re.search(r"(\d+) 콤보 상자 \(settable\)[^\n]*Placeholder: 태그 입력",t).group(1)
 r=run("set-value","--element-index",c,"--value",tag); 
 for attempt in range(3):

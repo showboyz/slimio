@@ -17,7 +17,11 @@ done
 oc set-value --window-id $DL --element-index $F --value "$P" >/dev/null
 st $DL --restore-window >/dev/null
 oc press-key --window-id $DL --key Return | python3 -c 'import json,sys;d=json.load(sys.stdin);print("return",d.get("ok"),d.get("error",{}).get("code"))'; sleep 1.2
-B=$(st $DL | grep -o -E '^\s*[0-9]+ 버튼 열기' | grep -o -E '[0-9]+' | head -1)
+# the tree can still say '버튼 (disabled) 열기' for a few seconds after the file is picked (2026-11-02)
+for n in 1 2 3 4 5 6; do
+  B=$(st $DL | grep -o -E '^\s*[0-9]+ 버튼 열기' | grep -o -E '[0-9]+' | head -1)
+  [ -n "$B" ] && break; sleep 1
+done
 [ -z "$B" ] && { echo "no open button"; exit 1; }
 oc click --window-id $DL --element-index $B >/dev/null; sleep 4
 st $W | grep -E "이미지 $(basename $P)|focused UI"
