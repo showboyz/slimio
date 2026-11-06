@@ -565,14 +565,14 @@ KO["watermark.html"] = dict(
 
 KO["pdf-to-jpg.html"] = dict(
     title="PDF JPG 변환 - PDF를 이미지로 무료 변환 | SlimIO",
-    desc="PDF 페이지를 JPG나 PNG 이미지로 바꾸세요. 화질과 해상도를 고르고 ZIP으로 한 번에 받아요. 회원가입 없이 무료, 브라우저 안에서 처리돼요.",
+    desc="PDF 페이지를 JPG나 PNG 이미지로 바꾸세요. 화질과 해상도를 고르면 1쪽은 이미지 한 장, 여러 쪽은 ZIP으로 한 번에 받아요. 회원가입 없이 무료, 브라우저 안에서 처리돼요.",
     keywords="PDF JPG 변환, PDF 이미지 변환, PDF를 JPG로, PDF PNG 변환, PDF 사진으로 저장",
     short="PDF JPG 변환 | SlimIO",
     app_name="SlimIO PDF JPG 변환",
     app_desc="PDF 페이지를 JPG나 PNG 이미지로 바꾸는 무료 도구. 브라우저에서 처리돼 파일이 업로드되지 않아요.",
     features=["PDF를 JPG로 변환", "PNG 무손실 저장", "화질 · 해상도 선택", "브라우저에서 처리 (업로드 없음)"],
     h1="PDF를 JPG로,<br /><b>선명하게.</b>",
-    lead="모든 페이지를 이미지로 바꿔 ZIP으로 한 번에 받아요. 무료로, 설치 없이 브라우저에서 바로.",
+    lead="모든 페이지를 이미지로 바꿔요. 1쪽이면 이미지 한 장, 여러 쪽이면 ZIP으로 한 번에 받아요. 무료로, 설치 없이 브라우저에서 바로.",
     ui=[
         ('<a href="/merge.html">Merge</a>', '<a href="/merge.html">PDF 합치기</a>'),
         ('<a href="/pdf-to-jpg.html">PDF to JPG</a>', '<a href="/pdf-to-jpg.html">PDF → JPG</a>'),
