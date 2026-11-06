@@ -132,8 +132,8 @@
   "2026-10-30"
  ],
  "/ko/": [
-  "b469b984f3a5f087",
-  "2026-11-02"
+  "ef31c56ae4413170",
+  "2026-11-06"
  ],
  "/ko/about.html": [
   "39ba45112791f708",
@@ -144,7 +144,7 @@
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "285ae5d21ec43b08",
+  "7e6c4bb43f9763f2",
   "2026-11-06"
  ],
  "/ko/compress-image-to-100kb.html": [
@@ -208,12 +208,16 @@
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "061ff688bfd5da13",
+  "35517c68106d5965",
   "2026-11-06"
  ],
  "/ko/guides/china-visa-photo.html": [
   "f9ae777028f2d817",
   "2026-10-29"
+ ],
+ "/ko/guides/civil-service-exam-photo.html": [
+  "d42a46cd163164b3",
+  "2026-11-06"
  ],
  "/ko/guides/computer-certificate-photo-size.html": [
   "1ea3cde8cd40176d",
@@ -224,8 +228,8 @@
   "2026-11-02"
  ],
  "/ko/guides/exam-application-photo-size.html": [
-  "b9185ec634a5bb36",
-  "2026-10-29"
+  "995e5b90bac4a5e0",
+  "2026-11-06"
  ],
  "/ko/guides/gov24-pdf-save.html": [
   "bf77dfdef50faa39",
@@ -238,6 +242,10 @@
  "/ko/guides/iphone-mac-pdf-size.html": [
   "156fd2c03efba564",
   "2026-10-29"
+ ],
+ "/ko/guides/korean-history-exam-photo.html": [
+  "5e1020bdbed525cb",
+  "2026-11-06"
  ],
  "/ko/guides/kuksiwon-photo.html": [
   "767426ea8c53b85d",
@@ -283,6 +291,10 @@
   "c88aa39099a72771",
   "2026-10-29"
  ],
+ "/ko/guides/resident-card-photo.html": [
+  "a531a2309ab99b79",
+  "2026-11-06"
+ ],
  "/ko/guides/resume-photo-size.html": [
   "18fecbf942b357fe",
   "2026-11-06"
@@ -294,6 +306,10 @@
  "/ko/guides/us-visa-photo-size.html": [
   "942bcf16b1b4b52e",
   "2026-10-29"
+ ],
+ "/ko/guides/yearend-tax-pdf-password.html": [
+  "c688ece88cfebf9b",
+  "2026-11-06"
  ],
  "/ko/guides/youth-id-photo.html": [
   "15418c8a0ac9076d",
@@ -324,8 +340,8 @@
   "2026-10-11"
  ],
  "/ko/receipt-to-pdf.html": [
-  "e649cf4a8a415c04",
-  "2026-10-29"
+  "d4378ded68610912",
+  "2026-11-06"
  ],
  "/ko/rotate.html": [
   "ddb2f4277f261998",
@@ -348,8 +364,8 @@
   "2026-09-29"
  ],
  "/ko/unlock-pdf.html": [
-  "6c54bdbb44c1be82",
-  "2026-10-31"
+  "460bb93d15a27cd3",
+  "2026-11-06"
  ],
  "/ko/us-visa-photo.html": [
   "958d05cb1b1be06c",

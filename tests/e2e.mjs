@@ -950,6 +950,9 @@ async function pageChecks(browser) {
   }
   for (const l of links) {
     if (!l) continue;
+    // gen_ko/gen_guides write ?v=0 and bump_versions puts the content hash in; a leftover 0 means a
+    // year-long cached copy that never updates (ko.js went live like that on 6 November)
+    if (/[?&]v=0$/.test(l)) fails.push([l, ["asset still has the ?v=0 placeholder: run tools/bump_versions.py"]]);
     const r = await fetch(BASE + l, { redirect: "follow" });
     if (r.status >= 400) fails.push([l, [`link returns HTTP ${r.status}`]]);
   }
