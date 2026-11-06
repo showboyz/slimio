@@ -277,7 +277,8 @@ def size_row(slug):
 
 def with_size_row(s, slug):
     s = re.sub(r'<div class="related sizes">.*?</div>\n</div>\n\n', "", s, flags=re.S)   # idempotent
-    return sub1(r'(<!-- more-tools:start -->|<div class="related">\s*<h3>Related tools</h3>)', lambda m: size_row(slug) + m.group(1), s, slug)
+    # above the related guides when the page has them (the first of these in the page), so the row stays put on every run
+    return sub1(r'(<!-- guide-links:start -->|<!-- more-tools:start -->|<div class="related">\s*<h3>Related tools</h3>)', lambda m: size_row(slug) + m.group(1), s, slug)
 
 
 SPECS_BLOCK = re.compile(r'\n\s*<div class="specs">\n.*?<div class="specs-out" id="specsout" hidden></div>\n\s*</div>', re.S)

@@ -55,6 +55,8 @@ window.SLIMIO_KO = {
    "Limit service currently unavailable.": "남은 횟수를 확인할 수 없어요.",
    "↓ Download PDF": "↓ PDF 다운로드",
    "↓ Download ZIP": "↓ ZIP 다운로드",
+   "↓ Download JPG": "↓ JPG 다운로드",
+   "↓ Download PNG": "↓ PNG 다운로드",
    "In-app browsers sometimes can't save files. If nothing downloads, open this page in a browser and run it again.":
       "앱 안에서 열린 화면에서는 파일 저장이 안 될 때가 있어요. 다운로드가 안 되면 브라우저로 열어서 다시 해 주세요.",
    "In-app browsers sometimes can't save files. If nothing downloads, choose “Open in Safari” (or another browser) from the app's ⋯ menu and run it again.":
@@ -148,6 +150,7 @@ window.SLIMIO_KO = {
 
    // pdf <-> jpg
    "Convert to JPG": "JPG로 변환하기",
+   "Convert to PNG": "PNG로 변환하기",
    "Convert to PDF": "PDF로 변환하기",
    "Converting…": "변환하는 중…",
    "Enter a size of at least 10KB.": "10KB 이상으로 입력해 주세요.",
@@ -188,6 +191,7 @@ window.SLIMIO_KO = {
    "cm/mm converted at 200 dpi; check the result": "cm·mm는 200dpi 기준으로 바꿨어요. 결과를 확인하세요",
    "Couldn't find sizes in that text — set them below.": "붙여 넣은 글에서 크기를 찾지 못했어요. 아래에서 직접 정해 주세요.",
    "Enter a width and height between 16 and 4000 pixels.": "가로와 세로를 16~4000픽셀 사이로 입력해 주세요.",
+   "Read as {w} × {h} cm: the photo is made {pw} × {ph} pixels (300 dpi).": "{w}×{h}cm로 보고 {pw}×{ph}픽셀(300dpi)로 만들어요.",
    "↓ Download": "↓ 다운로드",
    "Total: {before} → {after} ({change})": "전체: {before} → {after} ({change})",
    "already optimized, kept as is": "이미 최적화된 파일이라 그대로 두었어요",
@@ -201,6 +205,8 @@ window.SLIMIO_KO = {
    "Page {n}": "{n}페이지",
    "Page {n} / {total}": "{n} / {total}페이지",
    "Draw your signature first.": "먼저 서명을 그려 주세요.",
+   "Draw your signature in the box above first.": "먼저 위 칸에 손가락이나 마우스로 서명을 그려 주세요.",
+   "Photo, turned into a 1-page PDF": "사진을 PDF 1쪽으로 바꿨어요",
    "Type your name first.": "먼저 이름을 입력해 주세요.",
    "Choose a signature image first.": "먼저 서명이나 도장 이미지를 골라 주세요.",
    "Add a signature to the page first.": "먼저 페이지에 서명을 추가해 주세요.",
@@ -213,6 +219,8 @@ window.SLIMIO_KO = {
    "Your name": "홍길동",
    "Tap to choose PDF files": "눌러서 PDF 파일 선택",
    "Tap to choose a PDF": "눌러서 PDF 파일 선택",
+   "Tap to choose a PDF or photo": "눌러서 PDF나 사진 선택",
+   "From your files or gallery": "파일이나 앨범에서 골라요",
    "Tap to choose photos": "눌러서 사진 선택",
    "You can pick several at once": "여러 개를 한 번에 고를 수 있어요",
    "Pick a file saved on your phone": "휴대폰에 저장된 파일에서 골라요",

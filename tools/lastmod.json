@@ -140,15 +140,15 @@
   "2026-11-01"
  ],
  "/ko/add-page-numbers.html": [
-  "9e166fa632e3785a",
+  "c447ed924a3809eb",
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "fe2ae2efb6201f00",
-  "2026-11-02"
+  "285ae5d21ec43b08",
+  "2026-11-06"
  ],
  "/ko/compress-image-to-100kb.html": [
-  "adbb4a670c6fb343",
+  "81fd3eb51fb8893d",
   "2026-10-30"
  ],
  "/ko/compress-image-to-200kb.html": [
@@ -156,7 +156,7 @@
   "2026-11-02"
  ],
  "/ko/compress-image-to-20kb.html": [
-  "acc96549fac02da1",
+  "7c809f3584ac6ddb",
   "2026-10-30"
  ],
  "/ko/compress-image-to-50kb.html": [
@@ -164,39 +164,39 @@
   "2026-10-30"
  ],
  "/ko/compress-image.html": [
-  "77327a09ad90d7ad",
+  "b0ba732058b2bdeb",
   "2026-10-30"
  ],
  "/ko/compress-pdf-for-email.html": [
-  "3478467f0c7eb49d",
+  "0a00249a5f7463e5",
   "2026-10-27"
  ],
  "/ko/compress-pdf-to-100kb.html": [
-  "936c0bdd6856d4ce",
+  "6fc7def66406859f",
   "2026-10-30"
  ],
  "/ko/compress-pdf-to-1mb.html": [
-  "ded1a6b63dcfd349",
+  "b874ad72d77c39c0",
   "2026-11-01"
  ],
  "/ko/compress-pdf-to-200kb.html": [
-  "7d57fb0d442743f0",
+  "db17c032acfa61e5",
   "2026-10-30"
  ],
  "/ko/compress-pdf-to-2mb.html": [
-  "4170bf73c9bf9230",
+  "b0b54f32004c7a60",
   "2026-10-30"
  ],
  "/ko/compress-pdf-to-300kb.html": [
-  "70c4d7645c58bfc4",
+  "02f74a54241b2e20",
   "2026-10-30"
  ],
  "/ko/compress-pdf-to-500kb.html": [
-  "9ba0a457a060dbd7",
+  "2fafa67d569e2a66",
   "2026-11-01"
  ],
  "/ko/compress-pdf-to-50kb.html": [
-  "c1b698aeacffa441",
+  "b857945895c3db01",
   "2026-10-30"
  ],
  "/ko/contact.html": [
@@ -204,12 +204,12 @@
   "2026-10-09"
  ],
  "/ko/delete-pages.html": [
-  "1ebeb9bd0b462539",
+  "325f6d0440296ac3",
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "d83ad9188281650e",
-  "2026-11-02"
+  "061ff688bfd5da13",
+  "2026-11-06"
  ],
  "/ko/guides/china-visa-photo.html": [
   "f9ae777028f2d817",
@@ -244,12 +244,12 @@
   "2026-10-29"
  ],
  "/ko/guides/language-test-photo.html": [
-  "ece17ebee5b6b9d3",
-  "2026-10-29"
+  "78118847bb9158e2",
+  "2026-11-06"
  ],
  "/ko/guides/mail-attachment-size-limit.html": [
-  "7ecf6fc8f3c2c645",
-  "2026-10-29"
+  "412176ebc4362b94",
+  "2026-11-06"
  ],
  "/ko/guides/mobile-id-photo.html": [
   "86ac232a381c70c8",
@@ -284,8 +284,8 @@
   "2026-10-29"
  ],
  "/ko/guides/resume-photo-size.html": [
-  "2418b922b100fe84",
-  "2026-10-21"
+  "18fecbf942b357fe",
+  "2026-11-06"
  ],
  "/ko/guides/university-application-photo.html": [
   "0a19880b5ee2c683",
@@ -300,7 +300,7 @@
   "2026-10-29"
  ],
  "/ko/heic-to-jpg.html": [
-  "96c029e7ff937860",
+  "d0ad1523dcb8e0af",
   "2026-10-29"
  ],
  "/ko/jpg-to-pdf.html": [
@@ -312,35 +312,35 @@
   "2026-10-29"
  ],
  "/ko/organize.html": [
-  "b457604cee1a3782",
+  "e514592738a8e097",
   "2026-10-27"
  ],
  "/ko/pdf-to-jpg.html": [
-  "483aba7c0e3b27c0",
-  "2026-10-27"
+  "b9f2e86822a4e9ee",
+  "2026-11-06"
  ],
  "/ko/privacy.html": [
   "d1411a30a29ac20d",
   "2026-10-11"
  ],
  "/ko/receipt-to-pdf.html": [
-  "8827ca9b65126146",
+  "e649cf4a8a415c04",
   "2026-10-29"
  ],
  "/ko/rotate.html": [
-  "6ce14163a245a5ad",
+  "ddb2f4277f261998",
   "2026-10-27"
  ],
  "/ko/sign-pdf.html": [
-  "ffd8d0a04f8b255c",
-  "2026-10-29"
+  "1596c17f0efc8a18",
+  "2026-11-06"
  ],
  "/ko/signature-image.html": [
-  "eaf40282fa63f1b5",
+  "52c1127a5ff3c34c",
   "2026-10-27"
  ],
  "/ko/split.html": [
-  "b6e4801ef47b0131",
+  "c18727e51c06eb1e",
   "2026-10-27"
  ],
  "/ko/terms.html": [
@@ -348,7 +348,7 @@
   "2026-09-29"
  ],
  "/ko/unlock-pdf.html": [
-  "8cb678cd016b545c",
+  "6c54bdbb44c1be82",
   "2026-10-31"
  ],
  "/ko/us-visa-photo.html": [
@@ -356,7 +356,7 @@
   "2026-10-30"
  ],
  "/ko/watermark.html": [
-  "b22d03e4e4dd7210",
+  "e69960058d57d4dd",
   "2026-10-27"
  ],
  "/merge.html": [
@@ -368,8 +368,8 @@
   "2026-10-30"
  ],
  "/pdf-to-jpg.html": [
-  "44e2645e7af5dff0",
-  "2026-10-30"
+  "74adea077f6ab4ab",
+  "2026-11-06"
  ],
  "/privacy.html": [
   "8e38698cf37586e0",
@@ -384,8 +384,8 @@
   "2026-10-30"
  ],
  "/sign-pdf.html": [
-  "6555db77255544c4",
-  "2026-10-27"
+  "43062008606d4010",
+  "2026-11-06"
  ],
  "/signature-image.html": [
   "db4d01fa5d143f62",

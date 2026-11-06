@@ -26,21 +26,43 @@ const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), Math.max(lo, hi));
 
 // ---------------------------------------------------------------- file & pages
 
+// A photo of a form (or a scan saved as JPG) becomes a one-page PDF first. People did drop photos
+// here to stamp them. The page is A4-sized on its long side, so a seal comes out its usual size.
+async function photoPdf(f) {
+     const img = await SlimIO.openImage(f, drop.querySelector(".drop-or"));
+     if (!img) throw new Error(SlimIO.t("This image can't be opened in this browser. Save it as JPG and try again."));
+     const s = Math.min(1, 2400 / Math.max(img.width, img.height));
+     const c = document.createElement("canvas");
+     c.width = Math.round(img.width * s);
+     c.height = Math.round(img.height * s);
+     const ctx = c.getContext("2d");
+     ctx.fillStyle = "#ffffff";   // a transparent PNG goes on white paper
+     ctx.fillRect(0, 0, c.width, c.height);
+     ctx.drawImage(img, 0, 0, c.width, c.height);
+     if (img.close) img.close();
+     const jpg = await new Promise((resolve) => c.toBlob(resolve, "image/jpeg", 0.92));
+     const doc = await PDFDocument.create();
+     const k = 842 / Math.max(c.width, c.height), w = c.width * k, h = c.height * k;
+     doc.addPage([w, h]).drawImage(await doc.embedJpg(new Uint8Array(await jpg.arrayBuffer())), { x: 0, y: 0, width: w, height: h });
+     return doc.save();
+}
+
 async function setFile(f) {
-     if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f); return; }
+     const photo = !SlimIO.isPdf(f) && SlimIO.isImage(f);
+     if (!SlimIO.isPdf(f) && !photo) { SlimIO.notPdf(f); return; }
      SlimIO.clearError();
      try {
-             const data = new Uint8Array(await f.arrayBuffer());
+             const data = photo ? await photoPdf(f) : new Uint8Array(await f.arrayBuffer());
              const doc = await pdfjsLib.getDocument({ data: data.slice() }).promise;
              file = f;
              bytes = data;
              viewer = doc;
      } catch (e) {
-             SlimIO.showError(SlimIO.pdfError("Could not open this PDF: {msg}", e));
+             SlimIO.showError(photo ? e.message : SlimIO.pdfError("Could not open this PDF: {msg}", e));
              return;
      }
      drop.querySelector(".drop-title").textContent = f.name;
-     drop.querySelector(".drop-or").textContent = SlimIO.formatSize(f.size);
+     drop.querySelector(".drop-or").textContent = photo ? SlimIO.t("Photo, turned into a 1-page PDF") : SlimIO.formatSize(f.size);
      controls.classList.remove("hidden");
      result.style.display = "none";
      items = [];
@@ -211,7 +233,11 @@ document.querySelectorAll(".swatch").forEach((b) => b.addEventListener("click", 
 }));
 
 function drawnSignature() {
-     if (!bounds) throw new Error(SlimIO.t("Draw your signature first."));
+     if (!bounds) {
+             pad.parentElement.classList.add("live");   // the pad is ready to draw on, without its start button
+             sizePad();
+             throw new Error(SlimIO.t("Draw your signature in the box above first."));
+     }
      const x0 = Math.max(0, Math.floor(bounds.x0)), y0 = Math.max(0, Math.floor(bounds.y0));
      const x1 = Math.min(pad.width, Math.ceil(bounds.x1)), y1 = Math.min(pad.height, Math.ceil(bounds.y1));
      const c = document.createElement("canvas");
@@ -342,6 +368,7 @@ async function typedSignature() {
 // ---------------------------------------------------------------- signature: upload
 
 let uploaded = null;   // decoded image, before background removal
+let addAfterPick = false;   // "+ Add" was tapped before an image was chosen: add it once it's picked
 
 // iPhone HEIC photos go through the decoder in lib.js; the button says "Opening HEIC photos…" meanwhile
 async function decode(f) {
@@ -422,12 +449,17 @@ function showUpload() {
 }
 
 SlimIO.acceptHeic($("sigfile"));   // computers: let the file dialog show HEIC files too (lib.js)
-$("pickimg").addEventListener("click", () => $("sigfile").click());
+$("pickimg").addEventListener("click", () => { addAfterPick = false; $("sigfile").click(); });
 $("sigfile").addEventListener("change", async () => {
      const f = $("sigfile").files[0];
      if (!f) return;
      SlimIO.clearError();
-     try { uploaded = await decode(f); showUpload(); } catch (e) { SlimIO.showError(e.message); }
+     try {
+             uploaded = await decode(f);
+             showUpload();
+             if (addAfterPick) $("add").click();
+     } catch (e) { SlimIO.showError(e.message); }
+     addAfterPick = false;
 });
 $("knockout").addEventListener("change", showUpload);
 
@@ -470,6 +502,8 @@ function toPng(canvas) {
 
 $("add").addEventListener("click", async () => {
      if (!viewer) return;
+     // Upload tab with no image yet: most people tapped this expecting to choose one, so open the picker
+     if (mode === "upload" && !uploaded) { addAfterPick = true; $("sigfile").click(); return; }
      SlimIO.clearError();
      try {
              const sig = mode === "draw" ? drawnSignature() : mode === "type" ? await typedSignature() : uploadedSignature();
@@ -537,12 +571,13 @@ function showResult(pages, count, out) {
      result.style.display = "block";
      $("after").textContent = SlimIO.pages(pages);
      $("count").textContent = SlimIO.t(count === 1 ? "{n} signature" : "{n} signatures", { n: count });
-     const name = file.name.replace(/\.pdf$/i, "") + "_signed.pdf";
+     const name = file.name.replace(/\.(pdf|jpe?g|png|webp|heic|heif|gif|bmp|avif)$/i, "") + "_signed.pdf";
      dl.onclick = () => SlimIO.download(out, name, "application/pdf");
      SlimIO.reveal(result);
 }
 
 goBtn.addEventListener("click", sign);
+SlimIO.acceptHeic($("pdf"));
 drop.addEventListener("click", () => $("pdf").click());
 $("pdf").addEventListener("change", () => setFile($("pdf").files[0]));
 drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });

@@ -191,6 +191,8 @@ async function makeFixtures(browser) {
   await p.setContent(`<style>body{font:13pt/1.6 sans-serif}section{page-break-after:always}</style>` +
     [1, 2, 3].map((n) => `<section><h1>Test page ${n}</h1><p>${para.repeat(12)}</p></section>`).join(""));
   fs.writeFileSync(path.join(TMP, "text.pdf"), await p.pdf({ format: "A4" }));
+  await p.setContent(`<style>body{font:13pt/1.6 sans-serif}</style><h1>Test page 1</h1><p>${para}</p>`);
+  fs.writeFileSync(path.join(TMP, "one.pdf"), await p.pdf({ format: "A4" }));
   // issued certificates: one that needs a password to open, one that opens but has editing locked
   // (the password one has photos, so it's over the size targets and really goes to the server)
   if (HAS_GS) for (const [name, lock, src] of [["password.pdf", "-sUserPassword=030301", "photo.pdf"], ["locked.pdf", "-dPermissions=-3904", "text.pdf"],
@@ -379,7 +381,7 @@ function toolTests() {
   });
   // People drop photos on PDF tools: they get a link to the tool that takes photos.
   for (const [page, href] of [["", "compress-image.html"], ["compress-pdf-to-300kb.html", "compress-image.html?target=300KB"],
-                              ["merge.html", "jpg-to-pdf.html"], ["sign-pdf.html", "jpg-to-pdf.html"]])
+                              ["merge.html", "jpg-to-pdf.html"]])
     both(page, "a photo gets a link to the photo tool", async (p) => {
       await p.setInputFiles(page === "merge.html" ? "#pdfs" : "#pdf", F("photo.jpg"));
       const a = await p.waitForSelector("#error a", { timeout: 5000 }).catch(() => null);
@@ -541,6 +543,16 @@ function toolTests() {
     const st = await p.textContent("#status");
     if (!/no password and no lock|암호도 제한도 없는/.test(st)) return "status: " + st;
     return (await p.isEnabled("#go")) ? "the unlock button is on" : null;
+  });
+  both("pdf-to-jpg.html", "one page gives one PNG, and the button says PNG", async (p) => {
+    await p.setInputFiles("#pdf", F("one.pdf"));
+    await select(p, "#outtype", "image/png");
+    const label = (await p.textContent("#go")).trim();
+    if (!/PNG/.test(label)) return `the button says "${label}" with PNG chosen`;
+    await runTool(p);
+    const r = await download(p), s = imageSize(r.bytes);
+    if (!s || s.type !== "png") return `downloaded ${r.name}, not one PNG`;
+    return r.name === "one.png" ? null : "saved as " + r.name;
   });
   both("pdf-to-jpg.html", "3 images", async (p) => {
     await p.setInputFiles("#pdf", F("text.pdf")); await runTool(p);
@@ -707,6 +719,35 @@ function toolTests() {
     const box = String(spawnSync("gs", ["-q", "-dNODISPLAY", "-dNOSAFER", "-c", `(${f}) (r) file runpdfbegin 1 pdfgetpage /MediaBox pget pop == quit`]).stdout).match(/[\d.]+/g).map(Number);
     return box[3] - box[1] > box[2] - box[0] ? null : `page is ${box[2] - box[0]}×${box[3] - box[1]}: lying on its side`;
   });
+  // Sign PDF takes a photo of a form too: it becomes one A4-sized page (people dropped photos there to stamp them)
+  both("sign-pdf.html", "a photo becomes a 1-page PDF and gets the signature", async (p) => {
+    await p.setInputFiles("#pdf", F("photo.jpg"));
+    await p.waitForFunction(() => document.querySelector("#pagecanvas")?.width > 0, null, { timeout: 30000 }).catch(() => {});
+    const err = await p.$eval("#error", (e) => e.textContent.trim());
+    if (err) return "error: " + err;
+    await p.click('.tab[data-mode="type"]'); await p.fill("#name", "J. Rivera");
+    await p.click("#add"); await runTool(p);
+    const r = await download(p);
+    if (r.name !== "photo_signed.pdf") return "saved as " + r.name;
+    const e = pdfCheck(r.bytes, { pages: 1 });
+    if (e || !HAS_GS) return e;
+    const box = String(spawnSync("gs", ["-q", "-dNODISPLAY", "-dNOSAFER", "-c", `(${path.join(TMP, "check.pdf")}) (r) file runpdfbegin 1 pdfgetpage /MediaBox pget pop == quit`]).stdout).match(/[\d.]+/g).map(Number);
+    const long = Math.max(box[2] - box[0], box[3] - box[1]);
+    return Math.abs(long - 842) < 2 ? null : `page is ${box[2] - box[0]}×${box[3] - box[1]} pt, expected A4 on its long side`;
+  });
+  // the Upload tab's "+ Add" with no image yet: the file picker opens (it used to be an error), and the image goes in
+  both("sign-pdf.html", "+ Add with no image opens the picker", async (p) => {
+    await p.setInputFiles("#pdf", F("text.pdf"));
+    await p.waitForFunction(() => document.querySelector("#pagecanvas")?.width > 0, null, { timeout: 30000 });
+    await p.click('.tab[data-mode="upload"]');
+    const [chooser] = await Promise.all([p.waitForEvent("filechooser", { timeout: 5000 }).catch(() => null), p.click("#add")]);
+    if (!chooser) return "no file picker";
+    const err = await p.$eval("#error", (e) => e.textContent.trim());
+    if (err) return "error: " + err;
+    await chooser.setFiles(F("sig.png"));
+    await p.waitForFunction(() => document.querySelectorAll("#layer .item").length === 1, null, { timeout: 15000 }).catch(() => {});
+    return (await p.$$eval("#layer .item", (a) => a.length)) === 1 ? null : "the picked image was not put on the page";
+  });
   both("sign-pdf.html", "typed signature", async (p) => {
     await p.setInputFiles("#pdf", F("text.pdf"));
     await p.waitForFunction(() => document.querySelector("#pagecanvas")?.width > 0, null, { timeout: 30000 });
@@ -753,6 +794,20 @@ function toolTests() {
   for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, async (p) => !(NOT_KO.includes(r) && p.url().includes("/ko/")) ? photo(p, { resize: r })
     : (await p.$(`#resize option[value="${r}"]`)) ? `${r} is still in the Korean size list` : null);
   both("us-visa-photo.html", "600×600, 54–240KB", (p) => photo(p, { expect: { min: 54000 } }));
+  // people typed the print size (3 × 4 cm) into the pixel boxes: small numbers are centimetres at 300 dpi
+  both("compress-id-photo.html", "custom 3 × 4 is read as centimetres", async (p) => {
+    await p.evaluate(() => {
+      const r = document.querySelector("#resize");
+      r.value = "custom"; r.dispatchEvent(new Event("change"));
+      for (const [id, v] of [["cw", "3"], ["ch", "4"]]) { const e = document.querySelector("#" + id); e.value = v; e.dispatchEvent(new Event("input")); }
+    });
+    await p.setInputFiles("#images", F("photo.jpg"));
+    await photoResult(p);
+    const s = imageSize((await download(p, "#result a[download]")).bytes);
+    if (!s || s.w !== 354 || s.h !== 472) return `${s ? s.w + "×" + s.h : "not an image"}, expected 354×472`;
+    const note = await p.$eval("#custom + .hint", (e) => (e.hidden ? "" : e.textContent));
+    return note.includes("354") ? null : "no note saying how the numbers were read";
+  });
   both("compress-id-photo.html", "KUKSIWON picks 413×531, 500KB", async (p) => {
     const err = await photo(p, { resize: "kr-kuksiwon" });
     const v = await p.evaluate(() => document.querySelector("#target").value);
@@ -804,6 +859,16 @@ function toolTests() {
     return null;
   });
 
+  // the paper-photo tab's button with no photo yet opens the file picker (it used to be an error)
+  both("signature-image.html", "the button with no photo yet opens the picker", async (p) => {
+    await p.click('.tab[data-mode="upload"]');
+    const [chooser] = await Promise.all([p.waitForEvent("filechooser", { timeout: 5000 }).catch(() => null), p.click("#go")]);
+    if (!chooser) return "no file picker";
+    await chooser.setFiles(F("sig.png"));
+    await p.waitForSelector("#dl", { state: "visible", timeout: 30000 }).catch(() => {});
+    return (await p.isVisible("#dl")) ? null : "no signature image after picking the photo";
+  });
+
   // pasted form rules (sentences people really paste into Google): the box sets size and KB range
   // before any photo is added, and the file that comes out meets them
   const PASTED = [
@@ -847,7 +912,8 @@ async function pageChecks(browser) {
   const links = new Set(), fails = [];
   for (const u of urls) {
     const p = await open(browser, u, { mobile: true });
-    const over = await p.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+    // clientWidth, not innerWidth: a phone zooms out to fit a too-wide page, and innerWidth grows with it
+    const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     if (over > 1) p.problems.push(`scrolls sideways by ${over}px at phone width`);
     // phones: the upload box says "tap" (no drag and drop there) and starts on the first screen
     // (an iPhone shows about 660px of a page under Safari's bars)

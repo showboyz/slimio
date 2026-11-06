@@ -55,7 +55,7 @@
 }
 </script>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-<link rel="stylesheet" href="/style.css?v=12b6b8eb" />
+<link rel="stylesheet" href="/style.css?v=ac2de747" />
 <style>
 .tabs { display: flex; gap: 6px; margin-bottom: 10px; }
 .tab {
@@ -105,7 +105,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 <body>
 <div class="wrap">
       <nav>
-           <div class="brand"><span class="logo">📄</span> SlimIO</div>
+           <a class="brand" href="/"><span class="logo">📄</span> SlimIO</a>
            <div class="nav-links">
                <a href="/">Compress</a>
                <a href="/#tools">All tools</a>
@@ -132,10 +132,10 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
       <div class="tool">
            <div class="handoff" id="handoff" hidden>✓ Your signature is ready. Choose the PDF you want to sign.</div>
            <div class="drop" id="drop">
-               <input type="file" id="pdf" accept="application/pdf" hidden />
+               <input type="file" id="pdf" accept="application/pdf,image/*" hidden />
                <div class="drop-title">Drop your PDF here</div>
                <div class="drop-or">or click to browse</div>
-               <div class="drop-sub">File never leaves your device — signing happens locally in your browser.</div>
+               <div class="drop-sub">A photo of the page (JPG, PNG) works too. File never leaves your device — signing happens locally in your browser.</div>
            </div>
 
            <div class="controls hidden" id="controls">
@@ -309,7 +309,7 @@ button.btn.ghost { background: #1a2130; color: var(--text); border: 1px solid va
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-<script defer src="/lib.js?v=26ace182"></script>
-<script type="module" src="/js/sign-pdf.js?v=b60741d9"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script type="module" src="/js/sign-pdf.js?v=3ebbf2f7"></script>
 </body>
 </html>

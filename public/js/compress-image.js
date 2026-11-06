@@ -164,18 +164,35 @@ async function loadImage(file) {
      return img;
 }
 
+// The custom size boxes. Two small numbers (3 × 4, 3.5 × 4.5) are centimetres, not pixels: people
+// typed the print size of their ID photo there. They become pixels at 300 dpi, as in the presets.
+function customSize() {
+     const w = Number($("cw").value), h = Number($("ch").value);
+     if (w > 0 && h > 0 && w < 16 && h < 16) return { w: Math.round((w / 2.54) * 300), h: Math.round((h / 2.54) * 300), cm: [w, h] };
+     return { w: Math.round(w), h: Math.round(h) };
+}
 // Resize choice: a preset key, a max side ("1920"), or [w, h] for a custom pixel size.
 // null when the custom size is out of range.
 function resizeChoice() {
      const v = $("resize").value;
      if (v !== "custom") return v;
-     const w = Math.round(Number($("cw").value)), h = Math.round(Number($("ch").value));
+     const { w, h } = customSize();
      return w >= 16 && w <= 4000 && h >= 16 && h <= 4000 ? [w, h] : null;
 }
+const sizeNote = document.createElement("div");   // under the boxes: how centimetres were read, or what's wrong
+sizeNote.className = "hint";
+sizeNote.hidden = true;
+$("custom").after(sizeNote);
 function syncCustom() {
-     $("custom").hidden = $("resize").value !== "custom";
+     const on = $("resize").value === "custom", s = customSize();
+     $("custom").hidden = !on;
+     sizeNote.hidden = !on || !(s.cm || !resizeChoice());
+     sizeNote.textContent = s.cm
+             ? SlimIO.t("Read as {w} × {h} cm: the photo is made {pw} × {ph} pixels (300 dpi).", { w: s.cm[0], h: s.cm[1], pw: s.w, ph: s.h })
+             : SlimIO.t("Enter a width and height between 16 and 4000 pixels.");
 }
 $("resize").addEventListener("change", syncCustom);
+for (const id of ["cw", "ch"]) $(id).addEventListener("input", syncCustom);
 // live pages: remake the photo after any change (typed numbers wait a little longer)
 for (const id of ["resize", "target", "format"]) $(id).addEventListener("change", () => schedule());
 for (const id of ["kmin", "kmax", "cw", "ch"]) $(id).addEventListener("input", () => schedule(600));
@@ -530,8 +547,9 @@ async function make(auto) {
      const my = gen;
      const resize = resizeChoice();
      if (!resize) {
-             SlimIO.showError(SlimIO.t("Enter a width and height between 16 and 4000 pixels."));
+             // while typing (live remake) the note under the boxes says it; the error box is for the button
              if (auto) result.style.display = "none";
+             else SlimIO.showError(SlimIO.t("Enter a width and height between 16 and 4000 pixels."));
              return;
      }
      if (!auto) {

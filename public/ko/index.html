@@ -145,6 +145,7 @@
         padding: 18px 0;
     }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
+    a.brand { color: var(--text); }
     .logo {
         width: 30px; height: 30px; border-radius: 8px;
         background: linear-gradient(135deg, var(--accent), #2b8fd6);
@@ -306,12 +307,12 @@
     .foot-links a:hover { color: var(--text); }
 
     /* guide cards (the same look as /guides/) */
-    .guide-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 22px 0 8px; text-align: left; }
+    .guide-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 22px 0 8px; text-align: left; }
     .guide-card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; }
     .guide-card:hover { border-color: var(--accent); }
     .guide-card b { display: block; color: var(--text); font-size: 16px; margin-bottom: 4px; }
     .guide-card small { display: block; color: var(--muted); font-size: 14px; line-height: 1.5; }
-    @media (max-width: 720px) { .guide-list { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) { .guide-list { grid-template-columns: minmax(0, 1fr); } }   /* minmax: long titles wrap instead of widening the page */
     </style>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
@@ -319,7 +320,7 @@
 <body>
     <div class="wrap">
         <nav>
-            <div class="brand"><span class="logo">📄</span> SlimIO</div>
+            <a class="brand" href="/ko/"><span class="logo">📄</span> SlimIO</a>
           <div class="nav-links">
               <a href="#tools">도구</a>
               <a href="#how">사용 방법</a>
@@ -585,8 +586,8 @@
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <script defer src="/js/pdf-images.js?v=7a2dd178"></script>
-<script defer src="/i18n/ko.js?v=40678675"></script>
-<script defer src="/lib.js?v=26ace182"></script>
+<script defer src="/i18n/ko.js?v=0"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
 <script type="module" src="/js/compress.js?v=3620c7fe"></script>
  </body>
 </html>

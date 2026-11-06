@@ -376,11 +376,11 @@ const SlimIO = (() => {
       const input = d.querySelector("input[type=file]");
       const title = d.querySelector(".drop-title"), or = d.querySelector(".drop-or");
       if (!input || !title || !or) return;
-      const pdf = input.accept.includes("pdf");
+      const pdf = input.accept.includes("pdf"), pic = pdf && input.accept.includes("image");   // Sign PDF takes photos too
       const several = input.multiple && !input.accept.includes(",");   // merge, JPG→PDF
-      title.textContent = pdf ? t(several ? "Tap to choose PDF files" : "Tap to choose a PDF") : t("Tap to choose photos");
+      title.textContent = pic ? t("Tap to choose a PDF or photo") : pdf ? t(several ? "Tap to choose PDF files" : "Tap to choose a PDF") : t("Tap to choose photos");
       or.textContent = several ? t("You can pick several at once")
-             : pdf ? t("Pick a file saved on your phone") : t("From your gallery or files");
+             : pic ? t("From your files or gallery") : pdf ? t("Pick a file saved on your phone") : t("From your gallery or files");
    });
 })();
 

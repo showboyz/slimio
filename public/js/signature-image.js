@@ -85,6 +85,7 @@ function drawnSignature() {
 
 let uploaded = null;   // decoded image, before cleanup
 let decoding = null;   // a big phone photo takes a moment; the button waits for it
+let runAfterPick = false;   // the button was tapped before an image was chosen: run once it's picked
 
 // iPhone HEIC photos go through the decoder in lib.js; the button says "Opening HEIC photos…" meanwhile
 async function decode(f) {
@@ -223,7 +224,7 @@ function dilate(mask, W, H, r) {
 }
 
 SlimIO.acceptHeic($("sigfile"));   // computers: let the file dialog show HEIC files too (lib.js)
-$("pickimg").addEventListener("click", () => $("sigfile").click());
+$("pickimg").addEventListener("click", () => { runAfterPick = false; $("sigfile").click(); });
 $("sigfile").addEventListener("change", async () => {
      const f = $("sigfile").files[0];
      if (!f) return;
@@ -235,6 +236,8 @@ $("sigfile").addEventListener("change", async () => {
              $("pickimg").firstChild.textContent = f.name;
      } catch (e) { SlimIO.showError(e.message); }
      decoding = null;
+     if (uploaded && runAfterPick) goBtn.click();
+     runAfterPick = false;
 });
 
 document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => {
@@ -452,6 +455,8 @@ $("topdf").addEventListener("click", () => {
 });
 
 goBtn.addEventListener("click", async () => {
+     // Upload tab with no image yet: open the picker instead of an error (most people tapped this first)
+     if (mode !== "draw" && !uploaded && !decoding) { runAfterPick = true; $("sigfile").click(); return; }
      SlimIO.clearError();
      $("result").style.display = "none";   // never leave an old result next to a new error
      let sig, box;

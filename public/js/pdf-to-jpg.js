@@ -17,6 +17,9 @@ let file = null;
 
 quality.oninput = () => (qval.textContent = quality.value + "%");
 scale.oninput = () => (sval.textContent = (scale.value / 100).toFixed(1) + "x");
+// the button names the format chosen (it said "Convert to JPG" with PNG chosen)
+const goLabel = () => SlimIO.t(outtype.value === "image/png" ? "Convert to PNG" : "Convert to JPG");
+outtype.addEventListener("change", () => { if (!goBtn.disabled) goBtn.textContent = goLabel(); });
 
 async function setFile(f) {
     if (!SlimIO.isPdf(f)) { SlimIO.notPdf(f); return; }
@@ -59,6 +62,7 @@ async function convert() {
         const ext = mime === "image/png" ? "png" : "jpg";
         const zip = new JSZip();
         const base = (file.name || "document").replace(/\.pdf$/i, "");
+        let one = null;   // a one-page PDF gives one picture, not a ZIP with one picture in it
 
         for (let i = 1; i <= src.numPages; i++) {
             const page = await src.getPage(i);
@@ -73,28 +77,29 @@ async function convert() {
 
             const blob = await new Promise((resolve, reject) =>
                 canvas.toBlob((b) => b ? resolve(b) : reject(new Error("toBlob failed")), mime, q));
-            const bytes = await blob.arrayBuffer();
-            zip.file(`${base}_${String(i).padStart(3, "0")}.${ext}`, new Uint8Array(bytes));
+            const bytes = new Uint8Array(await blob.arrayBuffer());
+            if (src.numPages === 1) one = { bytes, name: `${base}.${ext}` };
+            else zip.file(`${base}_${String(i).padStart(3, "0")}.${ext}`, bytes);
             prog.set(Math.round((i / src.numPages) * 100));
         }
 
-        const out = await zip.generateAsync({ type: "uint8array" });
-        showResult(src.numPages, mime, out);
+        showResult(src.numPages, mime, one || { bytes: await zip.generateAsync({ type: "uint8array" }), name: "slimio_images.zip" });
      } catch (e) {
         SlimIO.showError(SlimIO.pdfError("Conversion failed: {msg}", e));
      } finally {
         goBtn.disabled = false;
-        goBtn.textContent = SlimIO.t("Convert to JPG");
+        goBtn.textContent = goLabel();
         prog.hide();
      }
 }
 
-function showResult(count, mime, bytes) {
+function showResult(count, mime, out) {
     result.style.display = "block";
      $("after").textContent = SlimIO.pages(count);
      $("outtype-label").textContent = mime === "image/png" ? "PNG" : "JPG";
-    dl.textContent = SlimIO.t("↓ Download ZIP");
-    dl.onclick = () => SlimIO.download(bytes, "slimio_images.zip", "application/zip");
+    const zip = count > 1;
+    dl.textContent = zip ? SlimIO.t("↓ Download ZIP") : SlimIO.t(mime === "image/png" ? "↓ Download PNG" : "↓ Download JPG");
+    dl.onclick = () => SlimIO.download(out.bytes, out.name, zip ? "application/zip" : mime);
     SlimIO.reveal(result);
 }
 
