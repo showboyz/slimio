@@ -409,6 +409,14 @@ function toolTests() {
     if (r.bytes.length > lim.max) return `result ${KB(r.bytes.length)} is over ${t}`;
     return pdfCheck(r.bytes, { pages: 2 });
   });
+  // English only (the IRCC limit): no Korean twin
+  T.push({ name: "/compress-pdf-to-4mb.html fits the target", url: "/compress-pdf-to-4mb.html", fn: async (p) => {
+    if (await p.$eval("#target", (s) => s.value) !== "4MB") return "the target is not 4MB";
+    await p.setInputFiles("#pdf", F("photo.pdf")); await runTool(p);
+    const r = await download(p);
+    if (r.bytes.length > kbRange("4MB").max) return `result ${KB(r.bytes.length)} is over 4MB`;
+    return pdfCheck(r.bytes, { pages: 2 });
+  } });
   // Below 1MB the server went straight to 72 dpi, which smudged a scan's small print though
   // 150 dpi fit the limit.
   both("compress-pdf-to-500kb.html", "keeps 150 dpi when 500KB has room", async (p) => {
@@ -789,8 +797,8 @@ function toolTests() {
   both("compress-image.html", "20–50KB range", (p) => photo(p, { target: "20-50KB" }));
   both("compress-image.html", "WebP 100KB", (p) => photo(p, { target: "100KB", format: "webp" }));
   for (const t of ["20kb", "50kb", "100kb", "200kb"]) both(`compress-image-to-${t}.html`, "fits", (p) => photo(p, {}));
-  // the Korean page leaves out the US visa (own page) and Indian exam sizes
-  const NOT_KO = ["us-visa", "bank-photo", "upsc-photo"];
+  // the Korean page leaves out the US visa (own page), Indian exam, Pakistani passport and OCI sizes
+  const NOT_KO = ["us-visa", "bank-photo", "upsc-photo", "pk-passport", "oci-photo"];
   for (const r of Object.keys(PRESETS)) both("compress-id-photo.html", `preset ${r}`, async (p) => !(NOT_KO.includes(r) && p.url().includes("/ko/")) ? photo(p, { resize: r })
     : (await p.$(`#resize option[value="${r}"]`)) ? `${r} is still in the Korean size list` : null);
   both("us-visa-photo.html", "600×600, 54–240KB", (p) => photo(p, { expect: { min: 54000 } }));

@@ -34,7 +34,7 @@ PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.
 
 
 # English-only pages (no Korean version): listed in the sitemap, no hreflang.
-EN_ONLY = ["bank-exam-photo-signature.html"]
+EN_ONLY = ["bank-exam-photo-signature.html", "compress-pdf-to-4mb.html"]
 
 # Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
 INFO_PAGES = ["about.html", "terms.html", "privacy.html", "contact.html"]
@@ -629,7 +629,7 @@ KO["jpg-to-pdf.html"] = dict(
         ('<label for="target">PDF size limit</label>', '<label for="target">PDF 용량 제한</label>'),
         (">No limit — keep full quality<", ">제한 없음 — 원래 화질 그대로<"),
         (">Under 100KB<", ">100KB 이하<"), (">Under 200KB<", ">200KB 이하<"), (">Under 300KB<", ">300KB 이하<"),
-        (">Under 500KB<", ">500KB 이하<"), (">Under 1MB<", ">1MB 이하<"), (">Under 2MB<", ">2MB 이하<"), (">Under 5MB<", ">5MB 이하<"),
+        (">Under 500KB<", ">500KB 이하<"), (">Under 1MB<", ">1MB 이하<"), (">Under 2MB<", ">2MB 이하<"), (">Under 4MB<", ">4MB 이하<"), (">Under 5MB<", ">5MB 이하<"),
         (">Custom limit…<", ">직접 입력…<"),
         ('<label for="kmax">Up to</label>', '<label for="kmax">최대</label>'),
         ("For upload forms with a limit: the photos are made smaller until the whole PDF fits.", "제출 용량 제한이 있을 때 고르세요. PDF 전체가 들어갈 때까지 사진을 줄여요."),
@@ -773,6 +773,8 @@ KO["compress-image.html"] = dict(
         (">US visa 600×600 px (square)<", ">미국 비자 600×600px (정사각형)<"),
         (">China visa photo 354×472 px (40–120KB)<", ">중국 비자 354×472px (40~120KB)<"),
         (">UK ETA photo 600×750 px (50KB+)<", ">영국 ETA 600×750px (50KB 이상)<"),
+        (">Pakistan passport (online) 35×45 mm, 413×531 px (≤20KB)<", ">파키스탄 여권(온라인) 35×45mm, 413×531px (20KB 이하)<"),
+        (">India OCI photo 600×600 px (≤200KB)<", ">인도 OCI 사진 600×600px (200KB 이하)<"),
         (">Bank exam photo 200×230 px (IBPS / SBI)<", ">인도 은행 시험 사진 200×230px (IBPS / SBI)<"),
         (">Korea Q-Net exam photo 300×400 px<", ">큐넷 자격시험 300×400px<"),
         (">Korea civil service exam 137×177 px<", ">공무원 시험 원서 137×177px<"),
@@ -989,9 +991,9 @@ KO["compress-id-photo.html"] = dict(
          '               <span>🆓 Free</span>\n               <span>📦 No install</span>\n           </div>', ''),
     ],
     lead="3×4cm·3.5×4.5cm, 큐넷·공무원·한능검·컴활 원서 규격으로 자르고 용량 제한까지 맞춰요. 설치 없이, 무료로.",
-    # sizes for other countries (US visa has its own page, the Indian exams are on the English page)
-    # and plain long-side sizes, which an ID photo never needs
-    drop_options=["1920", "1280", "800", "us-visa", "bank-photo", "upsc-photo"],
+    # sizes for other countries (US visa has its own page, the Indian exams, Pakistani passports and
+    # India's OCI card are on the English page) and plain long-side sizes, which an ID photo never needs
+    drop_options=["1920", "1280", "800", "us-visa", "bank-photo", "upsc-photo", "pk-passport", "oci-photo"],
     ui=None,
     content="""
       <h2>증명사진 용량 줄이는 방법</h2>
@@ -1102,6 +1104,8 @@ KO["signature-image.html"] = dict(
         (">UPSC signature — 20–300KB, 350–1000 px<", ">UPSC 서명 — 20~300KB, 350~1000px<"),
         (">NEET signature — 10–100KB<", ">NEET 서명 — 10~100KB<"),
         (">UGC NET signature — 10–50KB<", ">UGC NET 서명 — 10~50KB<"),
+        ('<optgroup label="Visas and citizenship">', '<optgroup label="비자·국적">'),
+        (">India OCI card signature — 600×200 px, under 200KB<", ">인도 OCI 카드 서명 — 600×200px, 200KB 이하<"),
         (">20–50KB<", ">20~50KB<"), (">50–100KB<", ">50~100KB<"),
         ('<label for="cw">Width</label>', '<label for="cw">가로</label>'), ('<label for="ch">Height</label>', '<label for="ch">세로</label>'),
         ("<label>File size</label>", "<label>파일 용량</label>"),
@@ -1807,7 +1811,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "OCI", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "HEIF", "GPS", "cm", "px", "iOS", "AirDrop", "USB"}
 
 

@@ -249,6 +249,20 @@
    - **배포 확인(11/8):** 배포 전 `npm test`·`--mobile` 전부 통과. `fly deploy`(이미지 deployment-01M6VSZZG1K4KBXVS8Y0EVHMSX) 뒤 `npm test -- --live`·`--live --mobile` 둘 다 '110 sitemap pages, 238 internal links checked / all passed'. 실제 사이트 세 가이드에 `data-preset`(kr-korcham·kr-history·kr-toeic)과 '다른 규격은' 줄 확인. IndexNow HTTP 200(110 URL).
    - **다음:** 배포 뒤 ② 미색인 KO 가이드 GSC 색인 요청(이 3편 포함). 반응 보고(Umami `tool-used`의 tool이 `ko/guides/<slug>`로 따로 잡힘) 큐넷·운전면허·여권·공무원·이력서·중국 비자 가이드로 넓히기(운전면허·여권은 칩이 시험 줄에 없어서 gen_guide_tools가 지금은 막음 — 타일에서 칩 만드는 것 필요).
 
+2-55. **KO 가이드 구글 색인 점검·요청 (2026-11-08 새벽, 사장님 '다음작업도 계속' → 2-53 제안 ②)** — 내 크롬 창(`open.sh`로 `/u/1/` GSC, 끝나고 `close.sh`), 기록 scratchpad `r1107a/insp_ko_1108.txt`(29편 URL 검사), `req_ko_1108*.txt`(요청).
+   - **URL 검사 29편:** 색인 9편 — china-visa, computer-certificate(컴활), driver-license, exam-application, kuksiwon, language-test(토익), mobile-id, university-application, us-visa. **미색인 20편:** 'URL is unknown' 10편(civil-service, korean-history, national-scholarship, passport-photo-online, pdf-sign-free, pdf-size-test, qnet, resident-card, yearend-tax-pdf-password, yearend-tax-rent-docs), 'Discovered - not indexed' 6편(gov24, iphone-mac, multiple-photos, pdf-compression-explained, pdf-stamp, phone-scan), 'Crawled - not indexed' 4편(india-visa, mail-attachment, resume, youth-id).
+   - **요청:** 'unknown' 10편부터. 한능검(korean-history) 1편 요청됨(05:23). 두 번째(큐넷)부터 구글이 'We had a problem submitting your indexing request. Please try again later.' → 20분 뒤 다시 해도 같음 → 하루 한도로 보고 멈춤(큐넷 화면엔 'Request again' 버튼이 보여서 요청이 들어갔을 수도 있음, 다음 검사 때 확인). **남은 9편은 17:10(미국 태평양 자정 뒤)에 자동 재시도**(`r1106/stats/later.sh` → `req2.py`, 'try again later'면 바로 멈춤).
+   - **도구:** `tools/gsc/req.py`는 `/u/0/` 주소를 열어서(권한 없음) 안 씀. 새 `r1106/stats/req2.py <창> <url>…`은 이미 연 내 창에서 req.py와 같은 순서로 요청, guard.sh 확인, 'problem submitting'/Quota면 멈춤.
+   - **다음:** 내일부터 하루 10편: 'Discovered' 6편 → 'Crawled' 4편 → 도구 넣은 컴활·토익 재크롤 요청(내용이 바뀜). 11/20 GSC 재확인.
+
+2-56. **해외 영어 페이지: 파키스탄 여권 20KB·인도 OCI·캐나다 IRCC 4MB (2026-11-08, 2-53 제안 ③)** — **배포 전(사장님 '배포해' 대기)**. 가이드 3편은 서브에이전트(지침 scratchpad `r1108g/brief.md`, 출처 노트 `r1108g/<slug>/notes.md`), 내가 전부 읽고 노트와 대조.
+   - **새 프리셋:** `pk-passport` 35×45mm → 413×531, 20KB(공식 페이지에 픽셀 없음, 여권 300dpi 기준; 얼굴 타원 70% = 29~34mm 안), `oci-photo` 600×600, 200KB(MHA FAQ: 정사각 200~900px, JPG 200KB 이하; 타원은 MHA 사진 규격서 머리 25~35mm/51mm = 49~69% 중간인 62%), 서명 `oci-sign` 600×200(1:3은 공관 안내, MHA FAQ는 200KB만) '100KB 이하'로 저장, 서명 힌트 끝말을 프리셋별 `check`로(OCI는 '업로드 화면 확인'). 한국어 증명사진 페이지에서는 pk·oci 옵션 뺌(drop_options, e2e NOT_KO).
+   - **새 도구 페이지 `/compress-pdf-to-4mb.html`(영어 전용, gen_ko `EN_ONLY`):** IRCC 4MB(포털 5MB, 일부 2MB), 한 칸에 파일 하나, 서버 압축 사실대로. 목표 용량 목록에 4MB 추가(PDF 크기 페이지 전부, JPG→PDF). gen_llms에 영어 전용 크기 페이지 묶음(SIZE_ALL), gen_related SIZE_PDF에 추가.
+   - **가이드 3편(영어):** `pakistan-passport-photo-20kb`(20KB vs 공식 PDF 2개의 5MB, '잘라낸 사진 금지'의 뜻, 20KB가 흐린 이유와 실측, 지문 양식은 600dpi 스캐너로만 — SlimIO에 넣지 말라고), `oci-photo-signature-size`(30KB→500KB→200KB 세 세대 숫자, 흰 배경 금지, 만 5세 미만 왼손 엄지, 새 여권 갱신·US$25 면제 2026-12-31, 실물 카드 2026-07-08 중단), `ircc-document-upload-size-limit`(계정별 한도·파일 형식 표, 마지막 업로드만 남음, 실측: 휴대폰 사진 12쪽 32.2MB→3.7MB 210dpi, 24쪽 108dpi). overlap 0%. 이미지 6장(`public/img/blog/<slug>-*.jpg`).
+   - **연결(gen_guide_links 영어):** 증명사진 페이지에 pk·oci, 서명에 oci, 사진 20KB에 pk, 200KB에 oci, PDF 4MB·2MB·합치기에 IRCC. 4MB 페이지 본문에서 IRCC 가이드로.
+   - 생성 전체 다시 돌림: 가이드 42편, 사이트맵 114 URL, llms 107 링크.
+   - **다음:** 배포 뒤 이 4쪽 GSC 색인 요청(한도 남을 때), Umami에서 `tool-used` pk-passport·oci 확인. ④ UPSC NDA·CDS(12/2)·CSE(1/13) 페이지.
+
 ## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
 |---|---|

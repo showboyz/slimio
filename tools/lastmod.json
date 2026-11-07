@@ -1,7 +1,7 @@
 {
  "/": [
-  "38e44d2371abaf02",
-  "2026-10-30"
+  "8cf1e03345cbc241",
+  "2026-11-08"
  ],
  "/about.html": [
   "737beaf7d012efd8",
@@ -16,60 +16,64 @@
   "2026-10-28"
  ],
  "/compress-id-photo.html": [
-  "17f772ce219a066b",
-  "2026-10-30"
+  "fb460098b7cf8992",
+  "2026-11-08"
  ],
  "/compress-image-to-100kb.html": [
-  "0edb44537ac0b5db",
-  "2026-10-30"
+  "14b0f7df65adecc3",
+  "2026-11-08"
  ],
  "/compress-image-to-200kb.html": [
-  "39af536f49ff5b28",
-  "2026-10-30"
+  "51da2bafc531ca59",
+  "2026-11-08"
  ],
  "/compress-image-to-20kb.html": [
-  "0ecb2277cd7045c5",
-  "2026-10-30"
+  "e12248c148444b6a",
+  "2026-11-08"
  ],
  "/compress-image-to-50kb.html": [
-  "382f10576a48dd80",
-  "2026-10-30"
+  "4bd5a41eb8941d72",
+  "2026-11-08"
  ],
  "/compress-image.html": [
-  "d93e5ef7b7fdabdf",
-  "2026-10-30"
+  "ff75548631ca37d5",
+  "2026-11-08"
  ],
  "/compress-pdf-for-email.html": [
-  "4b3049a4595e3998",
-  "2026-10-30"
+  "d2e443cae7968d96",
+  "2026-11-08"
  ],
  "/compress-pdf-to-100kb.html": [
-  "83cafab4c708b00a",
-  "2026-10-30"
+  "69d0ba50ba4e9105",
+  "2026-11-08"
  ],
  "/compress-pdf-to-1mb.html": [
-  "e59721b784e1da7f",
-  "2026-11-01"
+  "8579aa276c923059",
+  "2026-11-08"
  ],
  "/compress-pdf-to-200kb.html": [
-  "c58e035fb288ccfc",
-  "2026-10-30"
+  "426f09f525a9bf8e",
+  "2026-11-08"
  ],
  "/compress-pdf-to-2mb.html": [
-  "e26220f192454f2c",
-  "2026-10-30"
+  "5a0cfa38b2115bbf",
+  "2026-11-08"
  ],
  "/compress-pdf-to-300kb.html": [
-  "a00c570141050bb1",
-  "2026-10-30"
+  "a91bf45f0989f793",
+  "2026-11-08"
+ ],
+ "/compress-pdf-to-4mb.html": [
+  "72ed823f0e841a35",
+  "2026-11-08"
  ],
  "/compress-pdf-to-500kb.html": [
-  "bc3391539a3a5bb7",
-  "2026-11-01"
+  "1d34edc7a1951e70",
+  "2026-11-08"
  ],
  "/compress-pdf-to-50kb.html": [
-  "8d89f39b3a400847",
-  "2026-10-30"
+  "9d4132f31a2d1a9b",
+  "2026-11-08"
  ],
  "/contact.html": [
   "43a780c125c77399",
@@ -80,8 +84,8 @@
   "2026-10-30"
  ],
  "/guides/": [
-  "67a3680f05d4e07a",
-  "2026-11-01"
+  "dc12b56afd6c0cb7",
+  "2026-11-08"
  ],
  "/guides/compress-pdf-without-losing-quality.html": [
   "ca27eb57d689f282",
@@ -95,9 +99,21 @@
   "d508bc34083669a0",
   "2026-10-28"
  ],
+ "/guides/ircc-document-upload-size-limit.html": [
+  "4f73cc9ce72a59fb",
+  "2026-11-08"
+ ],
  "/guides/kb-pixels-cm-dpi-explained.html": [
   "7d92524d1bc9f912",
   "2026-10-18"
+ ],
+ "/guides/oci-photo-signature-size.html": [
+  "2467f30de00289b5",
+  "2026-11-08"
+ ],
+ "/guides/pakistan-passport-photo-20kb.html": [
+  "b360162b22610155",
+  "2026-11-08"
  ],
  "/guides/pdf-size-test.html": [
   "0777dca6d9a03e9d",
@@ -128,8 +144,8 @@
   "2026-10-29"
  ],
  "/jpg-to-pdf.html": [
-  "bb709340341cc9a8",
-  "2026-10-30"
+  "84404d60292f6f59",
+  "2026-11-08"
  ],
  "/ko/": [
   "e560a5a6b5c64a9d",
@@ -148,56 +164,56 @@
   "2026-11-07"
  ],
  "/ko/compress-image-to-100kb.html": [
-  "81fd3eb51fb8893d",
-  "2026-10-30"
+  "71d04afc949226f4",
+  "2026-11-08"
  ],
  "/ko/compress-image-to-200kb.html": [
-  "f93e0a6e17286935",
-  "2026-11-07"
+  "482881a5c7d7405d",
+  "2026-11-08"
  ],
  "/ko/compress-image-to-20kb.html": [
-  "7c809f3584ac6ddb",
-  "2026-10-30"
+  "e61dd594e3cea947",
+  "2026-11-08"
  ],
  "/ko/compress-image-to-50kb.html": [
-  "44e64b51d6dd5585",
-  "2026-10-30"
+  "9425c2c465c8c7f1",
+  "2026-11-08"
  ],
  "/ko/compress-image.html": [
-  "b0ba732058b2bdeb",
-  "2026-10-30"
+  "7b8172b9efaf2215",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-for-email.html": [
-  "0a00249a5f7463e5",
-  "2026-10-27"
+  "621f2a6c6f2e8b22",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-100kb.html": [
-  "6fc7def66406859f",
-  "2026-10-30"
+  "3d9707725e6fdad0",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-1mb.html": [
-  "b874ad72d77c39c0",
-  "2026-11-01"
+  "273cfd445773848b",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-200kb.html": [
-  "db17c032acfa61e5",
-  "2026-10-30"
+  "8096039714cd1ce3",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-2mb.html": [
-  "b0b54f32004c7a60",
-  "2026-10-30"
+  "08659141f2896c9f",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-300kb.html": [
-  "02f74a54241b2e20",
-  "2026-10-30"
+  "96635588fe46a1a0",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-500kb.html": [
-  "2fafa67d569e2a66",
-  "2026-11-01"
+  "47bb9a54df8d4a56",
+  "2026-11-08"
  ],
  "/ko/compress-pdf-to-50kb.html": [
-  "b857945895c3db01",
-  "2026-10-30"
+  "6a4b5d900cf48104",
+  "2026-11-08"
  ],
  "/ko/contact.html": [
   "d08040c004f8ad6d",
@@ -220,8 +236,8 @@
   "2026-11-06"
  ],
  "/ko/guides/computer-certificate-photo-size.html": [
-  "a52d913de4cce6e5",
-  "2026-11-07"
+  "1a92481e8c157a75",
+  "2026-11-08"
  ],
  "/ko/guides/driver-license-photo.html": [
   "02ae79c0950676aa",
@@ -244,16 +260,16 @@
   "2026-10-29"
  ],
  "/ko/guides/korean-history-exam-photo.html": [
-  "1634f785ae13e5c5",
-  "2026-11-07"
+  "ab3ab41e917491c0",
+  "2026-11-08"
  ],
  "/ko/guides/kuksiwon-photo.html": [
   "767426ea8c53b85d",
   "2026-10-29"
  ],
  "/ko/guides/language-test-photo.html": [
-  "a4aa6681135fbcf3",
-  "2026-11-07"
+  "4524c8be84dacac8",
+  "2026-11-08"
  ],
  "/ko/guides/mail-attachment-size-limit.html": [
   "412176ebc4362b94",
@@ -332,8 +348,8 @@
   "2026-10-29"
  ],
  "/ko/jpg-to-pdf.html": [
-  "49e8c72e84bb7f0d",
-  "2026-10-29"
+  "706bdc36de9e14c4",
+  "2026-11-08"
  ],
  "/ko/merge.html": [
   "67e55cd527f0ef5e",
@@ -364,8 +380,8 @@
   "2026-11-06"
  ],
  "/ko/signature-image.html": [
-  "52c1127a5ff3c34c",
-  "2026-10-27"
+  "d83958869c3d0d81",
+  "2026-11-08"
  ],
  "/ko/split.html": [
   "c18727e51c06eb1e",
@@ -380,16 +396,16 @@
   "2026-11-06"
  ],
  "/ko/us-visa-photo.html": [
-  "958d05cb1b1be06c",
-  "2026-10-30"
+  "37a631e63a95d04b",
+  "2026-11-08"
  ],
  "/ko/watermark.html": [
   "e69960058d57d4dd",
   "2026-10-27"
  ],
  "/merge.html": [
-  "40e3f2e357664340",
-  "2026-10-30"
+  "0b78681d54daf0fa",
+  "2026-11-08"
  ],
  "/organize.html": [
   "4fb7fae626a47942",
@@ -416,8 +432,8 @@
   "2026-11-06"
  ],
  "/signature-image.html": [
-  "db4d01fa5d143f62",
-  "2026-10-28"
+  "8376d47634bfe0c4",
+  "2026-11-08"
  ],
  "/split.html": [
   "2338f0f70e0582f4",
@@ -432,8 +448,8 @@
   "2026-10-31"
  ],
  "/us-visa-photo.html": [
-  "a5d42a5bf68764c8",
-  "2026-10-30"
+  "8b7dc8248a638c9a",
+  "2026-11-08"
  ],
  "/watermark.html": [
   "f046a5ff231f594d",

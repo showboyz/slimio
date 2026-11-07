@@ -15,7 +15,9 @@ PDF_TOOLS = ["index.html", "merge.html", "split.html", "delete-pages.html", "rot
 PHOTO_TOOLS = ["compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
                "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
                "us-visa-photo.html", "signature-image.html", "bank-exam-photo-signature.html", "heic-to-jpg.html"]
-assert set(PDF_TOOLS + PHOTO_TOOLS + SIZE_PAGES) == set(PAGES + EN_ONLY), "a page is missing from llms.txt groups"
+# size pages that are English only (compress-pdf-to-4mb: IRCC) sit after the shared ones
+SIZE_ALL = SIZE_PAGES[:-1] + [p for p in EN_ONLY if p.startswith("compress-pdf-to-")] + SIZE_PAGES[-1:]
+assert set(PDF_TOOLS + PHOTO_TOOLS + SIZE_ALL) == set(PAGES + EN_ONLY), "a page is missing from llms.txt groups"
 
 
 def meta(path):
@@ -71,7 +73,7 @@ def guides_section():
 def build():
     out = BODY
     out += section("PDF tools", PDF_TOOLS) + "\n"
-    out += section("Compress a PDF to a set size", SIZE_PAGES) + "\n"
+    out += section("Compress a PDF to a set size", SIZE_ALL) + "\n"
     out += section("Photos, ID photos and signatures", PHOTO_TOOLS) + "\n"
     ko = [p for p in PDF_TOOLS + SIZE_PAGES + PHOTO_TOOLS if p in PAGES]
     out += section("한국어 (Korean)", ko, ko=True) + "\n"

@@ -268,13 +268,17 @@ const PRESETS = {
              hint: "NEET (NTA): JPG between 10KB and 100KB. Sign with a black pen on white paper." },
      "ugcnet-sign": { box: [400, 160], target: "10-50",
              hint: "UGC NET (NTA, December 2026 bulletin): between 10KB and 50KB. Some sites still show the old 4–30KB limit. Sign with a black pen on white paper." },
+     // India OCI card (ociservices.gov.in FAQ: photo and signature JPEG, max 200KB). The 1:3 shape and
+     // 200×67 to 1500×500 px come from older mission instructions; 600×200 meets both.
+     "oci-sign": { box: [600, 200], target: "100", check: "Always check the numbers on the OCI upload page.",
+             hint: "OCI: a JPG of up to 200KB; this saves it under 100KB. Older OCI instructions ask for a 1:3 shape between 200×67 and 1500×500 px, so it is 600×200. Sign with a black pen on white paper." },
 };
 function syncSize() {
      const v = $("size").value, p = PRESETS[v];
      $("custom").hidden = v !== "custom";
      $("presethint").hidden = !p;
      if (p) {
-             $("presethint").textContent = SlimIO.t(p.hint) + " " + SlimIO.t("Always check the exact numbers in your exam notice.");
+             $("presethint").textContent = SlimIO.t(p.hint) + " " + SlimIO.t(p.check || "Always check the exact numbers in your exam notice.");
              if ([...$("target").options].some((o) => o.value === p.target)) $("target").value = p.target;
              else {   // a range the menu doesn't list (RRB's 30–49KB): use the custom fields
                      const [lo, hi] = p.target.split("-");

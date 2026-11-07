@@ -55,7 +55,8 @@ FEATURES = {
 }
 
 SIZE_PDF = ["compress-pdf-to-50kb.html", "compress-pdf-to-100kb.html", "compress-pdf-to-200kb.html", "compress-pdf-to-300kb.html",
-            "compress-pdf-to-500kb.html", "compress-pdf-to-1mb.html", "compress-pdf-to-2mb.html", "compress-pdf-for-email.html"]
+            "compress-pdf-to-500kb.html", "compress-pdf-to-1mb.html", "compress-pdf-to-2mb.html", "compress-pdf-to-4mb.html",
+            "compress-pdf-for-email.html"]
 SIZE_IMG = ["compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
             "compress-image-to-100kb.html", "compress-image-to-200kb.html"]
 

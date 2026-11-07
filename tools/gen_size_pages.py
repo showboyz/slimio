@@ -3,7 +3,7 @@ import json, html, sys, os
 
 OUT = sys.argv[1]
 
-SIZES = ["50KB", "100KB", "150KB", "200KB", "300KB", "500KB", "1MB", "2MB", "5MB", "10MB", "20MB", "25MB"]
+SIZES = ["50KB", "100KB", "150KB", "200KB", "300KB", "500KB", "1MB", "2MB", "4MB", "5MB", "10MB", "20MB", "25MB"]
 SIBLINGS = [
     ("/compress-pdf-to-50kb.html", "Compress to 50KB"),
     ("/compress-pdf-to-100kb.html", "Compress to 100KB"),
@@ -108,6 +108,39 @@ PAGES = [
   ("Will my PDF stay searchable at 2MB?", "Almost always for documents created on a computer. Scanned pages were images to begin with, so they stay images — just smaller."),
   ("My phone scan is 15MB. Can it get under 2MB?", "Usually, yes. Most of that size is high-resolution photos of each page, which compress very well."),
   ("Can I compress several PDFs to 2MB each?", "Yes. Compress them one after another; each file gets its own 2MB target."),
+  ("Is my file uploaded?", "Files up to 50MB are compressed on our server over HTTPS with a text-preserving method and deleted right after. The image step runs only in your browser."),
+ ],
+},
+{
+ # English only (gen_ko.EN_ONLY): the 4MB limit people search for is Canada's IRCC, so the Korean size
+ # pages don't link here
+ "slug": "compress-pdf-to-4mb", "target": "4MB",
+ "title": "Compress PDF to 4MB — For IRCC and Other 4MB Upload Limits | SlimIO",
+ "short": "Compress PDF to 4MB | SlimIO",
+ "desc": "Get a PDF under 4MB for upload limits like Canada's IRCC secure account and Permanent Residence Portal. Text stays sharp and selectable in most documents. Free, no signup.",
+ "keywords": "compress pdf to 4mb, pdf under 4mb, reduce pdf size to 4mb, ircc pdf 4mb, pdf less than 4mb, ircc file size limit",
+ "h1": "Compress PDF<br /><b>to 4MB.</b>",
+ "lead": "A 4MB limit leaves room for several scanned pages with sharp, selectable text.",
+ "content": """
+      <h2>How to compress a PDF to 4MB</h2>
+      <ul>
+          <li><b>1. Add your PDF.</b> The target is already 4MB.</li>
+          <li><b>2. Click Compress.</b> At this size SlimIO keeps text as real text and only resamples photos and scans that are bigger than they need to be.</li>
+          <li><b>3. Check the result.</b> It shows the new size and whether the text is still selectable.</li>
+      </ul>
+      <h3>Where 4MB limits come from</h3>
+      <p>Canada's immigration department (IRCC) caps each uploaded file at <b>4MB</b> in the IRCC secure account, the Permanent Residence Portal, the online citizenship application and the asylum portal, and at <b>5MB</b> in the IRCC Portal. Its help centre adds that some applications go as low as 2MB, so check the limit shown next to the upload field before you compress. Every IRCC limit, with the file types each account takes, is in <a href="/guides/ircc-document-upload-size-limit.html">IRCC document upload size limits</a>.</p>
+      <h3>One upload field, several documents</h3>
+      <p>IRCC saves one file per field: upload a second file to the same field and only the last one is kept. Combine the pages first with <a href="/merge.html">Merge PDF</a>, then compress the combined file here so the whole set fits.</p>
+      <h3>Why a scan is over 4MB</h3>
+      <p>Phone scanning apps store each page as a full-resolution photo, often 2–4MB per page, so a six-page bank statement can pass 12MB. Those photos are what SlimIO shrinks; the layout stays the same and the pages still read clearly on screen and on paper.</p>
+      <h3>Is the file uploaded?</h3>
+      <p>Briefly, yes. Files up to 50MB go to our server over HTTPS for the text-preserving step and are deleted as soon as they are compressed; nothing is kept. IRCC itself asks applicants to read a tool's privacy policy before using it, so here is <a href="/privacy.html">ours</a>.</p>""",
+ "faq": [
+  ("How do I make a PDF smaller than 4MB?", "Drop it on this page and click Compress. The target is already 4MB; SlimIO keeps text sharp and shrinks only the images as much as needed."),
+  ("What is the IRCC file size limit?", "4MB per file in the IRCC secure account, the Permanent Residence Portal, the online citizenship application and the asylum portal, and 5MB in the IRCC Portal, according to IRCC's help centre (page modified 3 November 2026). Some applications allow only 2MB, so check the upload screen."),
+  ("Can I upload several files to one IRCC field?", "No. Each field keeps one file, the last one you uploaded. Merge the documents into one PDF first, then compress the result to fit."),
+  ("Will my PDF stay readable at 4MB?", "For most documents, yes. 4MB holds many scanned pages at a clear resolution, and documents made on a computer keep their selectable text."),
   ("Is my file uploaded?", "Files up to 50MB are compressed on our server over HTTPS with a text-preserving method and deleted right after. The image step runs only in your browser."),
  ],
 },
