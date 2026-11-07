@@ -252,6 +252,11 @@ $("specs").addEventListener("input", () => { clearTimeout(specsTimer); specsTime
      if (box && location.hash === "#specs") { box.open = true; $("specs").focus({ preventScroll: true }); }
 }
 
+// A guide with the tool in it (tools/gen_guide_tools.py) starts at its exam's size
+{
+     const d = document.querySelector(".tool[data-preset]");
+     if (d) { $("resize").value = d.dataset.preset; $("resize").dispatchEvent(new Event("change")); }
+}
 // ?resize=bank-photo&target=50KB preselects options (links from guide pages)
 {
      const q = new URLSearchParams(location.search);

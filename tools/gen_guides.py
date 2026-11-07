@@ -33,6 +33,7 @@ UMAMI = "ab53f00a-b92a-4d4d-aaf0-6b5329869de7"
 # topic -> broader group. exam: photos/signatures for exam, school and job forms;
 # id: passport, licence and visa photos; pdf: making and shrinking PDFs.
 TOPICS = {"exam": "photo", "id": "photo", "pdf": "pdf"}
+TOOL_START, TOOL_END = "<!-- guide-tool:start -->", "<!-- guide-tool:end -->"
 
 T = {
     "en": dict(guides="Guides", home="SlimIO", compress="Compress", all_tools="All tools", by="By SlimIO",
@@ -189,15 +190,32 @@ def article_page(a, siblings):
             {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": re.sub(r"<[^>]+>", "", ans)}} for q, ans in a["faq"]]})
     out = head(lang, a["seo_title"] + " | SlimIO", a["desc"], path, image=a.get("image"), ld=ld, scripts=["/guide.js"] if a.get("cta") else [])
     body = tag_tool_links(a["body"], guide)
-    if a.get("cta"):
+    # "tool": ["kr-korcham", "kr-kpc"] puts the ID photo tool itself under the intro, set to the
+    # first size (all of them become chips). Small sites rank on Google with per-exam pages that
+    # carry the tool, and the guide's readers went to it anyway. The article column is split around
+    # the tool (the column's text styles would restyle it), and gen_guide_tools.py fills the slot
+    # after gen_ko.py has built the Korean tool page it copies. The end buttons then scroll up to it.
+    tool = a.get("tool")
+    i = body.find("</p>") + len("</p>")
+    if tool:
+        href, arrow = "#tool", "↑"
+        label, line = a["cta"][1:]
+        body = body[:i] + f"""
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="{' '.join(tool)}">
+{TOOL_START}{TOOL_END}
+</div>
+<div class="content article">""" + body[i:]
+    elif a.get("cta"):
         # Search visitors decide on the first screen: put the tool button right under the intro
         # (it used to be only at the end, 5-7 phone screens down).
         href, label, line = a["cta"]
-        i = body.find("</p>") + len("</p>")
+        arrow = "→"
         body = body[:i] + f"""
       <p class="cta-top"><a class="cta-btn" href="{href}"{track("top", guide)}>{label} →</a><span>{line}</span></p>""" + body[i:]
+    main = '<main>\n<div class="content article">' if tool else '<main class="content article">'
     out += f"""
-<main class="content article">
+{main}
       <p class="crumbs"><a href="{'/' if lang == 'en' else '/ko/'}">SlimIO</a> › <a href="{hub_path(lang)}">{t['guides']}</a></p>
       <h1>{a['title']}</h1>
       <p class="byline">{t['by']} · {t['updated']} <time datetime="{a['updated']}">{fmt_date(a['updated'], lang)}</time> · {a['minutes']} {t['read']}</p>
@@ -206,11 +224,11 @@ def article_page(a, siblings):
     if a.get("cta"):
         out += f"""      <div class="cta-box">
           <div><b>{t['try_it']}</b><p>{line}</p></div>
-          <a class="cta-btn" href="{href}"{track("bottom", guide)}>{label} →</a>
+          <a class="cta-btn" href="{href}"{track("bottom", guide)}>{label} {arrow}</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="{href}"{track("sticky", guide)}>{label} →</a><button type="button" aria-label="{t['close']}">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="{href}"{track("sticky", guide)}>{label} {arrow}</a><button type="button" aria-label="{t['close']}">✕</button></div>
 """
-    out += "</main>\n"
+    out += "</div>\n</main>\n" if tool else "</main>\n"
     if a.get("faq"):
         out += f'\n<section class="faq">\n      <h2>{t["faq"]}</h2>\n'
         out += "".join(f"      <details>\n          <summary>{q}</summary>\n          <p>{ans}</p>\n      </details>\n" for q, ans in a["faq"])

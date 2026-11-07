@@ -844,6 +844,15 @@ function toolTests() {
     const n = await p.$$eval("#result li a[download]", (a) => a.length);
     return n === 2 ? null : `${n} downloads, expected 2`;
   });
+  // Korean photo guides with the ID photo tool in them (tools/gen_guide_tools.py): the box starts
+  // at the guide's first size and makes a photo of that size within its KB limit
+  for (const f of fs.readdirSync(path.join(ROOT, "content/guides/ko"))) {
+    const meta = JSON.parse(fs.readFileSync(path.join(ROOT, "content/guides/ko", f), "utf8").match(/<!--([\s\S]*?)-->/)[1]);
+    if (meta.tool) T.push({ name: `/ko/guides/${f} tool starts at ${meta.tool[0]}`, url: `/ko/guides/${f}`, fn: async (p) => {
+      const v = await p.$eval("#resize", (e) => e.value);
+      return v === meta.tool[0] ? photo(p, {}) : `the size is ${v}, expected ${meta.tool[0]}`;
+    } });
+  }
 
   // signatures: every preset from a photo of a paper signature
   const SIGS = objectLiteral("js/signature-image.js", "PRESETS");
@@ -920,12 +929,13 @@ async function pageChecks(browser) {
     const drop = await p.evaluate(() => { const d = document.querySelector(".drop"); return d && { top: d.getBoundingClientRect().top + scrollY, title: d.querySelector(".drop-title").textContent }; });
     if (drop && /drop|click|끌어다|클릭/i.test(drop.title)) p.problems.push(`upload box says "${drop.title}" on a phone`);
     if (drop && drop.top > 600) p.problems.push(`upload box starts at ${Math.round(drop.top)}px, below the first phone screen`);
-    // guides: the tool button sits on the first phone screen, and a bar with it shows while
-    // reading but not over the end box (search visitors used to leave before reaching any button)
+    // guides: the tool button (or the photo tool itself) sits on the first phone screen, and a bar
+    // with the button shows while reading but not over the end box (search visitors used to leave
+    // before reaching any button)
     if (/\/guides\/.+\.html$/.test(u)) {
       const g = await p.evaluate(async () => {
-        const top = document.querySelector(".cta-top"), bar = document.querySelector(".cta-sticky"), end = document.querySelector(".cta-box");
-        if (!top || !bar || !end) return "no tool button under the intro";
+        const top = document.querySelector(".cta-top, .guide-tool"), bar = document.querySelector(".cta-sticky"), end = document.querySelector(".cta-box");
+        if (!top || !bar || !end) return "no tool or tool button under the intro";
         const y = top.getBoundingClientRect().top + scrollY;
         if (y > 600) return `tool button starts at ${Math.round(y)}px, below the first phone screen`;
         const wait = () => new Promise((r) => setTimeout(r, 300));

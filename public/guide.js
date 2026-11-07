@@ -1,12 +1,13 @@
 // Guide pages: keep the tool one tap away and measure how far people read.
 // Readers who land from search on a long guide rarely scroll to the CTA box at the end, so a bar
-// with the same button slides up once the button under the intro has scrolled away, and hides
-// again when the end box comes into view. Clicks are counted by Umami's data-umami-event
-// attributes (pos = top / sticky / bottom / body); this file sends `guide-read` at half and end.
+// with the same button slides up once the button under the intro (or the tool itself, on guides
+// that carry it) has scrolled away, and hides again when the end box comes into view. Clicks are
+// counted by Umami's data-umami-event attributes (pos = top / sticky / bottom / body); this file
+// sends `guide-read` at half and end.
 (() => {
    try { if (/[?&]notrack\b/.test(location.search)) localStorage.setItem("umami.disabled", "1"); } catch (e) {}
    const guide = location.pathname.replace(/^\/(ko\/)?guides\/(.*)\.html$/, "$1$2");
-   const top = document.querySelector(".cta-top"), end = document.querySelector(".cta-box"), bar = document.querySelector(".cta-sticky");
+   const top = document.querySelector(".cta-top, .guide-tool"), end = document.querySelector(".cta-box"), bar = document.querySelector(".cta-sticky");
    let closed = false;
    try { closed = sessionStorage.getItem("slimio.ctaClosed") === "1"; } catch (e) {}
    const sent = {};

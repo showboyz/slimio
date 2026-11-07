@@ -447,6 +447,10 @@ a.brand { color: var(--text); }
 /* guides: the tool button under the intro, and a bar with the same button while reading (guide.js) */
 .article .cta-top { display: flex; align-items: center; gap: 10px 14px; flex-wrap: wrap; margin: 16px 0 4px; }
 .article .cta-top span { flex: 1 1 240px; font-size: 13px; color: var(--muted); line-height: 1.45; }
+/* photo guides with the ID photo tool under the intro (tools/gen_guide_tools.py) */
+.guide-tool { margin: 18px auto 6px; }
+.guide-tool-more { max-width: 620px; margin: 10px auto 0; text-align: center; font-size: 13px; color: var(--muted); }
+.guide-tool-more a { color: var(--accent); }
 .cta-sticky { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; align-items: center; gap: 6px; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)) 14px; background: rgba(11, 13, 18, 0.94); border-top: 1px solid var(--line); transform: translateY(110%); visibility: hidden; transition: transform 0.2s, visibility 0s 0.2s; }
 .cta-sticky.on { transform: none; visibility: visible; transition: transform 0.2s; }
 .cta-sticky .cta-btn { flex: 1; text-align: center; overflow: hidden; text-overflow: ellipsis; }

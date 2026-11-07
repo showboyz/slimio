@@ -241,6 +241,13 @@
    - **판단:** 구글은 나이·기술·벌칙 문제가 아니라 사이트 신뢰(외부 링크 0, 가이드 대부분 미색인)와 페이지 형태(도구가 ?resize= 한 URL이라 시험별로 순위 잡을 페이지가 없음) 문제로 봄. 제안 순서는 아래 '다음'.
    - **다음(사장님 결정 대기):** ① 사진 가이드 위에 그 시험 규격으로 고정된 도구를 바로 넣기(새 얇은 페이지 대신 기존 가이드를 '도구+규격' 페이지로) — 컴활·한능검·토익부터 ② 미색인 KO 가이드 GSC 색인 요청 하루 10개쯤 ③ 영어: 파키스탄 여권 20KB·OCI 사진/서명·IRCC 4MB(새 프리셋, 배경색 규칙은 안내만) ④ UPSC NDA·CDS(12/2)·CSE(1/13) 전에 페이지 ⑤ 외부 링크는 사장님 계정으로 커뮤니티 소개 1~2개(선택) ⑥ 11/20 GSC 재확인. 일본어는 나중.
 
+2-54. **사진 가이드 안에 증명사진 도구 넣기 (2026-11-07, 사장님 '하나씩 진행해보자' → 2-53 제안 ①)** — **배포 전(사장님 '배포해' 대기)**.
+   - **왜:** 구글 한국에서 새 작은 사이트(mirifit 등)가 '시험별 주소 + 그 시험 규격의 도구 + 공식 규격'으로 뜸. 우리는 도구가 `/ko/compress-id-photo.html?resize=` 한 주소라 시험별로 순위 잡을 페이지가 없고, 가이드는 글 + 버튼뿐. 새 얇은 페이지를 늘리는 대신 기존 가이드를 '도구+규격' 페이지로.
+   - **어떻게:** 가이드 메타에 `"tool": ["kr-korcham", "kr-kpc"]`(첫 칸이 처음 골라짐) → `gen_guides.py`가 첫 문단 아래에 `<div class="wrap guide-tool" id="tool">` + 빈 표시 `<!-- guide-tool:start/end -->`를 넣고 글 칸(`.content.article`)을 그 앞뒤로 나눔(글 칸의 p·ul·a 스타일이 도구를 바꾸지 않게; 그래서 `<main>`은 클래스 없이 감쌈). 위 버튼(cta-top)은 빠지고 끝 상자·떠 있는 막대는 `#tool`로 올라가는 '… ↑'. 새 `tools/gen_guide_tools.py` `fill()`을 `gen_ko.py` 마지막(guide-links 다음)에 불러서, 막 만든 `/ko/compress-id-photo.html`의 `.tool` 상자를 그대로 복사(3×4·여권·직접입력 타일 빼고, 시험 칩은 그 가이드 것만, `data-preset`)하고 그 페이지 스크립트(jszip·ko.js·lib.js·specs.js·compress-image.js)도 같이 넣음 → 도구를 고치면 다음 빌드에 가이드도 같이 바뀜. `compress-image.js`는 `.tool[data-preset]`이 있으면 그 규격으로 시작(?resize= 링크가 있으면 그게 이김). `guide.js`는 `.cta-top` 대신 `.guide-tool`이 지나가면 막대를 띄움. CSS `.guide-tool`, `.guide-tool-more`(도구 아래 '다른 규격은 증명사진 도구에서').
+   - **적용 3편:** 컴활(computer-certificate-photo-size: 컴활·워드 400×500 50KB / ITQ), 한능검(korean-history-exam-photo: 120×160), 토익·텝스(language-test-photo: 토익 300×400 / 텝스 126×165 50KB). 글 내용·updated 날짜는 그대로(lastmod는 도구 글자 때문에 11/7로 바뀜).
+   - **확인:** 휴대폰·PC에서 세 페이지 모두 가로 넘침 없음, 첫 화면에 사진 상자, 샘플 사진으로 400×500·120×160·300×400 300dpi 결과, 떠 있는 막대 `#tool`. 새 e2e: `content/guides/ko`에서 `tool` 있는 가이드마다 '처음 규격 = tool[0]이고 그 크기·용량으로 만들어짐'(가이드가 늘면 자동으로 검사). 페이지 검사는 '첫 문단 아래 버튼 또는 도구'로 바꿈. `npm test`·`--mobile` 도구 테스트 전부 통과, 페이지 검사 `--pages`·`--pages --mobile` '110 sitemap pages, 238 internal links checked / all passed'.
+   - **다음:** 배포 뒤 ② 미색인 KO 가이드 GSC 색인 요청(이 3편 포함). 반응 보고(Umami `tool-used`의 tool이 `ko/guides/<slug>`로 따로 잡힘) 큐넷·운전면허·여권·공무원·이력서·중국 비자 가이드로 넓히기(운전면허·여권은 칩이 시험 줄에 없어서 gen_guide_tools가 지금은 막음 — 타일에서 칩 만드는 것 필요).
+
 ## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
 |---|---|

@@ -14,8 +14,8 @@
 <meta property="og:description" content="컴활·워드프로세서 같은 대한상공회의소 자격 사진은 400×500픽셀(1:1.25), 50KB 이하예요. &#x27;50kbyte를 초과할 수 없습니다&#x27;가 뜨는 이유, GIF가 막히는 이유, 사진 변경 승인, ITQ(KPC) 규격까지 공식 등록 화면 기준으로 정리했어요." />
 <meta property="og:url" content="https://pdfslimio.com/ko/guides/computer-certificate-photo-size.html" />
 <meta property="og:image" content="https://pdfslimio.com/img/blog/korcham-hero.jpg" />
-<link rel="stylesheet" href="/style.css?v=ac2de747" />
-<script defer src="/guide.js?v=94e3324c"></script>
+<link rel="stylesheet" href="/style.css?v=6a5a4002" />
+<script defer src="/guide.js?v=15b15e38"></script>
 <script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
 <meta name="google-adsense-account" content="ca-pub-5339352429300786" />
 <script type="application/ld+json">
@@ -129,12 +129,130 @@
       </nav>
 </div>
 
-<main class="content article">
+<main>
+<div class="content article">
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>컴활 사진 규격: 400×500px, 50KB 이하로 맞추는 법 (워드·ITQ까지)</h1>
       <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-10-14">2026년 10월 14일</time> · 6 분 분량</p>
 <p>컴활(컴퓨터활용능력) 접수하다 사진에서 막히는 이유는 대부분 둘 중 하나예요. 파일이 <b>50KB를 넘었거나</b>, 사진 <b>비율이 400×500(1:1.25)과 달라서</b>예요. 컴활·워드프로세서·전산회계운용사 같은 대한상공회의소 자격은 회원 정보에 사진을 등록해 두는 방식이라 규칙도 하나예요. 대한상공회의소 공지와 사진 등록 화면을 직접 확인해 정리했어요. 함께 많이 따는 ITQ 규격도 아래에 있어요. (2026년 10월 확인)</p>
-      <p class="cta-top"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-korcham" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/computer-certificate-photo-size">컴활 사진 맞추기 →</a><span>400×500으로 자르고 50KB 아래로 저장해요. 사진은 서버로 올라가지 않아요.</span></p>
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="kr-korcham kr-kpc">
+<!-- guide-tool:start -->
+<div class="tool" data-live data-preset="kr-korcham">
+           <div class="drop" id="drop">
+               <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
+               <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
+               <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
+               <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
+           </div>
+           <div class="exams" role="group" aria-label="시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-korcham" data-umami-event="id-size" data-umami-event-size="kr-korcham"><b>컴활·워드</b><small>400×500</small></button><button type="button" class="preset" data-resize="kr-kpc" data-umami-event="id-size" data-umami-event-size="kr-kpc"><b>ITQ</b><small>225×300</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </details>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>목표 용량</label>
+                   <select id="target">
+                       <option value="">제한 없음 — 알맞게 최적화</option>
+                       <option value="20KB">20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
+                       <option value="50KB">50KB 이하</option>
+                       <option value="100KB" selected>100KB 이하</option>
+                       <option value="200KB">200KB 이하</option>
+                       <option value="300KB">300KB 이하</option>
+                       <option value="500KB">500KB 이하</option>
+                       <option value="1MB">1MB 이하</option>
+                       <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
+                   <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
+               </div>
+
+               <div class="field">
+                   <label>크기 조절</label>
+                   <select id="resize">
+                       <option value="0">원래 크기 유지</option>
+                       <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
+                       <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
+                       <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="kr-qnet">큐넷 자격시험 300×400px</option>
+                       <option value="kr-gosi">공무원 시험 원서 137×177px</option>
+                       <option value="kr-history">한국사능력검정 120×160px</option>
+                       <option value="kr-korcham">대한상의 컴활·워드 400×500px (50KB 이하)</option>
+                       <option value="kr-kpc">KPC ITQ·GTQ 225×300px</option>
+                       <option value="kr-toeic">토익·토익스피킹 300×400px</option>
+                       <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
+                       <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
+                       <option value="kr-saramin">사람인 이력서 100×140px</option>
+                       <option value="custom">픽셀 직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" step="any" inputmode="decimal" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" step="any" inputmode="decimal" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
+               </div>
+
+               <div class="field">
+                   <label>저장 형식</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — 어디서나 호환</option>
+                       <option value="webp">WebP — 더 작고 투명 배경 유지</option>
+                       <option value="png">PNG — 무손실, 용량 큼</option>
+                   </select>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>사진 용량 줄이기</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="summary"><span id="total">—</span><a id="dlzip" class="dl">↓ 전체 다운로드 (ZIP)</a></div>
+               <ul class="imglist" id="list"></ul>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<p class="guide-tool-more">다른 규격은 <a href="/ko/compress-id-photo.html">증명사진 도구</a>에서 골라요.</p>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script defer src="/i18n/ko.js?v=b6fb84c5"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/js/specs.js?v=4e758873"></script>
+<script type="module" src="/js/compress-image.js?v=d6adddd9"></script>
+<!-- guide-tool:end -->
+</div>
+<div class="content article">
 
       <div class="callout">안내는 바뀔 수 있어요. 아래 숫자와 사이트 화면의 안내가 다르면 <b>사이트 안내가 우선</b>이에요. 출처는 글 맨 아래에 있어요.</div>
 
@@ -211,9 +329,10 @@
       </ul>
       <div class="cta-box">
           <div><b>무료로 해 보기</b><p>400×500으로 자르고 50KB 아래로 저장해요. 사진은 서버로 올라가지 않아요.</p></div>
-          <a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-korcham" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/computer-certificate-photo-size">컴활 사진 맞추기 →</a>
+          <a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/computer-certificate-photo-size">컴활 사진 맞추기 ↑</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-korcham" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/computer-certificate-photo-size">컴활 사진 맞추기 →</a><button type="button" aria-label="닫기">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/computer-certificate-photo-size">컴활 사진 맞추기 ↑</a><button type="button" aria-label="닫기">✕</button></div>
+</div>
 </main>
 
 <section class="faq">
