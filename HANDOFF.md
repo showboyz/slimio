@@ -221,7 +221,7 @@
    - 생성: gen_size_pages → gen_image_pages → gen_guides → gen_ko → gen_llms → check_i18n → bump_versions. 가이드 36편(KO 26), 사이트맵 107 URL. 사이트맵 날짜 바뀐 곳: 새 가이드 4, /ko/, 총정리, ko/receipt-to-pdf, ko/unlock-pdf.
    - **배포 확인(11/7):** `npm test -- --live`·`--live --mobile` 둘 다 '107 sitemap pages, 226 internal links checked / all passed'. 새 4편 모두 200, 실제 사이트 ko.js가 `?v=b6fb84c5`(0 아님). IndexNow HTTP 200(107 URL).
    - **다음:** 규격 가이드 계속(하루 1~2편 목표), 12월 중순까지 연말정산 영수증·월세 서류 페이지, 11월 중순~말 애드센스 재심사(신청은 사장님 계정), 1/19쯤 애드포스트 신청.
-2-52. **하루 1,000명 계획 2차: 새 KO 가이드 3편 (2026-11-07, 사장님 '다음 가이드 진행해')** — **배포 전(사장님 '배포해' 대기)**.
+2-52. **하루 1,000명 계획 2차: 새 KO 가이드 3편 (2026-11-07, 사장님 '다음 가이드 진행해')** — **2026-11-07 배포 완료**(사장님 '배포해').
    - **주제 고르기:** 네이버 자동완성(curl). 큐넷은 '사진변경·사진등록·판독 불가·변경 안됨·변경 승인'처럼 막힌 사람 검색어가 많음. 연말정산 월세는 '공제 서류·이체내역·전입신고·경정청구'. 국가장학금은 '서류제출 방법·기간·미제출'. 블로그(#41 국가장학금, #77 연말정산)와 주제는 겹치지만 문장은 새로 씀(overlap 최대 0.1%, 출처 제목뿐).
    - **새 가이드(서브에이전트 3개, 지침 scratchpad `r1107g/brief.md`, 출처 노트 `r1107g/<slug>/notes.md`, 내가 전부 읽고 노트와 대조):**
      - `qnet-photo`(exam, CTA kr-qnet): 큐넷 FAQ(2025-12-17) '300 X 400 픽셀 이상'·jpeg/jpg. 200KB·300DPI 권장은 공단 2026 시행계획 공고(관광통역안내사 제2026-087호, 청소년상담사 제2026-099호)에만 있음. 자격증 보완 FAQ는 '300px·400px 이내' → 딱 300×400이 둘 다 만족. 큐넷 '자격 검정 절차 안내'에 옛 120×160이 아직 남아 있음(블로그 숫자가 제각각인 이유). '사진 판독이 불가합니다' = 자동인식 프로그램이 거부한 사진 내용 문제(셀카·흑백·모자·종이 사진 재촬영·홀로그램 신분증 스캔 등). 변경 경로: 접수 전 마이페이지›개인정보수정›사진등록, 접수 후 원서접수관리›사진변경 신청/결과(경우에 따라 지부·지사 승인). 상장형 자격증 사진변경 6개월 1회·2~7일. 원서 사진변경 마감·승인 기간은 공개 안내에 없음(1644-8000 안내). kr-qnet 프리셋 [300,400]·200KB = 공식과 일치.
@@ -231,6 +231,7 @@
    - **연결(gen_guide_links):** compress-id-photo에 qnet-photo(총정리 다음), compress-image-to-200kb 첫 칸 qnet-photo, merge에 yearend-tax-rent-docs, receipt-to-pdf에 yearend-tax-rent-docs(multiple-photos-to-pdf 대신), pdf-to-jpg 목록 새로 만듦(national-scholarship-docs·gov24-pdf-save·pdf-compression-explained).
    - 생성: gen_size_pages → gen_image_pages → gen_guides → gen_ko → gen_llms → check_i18n → bump_versions. 가이드 39편(KO 29), 사이트맵 110 URL.
    - **다음:** 규격 가이드 계속. 국가장학금 2027-1 공고 확인(11월 중순), 연말정산 영수증(의료비·교육비) 페이지.
+   - **배포 확인(11/7):** `fly deploy`(이미지 deployment-01M6TJ76MSNEGQ0ZAFZ37ZW1FP) 뒤 `npm test -- --live`·`--live --mobile` 둘 다 '110 sitemap pages, 238 internal links checked / all passed'. 새 3편 모두 200, 실제 PDF→JPG 페이지에 '1쪽이면 이미지 한 장' 문구 확인. IndexNow HTTP 200(110 URL).
 
 ## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
