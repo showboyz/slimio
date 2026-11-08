@@ -36,13 +36,13 @@ K_VISA = ["us-visa-photo-size", "china-visa-photo", "india-visa-photo", "passpor
 GUIDES = {
     "en": {
         "default_pdf": E_PDF,
-        "sign-pdf.html": E_SIG, "signature-image.html": ["ssc-signature-photo-size", "oci-photo-signature-size", *E_SIG],
+        "sign-pdf.html": E_SIG, "signature-image.html": ["upsc-photo-signature-size", "ssc-signature-photo-size", "oci-photo-signature-size", *E_SIG],
         "bank-exam-photo-signature.html": ["india-exam-photo-signature-size", "ssc-signature-photo-size", "ugc-net-photo-signature-size", "signature-image-for-online-forms"],
         "us-visa-photo.html": ["us-visa-photo-requirements", "india-e-visa-photo-requirements", "kb-pixels-cm-dpi-explained"],
-        "compress-id-photo.html": ["pakistan-passport-photo-20kb", "oci-photo-signature-size", *E_PHOTO, "india-e-visa-photo-requirements"],
+        "compress-id-photo.html": ["upsc-photo-signature-size", "pakistan-passport-photo-20kb", "oci-photo-signature-size", *E_PHOTO, "india-e-visa-photo-requirements"],
         **{p: E_PHOTO for p in gen_related.SIZE_IMG},
         "compress-image-to-20kb.html": ["pakistan-passport-photo-20kb", *E_PHOTO],
-        "compress-image-to-200kb.html": ["oci-photo-signature-size", *E_PHOTO],
+        "compress-image-to-200kb.html": ["oci-photo-signature-size", "upsc-photo-signature-size", *E_PHOTO],
         # Canada's IRCC: 4MB per file (2MB on some forms), one file per upload field
         "compress-pdf-to-4mb.html": ["ircc-document-upload-size-limit", "reduce-pdf-size-iphone-mac", "pdf-size-test"],
         "compress-pdf-to-2mb.html": ["ircc-document-upload-size-limit", *E_PDF],

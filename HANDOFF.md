@@ -263,6 +263,13 @@
    - 생성 전체 다시 돌림: 가이드 42편, 사이트맵 114 URL, llms 107 링크.
    - **다음:** 배포 뒤 이 4쪽 GSC 색인 요청(한도 남을 때), Umami에서 `tool-used` pk-passport·oci 확인. ④ UPSC NDA·CDS(12/2)·CSE(1/13) 페이지.
 
+2-57. **UPSC 사진·서명 규격을 새 접수 사이트 기준으로 (2026-11-08, 2-53 제안 ④)** — 조사 서브에이전트(지침 scratchpad `r1108h/brief.md`, 출처 노트 `r1108h/upsc-photo-signature-size/notes.md`, 내려받은 PDF·포털 JS `dl/`). 처음엔 '사진에 이름·촬영 날짜' 기능을 만들었는데 **그건 옛 포털(upsconline.gov.in, 2025-03까지) 규칙**이라 버림(커밋 안 함).
+   - **지금 포털 upsconline.nic.in 규칙(사진·서명 안내 PDF 2026-02, 업로드 화면 JS로 확인):** 사진 = 컬러 JPG **20~200KB**(바이트/1024로 셈), **파일 이름 'photo'**, **얼굴이 사진 면적 3/4 이상**(어깨 나온 여권사진은 반려 샘플), 흰 배경, 양쪽 귀, 흑백 거부, 픽셀 규정 없음. 신청 중 **라이브 사진** 필수·업로드 사진과 대조, 시험장 얼굴 인증. 서명 = **검은 펜으로 위아래 세 번, 한 이미지**, JPG **20~100KB**, **350~500px**, **파일 이름 'signature'**(2026-02 공고부터). 옛 20~300KB·350~1000px·이름+날짜·10일 이내 규칙은 다른 사이트에 아직 많음.
+   - **도구 수정:** `upsc-photo` 450×600 그대로, 목표 20~200KB(custom), 얼굴 안내 타원을 틀 가득(cy .47 rx .40 ry .45), 안내 문구, 저장 이름 `photo.jpg`(`FILE_NAME`). `upsc-sign` 500×500, 20~100KB, 종이 사진 탭으로, 저장 이름 `signature.jpg`(프리셋 `file`). 옵션 이름·한국어 번역·gen_ko 라벨. e2e: 'UPSC picks 20–200KB, saved as photo.jpg', 서명 프리셋에 `file` 있으면 파일 이름 확인.
+   - **가이드 수정:** `india-exam-photo-signature-size`(UPSC 절·표·FAQ·실수 목록), `signature-image-for-online-forms` 표. gen_llms 프리셋 목록에 uk-eta·pk-passport·oci-photo·oci-sign 추가(빠져 있었음).
+   - **새 가이드 `upsc-photo-signature-size`(영어, 1,400단어):** 포털이 확인하는 것 표, 75% 얼굴 규칙(그림: 샘플 인물로 여권 구도 ✕·너무 가까움 ✕·꽉 찬 구도 ✓ — UPSC 샘플은 실존 인물이라 글로만), 옛 규칙 vs 지금 표(ESE 2027 공고 부록엔 아직 20~300KB), 업로드 화면 오류 문구와 해결(포털 JS에서 그대로 확인), 사진·서명 만들기, 파일 이름 고치기(photo (1).jpg, 윈도 photo.jpg.jpg), 라이브 사진·시험장 얼굴 인증(PIB), 다른 업로드 표, 2027 일정 NDA·CDS(I) 12/2~12/22(시험 4/11), CSE 1/13~2/2(시험 5/23, 잠정). 나는 오류 문구·'anytime'·Aadhaar 권고를 원문과 대조. overlap 0%. 이미지 `public/img/blog/upsc-photo-signature-size-{hero,framing-en}.jpg`. 연결: 증명사진·서명 페이지 맨 앞, 사진 200KB 페이지. 가이드 43편, 사이트맵 115, llms 108.
+   - 사장님 '배포해'(11/8 저녁) = 2-56 + 2-57 함께 배포.
+
 ## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
 |---|---|
