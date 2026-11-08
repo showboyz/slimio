@@ -255,7 +255,7 @@
    - **도구:** `tools/gsc/req.py`는 `/u/0/` 주소를 열어서(권한 없음) 안 씀. 새 `r1106/stats/req2.py <창> <url>…`은 이미 연 내 창에서 req.py와 같은 순서로 요청, guard.sh 확인, 'problem submitting'/Quota면 멈춤.
    - **다음:** 11/9 17:10 이후 하루 약 8~10편: pdf-size-test(남은 'unknown' 1편) → 'Discovered' 6편 → 'Crawled' 4편 → 도구 넣은 컴활·토익 재크롤 요청(내용이 바뀜). 2-56 배포되면 영어 새 4쪽을 앞에 넣기. 11/20 GSC 재확인.
 
-2-56. **해외 영어 페이지: 파키스탄 여권 20KB·인도 OCI·캐나다 IRCC 4MB (2026-11-08, 2-53 제안 ③)** — **배포 전(사장님 '배포해' 대기)**. 가이드 3편은 서브에이전트(지침 scratchpad `r1108g/brief.md`, 출처 노트 `r1108g/<slug>/notes.md`), 내가 전부 읽고 노트와 대조.
+2-56. **해외 영어 페이지: 파키스탄 여권 20KB·인도 OCI·캐나다 IRCC 4MB (2026-11-08, 2-53 제안 ③)** — **배포 완료(11/8 저녁, 2-57과 함께)**. 가이드 3편은 서브에이전트(지침 scratchpad `r1108g/brief.md`, 출처 노트 `r1108g/<slug>/notes.md`), 내가 전부 읽고 노트와 대조.
    - **새 프리셋:** `pk-passport` 35×45mm → 413×531, 20KB(공식 페이지에 픽셀 없음, 여권 300dpi 기준; 얼굴 타원 70% = 29~34mm 안), `oci-photo` 600×600, 200KB(MHA FAQ: 정사각 200~900px, JPG 200KB 이하; 타원은 MHA 사진 규격서 머리 25~35mm/51mm = 49~69% 중간인 62%), 서명 `oci-sign` 600×200(1:3은 공관 안내, MHA FAQ는 200KB만) '100KB 이하'로 저장, 서명 힌트 끝말을 프리셋별 `check`로(OCI는 '업로드 화면 확인'). 한국어 증명사진 페이지에서는 pk·oci 옵션 뺌(drop_options, e2e NOT_KO).
    - **새 도구 페이지 `/compress-pdf-to-4mb.html`(영어 전용, gen_ko `EN_ONLY`):** IRCC 4MB(포털 5MB, 일부 2MB), 한 칸에 파일 하나, 서버 압축 사실대로. 목표 용량 목록에 4MB 추가(PDF 크기 페이지 전부, JPG→PDF). gen_llms에 영어 전용 크기 페이지 묶음(SIZE_ALL), gen_related SIZE_PDF에 추가.
    - **가이드 3편(영어):** `pakistan-passport-photo-20kb`(20KB vs 공식 PDF 2개의 5MB, '잘라낸 사진 금지'의 뜻, 20KB가 흐린 이유와 실측, 지문 양식은 600dpi 스캐너로만 — SlimIO에 넣지 말라고), `oci-photo-signature-size`(30KB→500KB→200KB 세 세대 숫자, 흰 배경 금지, 만 5세 미만 왼손 엄지, 새 여권 갱신·US$25 면제 2026-12-31, 실물 카드 2026-07-08 중단), `ircc-document-upload-size-limit`(계정별 한도·파일 형식 표, 마지막 업로드만 남음, 실측: 휴대폰 사진 12쪽 32.2MB→3.7MB 210dpi, 24쪽 108dpi). overlap 0%. 이미지 6장(`public/img/blog/<slug>-*.jpg`).
@@ -268,7 +268,8 @@
    - **도구 수정:** `upsc-photo` 450×600 그대로, 목표 20~200KB(custom), 얼굴 안내 타원을 틀 가득(cy .47 rx .40 ry .45), 안내 문구, 저장 이름 `photo.jpg`(`FILE_NAME`). `upsc-sign` 500×500, 20~100KB, 종이 사진 탭으로, 저장 이름 `signature.jpg`(프리셋 `file`). 옵션 이름·한국어 번역·gen_ko 라벨. e2e: 'UPSC picks 20–200KB, saved as photo.jpg', 서명 프리셋에 `file` 있으면 파일 이름 확인.
    - **가이드 수정:** `india-exam-photo-signature-size`(UPSC 절·표·FAQ·실수 목록), `signature-image-for-online-forms` 표. gen_llms 프리셋 목록에 uk-eta·pk-passport·oci-photo·oci-sign 추가(빠져 있었음).
    - **새 가이드 `upsc-photo-signature-size`(영어, 1,400단어):** 포털이 확인하는 것 표, 75% 얼굴 규칙(그림: 샘플 인물로 여권 구도 ✕·너무 가까움 ✕·꽉 찬 구도 ✓ — UPSC 샘플은 실존 인물이라 글로만), 옛 규칙 vs 지금 표(ESE 2027 공고 부록엔 아직 20~300KB), 업로드 화면 오류 문구와 해결(포털 JS에서 그대로 확인), 사진·서명 만들기, 파일 이름 고치기(photo (1).jpg, 윈도 photo.jpg.jpg), 라이브 사진·시험장 얼굴 인증(PIB), 다른 업로드 표, 2027 일정 NDA·CDS(I) 12/2~12/22(시험 4/11), CSE 1/13~2/2(시험 5/23, 잠정). 나는 오류 문구·'anytime'·Aadhaar 권고를 원문과 대조. overlap 0%. 이미지 `public/img/blog/upsc-photo-signature-size-{hero,framing-en}.jpg`. 연결: 증명사진·서명 페이지 맨 앞, 사진 200KB 페이지. 가이드 43편, 사이트맵 115, llms 108.
-   - 사장님 '배포해'(11/8 저녁) = 2-56 + 2-57 함께 배포.
+   - **배포 완료(11/8 저녁, 사장님 '배포해', 2-56과 함께):** 배포 전 npm test·--mobile 통과 → fly deploy → --live·--live --mobile 통과, 새 5쪽 200 확인, 실서버 JS에 UPSC 20~200KB·photo.jpg·signature.jpg 반영 확인, IndexNow 115 URL(HTTP 200).
+   - **GSC 색인 요청 예약:** 11/9 17:10(`r1106/stats/at.sh` → later.sh → req2.py), 영어 새 5쪽(upsc 가이드·pdf 4mb·ircc·oci·pk) 먼저, 그다음 KO pdf-size-test·Discovered 6편. 기록 `r1107a/req_1109.txt`. 한도 걸리면 남은 건 다음 날.
 
 ## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
