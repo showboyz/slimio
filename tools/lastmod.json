@@ -1,6 +1,6 @@
 {
  "/": [
-  "8cf1e03345cbc241",
+  "6a70f3b178d8569b",
   "2026-11-08"
  ],
  "/about.html": [
@@ -16,27 +16,27 @@
   "2026-10-28"
  ],
  "/compress-id-photo.html": [
-  "fb460098b7cf8992",
+  "7280c69634e86bba",
   "2026-11-08"
  ],
  "/compress-image-to-100kb.html": [
-  "14b0f7df65adecc3",
+  "38e2073b75b457e9",
   "2026-11-08"
  ],
  "/compress-image-to-200kb.html": [
-  "51da2bafc531ca59",
+  "66b0f7a4faaa9d0a",
   "2026-11-08"
  ],
  "/compress-image-to-20kb.html": [
-  "e12248c148444b6a",
+  "758a756b4ef117f5",
   "2026-11-08"
  ],
  "/compress-image-to-50kb.html": [
-  "4bd5a41eb8941d72",
+  "4b625afcd020417a",
   "2026-11-08"
  ],
  "/compress-image.html": [
-  "ff75548631ca37d5",
+  "1fb7de24d3732394",
   "2026-11-08"
  ],
  "/compress-pdf-for-email.html": [
@@ -84,7 +84,7 @@
   "2026-10-30"
  ],
  "/guides/": [
-  "dc12b56afd6c0cb7",
+  "df6fb3a1dc4328c2",
   "2026-11-08"
  ],
  "/guides/compress-pdf-without-losing-quality.html": [
@@ -96,8 +96,8 @@
   "2026-10-29"
  ],
  "/guides/india-exam-photo-signature-size.html": [
-  "d508bc34083669a0",
-  "2026-10-28"
+  "33e26d7835b68bcc",
+  "2026-11-08"
  ],
  "/guides/ircc-document-upload-size-limit.html": [
   "4f73cc9ce72a59fb",
@@ -124,8 +124,8 @@
   "2026-10-18"
  ],
  "/guides/signature-image-for-online-forms.html": [
-  "06c21dfc008e5c9a",
-  "2026-10-18"
+  "ff7de36063571bbe",
+  "2026-11-08"
  ],
  "/guides/ssc-signature-photo-size.html": [
   "9eef611253e2f784",
@@ -164,23 +164,23 @@
   "2026-11-07"
  ],
  "/ko/compress-image-to-100kb.html": [
-  "71d04afc949226f4",
+  "2b8a76d1f0ba16c3",
   "2026-11-08"
  ],
  "/ko/compress-image-to-200kb.html": [
-  "482881a5c7d7405d",
+  "4fe5e401935c8f0a",
   "2026-11-08"
  ],
  "/ko/compress-image-to-20kb.html": [
-  "e61dd594e3cea947",
+  "39dcfe1942ddaf08",
   "2026-11-08"
  ],
  "/ko/compress-image-to-50kb.html": [
-  "9425c2c465c8c7f1",
+  "b0e3fb4ea043a3c5",
   "2026-11-08"
  ],
  "/ko/compress-image.html": [
-  "7b8172b9efaf2215",
+  "9c719753c96cf968",
   "2026-11-08"
  ],
  "/ko/compress-pdf-for-email.html": [
@@ -380,7 +380,7 @@
   "2026-11-06"
  ],
  "/ko/signature-image.html": [
-  "d83958869c3d0d81",
+  "e00809e48a330e9b",
   "2026-11-08"
  ],
  "/ko/split.html": [
@@ -396,7 +396,7 @@
   "2026-11-06"
  ],
  "/ko/us-visa-photo.html": [
-  "37a631e63a95d04b",
+  "81b19a5a0debd0f9",
   "2026-11-08"
  ],
  "/ko/watermark.html": [
@@ -432,7 +432,7 @@
   "2026-11-06"
  ],
  "/signature-image.html": [
-  "8376d47634bfe0c4",
+  "2cd48aec8b4b6c5b",
   "2026-11-08"
  ],
  "/split.html": [
@@ -448,7 +448,7 @@
   "2026-10-31"
  ],
  "/us-visa-photo.html": [
-  "8b7dc8248a638c9a",
+  "400ae1a4c9a59a4c",
   "2026-11-08"
  ],
  "/watermark.html": [

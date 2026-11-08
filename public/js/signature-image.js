@@ -262,8 +262,10 @@ const PRESETS = {
              hint: "RRB: sign in running (joined) handwriting with a black pen on white paper, not in capital letters. At least 140×60 px." },
      "ssc-sign": { box: [300, 100], target: "10-20",
              hint: "SSC: sign with a black pen on white paper; the notice asks for about 6.0 × 2.0 cm. Blurred or tiny signatures are rejected." },
-     "upsc-sign": { box: [700, 350], target: "20-300",
-             hint: "UPSC: JPG between 20KB and 300KB, each side between 350 and 1000 px. Sign with a black pen on white paper." },
+     // UPSC (upsconline.nic.in photo & signature instructions, Feb 2026): three signatures one below the
+     // other in one image, black ink, plain white paper, JPG named "signature", 20–100KB, 350–500 px
+     "upsc-sign": { box: [500, 500], target: "20-100", paper: true, file: "signature",
+             hint: "UPSC: sign three times, one below the other, in black ink on plain white paper, with a gap between them, and photograph all three together. JPG of 20–100KB, 350–500 px, saved as signature.jpg." },
      "neet-sign": { box: [400, 160], target: "10-100",
              hint: "NEET (NTA): JPG between 10KB and 100KB. Sign with a black pen on white paper." },
      "ugcnet-sign": { box: [400, 160], target: "10-50",
@@ -506,7 +508,8 @@ function showResult(bytes, r, format, t) {
      if (note) meta.append(document.createElement("br"), note);
      $("result").style.display = "block";
      const ext = format === "jpeg" ? "jpg" : "png";
-     $("dl").onclick = () => SlimIO.download(bytes, `signature_${r.w}x${r.h}.${ext}`, type);
+     const p = PRESETS[$("size").value];   // UPSC only takes a file named "signature"
+     $("dl").onclick = () => SlimIO.download(bytes, `${p && p.file ? p.file : `signature_${r.w}x${r.h}`}.${ext}`, type);
      SlimIO.reveal($("result"));
 }
 

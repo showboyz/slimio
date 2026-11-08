@@ -826,6 +826,15 @@ function toolTests() {
     const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));
     return err || (v === "custom 40 120" ? null : `the size limit is "${v}", expected custom 40–120`);
   });
+  // UPSC's portal: 20–200KB, and the file must be named photo.jpg
+  T.push({ name: "/compress-id-photo.html UPSC picks 20–200KB, saved as photo.jpg", url: "/compress-id-photo.html", fn: async (p) => {
+    const err = await photo(p, { resize: "upsc-photo" });
+    if (err) return err;
+    const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));
+    if (v !== "custom 20 200") return `the size limit is "${v}", expected custom 20–200`;
+    const r = await download(p, "#result a[download]");
+    return r.name === "photo.jpg" ? null : `saved as ${r.name}, UPSC only takes photo.jpg`;
+  } });
   both("compress-id-photo.html", "UK ETA picks 600×750, 50–500KB", async (p) => {
     const err = await photo(p, { resize: "uk-eta" });
     const v = await p.evaluate(() => ["#target", "#kmin", "#kmax"].map((q) => document.querySelector(q).value).join(" "));
@@ -873,6 +882,7 @@ function toolTests() {
     if (!s || s.w !== v.box[0] || s.h !== v.box[1]) return `${s && s.w}×${s && s.h}, expected ${v.box.join("×")}`;
     const lim = kbRange(v.target);
     if (r.bytes.length > lim.max || r.bytes.length < lim.min) return `${KB(r.bytes.length)} is outside ${v.target}KB`;
+    if (v.file && r.name !== v.file + ".jpg") return `saved as ${r.name}, the form only takes ${v.file}.jpg`;
     return null;
   });
 

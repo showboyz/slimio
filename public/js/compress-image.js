@@ -25,8 +25,11 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
 // and the KB targets below 50KB come out too small at that size, so 50–500KB;
 // Pakistan online passport (onlinemrp.dgip.gov.pk photo requirements): 35×45 mm, JPG/PNG up to 20KB, no
 // pixel size given, so 35×45 mm at 300 dpi like other passports;
-// India OCI (ociservices.gov.in FAQ): square JPEG, 200×200 to 900×900 px, max 200KB.
-const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "300KB",
+// India OCI (ociservices.gov.in FAQ): square JPEG, 200×200 to 900×900 px, max 200KB;
+// UPSC (upsconline.nic.in photo & signature instructions, Feb 2026): colour JPG of 20–200KB named "photo",
+// face covering at least 3/4 of the photo, no pixel size. The old 20–300KB and "name and date on the
+// photo" rules belong to the previous portal.
+const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "20-200KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
      "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB",
      "uk-eta": "50-500KB", "pk-passport": "20KB", "oci-photo": "200KB" };
@@ -53,7 +56,12 @@ const GUIDES = {
      // OCI: the Ministry's photo sheet puts the head (hair to chin) at 25–35 mm of 51 mm = 49–69% of the
      // height ("80% coverage of face" is not defined anywhere); the oval is 62%, mid-range
      "oci-photo": { cy: 0.46, rx: 0.24, ry: 0.31 },
+     // UPSC: "face must cover at least 75% of the area"; its accepted samples are cropped from the top of
+     // the hair to just under the chin, ears near the sides. Photos with shoulders are refused.
+     "upsc-photo": { cy: 0.47, rx: 0.4, ry: 0.45 },
 };
+// Upload pages that check the file name: UPSC only takes "photo.jpg".
+const FILE_NAME = { "upsc-photo": "photo" };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
 
 // "200KB" -> bytes. Decimal (1KB = 1000 bytes) so the file passes whichever
@@ -443,6 +451,8 @@ function syncCrop() {
              ? SlimIO.t("Drag the frame and zoom until your face fills the oval's width and your eyes sit between the two dotted lines.")
              : $("resize").value === "kr-kuksiwon"   // the photo must come from a studio: a scan or the studio's file
              ? SlimIO.t("Scanned a printed photo? Zoom and drag until the frame sits just inside the photo's edges. Otherwise keep your face inside the guide.")
+             : $("resize").value === "upsc-photo"
+             ? SlimIO.t("Zoom in until your head fills the frame: hair at the top, chin near the bottom, both ears showing. UPSC refuses photos with shoulders. It is saved as photo.jpg.")
              : $("resize").value === "passport"
              ? SlimIO.t("Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");
@@ -605,7 +615,8 @@ async function make(auto) {
                                      r.blob = await padJpeg(r.blob, opts.min);
                                      r.padded = true;
                              }
-                             done.push({ file, ...r, name: file.name.replace(/\.[^.]+$/, "") + "_slimio." + EXT[opts.format] });
+                             const base = FILE_NAME[resize] || file.name.replace(/\.[^.]+$/, "") + "_slimio";
+                             done.push({ file, ...r, name: base + "." + EXT[opts.format] });
                      } catch (e) {
                              done.push({ file, error: e.message });
                      }
