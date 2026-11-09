@@ -148,7 +148,7 @@ PAGES = [
  "slug": "compress-pdf-to-100kb", "target": "100KB",
  "title": "Compress PDF to 100KB — Free Online, No Signup | SlimIO",
  "short": "Compress PDF to 100KB | SlimIO",
- "desc": "Compress a PDF to under 100KB for job, exam and government upload forms. Free, no signup, runs in your browser — your file never leaves your device.",
+ "desc": "Compress a PDF to under 100KB for job, exam and government upload forms. Free, no signup, and the file is deleted as soon as it is compressed.",
  "keywords": "compress pdf to 100kb, pdf under 100kb, reduce pdf size to 100kb, pdf size reducer 100kb, compress pdf below 100kb",
  "h1": "Compress PDF<br /><b>to 100KB.</b>",
  "lead": "Upload forms that say “max 100KB”? Drop your PDF in and get a file that fits — with the best quality that still squeezes under the limit.",

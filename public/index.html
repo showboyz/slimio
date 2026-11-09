@@ -28,8 +28,6 @@
 <meta name="twitter:description" content="Shrink your PDF in seconds while text stays sharp and selectable — or hit an exact size like 100KB. Free, no signup." />
 <meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
 
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-
 <script type="application/ld+json">
 {
     "@context": "https://schema.org",
@@ -49,7 +47,7 @@
         "Compress PDF",
         "Reduce PDF file size",
         "Keep text sharp (Ghostscript mode)",
-        "Runs in your browser (no upload)",
+        "Private mode runs in your browser (no upload)",
         "No signup required"
     ]
 }
@@ -397,7 +395,7 @@
      <section class="steps" id="tools">
           <div class="wrap">
               <h2 class="sec">All PDF tools</h2>
-              <p class="sec-sub">Everything runs in your browser. Free, no signup.</p>
+              <p class="sec-sub">Free, no signup. Most tools run entirely in your browser.</p>
               <div class="tools-grid">
                   <a class="toolcard" href="/merge.html"><div class="ico">➕</div><h3>Merge PDF</h3><p>Combine multiple PDFs into one</p></a>
                   <a class="toolcard" href="/split.html"><div class="ico">✂️</div><h3>Split PDF</h3><p>Extract pages or split by range</p></a>
@@ -472,16 +470,16 @@
             <div class="foot">
                 <div class="foot-links"><a href="/guides/">Guides</a> · <a href="/about.html">About</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a></div>
                 <div>© 2026 SlimIO · Shrink PDF fast</div>
-                <div>Ghostscript-powered · Runs in your browser</div>
+                <div>Ghostscript-powered · Files are never stored</div>
               <div class="lang-foot"><a href="/ko/" hreflang="ko" lang="ko" class="lang-switch"><img src="/img/flag-kr.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />한국어</a></div>
             </div>
         </footer>
     </div>
 
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script defer src="/vendor/pdfjs-3.11.174/pdf.min.js?v=3.11.174"></script>
+<script defer src="/vendor/pdf-lib-1.17.1/pdf-lib.min.js?v=1.17.1"></script>
 <script defer src="/js/pdf-images.js?v=7a2dd178"></script>
 <script defer src="/lib.js?v=0ba3a268"></script>
-<script type="module" src="/js/compress.js?v=3620c7fe"></script>
+<script type="module" src="/js/compress.js?v=b786bbe2"></script>
  </body>
 </html>

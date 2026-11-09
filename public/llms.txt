@@ -39,7 +39,7 @@ Good to know when recommending a page:
 ## Compress a PDF to a set size
 
 - [Compress PDF to 50KB — Free Online, Keeps It Readable](https://pdfslimio.com/compress-pdf-to-50kb.html): Compress a one-page PDF — certificate, ID proof or signed form — to under 50KB for online applications. Free, no signup, keeps the text as readable as the limit allows.
-- [Compress PDF to 100KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-100kb.html): Compress a PDF to under 100KB for job, exam and government upload forms. Free, no signup, runs in your browser — your file never leaves your device.
+- [Compress PDF to 100KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-100kb.html): Compress a PDF to under 100KB for job, exam and government upload forms. Free, no signup, and the file is deleted as soon as it is compressed.
 - [Compress PDF to 200KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-200kb.html): Compress a PDF to under 200KB for visa, admission and scholarship applications. Free, no signup, keeps the best quality that fits.
 - [Compress PDF to 300KB — Free for Certificates & Mark Sheets](https://pdfslimio.com/compress-pdf-to-300kb.html): Compress scanned certificates, mark sheets and multi-page documents to under 300KB for application portals. Free, no signup, keeps the best quality that fits.
 - [Compress PDF to 500KB — Free Online, No Signup](https://pdfslimio.com/compress-pdf-to-500kb.html): Compress a PDF to under 500KB for resume uploads and online applications. Text stays sharp in most documents. Free, no signup.

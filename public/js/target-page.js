@@ -1,5 +1,5 @@
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+        "/vendor/pdfjs-3.11.174/pdf.worker.min.js?v=3.11.174";
 const drop = $("drop");
 const controls = $("controls");
 const goBtn = $("go");

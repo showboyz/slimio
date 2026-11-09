@@ -28,8 +28,6 @@
 <meta name="twitter:description" content="PDF 용량을 무료로 줄이세요. 글자는 선명하게 유지하고, 회원가입·설치 없이 바로 압축해요. 100KB·1MB처럼 원하는 용량에 맞추는 것도 돼요." />
 <meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
 
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-
 <script type="application/ld+json">
 {
       "@context": "https://schema.org",
@@ -48,7 +46,7 @@
       "featureList": [
             "PDF 용량 줄이기",
             "Ghostscript 서버 압축 (글자 선명)",
-            "브라우저 압축 (파일 업로드 없음)",
+            "기기 안에서만 압축 (파일 업로드 없음)",
             "회원가입 없음"
       ],
       "inLanguage": "ko"
@@ -462,7 +460,7 @@
      <section class="steps" id="tools">
           <div class="wrap">
               <h2 class="sec">모든 PDF 도구</h2>
-              <p class="sec-sub">모두 브라우저에서 실행돼요. 무료, 가입 없음.</p>
+              <p class="sec-sub">무료, 가입 없음. 대부분 브라우저 안에서만 실행돼요.</p>
               <div class="tools-grid">
                   <a class="toolcard" href="/ko/merge.html"><div class="ico">➕</div><h3>PDF 합치기</h3><p>여러 PDF를 하나로</p></a>
                   <a class="toolcard" href="/ko/split.html"><div class="ico">✂️</div><h3>PDF 나누기</h3><p>페이지별로 나누거나 범위 추출</p></a>
@@ -577,17 +575,17 @@
             <div class="foot">
                 <div class="foot-links"><a href="/ko/guides/">가이드</a> · <a href="/ko/about.html">서비스 소개</a> · <a href="/ko/terms.html">이용약관</a> · <a href="/ko/privacy.html">개인정보처리방침</a> · <a href="/ko/contact.html">문의하기</a></div>
                 <div>© 2026 SlimIO · PDF 용량 줄이기</div>
-                <div>Ghostscript 기반 · 브라우저에서 실행</div>
+                <div>Ghostscript 기반 · 파일은 저장되지 않아요</div>
               <div class="lang-foot"><a href="/" hreflang="en" lang="en" class="lang-switch"><img src="/img/flag-us.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />English</a></div>
             </div>
         </footer>
     </div>
 
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script defer src="/vendor/pdfjs-3.11.174/pdf.min.js?v=3.11.174"></script>
+<script defer src="/vendor/pdf-lib-1.17.1/pdf-lib.min.js?v=1.17.1"></script>
 <script defer src="/js/pdf-images.js?v=7a2dd178"></script>
 <script defer src="/i18n/ko.js?v=3ff90ba2"></script>
 <script defer src="/lib.js?v=0ba3a268"></script>
-<script type="module" src="/js/compress.js?v=3620c7fe"></script>
+<script type="module" src="/js/compress.js?v=b786bbe2"></script>
  </body>
 </html>

@@ -132,7 +132,7 @@ KO["index.html"] = dict(
     short="PDF 용량 줄이기 | SlimIO",
     app_name="SlimIO PDF 압축",
     app_desc="회원가입 없이 쓰는 무료 온라인 PDF 압축 도구. 글자를 선명하게 유지하면서 PDF 용량을 줄여요.",
-    features=["PDF 용량 줄이기", "Ghostscript 서버 압축 (글자 선명)", "브라우저 압축 (파일 업로드 없음)", "회원가입 없음"],
+    features=["PDF 용량 줄이기", "Ghostscript 서버 압축 (글자 선명)", "기기 안에서만 압축 (파일 업로드 없음)", "회원가입 없음"],
     h1="PDF 용량 줄이기,<br /><b>글자는 선명하게.</b>",
     lead="몇 초 만에 PDF 용량을 줄여요. 글자가 뭉개지지 않게, 무료로, 설치 없이.",
     ui=[
@@ -179,7 +179,7 @@ KO["index.html"] = dict(
         ("<b>Auto-delete</b>Server files removed after each job", "<b>자동 삭제</b>서버 모드 파일은 처리 직후 삭제돼요"),
         ("<b>No signup</b>No account, ever", "<b>가입 없음</b>계정이 전혀 필요 없어요"),
         ('<h2 class="sec">All PDF tools</h2>', '<h2 class="sec">모든 PDF 도구</h2>'),
-        ("Everything runs in your browser. Free, no signup.", "모두 브라우저에서 실행돼요. 무료, 가입 없음."),
+        ("Free, no signup. Most tools run entirely in your browser.", "무료, 가입 없음. 대부분 브라우저 안에서만 실행돼요."),
         ("<h3>Merge PDF</h3><p>Combine multiple PDFs into one</p>", "<h3>PDF 합치기</h3><p>여러 PDF를 하나로</p>"),
         ("<h3>Split PDF</h3><p>Extract pages or split by range</p>", "<h3>PDF 나누기</h3><p>페이지별로 나누거나 범위 추출</p>"),
         ("<h3>PDF to JPG</h3><p>Convert pages to images</p>", "<h3>PDF → JPG</h3><p>페이지를 이미지로 변환</p>"),
@@ -208,7 +208,7 @@ KO["index.html"] = dict(
         ("<li>No account needed</li>", "<li>계정 필요 없음</li>"),
         (">Start free</button>", ">무료로 시작</button>"),
         ("<div>© 2026 SlimIO · Shrink PDF fast</div>", "<div>© 2026 SlimIO · PDF 용량 줄이기</div>"),
-        ("<div>Ghostscript-powered · Runs in your browser</div>", "<div>Ghostscript 기반 · 브라우저에서 실행</div>"),
+        ("<div>Ghostscript-powered · Files are never stored</div>", "<div>Ghostscript 기반 · 파일은 저장되지 않아요</div>"),
     ],
     content="""
       <h2>PDF 용량 줄이는 방법</h2>

@@ -229,6 +229,8 @@ function jpegPdf(jpegs) {
 async function open(browser, url, { mobile = false } = {}) {
   const ctx = await browser.newContext(mobile ? { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } : { viewport: { width: 1280, height: 900 } });
   await ctx.route(/cloud\.umami\.is|cloudflareinsights|googlesyndication/, (r) => r.abort());
+  // pdf.js, pdf-lib and JSZip are served from /vendor; a page still loading them from cdnjs fails here
+  await ctx.route(/cdnjs\.cloudflare\.com/, (r) => r.abort());
   await ctx.addInitScript(() => {
     window.__ev = [];
     Object.defineProperty(window, "umami", { value: { track: (n, p) => window.__ev.push([n, p]) } });
