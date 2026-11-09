@@ -293,7 +293,7 @@
    - **구글 하락은 이미 2-35에서 조사:** 구글 노출 95%가 인도 서명 페이지 AI 모드 노출 → 10/23부터 끊김(구글 쪽), 일반 검색은 그대로. ①과 무관. 지금 하락의 큰 원인은 네이버 누락(2-58).
    - **③ 경쟁 도구(서브에이전트, 기록 scratchpad `r1109/comp/notes.md`, 등록일은 내가 RDAP로 재확인):** lurapdf.com(2026-04-13, 12개 언어·한국어 포함, 100kb~1mb 페이지)·smilingpdf.com(2026-07-24, 영어)·nilepdf.com(2026-09-19, 목표 용량 + SSC·UPSC·IBPS·RRB·NEET 등 시험 사진·서명 프리셋 — 우리와 가장 비슷). 문장 비교로 베낀 흔적 없음(같은 개념일 뿐). **'상위권을 나눠 가짐'은 틀림** — 100kb·200kb·50kb는 adobe·ilovepdf·11zon·pi7·smallpdf 등 오래된 사이트, 서명·SSC는 simpleimageresizer·pi7·sscphotoresizer.in 등. 우리는 색인은 됐지만 1쪽 밖(맞음). 2026년에 생긴 비슷한 사이트 10곳(sahiphoto.in·signresizer.com·sscphotoresizer.in 등), 일부는 시험 사진 검색에 뜸. Semrush 9.5(10/27)는 미국 데스크톱 2차 출처만, AI 개요 80%+는 미국 브랜드 검색 수치라 과장(인도 100kb·200kb는 AI 개요 없음).
    - **덤으로 찾은 것:** 100KB 페이지 설명이 'your file never leaves your device'인데 같은 페이지 FAQ는 '글자 유지 단계는 서버로 보냄' → 모순. 같은 문구+서버 언급이 함께 있는 곳: index.html·bank-exam-photo-signature·compress-pdf-to-100kb·guides/reduce-pdf-size-iphone-mac·llms.txt·gen_size_pages.py·gen_ko.py → ① 수정 때 같이 고칠 것.
-2-61. **라이브러리 자체 호스팅 + 문구 정리 (2026-11-10 새벽, 사장님 '전부 처리해')** — 2-60 ①·덤, 2-59 메일 링크. **배포 전**(사장님 '배포해' 기다림).
+2-61. **라이브러리 자체 호스팅 + 문구 정리 (2026-11-10 새벽, 사장님 '전부 처리해')** — 2-60 ①·덤, 2-59 메일 링크. **배포 완료 2026-11-10 03:15(사장님 '배포해', Fly v104).**
    - **받은 파일:** cdnjs의 pdf.js 3.11.174(pdf.min.js·pdf.worker.min.js)·pdf-lib 1.17.1·jszip 3.10.1 → `public/vendor/pdfjs-3.11.174/`·`pdf-lib-1.17.1/`·`jszip-3.10.1/`. cdnjs SRI 해시, npm 원본(jsdelivr) 둘 다 바이트 일치. 폴더마다 LICENSES.txt(sha256, 라이선스 원문 — pdf.js Apache 2.0, pdf-lib MIT, JSZip MIT 선택).
    - **주소:** `/vendor/<lib>-<ver>/<file>?v=<ver>` — server.cjs가 `?v=` 붙은 파일을 1년 immutable로 줌. bump_versions 정규식은 점이 든 `v=`를 건드리지 않음(qpdf와 같음). html 59쪽+size_template의 script 89줄, workerSrc 5곳(compress·organize·pdf-to-jpg·sign-pdf·target-page), cdnjs preconnect 60줄 삭제. 남은 cdnjs 글자는 lib.js 오류 보고 필터(무해)와 LICENSES뿐. 다른 외부 라이브러리는 HEIC 변환기(jsdelivr) 하나 — HEIC를 올릴 때만 불러오고 실패하면 안내 문구가 떠서 그대로 둠.
    - **테스트 지킴이:** e2e가 cdnjs 요청을 막음(`tests/e2e.mjs` open()) → 어느 페이지든 cdnjs로 돌아가면 도구 테스트가 깨짐.
@@ -302,7 +302,8 @@
    - **2-59 404 후보:** contact·privacy(한·영) 메일 링크를 `<!--email_off-->…<!--/email_off-->`로 감쌈 → Cloudflare가 `/cdn-cgi/l/email-protection#…`(404)로 바꾸지 않아야 함.
    - **다시 만든 것:** gen_ko.py(의도한 줄 말고는 차이 없음, 사이트맵 lastmod 5개만 11/10), gen_llms.py, bump_versions(46쪽). check_i18n 빠진 키 0.
    - **테스트:** `npm test` 240개 통과, `npm test -- --mobile` 240개 통과(로그 scratchpad `r1110/test_desktop.txt`·`test_mobile.txt`).
-   - **배포 뒤 할 일:** `npm test -- --live`, 라이브에서 `/vendor/` 4개 200·`immutable`·JS MIME, 도구 페이지 html에 cdnjs·`cdn-cgi/l/email-protection` 없음, indexnow(홈·100KB·privacy 한·영).
+   - **배포 확인:** `npm test -- --live`·`--live --mobile` 둘 다 '115 sitemap pages, 256 internal links checked / all passed'. 라이브 `/vendor/` 4개 200·`application/javascript`·`max-age=31536000, immutable`. 홈·100KB·PDF→JPG·서명(한) html에 cdnjs 0, contact·privacy html에 `email-protection` 0(메일 링크가 그냥 `mailto:`). 100KB meta 설명 새 문구 확인. IndexNow 115 URL HTTP 200.
+   - **남은 확인:** GSC 404 줄이 다음 갱신에서 email-protection이었는지(11/20 GSC 점검 때).
 
 ## 지금 서비스 상태 (2026-09-29)
 | 항목 | 상태 |
