@@ -39,10 +39,12 @@ prv = text_before(a)
 log(n, draft, 'button before', repr(nxt))
 def find(s):   # Chrome find, which also scrolls the match into view; returns the number of matches
     subprocess.run('pbcopy', input=s, text=True)
+    before = tf.windows()
     k('hotkey', '--key', 'CmdOrCtrl+F'); time.sleep(0.7); k('hotkey', '--key', 'CmdOrCtrl+V'); time.sleep(1.2)
     k('press-key', '--key', 'Return'); time.sleep(1.5)
     m = re.search(r'전체 결과 (\d+)개 중 (\d+)개', tf.tree())
-    tf.press(r'^버튼 검색 바 닫기$'); time.sleep(1)
+    if not tf.close_find(before): fail('find bar did not close')
+    time.sleep(1)
     return int(m.group(1)) if m else None
 
 def clear_leftovers():

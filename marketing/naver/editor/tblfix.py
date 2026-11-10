@@ -26,8 +26,30 @@ def guard(wait=3 * 3600):
 def done(): sh('bash', f'{T}/guard.sh', 'done')
 def k(*a):
     r = sh('bash', f'{T}/k.sh', W, *a)
-    if 'ok' not in r.stdout: raise SystemExit(f'key/click failed: {a} {r.stdout} {r.stderr}')
+    if r.stdout.strip() != 'ok': raise SystemExit(f'key/click failed: {a} {r.stdout} {r.stderr}')
     done()  # our own input, so guard() does not take it for the owner's
+def windows():   # ids of Chrome's windows as list-windows gives them
+    r = sh('orca', 'computer', 'list-windows', '--app', 'com.google.Chrome', '--json')
+    try: d = json.loads(r.stdout); d = d.get('result', d); return {str(w['id']) for w in d.get('windows', [])}
+    except Exception: return set()
+def close_find(before):
+    # Since the orca update of 2026-11-10 Chrome's find bar is a window of its own: while it is open the tree of W can
+    # be just the bar, and a click on its 검색 바 닫기 through W does nothing (ctaoff #28 on 11/11). So the button is
+    # clicked in the bar's own window, one that is new since `before` (the windows before my Cmd+F) and so can only be
+    # mine. Esc is no use: it scrolls the editor back to its old caret. Returns True when no find bar is left.
+    for w in windows() - set(before) - {str(W)}:
+        r = sh('orca', 'computer', 'get-app-state', '--app', 'com.google.Chrome', '--window-id', w, '--json', '--no-screenshot')
+        try: t = json.loads(r.stdout)['result']['snapshot']['treeText']
+        except Exception: continue
+        i = idx(t, r'^버튼 검색 바 닫기$')
+        if i and idx(t, r'^텍스트 필드 \(settable\) 찾기'):
+            sh('orca', 'computer', 'click', '--app', 'com.google.Chrome', '--window-id', w, '--element-index', i, '--no-screenshot')
+            done(); time.sleep(0.8)
+            return w not in windows()
+    press(r'^버튼 검색 바 닫기$')   # the bar inside W, as before 2026-11-10
+    return '검색 바 닫기' not in tree()
+def leave_dialog(press=False):   # see leavedlg.sh; True when the dialog is open (or, with press, was answered 나가기)
+    return sh('bash', f'{T}/leavedlg.sh', 'press' if press else 'check').stdout.strip() in ('open', 'left')
 def tree():
     r = sh('orca', 'computer', 'get-app-state', '--app', 'com.google.Chrome', '--window-id', W, '--json', '--no-screenshot')
     try: return json.loads(r.stdout)['result']['snapshot']['treeText']

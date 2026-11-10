@@ -17,11 +17,16 @@ def drafts():
     return out
 def go(url):
     t = tf.tree(); i = tf.idx(t, r'^텍스트 필드 \(settable\) 주소창')
+    if not i: raise SystemExit('no address bar in the tree (a find bar or dialog open?)')
     tf.sh('orca', 'computer', 'set-value', '--app', 'com.google.Chrome', '--window-id', tf.W, '--element-index', i, '--value', url)
     tf.k('click', '--element-index', i); tf.k('press-key', '--key', 'Return')
 def leave_unsaved():
+    # Chrome asks '사이트에서 나가시겠습니까?' in a window of its own since 2026-11-10 (leavedlg.sh); it is answered only
+    # when it was not there before go(), so it can only be this window's
+    pre = tf.leave_dialog()
     go('https://blog.naver.com/todayz777'); time.sleep(2)
-    tf.press(r'^버튼 나가기$'); time.sleep(2)
+    if not tf.press(r'^버튼 나가기$') and not pre: tf.leave_dialog(press=True)
+    time.sleep(2)
 def wait_for(pat, n=20):
     for _ in range(n):
         t = tf.tree()
