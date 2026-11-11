@@ -1,27 +1,13 @@
-# usage: img.sh <editor-win> <abs-path>
+# usage: img.sh <editor-win> <abs-path> : put one picture into the post at the caret.
+# Since the orca update of 2026-11-10 the 사진 button's file dialog is a sheet orca cannot focus, so its Cmd+Shift+G
+# went to the page instead (Chrome's 'find previous'). The file is now put on the clipboard as Finder's Copy does
+# (fileclip.js) and pasted; the editor uploads it under its own file name, so the '이미지 <name>' check stays the same
+# (tested 2026-11-12 with opic-score-hero.jpg). The caller backs up and restores the clipboard.
 W=$1; P=$2; T=$(cd "$(dirname "$0")" && pwd)
-oc(){ orca computer "$@" --app com.google.Chrome --json --no-screenshot; }
-st(){ oc get-app-state --window-id $1 ${2:-} | python3 -c 'import json,sys;print(json.load(sys.stdin)["result"]["snapshot"]["treeText"])'; }
-oc get-app-state --window-id $W --restore-window >/dev/null
-oc click --window-id $W --x 275 --y 119 >/dev/null; sleep 2.5
-DL=$(orca computer list-windows --app com.google.Chrome --json | python3 -c 'import json,sys;d=json.load(sys.stdin);print(([w["id"] for w in d["result"]["windows"] if w["title"]=="열기"] or [""])[0])')
-[ -z "$DL" ] && { echo "no dialog"; exit 1; }
-for n in 1 2; do
-  st $DL --restore-window >/dev/null; sleep 1
-  oc hotkey --window-id $DL --key CmdOrCtrl+Shift+G | python3 -c 'import json,sys;d=json.load(sys.stdin);print("hotkey",d.get("ok"),d.get("error",{}).get("code"))'
-  sleep 1
-  F=$(st $DL | grep -o -E '^\s*[0-9]+ 텍스트 필드 \(settable\), Value: /' | grep -o -E '[0-9]+' | head -1)
-  [ -n "$F" ] && break
+st(){ orca computer get-app-state --app com.google.Chrome --window-id $W --json --no-screenshot | python3 -c 'import json,sys;print(json.load(sys.stdin)["result"]["snapshot"]["treeText"])'; }
+osascript -l JavaScript $T/fileclip.js "$P" >/dev/null || { echo "no clipboard file"; exit 1; }
+r=$(bash $T/k.sh $W hotkey --key CmdOrCtrl+V); [ "$r" = ok ] || { echo "no paste $r"; exit 1; }
+for n in 1 2 3 4 5 6 7 8 9 10; do
+  sleep 1.5; L=$(st | grep -E "이미지 $(basename "$P")") && break
 done
-[ -z "$F" ] && { echo "no path field"; exit 1; }
-oc set-value --window-id $DL --element-index $F --value "$P" >/dev/null
-st $DL --restore-window >/dev/null
-oc press-key --window-id $DL --key Return | python3 -c 'import json,sys;d=json.load(sys.stdin);print("return",d.get("ok"),d.get("error",{}).get("code"))'; sleep 1.2
-# the tree can still say '버튼 (disabled) 열기' for a few seconds after the file is picked (2026-11-02)
-for n in 1 2 3 4 5 6; do
-  B=$(st $DL | grep -o -E '^\s*[0-9]+ 버튼 열기' | grep -o -E '[0-9]+' | head -1)
-  [ -n "$B" ] && break; sleep 1
-done
-[ -z "$B" ] && { echo "no open button"; exit 1; }
-oc click --window-id $DL --element-index $B >/dev/null; sleep 4
-st $W | grep -E "이미지 $(basename $P)|focused UI"
+[ -n "$L" ] && echo "$L" || echo "no picture $(basename "$P")"

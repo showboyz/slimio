@@ -22,7 +22,9 @@ else
   bash $T/k.sh $W press-key --key Return >/dev/null; sleep 1
 fi
 for pair in "시간:$HH" "분:00"; do k=${pair%%:*}; v=${pair##*:}
-  I=$(idx "팝업 버튼 예약 발행 $k 선택"); python3 $T/c.py $W '-' click --element-index $I >/dev/null; sleep 0.8
+  # a <select>: since the orca update of 2026-11-10 a background click on it is refused ('background_unavailable'),
+  # so this click brings the window forward (--restore-window)
+  I=$(idx "팝업 버튼 예약 발행 $k 선택"); python3 $T/c.py $W '-' click --element-index $I --restore-window >/dev/null; sleep 0.8
   FR=$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true')
   [ "$FR" = "Google Chrome" ] || { echo "ABORT front=$FR"; exit 1; }
   osascript -e "tell application \"System Events\" to keystroke \"$v\"" -e 'delay 0.4' -e 'tell application "System Events" to key code 36'; sleep 1
