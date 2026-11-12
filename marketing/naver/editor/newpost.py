@@ -23,7 +23,16 @@ def tall(i):
 small = [i for i in imgs[1:] if re.search(re.escape(i) + r"\([^)]*작게", desc) or tall(i)]
 last = tf.plain(re.findall(r'<p>(.*?)</p>', src, flags=re.S)[-1])[:40]
 
-def fail(why): log(n, 'FAIL', why); leave_unsaved(); tf.done(); sys.exit(1)
+def fail(why):   # the tree at the moment of failure goes to $TMPDIR/newpost_<NN>.txt (as in resched.py)
+    log(n, 'FAIL', why); open(os.path.join(os.environ.get('TMPDIR', '/tmp'), f'newpost_{n}.txt'), 'w').write(tf.tree())
+    leave_unsaved(); tf.done(); sys.exit(1)
+def copied_body():
+    # the tree cuts a long text component ('…사진 1장...'), and the editor keeps every paragraph after the last
+    # picture in one component, so a long ending hides the last paragraph (#86, 2026-11-13). Copy the component
+    # the caret is in (the last one) and read the clipboard instead; the caller restores the owner's clipboard.
+    tf.k('hotkey', '--key', 'CmdOrCtrl+A'); time.sleep(0.5); tf.k('hotkey', '--key', 'CmdOrCtrl+C'); time.sleep(0.8)
+    tf.k('press-key', '--key', 'Right'); time.sleep(0.5)
+    return tf.sh('pbpaste').stdout.replace('\xa0', ' ')
 if len(tags) != 10: sys.exit(f'{n}: {len(tags)} tags')
 tf.sh('python3', f'{tf.T}/chunk.py', draft, nb)
 if len(glob.glob(f'{nb}/c*.html')) != len(imgs): sys.exit(f'{n}: chunks do not match images')
@@ -43,7 +52,9 @@ t = tf.tree().replace('\xa0', ' ')
 missing = [i for i in imgs if f'이미지 {i}' not in t]
 if title not in t: fail('title missing')
 if missing: fail(f'images missing {missing}')
-if last not in t: fail(f'last paragraph missing {last!r}')
+if last not in t and last not in copied_body(): fail(f'last paragraph missing {last!r}')
+t = tf.tree().replace('\xa0', ' ')
+if title not in t or any(f'이미지 {i}' not in t for i in imgs): fail('title or a picture gone after the check')
 log(n, 'pasted, shot', tf.shot())
 if not tf.guard(): log(n, 'STOP owner busy for 3 h (post left open, not saved)'); sys.exit(2)
 r = tf.sh('bash', f'{tf.T}/finish.sh', W, date, hh, *tags); tf.done()
