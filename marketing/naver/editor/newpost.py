@@ -41,6 +41,15 @@ go(EDITOR); tf.done(); time.sleep(5)
 t = wait_for(r'예약 발행 \d+ 건', 30) or ''
 if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
 if tf.press(r'^버튼 도움말 닫기$'): time.sleep(0.8)
+def close_bubble():
+    # after a Chrome restart its '이제 탭 그룹이 자동으로 저장됩니다.' bubble, a small window of its own, sits over the
+    # 발행 button that finish.sh clicks by position (2026-11-15: the panel never opened and tag1.py found no tag box)
+    import json
+    ws = json.loads(tf.sh('orca', 'computer', 'list-windows', '--app', 'com.google.Chrome', '--json').stdout)['result']['windows']
+    for w in ws:
+        if '탭 그룹이 자동으로 저장' in w.get('title', ''):
+            ow = tf.W; tf.W = str(w['id']); tf.press(r'^버튼 도움말 풍선 닫기$'); tf.W = ow
+close_bubble()
 t = tf.tree()
 if not re.search(r'제목', t) or re.search(r'이미지 \S+\.jpg', t): fail('editor is not an empty new post')
 log(n, os.path.basename(draft), 'small', small)
