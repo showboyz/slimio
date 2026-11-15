@@ -1,8 +1,10 @@
-# post.sh <win> <nbdir> <title> <small-img|-> <img1> [img2 ...]   (chunk cN follows imgN)
+# post.sh <win> <nbdir> <title|-> <small-img|-> <img1> [img2 ...]   (chunk cN follows imgN)
 W=$1; D=$2; TITLE=$3; SMALL=$4; shift 4; T=$(cd "$(dirname "$0")" && pwd)
 B=$(cd "$T/../../../public/img/blog" && pwd)
-bash $T/k.sh $W click --x 731 --y 295 >/dev/null || exit 1
-printf '%s' "$TITLE" | pbcopy; bash $T/k.sh $W hotkey --key CmdOrCtrl+V >/dev/null || exit 1; sleep 0.6
+if [ "$TITLE" != "-" ]; then   # '-' keeps the title already there (repaste.py; Cmd+A in the title does not select it reliably)
+  bash $T/k.sh $W click --x 731 --y 295 >/dev/null || exit 1
+  printf '%s' "$TITLE" | pbcopy; bash $T/k.sh $W hotkey --key CmdOrCtrl+V >/dev/null || exit 1; sleep 0.6
+fi
 bash $T/k.sh $W click --x 823 --y 453 >/dev/null; sleep 0.5
 n=0
 for img in "$@"; do

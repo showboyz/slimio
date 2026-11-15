@@ -32,6 +32,13 @@ def wait_for(pat, n=20):
         t = tf.tree()
         if re.search(pat, t): return t
         time.sleep(1)
+def close_bubble():
+    # after a Chrome restart its '이제 탭 그룹이 자동으로 저장됩니다.' bubble, a small window of its own, sits over the
+    # 발행 button that finish.sh clicks by position (2026-11-15: the panel never opened and tag1.py found no tag box)
+    ws = json.loads(tf.sh('orca', 'computer', 'list-windows', '--app', 'com.google.Chrome', '--json').stdout)['result']['windows']
+    for w in ws:
+        if '탭 그룹이 자동으로 저장' in w.get('title', ''):
+            ow = tf.W; tf.W = str(w['id']); tf.press(r'^버튼 도움말 풍선 닫기$'); tf.W = ow
 
 if __name__ == '__main__':
     tf.W = W = sys.argv[1]
