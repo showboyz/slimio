@@ -59,7 +59,10 @@ def clear_body():
     for _ in range(10):
         for key, rm in (('Shift+Up', 'Backspace'), ('Shift+Down', 'Delete')):
             tf.k('hotkey', '--key', key)
-            for _ in range(59): fast('hotkey', '--key', key)
+            for i in range(59):
+                if i % 15 == 14 and tf.own_tab(): fail('another tab opened in my window while emptying the body')
+                fast('hotkey', '--key', key)
+            if tf.own_tab(): fail('another tab opened in my window while emptying the body')
             fast('press-key', '--key', rm); time.sleep(1.5); tf.done()
             if EMPTY in tf.tree(): return True
     return False

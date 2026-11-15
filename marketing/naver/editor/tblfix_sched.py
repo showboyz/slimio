@@ -16,6 +16,7 @@ def drafts():
         if m: out[m.group(1).strip()] = f
     return out
 def go(url):
+    tf.own_tab()   # the address bar belongs to the tab in front, which must be mine
     t = tf.tree(); i = tf.idx(t, r'^텍스트 필드 \(settable\) 주소창')
     if not i: raise SystemExit('no address bar in the tree (a find bar or dialog open?)')
     tf.sh('orca', 'computer', 'set-value', '--app', 'com.google.Chrome', '--window-id', tf.W, '--element-index', i, '--value', url)

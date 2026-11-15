@@ -63,6 +63,22 @@ def press(pat):
     if not i: return False
     sh('orca', 'computer', 'click', '--app', 'com.google.Chrome', '--window-id', W, '--element-index', i, '--no-screenshot')
     done(); time.sleep(0.8); return True
+MINE = '네이버 블로그'   # every page these scripts work in has this in its tab title
+def tabs(t=None):   # [(element, selected, title)] for the tabs of window W
+    return [(m.group(1), bool(m.group(2)), m.group(3)) for m in
+            re.finditer(r'^\s*(\d+) 탭 \((selected, )?settable\) (.*?)(?: - 메모리 사용량[^,]*)?, Value: \d', t or tree(), re.M)]
+def own_tab():
+    # A page opened elsewhere can land as a new tab in my window, the frontmost one: on 2026-11-15 a 'LiveTrans 소개
+    # 페이지' tab took my keys halfway through emptying #73. Bring my tab back to the front before keys go out.
+    # Returns the titles of the other tabs ([] when there are none).
+    ts = tabs()
+    sel = next((x for x in ts if x[1]), None)
+    if sel and MINE not in sel[2]:
+        mine = next((x for x in ts if MINE in x[2]), None)
+        if mine:
+            sh('orca', 'computer', 'click', '--app', 'com.google.Chrome', '--window-id', W, '--element-index', mine[0], '--no-screenshot')
+            done(); time.sleep(1)
+    return [x[2] for x in ts if MINE not in x[2]]
 def shot():
     r = sh('orca', 'computer', 'get-app-state', '--app', 'com.google.Chrome', '--window-id', W, '--json')
     return json.loads(r.stdout)['result']['screenshot']['path']
