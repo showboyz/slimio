@@ -6,13 +6,18 @@
 # right before that block, select the picture, press its own 삭제, check no badge is left and that block now follows
 # text (or, when the editor joins the text around the picture into one block, that Chrome find still sees it once).
 # Anything unexpected leaves the editor without saving.
-import os, re, sys, time, subprocess
+# ctaoff.py <win> <NN> live <logNo> : the same for a published post, opened through PostUpdateForm (owner, 2026-11-16:
+# '2편 시험해봐' — do the button-era posts that dropped out of search come back without it? HANDOFF 2-80). The public
+# page must show one picture link before and none after, with the same publish date.
+import os, re, sys, time, subprocess, urllib.request
 import tblfix as tf
 from tblfix_sched import go, wait_for, leave_unsaved, log, EDITOR, NAVER
 sys.path.insert(0, os.path.join(NAVER, '../tistory'))
 import cta
 tf.W = W = sys.argv[1]
-n, date, hh = int(sys.argv[2]), sys.argv[3], int(sys.argv[4])
+n, LIVE = int(sys.argv[2]), sys.argv[3] == 'live'
+date, hh = (None, None) if LIVE else (sys.argv[3], int(sys.argv[4]))
+logno = sys.argv[4] if LIVE else None
 draft = [f for f in os.listdir(NAVER) if re.match(rf'{n:02d}-.*\.html$', f)][0]
 src = open(os.path.join(NAVER, draft)).read()
 title = re.search(r'제목: (.*)', src).group(1).strip()
@@ -54,17 +59,29 @@ def clear_leftovers():
         else: return
 if not tf.guard(): log(n, 'STOP owner busy for 3 h'); sys.exit(2)
 clear_leftovers()
-go(EDITOR); tf.done(); time.sleep(3)
-clear_leftovers(); time.sleep(1)
-t = wait_for(r'예약 발행 \d+ 건', 30) or ''
-if not t: fail('editor did not open')
-if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
-tf.press(r'^버튼 예약 발행 \d+ 건'); time.sleep(1.5)
-when = f'{date} {hh:02d}:00'
-item = [l for l in tf.tree().splitlines() if re.search(rf'\d+ 버튼 .* {re.escape(when)}$', l)]
-if len(item) != 1: fail(f'list item {len(item)}')
-if re.match(rf'\s*\d+ 버튼 (.*) {re.escape(when)}$', item[0]).group(1).strip() != title: fail('the post at that time is not draft ' + draft)
-tf.press(rf'^버튼 .* {re.escape(when)}$'); time.sleep(5)
+def public():   # (picture links to the tool, publish date) on the public page
+    p = urllib.request.urlopen(urllib.request.Request(f'https://blog.naver.com/PostView.naver?blogId=todayz777&logNo={logno}',
+                                                      headers={'User-Agent': 'Mozilla/5.0'}), timeout=20).read().decode()
+    return (len(re.findall(r'data-linktype="img"[^>]*pdfslimio|pdfslimio[^"]*"[^>]*data-linktype="img"', p)),
+            re.search(r'se_publishDate[^>]*>([^<]*)', p).group(1))
+if LIVE:
+    pics, pub_date = public()
+    if pics != 1: log(n, f'public page has {pics} picture links, nothing to do'); sys.exit(1)
+    go(f'https://blog.naver.com/PostUpdateForm.naver?blogId=todayz777&logNo={logno}'); tf.done(); time.sleep(3)
+    clear_leftovers(); time.sleep(1)
+    when = 'live ' + logno
+else:
+  go(EDITOR); tf.done(); time.sleep(3)
+  clear_leftovers(); time.sleep(1)
+  t = wait_for(r'예약 발행 \d+ 건', 30) or ''
+  if not t: fail('editor did not open')
+  if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
+  tf.press(r'^버튼 예약 발행 \d+ 건'); time.sleep(1.5)
+  when = f'{date} {hh:02d}:00'
+  item = [l for l in tf.tree().splitlines() if re.search(rf'\d+ 버튼 .* {re.escape(when)}$', l)]
+  if len(item) != 1: fail(f'list item {len(item)}')
+  if re.match(rf'\s*\d+ 버튼 (.*) {re.escape(when)}$', item[0]).group(1).strip() != title: fail('the post at that time is not draft ' + draft)
+  tf.press(rf'^버튼 .* {re.escape(when)}$'); time.sleep(5)
 if not wait_for(rf'텍스트, Value: {re.escape(title)}', 20): fail('post did not load')
 
 c = find(bottom)
@@ -137,14 +154,24 @@ log(n, 'button removed')
 
 if not tf.guard(): log(n, 'STOP owner busy for 3 h (post left open, not saved)'); sys.exit(2)
 tf.press(r'^버튼 발행$'); time.sleep(2)
-t = tf.tree(); y, mo, dd = date.split('.')
+t = tf.tree()
 tags = re.findall(r'\d+ container (\S+)\n', t.split('태그 편집')[1].split('발행 시간')[0]) if '태그 편집' in t else []
-ok = (re.search(r'라디오 버튼 \(settable\) 예약, Value: 1', t) and f'Value: {y}. {mo}. {dd}' in t
-      and re.search(rf'시간 선택, Value: {hh:02d}', t) and re.search(r'분 선택, Value: 00', t)
-      and re.search(r'전체공개, Value: 1', t) and len(tags) == 10)
+if LIVE:   # a published post offers only '현재' and keeps its date
+    ok = re.search(r'라디오 버튼 \(settable\) 현재, Value: 1', t) and re.search(r'전체공개, Value: 1', t) and len(tags) >= 1
+else:
+    y, mo, dd = date.split('.')
+    ok = (re.search(r'라디오 버튼 \(settable\) 예약, Value: 1', t) and f'Value: {y}. {mo}. {dd}' in t
+          and re.search(rf'시간 선택, Value: {hh:02d}', t) and re.search(r'분 선택, Value: 00', t)
+          and re.search(r'전체공개, Value: 1', t) and len(tags) == 10)
 if not ok: fail(f'panel check, tags {len(tags)}')
 b = [l.split()[0] for l in t.splitlines() if re.match(r'\s*\d+ 버튼 발행$', l)]
 tf.sh('orca', 'computer', 'click', '--app', 'com.google.Chrome', '--window-id', W, '--element-index', b[-1], '--no-screenshot')
 tf.done(); time.sleep(5)
-home = re.search(r'주소창 및 검색창, Value: blog\.naver\.com/todayz777(,|$)', tf.tree(), re.M)
-log(n, 'SAVED' if home else 'CHECK: 발행 clicked but did not return to the blog home', when)
+if LIVE:   # after an edit Naver shows the post, not the blog home: check the public page instead
+    time.sleep(3); pics, nd = public()
+    log(n, f'public page: picture links {pics}, date {nd} (was {pub_date})')
+    home = pics == 0 and nd == pub_date
+else:
+    home = re.search(r'주소창 및 검색창, Value: blog\.naver\.com/todayz777(,|$)', tf.tree(), re.M)
+log(n, 'SAVED' if home else 'CHECK: ' + ('the public page still has the button or a new date' if LIVE else
+                                         '발행 clicked but did not return to the blog home'), when)

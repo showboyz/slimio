@@ -1,0 +1,13 @@
+11-16 17:53 window 286321
+17:53:38 1 01-driver-license-photo.html button before '📅 갱신 기간도 바뀌었어요 (생일 전후 6개'
+17:54:18 1 button removed
+17:54:31 1 public page: picture links 0, date 2026. 10. 22. 8:32 (was 2026. 10. 22. 8:32)
+17:54:31 1 SAVED live 224449759909
+11-16 17:54 #1 224449759909: 17:54:31 1 SAVED live 224449759909
+17:54:31 47 47-international-driving-permit.html button before '🌏 일본·미국에서 쓸 수 있나요?'
+17:55:16 47 button removed
+17:55:29 47 public page: picture links 0, date 2026. 11. 6. 19:00 (was 2026. 11. 6. 19:00)
+17:55:29 47 SAVED live 224458913126
+11-16 17:55 #47 224458913126: 17:55:29 47 SAVED live 224458913126
+window 286321 closed
+11-16 17:55 done
