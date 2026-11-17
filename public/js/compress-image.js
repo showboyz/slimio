@@ -11,7 +11,8 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
      "kr-qnet": [300, 400], "kr-gosi": [137, 177], "kr-history": [120, 160], "upsc-photo": [450, 600],
      "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300],
      "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472], "kr-kuksiwon": [413, 531],
-     "uk-eta": [600, 750], "pk-passport": [413, 531], "oci-photo": [600, 600] };
+     "uk-eta": [600, 750], "pk-passport": [413, 531], "oci-photo": [600, 600],
+     "kr-license": [413, 531], "kr-passport": [413, 531], "kr-resident": [413, 531], "in-evisa": [600, 600] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
 // KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
@@ -29,10 +30,18 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
 // UPSC (upsconline.nic.in photo & signature instructions, Feb 2026): colour JPG of 20–200KB named "photo",
 // face covering at least 3/4 of the photo, no pixel size. The old 20–300KB and "name and date on the
 // photo" rules belong to the previous portal.
+// Driver's licence (Police / KoROAD photo rules for the online licence office) and passport (MOFA, Gov24
+// re-issue): JPG ≤500KB, 413×531 recommended, only 395–431 × 507–550 px accepted;
+// resident ID card (Gov24 form examples): JPG only, 1MB and 900×1200 at most (re-issue example: 3MB),
+// so 500KB fits both; India e-Visa (indianvisaonline.gov.in upload page): square JPG, at least
+// 350×350 px, 10KB to 1MB counted as 1,000,000 bytes, so 600×600 under 500KB keeps clear of the edge.
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "20-200KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
      "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB",
-     "uk-eta": "50-500KB", "pk-passport": "20KB", "oci-photo": "200KB" };
+     "uk-eta": "50-500KB", "pk-passport": "20KB", "oci-photo": "200KB",
+     "kr-license": "500KB", "kr-passport": "500KB", "kr-resident": "500KB", "in-evisa": "500KB" };
+// Korean IDs that use the passport photo rules (head 3.2–3.6cm of 4.5cm)
+const PASSPORT_LIKE = ["passport", "kr-license", "kr-passport", "kr-resident"];
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
 // and, for US visas, the band the eyes must sit in (31–44% from the top = 56–69% from the bottom).
 const GUIDES = {
@@ -60,6 +69,9 @@ const GUIDES = {
      // the hair to just under the chin, ears near the sides. Photos with shoulders are refused.
      "upsc-photo": { cy: 0.47, rx: 0.4, ry: 0.45 },
 };
+for (const k of PASSPORT_LIKE) GUIDES[k] = GUIDES.passport;
+// India e-Visa asks for the whole head, hair to chin, centred on a square: the OCI oval
+GUIDES["in-evisa"] = GUIDES["oci-photo"];
 // Upload pages that check the file name: UPSC only takes "photo.jpg".
 const FILE_NAME = { "upsc-photo": "photo" };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };
@@ -453,7 +465,7 @@ function syncCrop() {
              ? SlimIO.t("Scanned a printed photo? Zoom and drag until the frame sits just inside the photo's edges. Otherwise keep your face inside the guide.")
              : $("resize").value === "upsc-photo"
              ? SlimIO.t("Zoom in until your head fills the frame: hair at the top, chin near the bottom, both ears showing. UPSC refuses photos with shoulders. It is saved as photo.jpg.")
-             : $("resize").value === "passport"
+             : PASSPORT_LIKE.includes($("resize").value)
              ? SlimIO.t("Drag the frame and zoom until your head, from the top of the skull (not the hair) to the chin, fills the oval.")
              : SlimIO.t("Drag the frame so your face sits inside the guide.");
      if (liveOn()) $("crophint").textContent += " " + SlimIO.t("The photo below follows the frame.");

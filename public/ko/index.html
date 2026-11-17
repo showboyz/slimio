@@ -101,6 +101,17 @@
 }
 </script>
 <style>
+    .photo-pick { display: flex; align-items: center; gap: 14px; max-width: 620px; margin: 0 auto 14px; padding: 16px 20px;
+        background: var(--card); border: 1.5px solid var(--accent); border-radius: 16px; color: var(--text); text-align: left; }
+    .photo-pick:hover { background: #15202b; }
+    .photo-pick .pp-ico { font-size: 30px; line-height: 1; }
+    .photo-pick .pp-txt { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .photo-pick b { font-size: 17px; }
+    .photo-pick small { color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+    .photo-pick .pp-go { color: var(--accent); font-size: 22px; font-weight: 700; }
+    .photo-more { max-width: 620px; margin: 0 auto 18px; text-align: center; font-size: 13.5px; color: var(--muted); }
+    .photo-more a { color: var(--accent); }
+    @media (max-width: 640px) { .photo-pick { padding: 14px 16px; gap: 12px; } .photo-pick b { font-size: 16px; } }
     body { word-break: keep-all; overflow-wrap: break-word; }
     .content { max-width: 760px; margin: 0 auto; padding: 10px 20px 0; }
     .content h2 { font-size: 24px; margin: 36px 0 10px; }
@@ -342,6 +353,13 @@
                 <span>📦 설치 없음</span>
             </div>
         </div>
+        <a class="photo-pick" href="/ko/compress-id-photo.html" data-umami-event="home-photo" data-umami-event-to="id-photo">
+            <span class="pp-ico" aria-hidden="true">🪪</span>
+            <span class="pp-txt"><b>증명사진·사진 용량 맞추기를 찾으세요?</b><small>여권·운전면허·주민등록증·큐넷·공무원 규격으로 자르고 KB까지 맞춰요</small></span>
+            <span class="pp-go" aria-hidden="true">→</span>
+        </a>
+        <p class="photo-more">사진 용량만: <a href="/ko/compress-image-to-50kb.html" data-umami-event="home-photo" data-umami-event-to="50kb">50KB</a> · <a href="/ko/compress-image-to-100kb.html" data-umami-event="home-photo" data-umami-event-to="100kb">100KB</a> · <a href="/ko/compress-image-to-200kb.html" data-umami-event="home-photo" data-umami-event-to="200kb">200KB</a> · <a href="/ko/us-visa-photo.html" data-umami-event="home-photo" data-umami-event-to="us-visa">미국 비자 사진</a> · <a href="/ko/signature-image.html" data-umami-event="home-photo" data-umami-event-to="signature">서명 이미지</a></p>
+
 
         <div class="tool">
             <div class="drop" id="drop">
@@ -459,9 +477,14 @@
      <!-- more tools -->
      <section class="steps" id="tools">
           <div class="wrap">
-              <h2 class="sec">모든 PDF 도구</h2>
+              <h2 class="sec">모든 도구</h2>
               <p class="sec-sub">무료, 가입 없음. 대부분 브라우저 안에서만 실행돼요.</p>
               <div class="tools-grid">
+                  <a class="toolcard" href="/ko/compress-id-photo.html"><div class="ico">🪪</div><h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p></a>
+                  <a class="toolcard" href="/ko/compress-image.html"><div class="ico">📸</div><h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p></a>
+                  <a class="toolcard" href="/ko/us-visa-photo.html"><div class="ico">🇺🇸</div><h3>미국 비자 사진</h3><p>DS-160용 600×600 · 240KB 이하</p></a>
+                  <a class="toolcard" href="/ko/signature-image.html"><div class="ico">🖋️</div><h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p></a>
+                  <a class="toolcard" href="/ko/heic-to-jpg.html"><div class="ico">🔁</div><h3>HEIC → JPG</h3><p>아이폰 사진을 JPG로, 여러 장 한 번에</p></a>
                   <a class="toolcard" href="/ko/merge.html"><div class="ico">➕</div><h3>PDF 합치기</h3><p>여러 PDF를 하나로</p></a>
                   <a class="toolcard" href="/ko/split.html"><div class="ico">✂️</div><h3>PDF 나누기</h3><p>페이지별로 나누거나 범위 추출</p></a>
                  <a class="toolcard" href="/ko/pdf-to-jpg.html"><div class="ico">🖼️</div><h3>PDF → JPG</h3><p>페이지를 이미지로 변환</p></a>
@@ -473,11 +496,6 @@
                   <a class="toolcard" href="/ko/watermark.html"><div class="ico">💧</div><h3>워터마크</h3><p>대외비 · 사본 문구 넣기</p></a>
                   <a class="toolcard" href="/ko/sign-pdf.html"><div class="ico">✍️</div><h3>PDF 서명</h3><p>그리기 · 이름 · 도장으로 서명</p></a>
                   <a class="toolcard" href="/ko/unlock-pdf.html"><div class="ico">🔓</div><h3>PDF 비밀번호 해제</h3><p>아는 암호를 풀어 잠금 없는 사본으로</p></a>
-                  <a class="toolcard" href="/ko/compress-image.html"><div class="ico">📸</div><h3>사진 용량 줄이기</h3><p>JPG · PNG 사진을 원하는 KB로</p></a>
-                  <a class="toolcard" href="/ko/heic-to-jpg.html"><div class="ico">🔁</div><h3>HEIC → JPG</h3><p>아이폰 사진을 JPG로, 여러 장 한 번에</p></a>
-                  <a class="toolcard" href="/ko/compress-id-photo.html"><div class="ico">🪪</div><h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p></a>
-                  <a class="toolcard" href="/ko/us-visa-photo.html"><div class="ico">🇺🇸</div><h3>미국 비자 사진</h3><p>DS-160용 600×600 · 240KB 이하</p></a>
-                  <a class="toolcard" href="/ko/signature-image.html"><div class="ico">🖋️</div><h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p></a>
               </div>
               <p class="sec-sub" style="margin-top:22px;">정해진 용량에 맞춰야 하나요?
                   <a href="/ko/compress-pdf-to-50kb.html">PDF 50KB로 줄이기</a> ·
@@ -498,12 +516,12 @@
               <h2 class="sec">가이드</h2>
               <p class="sec-sub">원서·서류 제출에서 막히는 사진, 서명, PDF 규격을 공식 기준과 함께 정리했어요.</p>
               <div class="guide-list">
-      <a class="guide-card" href="/ko/guides/national-scholarship-docs.html" data-umami-event="tool-guide" data-umami-event-guide="national-scholarship-docs" data-umami-event-page="index.html"><b>국가장학금 서류제출 방법: 누구 명의 가족관계증명서인지, 발급일 1개월, 앱·홈페이지로 내는 법</b><small>국가장학금 서류는 전산으로 가족관계가 확인되지 않은 신청자만 내요. 미혼은 부 또는 모 명의 가족관계증명서, 기혼은 본인 명의, 본인이 이혼했다면 혼인관계증명서이고 학자금 신청일 1개월 전부터 발급한 것만 인정돼요. 앱 사진 등록·홈페이지·전자문서지갑으로 내는 법, 서류미제출이면 생기는 일, 2차 기간 제출까지 한국장학재단 공지와 FAQ로 정리했어요.</small></a>
       <a class="guide-card" href="/ko/guides/qnet-photo.html" data-umami-event="tool-guide" data-umami-event-guide="qnet-photo" data-umami-event-page="index.html"><b>큐넷 사진 규격 300×400·200KB: 등록·변경 방법과 '사진 판독이 불가합니다' 해결</b><small>큐넷 사진은 300×400픽셀 이상, JPG, 200KB 이하예요. 원서 내기 전과 후에 사진 바꾸는 경로, 승인이 필요한 경우, '사진 판독이 불가합니다'가 뜨는 이유, 파일이 안 올라갈 때 고치는 법을 큐넷 FAQ와 공단 공고 기준으로 정리했어요.</small></a>
-      <a class="guide-card" href="/ko/guides/yearend-tax-rent-docs.html" data-umami-event="tool-guide" data-umami-event-guide="yearend-tax-rent-docs" data-umami-event-page="index.html"><b>연말정산 월세 세액공제 서류: 등본·계약서·이체 내역 준비부터 PDF 제출까지 (2026년 귀속)</b><small>2026년에 낸 월세는 총급여 8,000만 원 이하 무주택 세대주라면 연 1,000만 원까지 15%(총급여 5,500만 원 이하 17%)를 공제받아요. 회사에 낼 서류 3가지와 파일로 만드는 법, 간소화에 월세가 안 나오는 이유, 전입신고·현금 지급에서 막히는 경우, 2026년부터 달라진 부부·다자녀 기준, 놓쳤을 때 5월 신고와 경정청구까지 법령과 국세청 안내로 정리했어요.</small></a>
       <a class="guide-card" href="/ko/guides/civil-service-exam-photo.html" data-umami-event="tool-guide" data-umami-event-guide="civil-service-exam-photo" data-umami-event-page="index.html"><b>공무원 사진 규격: 국가직 137×177·350KB, 지방직 3개월·100dpi</b><small>국가직 공무원 원서 사진은 3.5×4.5cm(137×177픽셀) JPG·PNG, 350KB 미만이고, 지방직은 원서 접수 전 3개월 안에 찍은 3.5×4.5cm·100dpi 이상 JPG예요. 안 되는 옷과 사진, 사진을 바꿀 수 있는 마지막 날, 2027년 9급 원서접수일(1월 25~29일)까지 공식 안내로 정리했어요.</small></a>
-      <a class="guide-card" href="/ko/guides/korean-history-exam-photo.html" data-umami-event="tool-guide" data-umami-event-guide="korean-history-exam-photo" data-umami-event-page="index.html"><b>한능검 사진 규격 120×160px: 접수 끝나고 따로 올려요 (등록·변경 기간, 2027 일정)</b><small>한국사능력검정시험 사진은 가로 120×세로 160px, JPG·GIF(3MB 이하 권장)이고, 원서접수 때가 아니라 정기접수 마감 다음 날부터 시험 당일 오전 10시까지 따로 등록해요. 얼굴 1/3 기준, 응시 불가 사진, 변경 순서, 2027년 일정까지 응시요강 기준으로 정리했어요.</small></a>
       <a class="guide-card" href="/ko/guides/resident-card-photo.html" data-umami-event="tool-guide" data-umami-event-guide="resident-card-photo" data-umami-event-page="index.html"><b>주민등록증(민증) 사진 규격 3.5×4.5cm: 정부24 파일 조건·반려 사유·17세 첫 발급</b><small>주민등록증 사진은 6개월 안에 찍은 3.5×4.5cm 컬러 상반신 사진이고(3×4 반명함은 2020년 2월 7일까지만), 정부24에는 JPG 파일만 올라가며 작성 예시 기준 1MB 이하·900×1200 이내예요. 주민센터 방문과 온라인의 차이, 반려되는 사진 8가지, 17세 첫 발급까지 법령과 행정안전부 안내로 정리했어요.</small></a>
+      <a class="guide-card" href="/ko/guides/india-visa-photo.html" data-umami-event="tool-guide" data-umami-event-guide="india-visa-photo" data-umami-event-page="index.html"><b>인도 비자 사진 규격 2026: e-비자 정사각형 JPG 10KB~1MB, 여권 정보면 PDF 300KB</b><small>인도 e-비자는 얼굴 사진(JPG, 10KB~1MB, 가로세로가 같은 정사각형, 최소 350×350픽셀)과 여권 정보면(PDF, 10KB~300KB)을 올려요. 인도 정부 e-비자 사이트의 안내와 업로드 화면 기준으로 규격, 오류 메시지 3가지의 뜻, 1MB를 1,000,000바이트로 세는 점, 한국 여권 수수료와 신청 시기까지 정리했어요.</small></a>
+      <a class="guide-card" href="/ko/guides/mobile-id-photo.html" data-umami-event="tool-guide" data-umami-event-guide="mobile-id-photo" data-umami-event-page="index.html"><b>모바일 신분증 사진 바꾸는 법: 주민등록증 재발급 사진 규격과 정부24 업로드 (2026)</b><small>모바일 주민등록증은 실물 주민등록증 사진을 그대로 보여 줘서, 사진을 바꾸려면 주민등록증부터 다시 발급받아야 해요. 정부24 온라인 재발급(용모 변경)에 올리는 사진 규격, 수수료·처리 기간, 모바일 신분증 다시 발급 방법, 얼굴 인증이 안 될 때 확인할 것, 모바일 운전면허증 사진 변경까지 법령과 공식 안내 기준으로 정리했어요.</small></a>
+      <a class="guide-card" href="/ko/guides/china-visa-photo.html" data-umami-event="tool-guide" data-umami-event-guide="china-visa-photo" data-umami-event-page="index.html"><b>중국 비자 사진 규격 2026: 354×472·40~120KB, 온라인 신청에서 안 올라갈 때</b><small>중국 비자 온라인 신청서에 올리는 사진은 JPEG 354×472~420×560픽셀, 40~120KB예요. 중국 외교부 사진 규격의 얼굴 폭·머리 위 여백·눈 높이를 픽셀로 정리하고, 40KB가 안 돼서 안 올라가는 이유와 종이 사진 33×48mm, 무비자로 갈 수 있는 경우까지 공식 안내 기준으로 모았어요.</small></a>
               </div>
               <p class="sec-sub"><a href="/ko/guides/">가이드 전체 보기 →</a></p>
           </div>

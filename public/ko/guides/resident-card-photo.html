@@ -25,7 +25,7 @@
   "headline": "주민등록증(민증) 사진 규격 3.5×4.5cm: 정부24 파일 조건·반려 사유·17세 첫 발급",
   "description": "주민등록증 사진은 6개월 안에 찍은 3.5×4.5cm 컬러 상반신 사진이고(3×4 반명함은 2020년 2월 7일까지만), 정부24에는 JPG 파일만 올라가며 작성 예시 기준 1MB 이하·900×1200 이내예요. 주민센터 방문과 온라인의 차이, 반려되는 사진 8가지, 17세 첫 발급까지 법령과 행정안전부 안내로 정리했어요.",
   "datePublished": "2026-11-06",
-  "dateModified": "2026-11-06",
+  "dateModified": "2026-11-17",
   "inLanguage": "ko",
   "author": {
     "@type": "Organization",
@@ -129,12 +129,134 @@
       </nav>
 </div>
 
-<main class="content article">
+<main>
+<div class="content article">
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>주민등록증(민증) 사진 규격 3.5×4.5cm: 정부24 파일 조건·반려 사유·17세 첫 발급</h1>
-      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-06">2026년 11월 6일</time> · 8 분 분량</p>
+      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-17">2026년 11월 17일</time> · 8 분 분량</p>
 <p>민증 사진은 <b>가로 3.5cm×세로 4.5cm</b>, <b>6개월 안에 찍은</b> 모자 벗은 컬러 상반신 사진이에요. 주민센터에서는 인화한 사진 1장을 내고, 정부24에서는 <b>JPG 파일</b>을 올려요. 막히는 경우는 대개 셋이에요. 예전 기준인 3×4 반명함을 가져갔거나, 휴대폰 원본 파일이 너무 크거나, 보정한 얼굴이 예전 사진과 달라 보이는 경우예요. 주민등록법 시행령·시행규칙(2026년 10월 29일 시행본)과 행정안전부·정부24 안내를 직접 읽고 정리했어요. (2026년 11월 확인)</p>
-      <p class="cta-top"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/resident-card-photo">민증 사진 파일 만들기 →</a><span>3.5×4.5cm 비율(413×531)로 자르고 100KB 아래 JPG로 저장해요. 정부24 1MB·900×1200 한도에 들어가고, 사진은 서버로 올라가지 않아요.</span></p>
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="kr-resident">
+<!-- guide-tool:start -->
+<div class="tool" data-live data-preset="kr-resident">
+           <div class="drop" id="drop">
+               <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
+               <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
+               <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
+               <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
+           </div>
+           <div class="exams" role="group" aria-label="신분증·시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-resident" data-umami-event="id-size" data-umami-event-size="kr-resident"><b>주민등록증</b><small>413×531</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </details>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>목표 용량</label>
+                   <select id="target">
+                       <option value="">제한 없음 — 알맞게 최적화</option>
+                       <option value="20KB">20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
+                       <option value="50KB">50KB 이하</option>
+                       <option value="100KB" selected>100KB 이하</option>
+                       <option value="200KB">200KB 이하</option>
+                       <option value="300KB">300KB 이하</option>
+                       <option value="500KB">500KB 이하</option>
+                       <option value="1MB">1MB 이하</option>
+                       <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
+                   <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
+               </div>
+
+               <div class="field">
+                   <label>크기 조절</label>
+                   <select id="resize">
+                       <option value="0">원래 크기 유지</option>
+                       <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
+                       <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
+                       <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="in-evisa">인도 e-비자 600×600px (1MB 이하)</option>
+                       <option value="kr-qnet">큐넷 자격시험 300×400px</option>
+                       <option value="kr-gosi">공무원 시험 원서 137×177px</option>
+                       <option value="kr-history">한국사능력검정 120×160px</option>
+                       <option value="kr-korcham">대한상의 컴활·워드 400×500px (50KB 이하)</option>
+                       <option value="kr-kpc">KPC ITQ·GTQ 225×300px</option>
+                       <option value="kr-toeic">토익·토익스피킹 300×400px</option>
+                       <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
+                       <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-license">운전면허 갱신·재발급(온라인) 413×531px (500KB 이하)</option>
+                       <option value="kr-passport">여권 재발급(정부24) 413×531px (500KB 이하)</option>
+                       <option value="kr-resident">주민등록증(정부24) 413×531px</option>
+                       <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
+                       <option value="kr-saramin">사람인 이력서 100×140px</option>
+                       <option value="custom">픽셀 직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" step="any" inputmode="decimal" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" step="any" inputmode="decimal" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
+               </div>
+
+               <div class="field">
+                   <label>저장 형식</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — 어디서나 호환</option>
+                       <option value="webp">WebP — 더 작고 투명 배경 유지</option>
+                       <option value="png">PNG — 무손실, 용량 큼</option>
+                   </select>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>사진 용량 줄이기</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="summary"><span id="total">—</span><a id="dlzip" class="dl">↓ 전체 다운로드 (ZIP)</a></div>
+               <ul class="imglist" id="list"></ul>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<p class="guide-tool-more">다른 규격은 <a href="/ko/compress-id-photo.html">증명사진 도구</a>에서 골라요.</p>
+<script defer src="/vendor/jszip-3.10.1/jszip.min.js?v=3.10.1"></script>
+<script defer src="/i18n/ko.js?v=3ff90ba2"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/js/specs.js?v=4e758873"></script>
+<script type="module" src="/js/compress-image.js?v=4e1bd523"></script>
+<!-- guide-tool:end -->
+</div>
+<div class="content article">
 
       <div class="callout">정부24 파일 조건(JPG, 1MB, 900×1200)은 정부24 <b>신청서 작성 예시 화면</b>에 적힌 숫자예요. 실제 신청 화면에 다른 숫자가 보이면 <b>화면 안내가 우선</b>이에요. 출처는 글 맨 아래에 있어요.</div>
 
@@ -148,7 +270,7 @@
           <tr><td><b>배경</b></td><td>무배경이나 흰색 권장, 옅은 단색도 가능</td></tr>
           <tr><td><b>안경</b></td><td>일반 안경 가능(렌즈 반사 없이), 색안경 불가</td></tr>
           <tr><td><b>정부24 파일</b></td><td><b>JPG만</b>, 1MB 이하·900×1200 이내(신규 예시)<br>파일 1개 3MB까지(재발급 예시)</td></tr>
-          <tr><td><b>바로 맞추기</b></td><td><a href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/resident-card-photo" data-umami-event-to="/ko/compress-id-photo.html">3.5×4.5cm(413×531)로 열기</a></td></tr>
+          <tr><td><b>바로 맞추기</b></td><td><a href="/ko/compress-id-photo.html?resize=kr-resident" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/resident-card-photo" data-umami-event-to="/ko/compress-id-photo.html">주민등록증 규격(413×531)으로 열기</a></td></tr>
       </table></div>
 
       <h2>3×4 반명함은 이제 안 받아요</h2>
@@ -216,7 +338,7 @@
 
       <h2>1분 만에 민증 사진 파일 만들기</h2>
       <ol>
-          <li><a href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/resident-card-photo" data-umami-event-to="/ko/compress-id-photo.html">3.5×4.5cm 규격으로 열기</a>를 누르세요. 413×531픽셀, 100KB 이하가 골라져 있어요.</li>
+          <li>글 맨 위의 도구를 쓰거나 <a href="/ko/compress-id-photo.html?resize=kr-resident" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/resident-card-photo" data-umami-event-to="/ko/compress-id-photo.html">주민등록증 규격으로 열기</a>를 누르세요. 413×531픽셀, 500KB 이하가 골라져 있어요.</li>
           <li>흰 벽 앞에서 찍은 사진이나 사진관에서 받은 원본 파일을 올려요. 사진은 서버로 가지 않고 브라우저에서만 처리돼요.</li>
           <li>확대 막대와 초록 틀을 움직여 머리카락을 뺀 정수리부터 턱까지를 점선 타원에 맞춰요.</li>
           <li>결과에 413×531과 용량이 보이면 <b>다운로드</b>를 눌러요. JPG라서 정부24에 바로 첨부할 수 있어요.</li>
@@ -238,10 +360,11 @@
           <li>외교부 여권안내, 여권 사진 — <a href="https://www.passport.go.kr/home/kor/contents.do?menuPos=32" rel="noopener">passport.go.kr</a></li>
       </ul>
       <div class="cta-box">
-          <div><b>무료로 해 보기</b><p>3.5×4.5cm 비율(413×531)로 자르고 100KB 아래 JPG로 저장해요. 정부24 1MB·900×1200 한도에 들어가고, 사진은 서버로 올라가지 않아요.</p></div>
-          <a class="cta-btn" href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/resident-card-photo">민증 사진 파일 만들기 →</a>
+          <div><b>무료로 해 보기</b><p>3.5×4.5cm 비율(413×531)로 자르고 500KB 아래 JPG로 저장해요. 정부24 1MB·900×1200 한도에 들어가고, 사진은 서버로 올라가지 않아요.</p></div>
+          <a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/resident-card-photo">민증 사진 파일 만들기 ↑</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/resident-card-photo">민증 사진 파일 만들기 →</a><button type="button" aria-label="닫기">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/resident-card-photo">민증 사진 파일 만들기 ↑</a><button type="button" aria-label="닫기">✕</button></div>
+</div>
 </main>
 
 <section class="faq">

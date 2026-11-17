@@ -25,7 +25,7 @@
   "headline": "큐넷 사진 규격 300×400·200KB: 등록·변경 방법과 '사진 판독이 불가합니다' 해결",
   "description": "큐넷 사진은 300×400픽셀 이상, JPG, 200KB 이하예요. 원서 내기 전과 후에 사진 바꾸는 경로, 승인이 필요한 경우, '사진 판독이 불가합니다'가 뜨는 이유, 파일이 안 올라갈 때 고치는 법을 큐넷 FAQ와 공단 공고 기준으로 정리했어요.",
   "datePublished": "2026-11-07",
-  "dateModified": "2026-11-07",
+  "dateModified": "2026-11-17",
   "inLanguage": "ko",
   "author": {
     "@type": "Organization",
@@ -129,12 +129,134 @@
       </nav>
 </div>
 
-<main class="content article">
+<main>
+<div class="content article">
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>큐넷 사진 규격 300×400·200KB: 등록·변경 방법과 '사진 판독이 불가합니다' 해결</h1>
-      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-07">2026년 11월 7일</time> · 7 분 분량</p>
+      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-17">2026년 11월 17일</time> · 7 분 분량</p>
 <p>큐넷에서 사진 때문에 멈추는 곳은 대개 세 군데예요. 파일이 아예 안 올라가거나, 올렸더니 <b>"사진 판독이 불가합니다"</b>가 뜨거나, 원서를 낸 뒤 사진을 바꾸려는데 승인을 기다려야 하는 경우예요. 큐넷 고객지원의 사진 등록 FAQ(2025년 12월 수정), 원서접수 유의사항, 상장형 자격증 안내, 한국산업인력공단의 2026년 시행계획 공고를 직접 읽고 정리했어요. 파일 기준부터 말하면 <b>300×400픽셀 이상, JPG, 200KB 이하</b>예요. (2026년 11월 7일 확인)</p>
-      <p class="cta-top"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-qnet" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/qnet-photo">큐넷 사진 맞추기 →</a><span>300×400 JPG로 자르고 200KB 아래로 저장해요. 아이폰 HEIC도 돼요. 사진은 서버로 올라가지 않아요.</span></p>
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="kr-qnet">
+<!-- guide-tool:start -->
+<div class="tool" data-live data-preset="kr-qnet">
+           <div class="drop" id="drop">
+               <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
+               <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
+               <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
+               <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
+           </div>
+           <div class="exams" role="group" aria-label="신분증·시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-qnet" data-umami-event="id-size" data-umami-event-size="kr-qnet"><b>큐넷</b><small>300×400</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </details>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>목표 용량</label>
+                   <select id="target">
+                       <option value="">제한 없음 — 알맞게 최적화</option>
+                       <option value="20KB">20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
+                       <option value="50KB">50KB 이하</option>
+                       <option value="100KB" selected>100KB 이하</option>
+                       <option value="200KB">200KB 이하</option>
+                       <option value="300KB">300KB 이하</option>
+                       <option value="500KB">500KB 이하</option>
+                       <option value="1MB">1MB 이하</option>
+                       <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
+                   <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
+               </div>
+
+               <div class="field">
+                   <label>크기 조절</label>
+                   <select id="resize">
+                       <option value="0">원래 크기 유지</option>
+                       <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
+                       <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
+                       <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="in-evisa">인도 e-비자 600×600px (1MB 이하)</option>
+                       <option value="kr-qnet">큐넷 자격시험 300×400px</option>
+                       <option value="kr-gosi">공무원 시험 원서 137×177px</option>
+                       <option value="kr-history">한국사능력검정 120×160px</option>
+                       <option value="kr-korcham">대한상의 컴활·워드 400×500px (50KB 이하)</option>
+                       <option value="kr-kpc">KPC ITQ·GTQ 225×300px</option>
+                       <option value="kr-toeic">토익·토익스피킹 300×400px</option>
+                       <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
+                       <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-license">운전면허 갱신·재발급(온라인) 413×531px (500KB 이하)</option>
+                       <option value="kr-passport">여권 재발급(정부24) 413×531px (500KB 이하)</option>
+                       <option value="kr-resident">주민등록증(정부24) 413×531px</option>
+                       <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
+                       <option value="kr-saramin">사람인 이력서 100×140px</option>
+                       <option value="custom">픽셀 직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" step="any" inputmode="decimal" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" step="any" inputmode="decimal" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
+               </div>
+
+               <div class="field">
+                   <label>저장 형식</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — 어디서나 호환</option>
+                       <option value="webp">WebP — 더 작고 투명 배경 유지</option>
+                       <option value="png">PNG — 무손실, 용량 큼</option>
+                   </select>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>사진 용량 줄이기</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="summary"><span id="total">—</span><a id="dlzip" class="dl">↓ 전체 다운로드 (ZIP)</a></div>
+               <ul class="imglist" id="list"></ul>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<p class="guide-tool-more">다른 규격은 <a href="/ko/compress-id-photo.html">증명사진 도구</a>에서 골라요.</p>
+<script defer src="/vendor/jszip-3.10.1/jszip.min.js?v=3.10.1"></script>
+<script defer src="/i18n/ko.js?v=3ff90ba2"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/js/specs.js?v=4e758873"></script>
+<script type="module" src="/js/compress-image.js?v=4e1bd523"></script>
+<!-- guide-tool:end -->
+</div>
+<div class="content article">
 
       <div class="callout">안내는 바뀔 수 있어요. 아래 내용과 큐넷 화면이나 해당 시험 공고가 다르면 <b>큐넷 안내가 우선</b>이에요. 출처는 글 맨 아래에 있어요.</div>
 
@@ -236,9 +358,10 @@
       </ul>
       <div class="cta-box">
           <div><b>무료로 해 보기</b><p>300×400 JPG로 자르고 200KB 아래로 저장해요. 아이폰 HEIC도 돼요. 사진은 서버로 올라가지 않아요.</p></div>
-          <a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-qnet" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/qnet-photo">큐넷 사진 맞추기 →</a>
+          <a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/qnet-photo">큐넷 사진 맞추기 ↑</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-qnet" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/qnet-photo">큐넷 사진 맞추기 →</a><button type="button" aria-label="닫기">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/qnet-photo">큐넷 사진 맞추기 ↑</a><button type="button" aria-label="닫기">✕</button></div>
+</div>
 </main>
 
 <section class="faq">

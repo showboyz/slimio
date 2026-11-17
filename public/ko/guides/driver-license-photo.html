@@ -25,7 +25,7 @@
   "headline": "운전면허 사진 규격 2026: 온라인은 413×531·500KB (갱신·재발급 반려 안 되게)",
   "description": "운전면허 갱신·적성검사·재발급을 안전운전 통합민원에서 할 때 올리는 사진은 413×531 권장, 500KB 이하 JPG예요. 예전 350×450·250KB가 안 올라가는 이유, 배경색(320) 오류가 뜰 때 할 일, 2026년 3월부터 엄격해진 반려 기준, 6월 30일부터 바뀐 재발급 사진 변경, 생일 전후 6개월 갱신 기간까지 공식 안내 기준으로 정리했어요.",
   "datePublished": "2026-10-15",
-  "dateModified": "2026-11-02",
+  "dateModified": "2026-11-17",
   "inLanguage": "ko",
   "author": {
     "@type": "Organization",
@@ -137,12 +137,134 @@
       </nav>
 </div>
 
-<main class="content article">
+<main>
+<div class="content article">
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>운전면허 사진 규격 2026: 온라인은 413×531·500KB (갱신·재발급 반려 안 되게)</h1>
-      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-02">2026년 11월 2일</time> · 8 분 분량</p>
+      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-17">2026년 11월 17일</time> · 8 분 분량</p>
 <p>운전면허 갱신이나 적성검사, 분실 재발급을 안전운전 통합민원에서 하다 보면 사진 등록에서 막히는 경우가 많아요. 2026년에는 바뀐 게 셋이에요. <b>3월 1일부터 여권용 사진 규격을 엄격히 적용</b>하고, <b>1월 1일부터 갱신 기간이 생일 전후 6개월</b>로 바뀌었고, <b>6월 30일부터 온라인 재발급 때도 사진을 바꿀 수 있게</b> 됐어요. 그런데 인터넷에는 아직 예전 숫자(350×450픽셀, 250KB)가 많이 돌아다녀요. 경찰청·한국도로교통공단 안내를 직접 확인해 지금 기준으로 정리했어요. (2026년 10월 확인)</p>
-      <p class="cta-top"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/driver-license-photo">운전면허 사진 파일 만들기 →</a><span>3.5×4.5cm(413×531)로 자르고 500KB 아래로 저장해요. 머리 크기 타원을 보면서 맞추고, 사진은 서버로 올라가지 않아요.</span></p>
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="kr-license">
+<!-- guide-tool:start -->
+<div class="tool" data-live data-preset="kr-license">
+           <div class="drop" id="drop">
+               <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
+               <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
+               <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
+               <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
+           </div>
+           <div class="exams" role="group" aria-label="신분증·시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-license" data-umami-event="id-size" data-umami-event-size="kr-license"><b>운전면허</b><small>413×531</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </details>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>목표 용량</label>
+                   <select id="target">
+                       <option value="">제한 없음 — 알맞게 최적화</option>
+                       <option value="20KB">20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
+                       <option value="50KB">50KB 이하</option>
+                       <option value="100KB" selected>100KB 이하</option>
+                       <option value="200KB">200KB 이하</option>
+                       <option value="300KB">300KB 이하</option>
+                       <option value="500KB">500KB 이하</option>
+                       <option value="1MB">1MB 이하</option>
+                       <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
+                   <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
+               </div>
+
+               <div class="field">
+                   <label>크기 조절</label>
+                   <select id="resize">
+                       <option value="0">원래 크기 유지</option>
+                       <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
+                       <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
+                       <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="in-evisa">인도 e-비자 600×600px (1MB 이하)</option>
+                       <option value="kr-qnet">큐넷 자격시험 300×400px</option>
+                       <option value="kr-gosi">공무원 시험 원서 137×177px</option>
+                       <option value="kr-history">한국사능력검정 120×160px</option>
+                       <option value="kr-korcham">대한상의 컴활·워드 400×500px (50KB 이하)</option>
+                       <option value="kr-kpc">KPC ITQ·GTQ 225×300px</option>
+                       <option value="kr-toeic">토익·토익스피킹 300×400px</option>
+                       <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
+                       <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-license">운전면허 갱신·재발급(온라인) 413×531px (500KB 이하)</option>
+                       <option value="kr-passport">여권 재발급(정부24) 413×531px (500KB 이하)</option>
+                       <option value="kr-resident">주민등록증(정부24) 413×531px</option>
+                       <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
+                       <option value="kr-saramin">사람인 이력서 100×140px</option>
+                       <option value="custom">픽셀 직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" step="any" inputmode="decimal" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" step="any" inputmode="decimal" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
+               </div>
+
+               <div class="field">
+                   <label>저장 형식</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — 어디서나 호환</option>
+                       <option value="webp">WebP — 더 작고 투명 배경 유지</option>
+                       <option value="png">PNG — 무손실, 용량 큼</option>
+                   </select>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>사진 용량 줄이기</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="summary"><span id="total">—</span><a id="dlzip" class="dl">↓ 전체 다운로드 (ZIP)</a></div>
+               <ul class="imglist" id="list"></ul>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<p class="guide-tool-more">다른 규격은 <a href="/ko/compress-id-photo.html">증명사진 도구</a>에서 골라요.</p>
+<script defer src="/vendor/jszip-3.10.1/jszip.min.js?v=3.10.1"></script>
+<script defer src="/i18n/ko.js?v=3ff90ba2"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/js/specs.js?v=4e758873"></script>
+<script type="module" src="/js/compress-image.js?v=4e1bd523"></script>
+<!-- guide-tool:end -->
+</div>
+<div class="content article">
 
       <div class="callout">안내는 바뀔 수 있어요. 아래 숫자와 안전운전 통합민원 화면의 안내가 다르면 <b>사이트 안내가 우선</b>이에요. 출처는 글 맨 아래에 있어요.</div>
 
@@ -155,7 +277,7 @@
           <tr><td><b>온라인 파일</b></td><td><b>JPG, 500KB 이하</b><br>413×531픽셀 권장<br>(가로 395~431·세로 507~550만 올라감)</td></tr>
           <tr><td><b>해상도</b></td><td>300dpi 권장</td></tr>
           <tr><td><b>방문 접수</b></td><td>사진인화용지에 인화한 사진 (적성검사 2매, 2종 갱신 1매)</td></tr>
-          <tr><td><b>바로 맞추기</b></td><td><a href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/driver-license-photo" data-umami-event-to="/ko/compress-id-photo.html">3.5×4.5cm(413×531)로 열기</a></td></tr>
+          <tr><td><b>바로 맞추기</b></td><td><a href="/ko/compress-id-photo.html?resize=kr-license" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/driver-license-photo" data-umami-event-to="/ko/compress-id-photo.html">운전면허 규격(413×531·500KB)으로 열기</a></td></tr>
       </table></div>
       <p>온라인 파일 규격은 <a href="/ko/guides/passport-photo-online.html">여권 재발급 온라인 사진</a>과 숫자까지 같아요. 413×531은 3.5×4.5cm를 300dpi로 바꾼 크기예요(3.5 ÷ 2.54 × 300 ≈ 413).</p>
 
@@ -207,7 +329,7 @@
 
       <h2>휴대폰으로 1분 만에 맞추는 법</h2>
       <ol>
-          <li><a href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/driver-license-photo" data-umami-event-to="/ko/compress-id-photo.html">3.5×4.5cm 규격으로 열기</a>를 누르세요. 크기 조절이 '여권사진 3.5×4.5cm (413×531px)'로 골라져 있어요. 용량은 100KB 이하로 저장돼서 500KB 제한보다 한참 작아요.</li>
+          <li>글 맨 위의 도구를 쓰거나 <a href="/ko/compress-id-photo.html?resize=kr-license" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/driver-license-photo" data-umami-event-to="/ko/compress-id-photo.html">운전면허 규격으로 열기</a>를 누르세요. 크기는 413×531px, 용량은 500KB 이하로 골라져 있어요.</li>
           <li>사진관에서 받은 파일이나 흰 벽 앞에서 찍은 사진을 올리세요. 사진은 서버로 올라가지 않고 브라우저 안에서만 처리돼요.</li>
           <li>초록색 틀을 얼굴로 옮기고 확대 막대를 움직여서 정수리부터 턱까지가 점선 타원을 위아래로 꽉 채우게 맞추세요.</li>
           <li>아래에 바로 나오는 결과에 <b>413×531</b>과 용량이 보이면 <b>다운로드</b>를 누르세요. JPG로 저장돼서 안전운전 통합민원에 바로 올릴 수 있어요.</li>
@@ -241,9 +363,10 @@
       </ul>
       <div class="cta-box">
           <div><b>무료로 해 보기</b><p>3.5×4.5cm(413×531)로 자르고 500KB 아래로 저장해요. 머리 크기 타원을 보면서 맞추고, 사진은 서버로 올라가지 않아요.</p></div>
-          <a class="cta-btn" href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/driver-license-photo">운전면허 사진 파일 만들기 →</a>
+          <a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/driver-license-photo">운전면허 사진 파일 만들기 ↑</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=passport" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/driver-license-photo">운전면허 사진 파일 만들기 →</a><button type="button" aria-label="닫기">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/driver-license-photo">운전면허 사진 파일 만들기 ↑</a><button type="button" aria-label="닫기">✕</button></div>
+</div>
 </main>
 
 <section class="faq">

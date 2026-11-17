@@ -25,7 +25,7 @@
   "headline": "공무원 사진 규격: 국가직 137×177·350KB, 지방직 3개월·100dpi",
   "description": "국가직 공무원 원서 사진은 3.5×4.5cm(137×177픽셀) JPG·PNG, 350KB 미만이고, 지방직은 원서 접수 전 3개월 안에 찍은 3.5×4.5cm·100dpi 이상 JPG예요. 안 되는 옷과 사진, 사진을 바꿀 수 있는 마지막 날, 2027년 9급 원서접수일(1월 25~29일)까지 공식 안내로 정리했어요.",
   "datePublished": "2026-11-06",
-  "dateModified": "2026-11-06",
+  "dateModified": "2026-11-17",
   "inLanguage": "ko",
   "author": {
     "@type": "Organization",
@@ -129,12 +129,134 @@
       </nav>
 </div>
 
-<main class="content article">
+<main>
+<div class="content article">
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>공무원 사진 규격: 국가직 137×177·350KB, 지방직 3개월·100dpi</h1>
-      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-06">2026년 11월 6일</time> · 9 분 분량</p>
+      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-17">2026년 11월 17일</time> · 9 분 분량</p>
 <p>공무원 원서 사진은 어느 시험이냐에 따라 기준이 둘로 갈려요. 국가직(5·7·9급 공채)은 인사혁신처의 <b>국가공무원 채용시스템</b>에서, 지방직은 <b>지방자치단체 인터넷원서접수센터</b>에서 원서를 받는데 픽셀, 용량, 촬영 시기 기준이 서로 달라요. 두 사이트의 접수 화면 안내와 FAQ, 시·도 공고문을 하나씩 읽고 확인한 숫자만 적었어요. (2026년 11월 6일 확인)</p>
-      <p class="cta-top"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-gosi" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/civil-service-exam-photo">공무원 사진 137×177로 맞추기 →</a><span>3.5×4.5cm 비율로 잘라 JPG로 저장해요. 사진은 서버로 올라가지 않아요.</span></p>
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="kr-gosi">
+<!-- guide-tool:start -->
+<div class="tool" data-live data-preset="kr-gosi">
+           <div class="drop" id="drop">
+               <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
+               <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
+               <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
+               <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
+           </div>
+           <div class="exams" role="group" aria-label="신분증·시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-gosi" data-umami-event="id-size" data-umami-event-size="kr-gosi"><b>공무원</b><small>137×177</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </details>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>목표 용량</label>
+                   <select id="target">
+                       <option value="">제한 없음 — 알맞게 최적화</option>
+                       <option value="20KB">20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
+                       <option value="50KB">50KB 이하</option>
+                       <option value="100KB" selected>100KB 이하</option>
+                       <option value="200KB">200KB 이하</option>
+                       <option value="300KB">300KB 이하</option>
+                       <option value="500KB">500KB 이하</option>
+                       <option value="1MB">1MB 이하</option>
+                       <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
+                   <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
+               </div>
+
+               <div class="field">
+                   <label>크기 조절</label>
+                   <select id="resize">
+                       <option value="0">원래 크기 유지</option>
+                       <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
+                       <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
+                       <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="in-evisa">인도 e-비자 600×600px (1MB 이하)</option>
+                       <option value="kr-qnet">큐넷 자격시험 300×400px</option>
+                       <option value="kr-gosi">공무원 시험 원서 137×177px</option>
+                       <option value="kr-history">한국사능력검정 120×160px</option>
+                       <option value="kr-korcham">대한상의 컴활·워드 400×500px (50KB 이하)</option>
+                       <option value="kr-kpc">KPC ITQ·GTQ 225×300px</option>
+                       <option value="kr-toeic">토익·토익스피킹 300×400px</option>
+                       <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
+                       <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-license">운전면허 갱신·재발급(온라인) 413×531px (500KB 이하)</option>
+                       <option value="kr-passport">여권 재발급(정부24) 413×531px (500KB 이하)</option>
+                       <option value="kr-resident">주민등록증(정부24) 413×531px</option>
+                       <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
+                       <option value="kr-saramin">사람인 이력서 100×140px</option>
+                       <option value="custom">픽셀 직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" step="any" inputmode="decimal" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" step="any" inputmode="decimal" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
+               </div>
+
+               <div class="field">
+                   <label>저장 형식</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — 어디서나 호환</option>
+                       <option value="webp">WebP — 더 작고 투명 배경 유지</option>
+                       <option value="png">PNG — 무손실, 용량 큼</option>
+                   </select>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>사진 용량 줄이기</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="summary"><span id="total">—</span><a id="dlzip" class="dl">↓ 전체 다운로드 (ZIP)</a></div>
+               <ul class="imglist" id="list"></ul>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<p class="guide-tool-more">다른 규격은 <a href="/ko/compress-id-photo.html">증명사진 도구</a>에서 골라요.</p>
+<script defer src="/vendor/jszip-3.10.1/jszip.min.js?v=3.10.1"></script>
+<script defer src="/i18n/ko.js?v=3ff90ba2"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/js/specs.js?v=4e758873"></script>
+<script type="module" src="/js/compress-image.js?v=4e1bd523"></script>
+<!-- guide-tool:end -->
+</div>
+<div class="content article">
 
       <div class="callout">접수 화면이나 공고문이 이 글과 다르게 안내하면 <b>그쪽이 우선</b>이에요. 근거 링크는 맨 아래에 모아 두었어요.</div>
 
@@ -239,9 +361,10 @@
       </ul>
       <div class="cta-box">
           <div><b>무료로 해 보기</b><p>3.5×4.5cm 비율로 잘라 JPG로 저장해요. 사진은 서버로 올라가지 않아요.</p></div>
-          <a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-gosi" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/civil-service-exam-photo">공무원 사진 137×177로 맞추기 →</a>
+          <a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/civil-service-exam-photo">공무원 사진 137×177로 맞추기 ↑</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="/ko/compress-id-photo.html?resize=kr-gosi" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/civil-service-exam-photo">공무원 사진 137×177로 맞추기 →</a><button type="button" aria-label="닫기">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/civil-service-exam-photo">공무원 사진 137×177로 맞추기 ↑</a><button type="button" aria-label="닫기">✕</button></div>
+</div>
 </main>
 
 <section class="faq">

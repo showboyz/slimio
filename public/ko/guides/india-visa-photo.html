@@ -25,7 +25,7 @@
   "headline": "인도 비자 사진 규격 2026: e-비자 정사각형 JPG 10KB~1MB, 여권 정보면 PDF 300KB",
   "description": "인도 e-비자는 얼굴 사진(JPG, 10KB~1MB, 가로세로가 같은 정사각형, 최소 350×350픽셀)과 여권 정보면(PDF, 10KB~300KB)을 올려요. 인도 정부 e-비자 사이트의 안내와 업로드 화면 기준으로 규격, 오류 메시지 3가지의 뜻, 1MB를 1,000,000바이트로 세는 점, 한국 여권 수수료와 신청 시기까지 정리했어요.",
   "datePublished": "2026-10-29",
-  "dateModified": "2026-10-29",
+  "dateModified": "2026-11-17",
   "inLanguage": "ko",
   "author": {
     "@type": "Organization",
@@ -137,12 +137,134 @@
       </nav>
 </div>
 
-<main class="content article">
+<main>
+<div class="content article">
       <p class="crumbs"><a href="/ko/">SlimIO</a> › <a href="/ko/guides/">가이드</a></p>
       <h1>인도 비자 사진 규격 2026: e-비자 정사각형 JPG 10KB~1MB, 여권 정보면 PDF 300KB</h1>
-      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-10-29">2026년 10월 29일</time> · 6 분 분량</p>
+      <p class="byline">SlimIO 작성 · 업데이트 <time datetime="2026-11-17">2026년 11월 17일</time> · 6 분 분량</p>
 <p>인도 e-비자 신청서는 마지막에 파일 두 개를 올려야 해요. <b>최근 얼굴 사진(JPG)</b>과 <b>여권 정보면(PDF)</b>이에요. 둘 다 용량 범위가 정해져 있고 사진은 모양까지 정해져 있어서, 한국에서 쓰는 여권 사진 파일을 그대로 올리면 대부분 걸려요. 인도 정부 e-비자 사이트(indianvisaonline.gov.in)의 신청 안내와 실제 사진 업로드 화면을 확인해서 규격과 오류 메시지의 뜻을 정리하고, 휴대폰 사진으로 규격에 맞는 파일을 직접 만들어 봤어요.</p>
-      <p class="cta-top"><a class="cta-btn" href="/ko/compress-id-photo.html" data-umami-event="guide-cta" data-umami-event-pos="top" data-umami-event-guide="ko/india-visa-photo">인도 비자 사진 만들기 →</a><span>'픽셀 직접 입력'에 600×600을 넣으면 정사각형 JPG로 자르고 용량도 맞춰요. 사진은 서버로 올라가지 않아요.</span></p>
+</div>
+<div class="wrap guide-tool" id="tool" data-presets="in-evisa">
+<!-- guide-tool:start -->
+<div class="tool" data-live data-preset="in-evisa">
+           <div class="drop" id="drop">
+               <input type="file" id="images" accept="image/jpeg,image/png,image/webp,image/*" multiple hidden />
+               <div class="drop-title">사진을 여기에 끌어다 놓으세요</div>
+               <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
+               <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
+           </div>
+           <div class="exams" role="group" aria-label="신분증·시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="in-evisa" data-umami-event="id-size" data-umami-event-size="in-evisa"><b>인도 비자</b><small>600×600</small></button></div>
+           <details class="specs" id="pastebox">
+               <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
+               <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
+               <div class="specs-out" id="specsout" hidden></div>
+           </details>
+
+           <div class="controls hidden" id="controls">
+               <div class="field">
+                   <label>목표 용량</label>
+                   <select id="target">
+                       <option value="">제한 없음 — 알맞게 최적화</option>
+                       <option value="20KB">20KB 이하</option>
+                       <option value="20-50KB">20~50KB</option>
+                       <option value="50KB">50KB 이하</option>
+                       <option value="100KB" selected>100KB 이하</option>
+                       <option value="200KB">200KB 이하</option>
+                       <option value="300KB">300KB 이하</option>
+                       <option value="500KB">500KB 이하</option>
+                       <option value="1MB">1MB 이하</option>
+                       <option value="2MB">2MB 이하</option>
+                       <option value="custom">직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="krange" hidden>
+                       <label for="kmin">최소</label>
+                       <input type="number" id="kmin" min="0" max="20000" value="20" inputmode="numeric" />
+                       <span>–</span>
+                       <label for="kmax">최대</label>
+                       <input type="number" id="kmax" min="1" max="20000" value="50" inputmode="numeric" />
+                       <span>KB</span>
+                   </div>
+                   <div class="hint">사진마다 그 용량 안에서 가장 좋은 화질로 맞춰요.</div>
+               </div>
+
+               <div class="field">
+                   <label>크기 조절</label>
+                   <select id="resize">
+                       <option value="0">원래 크기 유지</option>
+                       <option value="id-3x4" selected>증명사진 3×4cm (354×472px)</option>
+                       <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
+                       <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
+                       <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="in-evisa">인도 e-비자 600×600px (1MB 이하)</option>
+                       <option value="kr-qnet">큐넷 자격시험 300×400px</option>
+                       <option value="kr-gosi">공무원 시험 원서 137×177px</option>
+                       <option value="kr-history">한국사능력검정 120×160px</option>
+                       <option value="kr-korcham">대한상의 컴활·워드 400×500px (50KB 이하)</option>
+                       <option value="kr-kpc">KPC ITQ·GTQ 225×300px</option>
+                       <option value="kr-toeic">토익·토익스피킹 300×400px</option>
+                       <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
+                       <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-license">운전면허 갱신·재발급(온라인) 413×531px (500KB 이하)</option>
+                       <option value="kr-passport">여권 재발급(정부24) 413×531px (500KB 이하)</option>
+                       <option value="kr-resident">주민등록증(정부24) 413×531px</option>
+                       <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
+                       <option value="kr-saramin">사람인 이력서 100×140px</option>
+                       <option value="custom">픽셀 직접 입력…</option>
+                   </select>
+                   <div class="px-row" id="custom" hidden>
+                       <label for="cw">가로</label>
+                       <input type="number" id="cw" min="16" max="4000" value="150" step="any" inputmode="decimal" />
+                       <span>×</span>
+                       <label for="ch">세로</label>
+                       <input type="number" id="ch" min="16" max="4000" value="200" step="any" inputmode="decimal" />
+                       <span>px</span>
+                   </div>
+                   <div class="hint">증명·여권사진과 직접 입력한 크기는 비율에 맞게 잘라요. 자르는 위치는 옮길 수 있어요.</div>
+               </div>
+
+               <div class="crop" id="crop" hidden>
+                   <canvas id="cropcv" aria-label="자르기 미리보기"></canvas>
+                   <div class="crop-bar">
+                       <label for="zoom">확대</label>
+                       <input type="range" id="zoom" min="100" max="300" value="100" />
+                       <button type="button" class="crop-reset" id="cropreset">처음으로</button>
+                   </div>
+                   <div class="hint" id="crophint">틀을 끌어서 얼굴이 점선 안에 들어오게 하세요.</div>
+               </div>
+
+               <div class="field">
+                   <label>저장 형식</label>
+                   <select id="format">
+                       <option value="jpeg" selected>JPG — 어디서나 호환</option>
+                       <option value="webp">WebP — 더 작고 투명 배경 유지</option>
+                       <option value="png">PNG — 무손실, 용량 큼</option>
+                   </select>
+               </div>
+
+               <div class="run-row">
+                   <button id="go" class="btn" disabled>사진 용량 줄이기</button>
+               </div>
+               <div class="bar"><i id="prog"></i></div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="summary"><span id="total">—</span><a id="dlzip" class="dl">↓ 전체 다운로드 (ZIP)</a></div>
+               <ul class="imglist" id="list"></ul>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<p class="guide-tool-more">다른 규격은 <a href="/ko/compress-id-photo.html">증명사진 도구</a>에서 골라요.</p>
+<script defer src="/vendor/jszip-3.10.1/jszip.min.js?v=3.10.1"></script>
+<script defer src="/i18n/ko.js?v=3ff90ba2"></script>
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/js/specs.js?v=4e758873"></script>
+<script type="module" src="/js/compress-image.js?v=4e1bd523"></script>
+<!-- guide-tool:end -->
+</div>
+<div class="content article">
 
       <div class="callout">인도 정부 e-비자 사이트와 수수료표 기준이에요(2026년 10월 확인). 대한민국은 e-비자 대상국 목록에 들어 있어요. 숫자는 예고 없이 바뀌기도 하니, 신청하는 날 공식 사이트 안내를 한 번 더 보세요.</div>
 
@@ -185,7 +307,7 @@
       <h2>휴대폰 사진으로 만들어 보기</h2>
       <p>흰 벽 앞에서 찍은 세로 사진(3024×4032픽셀, 653.7KB, 가상 인물)으로 규격 파일을 만들어 봤어요.</p>
       <ol>
-          <li><a href="/ko/compress-id-photo.html" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/india-visa-photo" data-umami-event-to="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>에 사진을 올려요.</li>
+          <li>글 맨 위의 도구나 <a href="/ko/compress-id-photo.html?resize=in-evisa" data-umami-event="guide-cta" data-umami-event-pos="body" data-umami-event-guide="ko/india-visa-photo" data-umami-event-to="/ko/compress-id-photo.html">증명사진 용량 줄이기</a>에 사진을 올려요. 지금은 <b>인도 비자</b> 버튼(600×600, 500KB 이하)이 있어서 아래 2~3단계 없이 바로 맞춰져요. 아래는 버튼이 생기기 전에 직접 입력으로 만든 과정이에요.</li>
           <li>'크기 조절' 목록 맨 아래 <b>픽셀 직접 입력…</b>에서 가로·세로 칸에 모두 <b>600</b>을 적어요.</li>
           <li>'용량'은 <b>300KB 이하</b>를, '저장 형식'은 <b>JPG</b>를 골라요.</li>
           <li>정사각형 틀을 끌고 확대해서 머리카락 끝부터 턱까지가 위아래 여유를 두고 들어오게 맞춰요.</li>
@@ -231,10 +353,11 @@
           <li>주한 인도대사관, Indian Visa Su-Swagatam 앱 안내 — <a href="https://indembassyseoul.gov.in/pages/MTA1" rel="noopener">indembassyseoul.gov.in</a></li>
       </ul>
       <div class="cta-box">
-          <div><b>무료로 해 보기</b><p>'픽셀 직접 입력'에 600×600을 넣으면 정사각형 JPG로 자르고 용량도 맞춰요. 사진은 서버로 올라가지 않아요.</p></div>
-          <a class="cta-btn" href="/ko/compress-id-photo.html" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/india-visa-photo">인도 비자 사진 만들기 →</a>
+          <div><b>무료로 해 보기</b><p>600×600 정사각형으로 자르고 500KB 아래 JPG로 저장해요(10KB~1MB 범위 안). 사진은 서버로 올라가지 않아요.</p></div>
+          <a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="bottom" data-umami-event-guide="ko/india-visa-photo">인도 비자 사진 만들기 ↑</a>
       </div>
-      <div class="cta-sticky"><a class="cta-btn" href="/ko/compress-id-photo.html" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/india-visa-photo">인도 비자 사진 만들기 →</a><button type="button" aria-label="닫기">✕</button></div>
+      <div class="cta-sticky"><a class="cta-btn" href="#tool" data-umami-event="guide-cta" data-umami-event-pos="sticky" data-umami-event-guide="ko/india-visa-photo">인도 비자 사진 만들기 ↑</a><button type="button" aria-label="닫기">✕</button></div>
+</div>
 </main>
 
 <section class="faq">

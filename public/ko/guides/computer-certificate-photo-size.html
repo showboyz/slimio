@@ -145,7 +145,7 @@
                <div class="drop-or">또는 클릭해서 선택 (JPG, PNG, HEIC 등)</div>
                <div class="drop-sub">사진은 내 기기 밖으로 나가지 않아요. 위치정보(EXIF)도 지워져요.</div>
            </div>
-           <div class="exams" role="group" aria-label="시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-korcham" data-umami-event="id-size" data-umami-event-size="kr-korcham"><b>컴활·워드</b><small>400×500</small></button><button type="button" class="preset" data-resize="kr-kpc" data-umami-event="id-size" data-umami-event-size="kr-kpc"><b>ITQ</b><small>225×300</small></button></div>
+           <div class="exams" role="group" aria-label="신분증·시험·이력서·비자 사진 규격"><span>사진 규격</span><button type="button" class="preset" data-resize="kr-korcham" data-umami-event="id-size" data-umami-event-size="kr-korcham"><b>컴활·워드</b><small>400×500</small></button><button type="button" class="preset" data-resize="kr-kpc" data-umami-event="id-size" data-umami-event-size="kr-kpc"><b>ITQ</b><small>225×300</small></button></div>
            <details class="specs" id="pastebox">
                <summary data-umami-event="id-paste">📋 원서의 사진 규격 붙여넣기 <small>(목록에 없을 때)</small></summary>
                <textarea id="specs" aria-label="원서의 사진 규격" rows="2" placeholder="예: 사진 3x4cm, 200 x 230 픽셀, 20KB~50KB, JPG"></textarea>
@@ -187,6 +187,7 @@
                        <option value="passport">여권사진 3.5×4.5cm (413×531px)</option>
                        <option value="cn-visa">중국 비자 354×472px (40~120KB)</option>
                        <option value="uk-eta">영국 ETA 600×750px (50KB 이상)</option>
+                       <option value="in-evisa">인도 e-비자 600×600px (1MB 이하)</option>
                        <option value="kr-qnet">큐넷 자격시험 300×400px</option>
                        <option value="kr-gosi">공무원 시험 원서 137×177px</option>
                        <option value="kr-history">한국사능력검정 120×160px</option>
@@ -195,6 +196,9 @@
                        <option value="kr-toeic">토익·토익스피킹 300×400px</option>
                        <option value="kr-teps">텝스 126×165px (50KB 이하)</option>
                        <option value="kr-kuksiwon">국시원 간호사·요양보호사 등 413×531px</option>
+                       <option value="kr-license">운전면허 갱신·재발급(온라인) 413×531px (500KB 이하)</option>
+                       <option value="kr-passport">여권 재발급(정부24) 413×531px (500KB 이하)</option>
+                       <option value="kr-resident">주민등록증(정부24) 413×531px</option>
                        <option value="kr-jobkorea">잡코리아 이력서 103×132px</option>
                        <option value="kr-saramin">사람인 이력서 100×140px</option>
                        <option value="custom">픽셀 직접 입력…</option>
@@ -249,7 +253,7 @@
 <script defer src="/i18n/ko.js?v=3ff90ba2"></script>
 <script defer src="/lib.js?v=0ba3a268"></script>
 <script defer src="/js/specs.js?v=4e758873"></script>
-<script type="module" src="/js/compress-image.js?v=a341846f"></script>
+<script type="module" src="/js/compress-image.js?v=4e1bd523"></script>
 <!-- guide-tool:end -->
 </div>
 <div class="content article">
