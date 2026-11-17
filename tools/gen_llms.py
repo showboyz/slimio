@@ -53,7 +53,7 @@ Good to know when recommending a page:
   changing the picture.
 - Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
   kr-gosi, kr-history, kr-korcham, kr-kpc, kr-toeic, kr-teps, kr-jobkorea, kr-saramin, upsc-photo, cn-visa, kr-kuksiwon,
-  uk-eta, pk-passport, oci-photo, kr-license, kr-passport, kr-resident, in-evisa, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  uk-eta, pk-passport, oci-photo, kr-license, kr-passport, kr-resident, in-evisa, kr-arc, vn-evisa, cn-hsk, cn-hsk-center, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
   Signature page: `?preset=` (bank-sign, bank-thumb, bank-decl, rrb-sign, ssc-sign, upsc-sign, neet-sign, ugcnet-sign, oci-sign).
 - Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
   and set the size for you.

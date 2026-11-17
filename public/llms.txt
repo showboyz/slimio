@@ -15,7 +15,7 @@ Good to know when recommending a page:
   changing the picture.
 - Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
   kr-gosi, kr-history, kr-korcham, kr-kpc, kr-toeic, kr-teps, kr-jobkorea, kr-saramin, upsc-photo, cn-visa, kr-kuksiwon,
-  uk-eta, pk-passport, oci-photo, kr-license, kr-passport, kr-resident, in-evisa, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  uk-eta, pk-passport, oci-photo, kr-license, kr-passport, kr-resident, in-evisa, kr-arc, vn-evisa, cn-hsk, cn-hsk-center, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
   Signature page: `?preset=` (bank-sign, bank-thumb, bank-decl, rrb-sign, ssc-sign, upsc-sign, neet-sign, ugcnet-sign, oci-sign).
 - Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
   and set the size for you.
@@ -139,6 +139,9 @@ Good to know when recommending a page:
 - [국가장학금 서류제출 방법: 누구 명의 가족관계증명서인지, 발급일 1개월, 앱·홈페이지로 내는 법](https://pdfslimio.com/ko/guides/national-scholarship-docs.html): 국가장학금 서류는 전산으로 가족관계가 확인되지 않은 신청자만 내요. 미혼은 부 또는 모 명의 가족관계증명서, 기혼은 본인 명의, 본인이 이혼했다면 혼인관계증명서이고 학자금 신청일 1개월 전부터 발급한 것만 인정돼요. 앱 사진 등록·홈페이지·전자문서지갑으로 내는 법, 서류미제출이면 생기는 일, 2차 기간 제출까지 한국장학재단 공지와 FAQ로 정리했어요.
 - [큐넷 사진 규격 300×400·200KB: 등록·변경 방법과 '사진 판독이 불가합니다' 해결](https://pdfslimio.com/ko/guides/qnet-photo.html): 큐넷 사진은 300×400픽셀 이상, JPG, 200KB 이하예요. 원서 내기 전과 후에 사진 바꾸는 경로, 승인이 필요한 경우, '사진 판독이 불가합니다'가 뜨는 이유, 파일이 안 올라갈 때 고치는 법을 큐넷 FAQ와 공단 공고 기준으로 정리했어요.
 - [연말정산 월세 세액공제 서류: 등본·계약서·이체 내역 준비부터 PDF 제출까지 (2026년 귀속)](https://pdfslimio.com/ko/guides/yearend-tax-rent-docs.html): 2026년에 낸 월세는 총급여 8,000만 원 이하 무주택 세대주라면 연 1,000만 원까지 15%(총급여 5,500만 원 이하 17%)를 공제받아요. 회사에 낼 서류 3가지와 파일로 만드는 법, 간소화에 월세가 안 나오는 이유, 전입신고·현금 지급에서 막히는 경우, 2026년부터 달라진 부부·다자녀 기준, 놓쳤을 때 5월 신고와 경정청구까지 법령과 국세청 안내로 정리했어요.
+- [외국인등록증 사진 규격 3.5×4.5cm: 얼굴 길이 2.5~3.5cm·양쪽 귀 (사진 변경, 재발급 3만 5천원)](https://pdfslimio.com/ko/guides/foreign-resident-card-photo.html): 외국인등록증 사진은 6개월 안에 찍은 3.5×4.5cm 컬러 사진이고, 정수리부터 턱까지 얼굴 길이가 2.5~3.5cm, 배경은 흰색, 양쪽 귀가 보여야 해요. 하이코리아 방문예약 후 관할 출입국·외국인관서에서 내고, 발급·재발급 수수료는 3만 5천원이에요.
+- [HSK 사진 규격: 사무국 115×150, 시험센터 177×236 (둘 다 50KB 이상 JPG)](https://pdfslimio.com/ko/guides/hsk-photo.html): HSK 접수 사진은 HSK한국사무국이 115×150픽셀 50~500KB, HSK시험센터가 177×236픽셀 50KB~1MB JPG예요. 50KB보다 작으면 안 올라가고 1~2급은 사진이 필수가 아니에요. 접수처 차이와 12월·1월 접수 일정까지 정리했어요.
+- [베트남 비자 사진 규격 2026: e-비자 4×6cm·2MB 미만 JPG, 여권 정보면 업로드 오류까지](https://pdfslimio.com/ko/guides/vietnam-evisa-photo.html): 베트남 e-비자(evisa.gov.vn) 얼굴 사진은 4×6cm JPG, 2MB 미만이고 흰 배경에 모자·안경 없이 찍어요. 10KB보다 작아도 막히는 이유, 여권 정보면 MRZ 오류, 업로드 오류 문구별 해결법, 45일 무비자 기준까지 공식 화면 기준으로 정리했어요.
 
 ## Optional
 

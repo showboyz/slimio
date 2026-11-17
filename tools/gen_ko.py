@@ -788,6 +788,10 @@ KO["compress-image.html"] = dict(
         (">Korea passport re-issue (Gov24) 413×531 px (≤500KB)<", ">여권 재발급(정부24) 413×531px (500KB 이하)<"),
         (">Korea resident ID card (Gov24) 413×531 px<", ">주민등록증(정부24) 413×531px<"),
         (">India e-Visa photo 600×600 px (≤1MB)<", ">인도 e-비자 600×600px (1MB 이하)<"),
+        (">Korea alien registration card (ARC) 413×531 px (≤95KB)<", ">외국인등록증 3.5×4.5cm 413×531px (95KB 이하)<"),
+        (">HSK photo (HSK Korea office) 115×150 px (50–500KB)<", ">HSK 한국사무국 115×150px (50~500KB)<"),
+        (">HSK photo (HSK test centre, Korea) 177×236 px (50KB–1MB)<", ">HSK 시험센터 177×236px (50KB~1MB)<"),
+        (">Vietnam e-Visa photo 4×6 cm, 472×709 px (≤2MB)<", ">베트남 e-비자 4×6cm 472×709px (2MB 미만)<"),
         (">JobKorea résumé photo 103×132 px<", ">잡코리아 이력서 103×132px<"),
         (">Saramin résumé photo 100×140 px<", ">사람인 이력서 100×140px<"),
         (">UPSC photo 450×600 px (20–200KB)<", ">인도 UPSC 사진 450×600px (20~200KB)<"),
@@ -974,6 +978,7 @@ KO["compress-id-photo.html"] = dict(
          f'<button type="button" class="preset" data-resize="kr-license"{ID_EV("kr-license")}><b>운전면허</b><small>413×531</small></button>'
          f'<button type="button" class="preset" data-resize="kr-passport"{ID_EV("kr-passport")}><b>여권 재발급</b><small>413×531</small></button>'
          f'<button type="button" class="preset" data-resize="kr-resident"{ID_EV("kr-resident")}><b>주민등록증</b><small>413×531</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-arc"{ID_EV("kr-arc")}><b>외국인등록증</b><small>413×531</small></button>'
          f'<button type="button" class="preset" data-resize="kr-qnet"{ID_EV("kr-qnet")}><b>큐넷</b><small>300×400</small></button>'
          f'<button type="button" class="preset" data-resize="kr-gosi"{ID_EV("kr-gosi")}><b>공무원</b><small>137×177</small></button>'
          f'<button type="button" class="preset" data-resize="kr-history"{ID_EV("kr-history")}><b>한능검</b><small>120×160</small></button>'
@@ -981,11 +986,14 @@ KO["compress-id-photo.html"] = dict(
          f'<button type="button" class="preset" data-resize="kr-kpc"{ID_EV("kr-kpc")}><b>ITQ</b><small>225×300</small></button>'
          f'<button type="button" class="preset" data-resize="kr-toeic"{ID_EV("kr-toeic")}><b>토익</b><small>300×400</small></button>'
          f'<button type="button" class="preset" data-resize="kr-teps"{ID_EV("kr-teps")}><b>텝스</b><small>126×165</small></button>'
+         f'<button type="button" class="preset" data-resize="cn-hsk"{ID_EV("cn-hsk")}><b>HSK 사무국</b><small>115×150</small></button>'
+         f'<button type="button" class="preset" data-resize="cn-hsk-center"{ID_EV("cn-hsk-center")}><b>HSK 센터</b><small>177×236</small></button>'
          f'<button type="button" class="preset" data-resize="kr-kuksiwon"{ID_EV("kr-kuksiwon")}><b>국시원</b><small>413×531</small></button>'
          f'<button type="button" class="preset" data-resize="kr-jobkorea"{ID_EV("kr-jobkorea")}><b>잡코리아</b><small>103×132</small></button>'
          f'<button type="button" class="preset" data-resize="kr-saramin"{ID_EV("kr-saramin")}><b>사람인</b><small>100×140</small></button>'
          f'<button type="button" class="preset" data-resize="cn-visa"{ID_EV("cn-visa")}><b>중국 비자</b><small>354×472</small></button>'
          f'<button type="button" class="preset" data-resize="in-evisa"{ID_EV("in-evisa")}><b>인도 비자</b><small>600×600</small></button>'
+         f'<button type="button" class="preset" data-resize="vn-evisa"{ID_EV("vn-evisa")}><b>베트남 비자</b><small>472×709</small></button>'
          f'<button type="button" class="preset" data-resize="uk-eta"{ID_EV("uk-eta")}><b>영국 ETA</b><small>600×750</small></button>'
          '</div>\n'
          '           <details class="specs" id="pastebox">'),
@@ -1038,13 +1046,16 @@ KO["compress-id-photo.html"] = dict(
           <li><b>ITQ·GTQ (한국생산성본부 KPC)</b> → 가로 115~235·세로 150~315px, 500KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-kpc">ITQ 규격으로 열기</a></li>
           <li><b>토익·토익스피킹</b> → JPG 6MB 이하. 등록 창이 3:4로 잘라 300×400px로 저장하고 얼굴 크기를 검사해요. <a href="/ko/compress-id-photo.html?resize=kr-toeic">토익 규격으로 열기</a> · <a href="/ko/guides/language-test-photo.html">토익·텝스 사진 규격</a></li>
           <li><b>텝스</b> → 3×4cm(126×165px), JPG 50KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-teps">텝스 규격으로 열기</a></li>
+          <li><b>HSK</b> → 접수처마다 달라요. HSK한국사무국은 115×150px, HSK시험센터는 177×236px(3×4cm), 둘 다 JPG 50KB 이상이에요. <a href="/ko/compress-id-photo.html?resize=cn-hsk">사무국 규격으로 열기</a> · <a href="/ko/compress-id-photo.html?resize=cn-hsk-center">시험센터 규격으로 열기</a> · <a href="/ko/guides/hsk-photo.html">HSK 사진 규격</a></li>
           <li><b>국시원 (간호사·요양보호사·간호조무사 등 보건의료인 국가시험)</b> → JPG, 276×354px 이상, 200dpi 이상. 면허증에도 쓰이는 사진이라 413×531px(3.5×4.5cm, 300dpi), 높은 화질로 저장해요. 셀프·휴대폰 촬영 사진은 안 받아요. <a href="/ko/compress-id-photo.html?resize=kr-kuksiwon">국시원 규격으로 열기</a> · <a href="/ko/guides/kuksiwon-photo.html">국시원 사진 규격</a></li>
           <li><b>운전면허 갱신·재발급 (안전운전 통합민원)</b> → 3.5×4.5cm, 413×531px 권장(가로 395~431·세로 507~550px만 올라가요), JPG 500KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-license">운전면허 규격으로 열기</a> · <a href="/ko/guides/driver-license-photo.html">운전면허 사진 규격</a></li>
           <li><b>여권 재발급 (정부24)</b> → 3.5×4.5cm, 413×531px 권장(가로 395~431·세로 507~550px), JPG 500KB 이하, 머리 길이 3.2~3.6cm. <a href="/ko/compress-id-photo.html?resize=kr-passport">여권 재발급 규격으로 열기</a> · <a href="/ko/guides/passport-photo-online.html">여권 온라인 사진 규격</a></li>
           <li><b>주민등록증 (정부24 온라인 신청)</b> → 3.5×4.5cm, JPG만, 1MB 이하·900×1200px 이내(신규 발급 작성 예시). 413×531px, 500KB 아래로 맞춰요. <a href="/ko/compress-id-photo.html?resize=kr-resident">주민등록증 규격으로 열기</a> · <a href="/ko/guides/resident-card-photo.html">주민등록증 사진 규격</a></li>
+          <li><b>외국인등록증 (출입국·외국인관서 방문 신청)</b> → 3.5×4.5cm, 얼굴 길이 2.5~3.5cm, 양쪽 귀가 보이게. 인화한 사진을 내고, 하이코리아 전자민원 사진 파일은 95KB 이하 JPG예요. <a href="/ko/compress-id-photo.html?resize=kr-arc">외국인등록증 규격으로 열기</a> · <a href="/ko/guides/foreign-resident-card-photo.html">외국인등록증 사진 규격</a></li>
           <li><b>대입 수시·정시 원서 (진학어플라이·유웨이어플라이)</b> → 3개월 이내 반명함 3×4cm, JPG. 수능 응시원서는 여권용 3.5×4.5cm. <a href="/ko/compress-id-photo.html?resize=id-3x4">3×4 규격으로 열기</a> · <a href="/ko/guides/university-application-photo.html">대입 원서 사진 규격</a></li>
           <li><b>중국 비자 (중국비자신청서비스센터 온라인 신청)</b> → JPG 354×472~420×560px, 40~120KB, 흰색 배경. 머리 위치 기준을 재는 354×472px로 맞춰요. <a href="/ko/compress-id-photo.html?resize=cn-visa">중국 비자 규격으로 열기</a> · <a href="/ko/guides/china-visa-photo.html">중국 비자 사진 규격</a></li>
           <li><b>인도 e-비자</b> → 정사각형 JPG, 350×350px 이상, 10KB~1MB(1MB = 1,000,000바이트). 600×600px, 500KB 아래로 맞춰요. <a href="/ko/compress-id-photo.html?resize=in-evisa">인도 비자 규격으로 열기</a> · <a href="/ko/guides/india-visa-photo.html">인도 비자 사진 규격</a></li>
+          <li><b>베트남 e-비자</b> → 4×6cm JPG, 2MB 미만(10KB보다 작아도 막혀요), 흰 배경. 472×709px, 10KB~1MB로 맞춰요. <a href="/ko/compress-id-photo.html?resize=vn-evisa">베트남 비자 규격으로 열기</a> · <a href="/ko/guides/vietnam-evisa-photo.html">베트남 비자 사진 규격</a></li>
           <li><b>영국 ETA (전자여행허가, 온라인 신청)</b> → JPG, 가로 600·세로 750px 이상, 50KB~6MB, 밝은 단색 배경. 그 크기로 맞추고 50KB 아래로 내려가지 않게 저장해요. <a href="/ko/compress-id-photo.html?resize=uk-eta">영국 ETA 규격으로 열기</a></li>
       </ul>
       <h3>이력서 사진 규격 (잡코리아·사람인)</h3>
@@ -1859,7 +1870,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "OCI", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "OCI", "HSK", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "HEIF", "GPS", "cm", "px", "iOS", "AirDrop", "USB"}
 
 

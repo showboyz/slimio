@@ -12,7 +12,8 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
      "kr-jobkorea": [103, 132], "kr-saramin": [100, 140], "kr-korcham": [400, 500], "kr-kpc": [225, 300],
      "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472], "kr-kuksiwon": [413, 531],
      "uk-eta": [600, 750], "pk-passport": [413, 531], "oci-photo": [600, 600],
-     "kr-license": [413, 531], "kr-passport": [413, 531], "kr-resident": [413, 531], "in-evisa": [600, 600] };
+     "kr-license": [413, 531], "kr-passport": [413, 531], "kr-resident": [413, 531], "in-evisa": [600, 600],
+     "kr-arc": [413, 531], "vn-evisa": [472, 709], "cn-hsk": [115, 150], "cn-hsk-center": [177, 236] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
 // KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
@@ -35,11 +36,16 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
 // resident ID card (Gov24 form examples): JPG only, 1MB and 900×1200 at most (re-issue example: 3MB),
 // so 500KB fits both; India e-Visa (indianvisaonline.gov.in upload page): square JPG, at least
 // 350×350 px, 10KB to 1MB counted as 1,000,000 bytes, so 600×600 under 500KB keeps clear of the edge.
+// Vietnam e-Visa (evisa.gov.vn upload note and its upload check): 4×6 cm JPG, refused over 2×1024×1024 bytes
+// ("Image size exceeds 2mb") and under 10×1024 ("The image quality is too low"), so 4×6 at 300 dpi, 10–1000KB;
+// HSK: the HSK Korea office (hsk.or.kr FAQ) takes 115×150 px JPG of 50–500KB, the HSK test centre
+// (hsk-korea.co.kr) 3×4 cm = 177×236 px JPG of 50KB–1MB (1024KB), so 50–1000KB.
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "20-200KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
      "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB",
      "uk-eta": "50-500KB", "pk-passport": "20KB", "oci-photo": "200KB",
-     "kr-license": "500KB", "kr-passport": "500KB", "kr-resident": "500KB", "in-evisa": "500KB" };
+     "kr-license": "500KB", "kr-passport": "500KB", "kr-resident": "500KB", "in-evisa": "500KB",
+     "vn-evisa": "10-1000KB", "cn-hsk": "50-500KB", "kr-arc": "0-95KB", "cn-hsk-center": "50-1000KB" };
 // Korean IDs that use the passport photo rules (head 3.2–3.6cm of 4.5cm)
 const PASSPORT_LIKE = ["passport", "kr-license", "kr-passport", "kr-resident"];
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
@@ -72,6 +78,12 @@ const GUIDES = {
 for (const k of PASSPORT_LIKE) GUIDES[k] = GUIDES.passport;
 // India e-Visa asks for the whole head, hair to chin, centred on a square: the OCI oval
 GUIDES["in-evisa"] = GUIDES["oci-photo"];
+// Korean alien registration card (Ministry of Justice photo rules): face 2.5–3.5 cm of the 4.5 cm
+// height, both ears showing, eyes 2.2–3.2 cm above the bottom (HiKorea diagram: about 2.6 cm); the oval
+// is the 3.0 cm middle, set high enough that a face filling it puts the eyes near 2.6 cm. The card itself
+// takes a printed photo; HiKorea's online applications take a JPG photo of 95KB or less (MOJ stay
+// manual, Nov 2026), hence the limit.
+GUIDES["kr-arc"] = { cy: 0.44, rx: 0.27, ry: 0.333 };
 // Upload pages that check the file name: UPSC only takes "photo.jpg".
 const FILE_NAME = { "upsc-photo": "photo" };
 const EXT = { jpeg: "jpg", webp: "webp", png: "png" };

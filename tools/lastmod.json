@@ -4,7 +4,7 @@
   "2026-11-10"
  ],
  "/about.html": [
-  "5ba7dffc81e9cd67",
+  "10ee86ea34b26c75",
   "2026-11-17"
  ],
  "/add-page-numbers.html": [
@@ -16,27 +16,27 @@
   "2026-10-28"
  ],
  "/compress-id-photo.html": [
-  "f9f0e538e9c6f017",
+  "e7e3a51aa27e160c",
   "2026-11-17"
  ],
  "/compress-image-to-100kb.html": [
-  "aaf42b536c3a64ca",
+  "ff06e45c510b73bd",
   "2026-11-17"
  ],
  "/compress-image-to-200kb.html": [
-  "351c80edf56d7c02",
+  "d8ddc141e1aabd42",
   "2026-11-17"
  ],
  "/compress-image-to-20kb.html": [
-  "61364c0d7e196138",
+  "7668a88c524ed65d",
   "2026-11-17"
  ],
  "/compress-image-to-50kb.html": [
-  "ab118cfb98d9b0f2",
+  "4bf1782899e7719d",
   "2026-11-17"
  ],
  "/compress-image.html": [
-  "b0a2afd3d965a931",
+  "86c76989038ca05d",
   "2026-11-17"
  ],
  "/compress-pdf-for-email.html": [
@@ -152,11 +152,11 @@
   "2026-11-08"
  ],
  "/ko/": [
-  "53a8ece15a117bca",
+  "0bcf792ec373e26f",
   "2026-11-17"
  ],
  "/ko/about.html": [
-  "71a601ce6c0c7614",
+  "2ad64428bf957909",
   "2026-11-17"
  ],
  "/ko/add-page-numbers.html": [
@@ -164,27 +164,27 @@
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "9400619d7ad619ab",
+  "f96734db6f5b74f4",
   "2026-11-17"
  ],
  "/ko/compress-image-to-100kb.html": [
-  "b7e4128f9cc25a05",
+  "8e1fe8076369c148",
   "2026-11-17"
  ],
  "/ko/compress-image-to-200kb.html": [
-  "ae7d4d8e781885c4",
+  "a74f8300168c8e25",
   "2026-11-17"
  ],
  "/ko/compress-image-to-20kb.html": [
-  "44aef2a90678b39f",
+  "7b6e9421f5cb1f65",
   "2026-11-17"
  ],
  "/ko/compress-image-to-50kb.html": [
-  "0fdecde58fd9d147",
+  "a6fdc299cb825389",
   "2026-11-17"
  ],
  "/ko/compress-image.html": [
-  "e3131af8b61d13dc",
+  "6398da3c5fa0afd8",
   "2026-11-17"
  ],
  "/ko/compress-pdf-for-email.html": [
@@ -228,35 +228,43 @@
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "65e2ffe578beefc1",
+  "792f5a8675232b75",
   "2026-11-17"
  ],
  "/ko/guides/china-visa-photo.html": [
-  "adb4425c04de7d3e",
+  "730d21b52ffc3f7b",
   "2026-11-17"
  ],
  "/ko/guides/civil-service-exam-photo.html": [
-  "172863dce283e7e6",
+  "81369f2099f14a9b",
   "2026-11-17"
  ],
  "/ko/guides/computer-certificate-photo-size.html": [
-  "1cac36550b317611",
+  "e23a8a94402d208d",
   "2026-11-17"
  ],
  "/ko/guides/driver-license-photo.html": [
-  "e73a4a6a513647bf",
+  "80acf3463b126071",
   "2026-11-17"
  ],
  "/ko/guides/exam-application-photo-size.html": [
-  "4a4ed7ea52ab0f99",
+  "09c6b15a41310a4b",
+  "2026-11-17"
+ ],
+ "/ko/guides/foreign-resident-card-photo.html": [
+  "f41c7cb77ee36130",
   "2026-11-17"
  ],
  "/ko/guides/gov24-pdf-save.html": [
   "bf77dfdef50faa39",
   "2026-10-29"
  ],
+ "/ko/guides/hsk-photo.html": [
+  "f411b942db09fb03",
+  "2026-11-17"
+ ],
  "/ko/guides/india-visa-photo.html": [
-  "f94381b5b585833e",
+  "2bd6bd26a40d4137",
   "2026-11-17"
  ],
  "/ko/guides/iphone-mac-pdf-size.html": [
@@ -264,15 +272,15 @@
   "2026-10-29"
  ],
  "/ko/guides/korean-history-exam-photo.html": [
-  "f0a34bc064883525",
+  "85b8a7a39c44b4fa",
   "2026-11-17"
  ],
  "/ko/guides/kuksiwon-photo.html": [
-  "221c6f1e7c11dca7",
+  "a0afb14e88240d1e",
   "2026-11-17"
  ],
  "/ko/guides/language-test-photo.html": [
-  "03efc7577ccc8cf4",
+  "9b9f787d52b9eda6",
   "2026-11-17"
  ],
  "/ko/guides/mail-attachment-size-limit.html": [
@@ -280,7 +288,7 @@
   "2026-11-06"
  ],
  "/ko/guides/mobile-id-photo.html": [
-  "16612dfacc50a29f",
+  "a1a0b482b546b99b",
   "2026-11-17"
  ],
  "/ko/guides/multiple-photos-to-pdf.html": [
@@ -292,7 +300,7 @@
   "2026-11-07"
  ],
  "/ko/guides/passport-photo-online.html": [
-  "2f2b078ec0f99aba",
+  "7ba4d197a00c60e4",
   "2026-11-17"
  ],
  "/ko/guides/pdf-compression-explained.html": [
@@ -316,15 +324,15 @@
   "2026-10-29"
  ],
  "/ko/guides/qnet-photo.html": [
-  "149a26717added4c",
+  "eacfa971bce0e27d",
   "2026-11-17"
  ],
  "/ko/guides/resident-card-photo.html": [
-  "3fcf4b0e74921532",
+  "07feb18dd62aeda8",
   "2026-11-17"
  ],
  "/ko/guides/resume-photo-size.html": [
-  "93c085f014192ff0",
+  "43a45cf42baad9c4",
   "2026-11-17"
  ],
  "/ko/guides/university-application-photo.html": [
@@ -334,6 +342,10 @@
  "/ko/guides/us-visa-photo-size.html": [
   "942bcf16b1b4b52e",
   "2026-10-29"
+ ],
+ "/ko/guides/vietnam-evisa-photo.html": [
+  "9e69df711c16e126",
+  "2026-11-17"
  ],
  "/ko/guides/yearend-tax-pdf-password.html": [
   "c688ece88cfebf9b",
@@ -400,7 +412,7 @@
   "2026-11-06"
  ],
  "/ko/us-visa-photo.html": [
-  "b4e7521df3ee081a",
+  "46b667f9c9cf1963",
   "2026-11-17"
  ],
  "/ko/watermark.html": [
@@ -452,7 +464,7 @@
   "2026-10-31"
  ],
  "/us-visa-photo.html": [
-  "3b11ab15c8190887",
+  "85c42b7a12560e74",
   "2026-11-17"
  ],
  "/watermark.html": [
