@@ -1,12 +1,12 @@
 #!/bin/bash
-# req_at.sh <YYYY-mm-dd> <HH:MM> <url>... : at that date and time (KST) open my own GSC window on the /u/1/ address
+# req_at.sh <YYYY-mm-dd> <HH:MM> <url>... : at that date and time (KST) open my own GSC window on the /u/0/ address (todays777 since 11/17; it was /u/1/ before — check the page shows todays777)
 # (todays777), request indexing with req_u1.py (stops on Google's quota or "try again later"), then close the window.
-# Never use req.py for this: it opens the u/0 address.
+# Never use req.py for this: importing it starts requests in a window of its own.
 cd "$(dirname "$0")"; E=../../marketing/naver/editor
 day=$1; at=$2; shift 2
 now=$(date +%s); then=$(date -j -f "%Y-%m-%d %H:%M" "$day $at" +%s) || exit 1
 [ "$then" -gt "$now" ] && sleep $((then - now))
-W=$(bash $E/win_open.sh "https://search.google.com/u/1/search-console/inspect?resource_id=sc-domain%3Apdfslimio.com" | tail -1)
+W=$(bash $E/win_open.sh "https://search.google.com/u/0/search-console/inspect?resource_id=sc-domain%3Apdfslimio.com" | tail -1)
 case "$W" in ''|*[!0-9]*) echo "no window ($W)"; exit 1;; esac
 echo "window $W"
 sleep 5
