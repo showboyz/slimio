@@ -1,0 +1,26 @@
+window 300865
+03:01:06 https://pdfslimio.com/ko/guides/foreign-resident-card-photo.html requested (not on Google)
+03:01:30 https://pdfslimio.com/ko/guides/vietnam-evisa-photo.html requested (not on Google)
+03:01:58 https://pdfslimio.com/ko/guides/hsk-photo.html requested (not on Google)
+03:02:35 https://pdfslimio.com/ko/guides/driver-license-photo.html requested (on Google)
+03:02:56 https://pdfslimio.com/ko/guides/passport-photo-online.html requested (not on Google)
+03:03:20 https://pdfslimio.com/ko/guides/resident-card-photo.html requested (not on Google)
+03:03:44 https://pdfslimio.com/ko/guides/qnet-photo.html requested (on Google)
+03:04:11 https://pdfslimio.com/ko/guides/civil-service-exam-photo.html requested (not on Google)
+03:04:35 https://pdfslimio.com/ko/guides/kuksiwon-photo.html requested (on Google)
+03:05:03 https://pdfslimio.com/ko/guides/resume-photo-size.html requested (not on Google)
+03:05:20 https://pdfslimio.com/ko/guides/exam-application-photo-size.html problem (on Google)
+03:05:21 RESULTS {
+ "https://pdfslimio.com/ko/guides/foreign-resident-card-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/vietnam-evisa-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/hsk-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/driver-license-photo.html": "requested (on Google)",
+ "https://pdfslimio.com/ko/guides/passport-photo-online.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/resident-card-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/qnet-photo.html": "requested (on Google)",
+ "https://pdfslimio.com/ko/guides/civil-service-exam-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/kuksiwon-photo.html": "requested (on Google)",
+ "https://pdfslimio.com/ko/guides/resume-photo-size.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/exam-application-photo-size.html": "problem (on Google)"
+}
+window 300865 closed
