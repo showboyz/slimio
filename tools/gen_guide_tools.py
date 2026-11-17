@@ -27,10 +27,14 @@ def tool_block(src, sizes):
     box = src[src.index('<div class="tool" data-live>'):src.index("<!-- next-steps:start -->")].rstrip()
     box = box.replace('<div class="tool" data-live>', f'<div class="tool" data-live data-preset="{sizes[0]}">', 1)
     # the three size tiles (3×4, passport, custom) would pull readers off their exam's size;
-    # custom sizes stay in the Resize list
-    box = re.sub(r'\n\s*<div class="presets"[^>]*>.*?</div>', "", box, count=1, flags=re.S)
+    # custom sizes stay in the Resize list. A guide about 3×4 or passport photos gets its tile as a chip.
+    tiles = re.search(r'\n\s*<div class="presets"[^>]*>(.*?)</div>', box, re.S)
+    box = box.replace(tiles.group(0), "", 1)
+    chip = r'(<button type="button" class="preset" data-resize="([^"]+)".*?</button>)'
+    chips = {k: re.sub(r"<svg.*?</svg>", "", c).replace("<span>", "<small>").replace("</span>", "</small>")
+             for c, k in re.findall(chip, tiles.group(1)) if k != "custom"}
     row = re.search(r'(<div class="exams"[^>]*>)<span>[^<]*</span>(.*?)</div>', box)
-    chips = {k: c for c, k in re.findall(r'(<button type="button" class="preset" data-resize="([^"]+)".*?</button>)', row.group(2))}
+    chips.update({k: c for c, k in re.findall(chip, row.group(2))})
     missing = [s for s in sizes if s not in chips]
     assert not missing, f"no exam chip on {TOOL_PAGE} for {missing}"
     box = box.replace(row.group(0), row.group(1) + "<span>사진 규격</span>" + "".join(chips[s] for s in sizes) + "</div>")

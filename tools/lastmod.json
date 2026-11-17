@@ -152,20 +152,20 @@
   "2026-11-08"
  ],
  "/ko/": [
-  "0bcf792ec373e26f",
-  "2026-11-17"
+  "a4f80a3c7e5a781d",
+  "2026-11-18"
  ],
  "/ko/about.html": [
-  "2ad64428bf957909",
-  "2026-11-17"
+  "4668046ad19e63ac",
+  "2026-11-18"
  ],
  "/ko/add-page-numbers.html": [
   "c447ed924a3809eb",
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "f96734db6f5b74f4",
-  "2026-11-17"
+  "7a9c8e96b3f6f2a2",
+  "2026-11-18"
  ],
  "/ko/compress-image-to-100kb.html": [
   "8e1fe8076369c148",
@@ -228,8 +228,12 @@
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "792f5a8675232b75",
-  "2026-11-17"
+  "1e693bc2b4e82406",
+  "2026-11-18"
+ ],
+ "/ko/guides/baby-passport-photo.html": [
+  "421b4357b1e92730",
+  "2026-11-18"
  ],
  "/ko/guides/china-visa-photo.html": [
   "730d21b52ffc3f7b",
@@ -258,6 +262,10 @@
  "/ko/guides/gov24-pdf-save.html": [
   "bf77dfdef50faa39",
   "2026-10-29"
+ ],
+ "/ko/guides/half-size-photo.html": [
+  "5359a1fcf40cd0a0",
+  "2026-11-18"
  ],
  "/ko/guides/hsk-photo.html": [
   "f411b942db09fb03",
@@ -302,6 +310,10 @@
  "/ko/guides/passport-photo-online.html": [
   "7ba4d197a00c60e4",
   "2026-11-17"
+ ],
+ "/ko/guides/passport-photo-size.html": [
+  "44532c04340e398d",
+  "2026-11-18"
  ],
  "/ko/guides/pdf-compression-explained.html": [
   "7215d825bc404457",
