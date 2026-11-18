@@ -1,0 +1,20 @@
+window 675
+03:11:15 https://pdfslimio.com/ko/guides/passport-photo-size.html requested (not on Google)
+03:11:43 https://pdfslimio.com/ko/guides/baby-passport-photo.html requested (not on Google)
+03:12:07 https://pdfslimio.com/ko/guides/half-size-photo.html requested (not on Google)
+03:12:41 https://pdfslimio.com/ko/guides/exam-application-photo-size.html requested (on Google)
+03:13:05 https://pdfslimio.com/ko/guides/china-visa-photo.html requested (on Google)
+03:13:28 https://pdfslimio.com/ko/guides/mobile-id-photo.html requested (on Google)
+03:14:02 https://pdfslimio.com/ko/guides/india-visa-photo.html requested (not on Google)
+03:14:26 https://pdfslimio.com/ko/compress-id-photo.html requested (on Google)
+03:14:29 RESULTS {
+ "https://pdfslimio.com/ko/guides/passport-photo-size.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/baby-passport-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/half-size-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/guides/exam-application-photo-size.html": "requested (on Google)",
+ "https://pdfslimio.com/ko/guides/china-visa-photo.html": "requested (on Google)",
+ "https://pdfslimio.com/ko/guides/mobile-id-photo.html": "requested (on Google)",
+ "https://pdfslimio.com/ko/guides/india-visa-photo.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/compress-id-photo.html": "requested (on Google)"
+}
+window 675 closed
