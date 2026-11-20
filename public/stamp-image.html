@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stamp Image Maker — Remove the Background From a Stamp Photo, Transparent PNG | SlimIO</title>
+<meta name="description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal. Free, in your browser." />
+<meta name="keywords" content="stamp image maker, stamp png, remove background from stamp, transparent stamp, company seal png, digital stamp, name seal maker, korean name stamp" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#0b0d12" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href="https://pdfslimio.com/stamp-image.html" />
+<link rel="alternate" hreflang="en" href="https://pdfslimio.com/stamp-image.html" />
+<link rel="alternate" hreflang="ko" href="https://pdfslimio.com/ko/stamp-image.html" />
+<link rel="alternate" hreflang="x-default" href="https://pdfslimio.com/stamp-image.html" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="SlimIO" />
+<meta property="og:title" content="Stamp Image Maker — Remove the Background From a Stamp Photo, Transparent PNG | SlimIO" />
+<meta property="og:description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal. Free, in your browser." />
+<meta property="og:url" content="https://pdfslimio.com/stamp-image.html" />
+<meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
+<meta property="og:locale" content="en_US" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Stamp Image Maker | SlimIO" />
+<meta name="twitter:description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal. Free, in your browser." />
+<meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
+
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SlimIO Stamp Image Maker",
+      "url": "https://pdfslimio.com/stamp-image.html",
+      "description": "Free tool that removes the paper from a photo of a stamp or seal and saves the ink as a transparent PNG, or draws a round or square name seal. Runs in your browser.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires a modern web browser",
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+      },
+      "featureList": [
+            "Remove the paper from a stamp photo",
+            "Keep only the red ink (printed text and shadows go)",
+            "Round or square name seal",
+            "Transparent PNG",
+            "Runs in your browser (no upload)"
+      ]
+}
+</script>
+<script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+            {
+                  "@type": "Question",
+                  "name": "How do I turn a photo of my stamp into a transparent PNG?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Stamp it on plain white paper, take a photo from straight above in good light, and choose it under Stamp photo. Click Make stamp image: the paper becomes transparent, the image is cut to the ink, and you download a PNG."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "My stamp is on a document with printed text. Can I still use the photo?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes, if the stamp is red. Keep Ink colour on Clean red: only red ink is kept, so black print, pen lines and shadows are removed. For a blue or black stamp, choose Keep the photo's colour and photograph it on blank paper."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "I don't have a stamp. Can I make one?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Open Make a name seal, type your name and pick a round or square seal. It's a picture of your name in a seal, not a registered seal, so use it only where a simple stamp mark is enough."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "How do I put the stamp image into Word, HWP or a PDF?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "In Word or HWP, insert the PNG as a picture and set it to sit in front of the text, then drag it onto the signature line. For a PDF, use Stamp a PDF with it under the result, which opens Sign PDF with the stamp ready."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Is my stamp uploaded anywhere?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "No. The background removal and the name seal are made in your browser. Your photo never leaves your device."
+                  }
+            }
+      ]
+}
+</script>
+<link rel="stylesheet" href="/style.css?v=6a5a4002" />
+<style>
+.tabs { display: flex; gap: 6px; margin-bottom: 10px; }
+.tab {
+     flex: 1; padding: 9px; background: #0e1117; color: var(--muted); font-size: 13px;
+     border: 1px solid var(--line); border-radius: 8px; cursor: pointer;
+}
+.tab.on { color: var(--text); border-color: var(--accent); }
+.panel.hidden { display: none; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.pick {
+     width: 100%; padding: 26px 12px; border: 2px dashed #333d4d; border-radius: 12px; background: #10141b;
+     color: var(--text); font: inherit; font-weight: 700; cursor: pointer;
+}
+.pick:hover { border-color: var(--accent); }
+.pick small { display: block; margin-top: 6px; color: var(--muted); font-weight: 400; font-size: 12px; }
+.picked { font-size: 13px; color: var(--muted); margin-top: 6px; text-align: center; word-break: break-all; }
+#name {
+     width: 100%; padding: 10px 12px; border-radius: 8px;
+     background: #0e1117; border: 1px solid var(--line); color: var(--text); font-size: 16px;
+}
+.styles { display: grid; grid-template-columns: repeat(2, minmax(0, 120px)); gap: 10px; margin-top: 10px; }
+.style {
+     background: #fff; border: 2px solid transparent; border-radius: 10px; aspect-ratio: 1; padding: 8px;
+     display: flex; align-items: center; justify-content: center; cursor: pointer; overflow: hidden;
+}
+.style.on { border-color: var(--accent); }
+.style canvas { max-width: 100%; max-height: 100%; }
+.sigout { margin-top: 12px; border-radius: 10px; padding: 14px; display: flex; justify-content: center;
+     background: repeating-conic-gradient(#e8ebf0 0% 25%, #fff 0% 50%) 0 0 / 16px 16px; }
+.sigout img { max-width: 100%; max-height: 220px; display: block; }
+.meta { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.meta b { color: var(--text); }
+.alt-tool { font-size: 13px; color: var(--muted); text-align: center; margin: -6px 0 16px; }
+.to-pdf { text-align: center; margin-top: 10px; font-size: 13px; }
+</style>
+<script defer src="https://cloud.umami.is/script.js" data-website-id="ab53f00a-b92a-4d4d-aaf0-6b5329869de7" data-domains="pdfslimio.com"></script>
+<meta name="google-adsense-account" content="ca-pub-5339352429300786" />
+</head>
+<body>
+<div class="wrap">
+      <nav>
+           <a class="brand" href="/"><span class="logo">📄</span> SlimIO</a>
+           <div class="nav-links">
+               <a href="/">Compress</a>
+               <a href="/#tools">All tools</a>
+               <a href="/signature-image.html">Signature Image</a>
+               <a href="/#how">How it works</a>
+               <a href="/#pricing">Pricing</a>
+              <a href="/ko/stamp-image.html" hreflang="ko" lang="ko" class="lang-switch"><img src="/img/flag-kr.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />한국어</a>
+           </div>
+      </nav>
+</div>
+
+<div class="wrap" id="tool">
+      <div class="hero">
+           <h1>Your stamp,<br /><b>as a clean PNG.</b></h1>
+           <p>Photograph your stamp or company seal on paper — the paper disappears and only the ink is kept, as a transparent PNG for any document. No stamp? Make a name seal.</p>
+           <div class="trust-row">
+               <span>⚡ Instant</span>
+               <span>🔒 Private</span>
+               <span>🆓 Free</span>
+               <span>📦 No install</span>
+           </div>
+      </div>
+
+      <div class="tool">
+           <div class="alt-tool">Want to stamp a PDF directly? <a href="/sign-pdf.html">Sign PDF →</a></div>
+           <div class="tabs" id="tabs">
+               <button type="button" class="tab on" data-mode="photo">📷 Stamp photo</button>
+               <button type="button" class="tab" data-mode="make">🔴 Make a name seal</button>
+           </div>
+           <div class="panel" id="panel-photo">
+               <input type="file" id="stampfile" accept="image/*" hidden />
+               <button type="button" class="pick" id="pickimg">Choose a photo of your stamp<small>Stamped on plain white paper, taken in good light</small></button>
+               <div class="picked" id="pickname"></div>
+           </div>
+           <div class="panel hidden" id="panel-make">
+               <input type="text" id="name" maxlength="24" placeholder="Your name" autocomplete="name" />
+               <label class="check"><input type="checkbox" id="yin" /> Add “인” after a Korean name (홍길동인)</label>
+               <div class="styles" id="shapes"></div>
+           </div>
+
+           <div class="controls" id="controls">
+               <div class="field" id="colourrow">
+                   <label for="colour">Ink colour</label>
+                   <select id="colour">
+                       <option value="red" selected>Clean red — keep only the red ink</option>
+                       <option value="keep">Keep the photo's colour</option>
+                       <option value="black">Black</option>
+                   </select>
+                   <div class="hint">Clean red also removes printed text, pen lines and shadows around a red stamp.</div>
+               </div>
+               <div class="field">
+                   <label for="size">Size</label>
+                   <select id="size">
+                       <option value="300">300 px — small file</option>
+                       <option value="600" selected>600 px — sharp when printed</option>
+                       <option value="1000">1000 px — large</option>
+                   </select>
+               </div>
+               <div class="run-row">
+                   <button id="go" class="btn">Make stamp image</button>
+               </div>
+           </div>
+
+           <div class="result" id="result">
+               <div class="sigout"><img id="outimg" alt="Your stamp image" /></div>
+               <div class="meta" id="outmeta"></div>
+               <div class="run-row"><a id="dl" class="dl">↓ Download stamp (PNG)</a></div>
+               <div class="to-pdf"><a id="topdf" href="/sign-pdf.html">🔴 Stamp a PDF with it →</a></div>
+           </div>
+
+           <div class="error" id="error"></div>
+           <div class="limit" id="limit"></div>
+           <div class="log" id="log"></div>
+      </div>
+<!-- next-steps:start -->
+<div class="next-steps" id="next" hidden>
+      <b class="nh">Next, you might want to…</b>
+      <div class="tcards three">
+          <a class="tcard" href="/sign-pdf.html"><span class="ico">✍️</span><span class="tx"><b>Sign PDF</b><small>Put your signature on any page</small></span></a>
+          <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
+          <a class="tcard" href="/watermark.html"><span class="ico">💧</span><span class="tx"><b>Watermark PDF</b><small>Stamp text on every page</small></span></a>
+      </div>
+</div>
+<!-- next-steps:end -->
+      <div class="ad" id="ad" hidden></div>
+</div>
+
+<div class="content">
+      <h2>How to make a stamp image</h2>
+      <ul>
+          <li><b>1. Stamp it on white paper.</b> Press the stamp firmly on plain white paper, with no lines or print under it.</li>
+          <li><b>2. Take the photo.</b> From straight above, in daylight or under a bright lamp, without your phone's shadow. Let the stamp fill most of the photo.</li>
+          <li><b>3. Choose it and make the image.</b> Pick the photo under Stamp photo and click Make stamp image. The paper becomes transparent and the image is cut to the ink.</li>
+          <li><b>4. Download the PNG.</b> Put it into Word, HWP or a slide, or click Stamp a PDF with it to place it on a PDF.</li>
+      </ul>
+      <h3>Clean red, keep the colour, or black</h3>
+      <p>Most stamps use red seal ink. <b>Clean red</b> keeps only the red ink and gives it one even colour, so the stamp looks the same on screen and on paper — and printed text, pen lines and shadows around it are dropped. A blue or black rubber stamp needs <b>Keep the photo's colour</b> (or Black), photographed on blank paper.</p>
+      <h3>No stamp? Make a name seal</h3>
+      <p>Type your name under Make a name seal and pick a round or square seal. A Korean name is set top to bottom and right to left, the way name seals are carved; four letters go in two columns. It's a picture of your name, not a registered seal — use it where a simple stamp mark is enough, such as a consent form or a quote, and never in place of a registered seal.</p>
+      <h3>Putting the stamp on a document</h3>
+      <ul>
+          <li><b>Word / HWP:</b> insert the PNG as a picture, set it in front of the text, and drag it over the signature line. The transparent background lets the text show through, like a real stamp.</li>
+          <li><b>PDF:</b> use <a href="/sign-pdf.html">Sign PDF</a> — the link under the result opens it with your stamp ready to place.</li>
+          <li><b>Size:</b> a printed stamp is usually about 1.5 cm (a name seal) to 2.5 cm (a company seal) across. Scale it to that in your document.</li>
+      </ul>
+      <p>Only use your own stamp, or a company seal you are allowed to use. Whether a stamp image is accepted depends on who receives the document — if unsure, ask them first.</p>
+</div>
+
+<section class="faq">
+      <h2>Stamp Image Maker — FAQ</h2>
+      <details open>
+          <summary>How do I turn a photo of my stamp into a transparent PNG?</summary>
+          <p>Stamp it on plain white paper, take a photo from straight above in good light, and choose it under Stamp photo. Click Make stamp image: the paper becomes transparent, the image is cut to the ink, and you download a PNG.</p>
+      </details>
+      <details>
+          <summary>My stamp is on a document with printed text. Can I still use the photo?</summary>
+          <p>Yes, if the stamp is red. Keep Ink colour on Clean red: only red ink is kept, so black print, pen lines and shadows are removed. For a blue or black stamp, choose Keep the photo&#x27;s colour and photograph it on blank paper.</p>
+      </details>
+      <details>
+          <summary>I don't have a stamp. Can I make one?</summary>
+          <p>Open Make a name seal, type your name and pick a round or square seal. It&#x27;s a picture of your name in a seal, not a registered seal, so use it only where a simple stamp mark is enough.</p>
+      </details>
+      <details>
+          <summary>How do I put the stamp image into Word, HWP or a PDF?</summary>
+          <p>In Word or HWP, insert the PNG as a picture and set it to sit in front of the text, then drag it onto the signature line. For a PDF, use Stamp a PDF with it under the result, which opens Sign PDF with the stamp ready.</p>
+      </details>
+      <details>
+          <summary>Is my stamp uploaded anywhere?</summary>
+          <p>No. The background removal and the name seal are made in your browser. Your photo never leaves your device.</p>
+      </details>
+</section>
+
+<!-- guide-links:start -->
+<!-- guide-links:end -->
+
+<!-- more-tools:start -->
+<section class="more">
+      <a class="feature" href="/compress-id-photo.html">
+          <span class="feature-art"><img src="/img/id-sample-3x4.webp" width="354" height="472" loading="lazy" alt="" /><img src="/img/id-sample-passport.webp" width="413" height="531" loading="lazy" alt="" /></span>
+          <span class="feature-body"><span class="tag">New</span><b class="ft">ID &amp; passport photos, sized right</b><span class="fx">Drag the frame onto your face, pick 3×4 or 3.5×4.5 cm and stay under the KB limit.</span><span class="cta">Make an ID photo →</span></span>
+      </a>
+      <h2 class="more-h">More free tools</h2>
+      <p class="more-sub">PDF tools</p>
+      <div class="tcards">
+          <a class="tcard" href="/"><span class="ico">🗜️</span><span class="tx"><b>Compress PDF</b><small>Smaller files, text kept sharp</small></span></a>
+          <a class="tcard" href="/merge.html"><span class="ico">➕</span><span class="tx"><b>Merge PDF</b><small>Combine multiple PDFs into one</small></span></a>
+          <a class="tcard" href="/split.html"><span class="ico">✂️</span><span class="tx"><b>Split PDF</b><small>Extract pages or split by range</small></span></a>
+          <a class="tcard" href="/delete-pages.html"><span class="ico">🗑️</span><span class="tx"><b>Remove Pages</b><small>Delete pages from a PDF</small></span></a>
+          <a class="tcard" href="/rotate.html"><span class="ico">🔄</span><span class="tx"><b>Rotate PDF</b><small>Turn pages 90/180/270°</small></span></a>
+          <a class="tcard" href="/organize.html"><span class="ico">🗂️</span><span class="tx"><b>Organize PDF</b><small>Reorder, rotate or delete pages</small></span></a>
+          <a class="tcard" href="/add-page-numbers.html"><span class="ico">🔢</span><span class="tx"><b>Page Numbers</b><small>Number every page of a PDF</small></span></a>
+          <a class="tcard" href="/watermark.html"><span class="ico">💧</span><span class="tx"><b>Watermark PDF</b><small>Stamp text on every page</small></span></a>
+          <a class="tcard" href="/sign-pdf.html"><span class="ico">✍️</span><span class="tx"><b>Sign PDF</b><small>Put your signature on any page</small></span></a>
+          <a class="tcard" href="/unlock-pdf.html"><span class="ico">🔓</span><span class="tx"><b>Unlock PDF</b><small>Remove a password you know</small></span></a>
+          <a class="tcard" href="/pdf-to-jpg.html"><span class="ico">🖼️</span><span class="tx"><b>PDF to JPG</b><small>Convert pages to images</small></span></a>
+          <a class="tcard" href="/jpg-to-pdf.html"><span class="ico">📷</span><span class="tx"><b>JPG to PDF</b><small>Turn photos into one PDF</small></span></a>
+          <a class="tcard" href="/receipt-to-pdf.html"><span class="ico">🧾</span><span class="tx"><b>Receipts to PDF</b><small>Receipts on A4 pages, numbered, under a size limit</small></span></a>
+      </div>
+      <p class="more-sub">Compress a PDF to a set size</p>
+      <div class="sizes"><a href="/compress-pdf-to-50kb.html" title="Compress PDF to 50KB">50KB</a><a href="/compress-pdf-to-100kb.html" title="Compress PDF to 100KB">100KB</a><a href="/compress-pdf-to-200kb.html" title="Compress PDF to 200KB">200KB</a><a href="/compress-pdf-to-300kb.html" title="Compress PDF to 300KB">300KB</a><a href="/compress-pdf-to-500kb.html" title="Compress PDF to 500KB">500KB</a><a href="/compress-pdf-to-1mb.html" title="Compress PDF to 1MB">1MB</a><a href="/compress-pdf-to-2mb.html" title="Compress PDF to 2MB">2MB</a><a href="/compress-pdf-for-email.html">For email</a></div>
+      <p class="more-sub">Photo &amp; signature tools</p>
+      <div class="tcards">
+          <a class="tcard" href="/compress-id-photo.html"><span class="ico">🪪</span><span class="tx"><b>ID Photo</b><small>Passport & ID sizes, under the KB limit</small></span></a>
+          <a class="tcard" href="/us-visa-photo.html"><span class="ico">🇺🇸</span><span class="tx"><b>US Visa Photo</b><small>600×600 for the DS-160, under 240KB</small></span></a>
+          <a class="tcard" href="/signature-image.html"><span class="ico">🖋️</span><span class="tx"><b>Signature Image</b><small>Clean JPG or transparent PNG</small></span></a>
+          <a class="tcard" href="/bank-exam-photo-signature.html"><span class="ico">🏦</span><span class="tx"><b>Bank Exam Documents</b><small>IBPS / SBI photo, signature, thumb, declaration</small></span></a>
+          <a class="tcard" href="/compress-image.html"><span class="ico">📸</span><span class="tx"><b>Compress Image</b><small>Shrink photos to any KB</small></span></a>
+          <a class="tcard" href="/heic-to-jpg.html"><span class="ico">🔁</span><span class="tx"><b>HEIC to JPG</b><small>iPhone photos as JPG, many at once</small></span></a>
+      </div>
+      <p class="more-sub">Compress a photo to a set size</p>
+      <div class="sizes"><a href="/compress-image-to-20kb.html" title="Compress photo to 20KB">20KB</a><a href="/compress-image-to-50kb.html" title="Compress photo to 50KB">50KB</a><a href="/compress-image-to-100kb.html" title="Compress photo to 100KB">100KB</a><a href="/compress-image-to-200kb.html" title="Compress photo to 200KB">200KB</a></div>
+</section>
+<!-- more-tools:end -->
+
+<div class="wrap">
+      <footer>
+          <div class="foot">
+              <div class="foot-links"><a href="/guides/">Guides</a> · <a href="/about.html">About</a> · <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy Policy</a> · <a href="/contact.html">Contact</a></div>
+              <div>© 2026 SlimIO · Free PDF tools</div>
+              <div>Runs in your browser · No signup</div>
+              <div class="lang-foot"><a href="/ko/stamp-image.html" hreflang="ko" lang="ko" class="lang-switch"><img src="/img/flag-kr.svg" alt="" width="20" height="14" style="vertical-align:-2px;border-radius:2px;margin-right:6px" />한국어</a></div>
+          </div>
+      </footer>
+</div>
+
+<script defer src="/lib.js?v=0ba3a268"></script>
+<script type="module" src="/js/stamp-image.js?v=ff0391a0"></script>
+</body>
+</html>

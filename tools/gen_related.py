@@ -33,6 +33,7 @@ TOOLS = {
     "receipt-to-pdf": ("/receipt-to-pdf.html", "🧾", ("Receipts to PDF", "Receipts on A4 pages, numbered, under a size limit"), ("영수증 PDF", "A4에 모아 번호 붙이고 용량 맞추기")),
     "compress-id-photo": ("/compress-id-photo.html", "🪪", ("ID Photo", "Passport & ID sizes, under the KB limit"), ("증명사진", "여권·반명함 규격 + 용량 맞추기")),
     "signature-image": ("/signature-image.html", "🖋️", ("Signature Image", "Clean JPG or transparent PNG"), ("서명 이미지", "깨끗한 JPG · 투명 PNG")),
+    "stamp-image": ("/stamp-image.html", "🔴", ("Stamp Image", "Stamp photo to transparent PNG, or a name seal"), ("도장 이미지", "도장 사진 배경 지우기 · 이름 도장 PNG")),
     "us-visa-photo": ("/us-visa-photo.html", "🇺🇸", ("US Visa Photo", "600×600 for the DS-160, under 240KB"), ("미국 비자 사진", "DS-160용 600×600 · 240KB")),
     "bank-exam": ("/bank-exam-photo-signature.html", "🏦", ("Bank Exam Documents", "IBPS / SBI photo, signature, thumb, declaration"), ("인도 은행 시험 서류", "IBPS / SBI 사진·서명·지문·서약문")),
     "compress-image": ("/compress-image.html", "📸", ("Compress Image", "Shrink photos to any KB"), ("사진 용량 줄이기", "사진을 원하는 KB로")),
@@ -40,7 +41,7 @@ TOOLS = {
 }
 PDF_TOOLS = ["compress", "merge", "split", "delete-pages", "rotate", "organize", "add-page-numbers",
              "watermark", "sign-pdf", "unlock-pdf", "pdf-to-jpg", "jpg-to-pdf", "receipt-to-pdf"]
-PHOTO_TOOLS = ["compress-id-photo", "us-visa-photo", "signature-image", "bank-exam", "compress-image", "heic-to-jpg"]
+PHOTO_TOOLS = ["compress-id-photo", "us-visa-photo", "signature-image", "stamp-image", "bank-exam", "compress-image", "heic-to-jpg"]
 
 # Feature banners: a tool from the *other* category, with a real example image.
 FEATURES = {
@@ -79,6 +80,7 @@ PAGES = {
     **{p: ("compress-image", "sig", ["compress-id-photo", "jpg-to-pdf", "signature-image"]) for p in SIZE_IMG},
     "compress-id-photo.html": ("compress-id-photo", "sig", ["signature-image", "compress-image", "jpg-to-pdf"]),
     "signature-image.html": ("signature-image", "id", ["sign-pdf", "compress-id-photo", "compress"]),
+    "stamp-image.html": ("stamp-image", "id", ["sign-pdf", "signature-image", "watermark"]),
     "bank-exam-photo-signature.html": ("bank-exam", "id", ["signature-image", "compress-id-photo", "compress"]),
     "us-visa-photo.html": ("us-visa-photo", "sig", ["signature-image", "compress-id-photo", "jpg-to-pdf"]),
     "heic-to-jpg.html": ("heic-to-jpg", "id", ["compress-image", "jpg-to-pdf", "compress-id-photo"]),

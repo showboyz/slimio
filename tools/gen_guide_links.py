@@ -59,6 +59,7 @@ GUIDES = {
         "jpg-to-pdf.html": ["phone-scan-to-pdf", "multiple-photos-to-pdf", "pdf-compression-explained"],
         "receipt-to-pdf.html": ["phone-scan-to-pdf", "yearend-tax-pdf-password", "yearend-tax-rent-docs"],
         "signature-image.html": ["pdf-stamp-seal", "exam-application-photo-size", "resume-photo-size"],
+        "stamp-image.html": ["pdf-stamp-seal", "pdf-sign-free", "gov24-pdf-save"],
         "us-visa-photo.html": K_VISA,
         "compress-id-photo.html": ["exam-application-photo-size", "qnet-photo", "civil-service-exam-photo", "korean-history-exam-photo", "resident-card-photo",
                                    "passport-photo-online", "resume-photo-size", "university-application-photo", "driver-license-photo",

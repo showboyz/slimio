@@ -1,6 +1,13 @@
 // Korean UI strings. Keys are the English text used in the code (see SlimIO.t in lib.js).
 // Load this before lib.js on /ko/ pages.
 window.SLIMIO_KO = {
+   // stamp image
+   "No red stamp found in this photo. If your stamp isn't red, choose “Keep the photo's colour”.": "사진에서 빨간 도장을 찾지 못했어요. 빨간 도장이 아니면 인주 색을 ‘사진 색 그대로’로 바꿔 보세요.",
+   "No stamp found in this photo. Take it on plain white paper, in good light.": "사진에서 도장을 찾지 못했어요. 흰 종이에 찍어서 밝은 곳에서 다시 찍어 주세요.",
+   "Hong Gildong": "홍길동",
+   "Round seal": "원형 도장",
+   "Square seal": "사각 도장",
+   "Transparent background: put it on any document.": "배경이 투명해서 어느 문서에나 얹을 수 있어요.",
    // receipts to PDF
    "Date": "날짜",
    "Store / purpose": "사용처",

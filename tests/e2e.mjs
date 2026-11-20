@@ -185,6 +185,23 @@ async function makeFixtures(browser) {
     return Array.from(new Uint8Array(await b.arrayBuffer()));
   }));
   fs.writeFileSync(path.join(TMP, "sig.png"), sig);
+  // a red name seal stamped over a printed form, photographed under uneven light
+  fs.writeFileSync(path.join(TMP, "stamp.jpg"), Buffer.from(await p.evaluate(async () => {
+    const c = new OffscreenCanvas(2000, 1500), x = c.getContext("2d");
+    const g = x.createRadialGradient(700, 500, 100, 1000, 750, 1400); g.addColorStop(0, "#f4f1ea"); g.addColorStop(1, "#c4beb1");
+    x.fillStyle = g; x.fillRect(0, 0, 2000, 1500);
+    x.fillStyle = "#262626"; x.font = "44px sans-serif";
+    for (let i = 0; i < 10; i++) x.fillText("신청인 성명 SlimIO sample line " + i + "      (인)", 140, 200 + i * 120);
+    x.strokeStyle = x.fillStyle = "rgba(214, 35, 47, 0.85)"; x.lineWidth = 22;
+    x.beginPath(); x.arc(1000, 760, 250, 0, 7); x.stroke();
+    x.font = "bold 150px sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
+    [["홍", 1080, 680], ["길", 1080, 860], ["동", 920, 680], ["인", 920, 860]].forEach(([t, cx, cy]) => x.fillText(t, cx, cy));
+    const d = x.getImageData(0, 0, 2000, 1500), a = d.data;
+    for (let i = 0; i < a.length; i += 4) { const n = (Math.random() - 0.5) * 20; a[i] += n; a[i + 1] += n; a[i + 2] += n; }
+    x.putImageData(d, 0, 0);
+    const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
+    return Array.from(new Uint8Array(await b.arrayBuffer()));
+  })));
   spawnSync("sips", ["-s", "format", "heic", path.join(TMP, "sig.png"), "--out", path.join(TMP, "sig.heic")], { stdio: "ignore" });
   // a 3-page text PDF with English and Korean, printed by Chrome like "Save as PDF"
   const para = "New sign-ups grew steadily this quarter. 이번 분기에는 신규 가입자가 꾸준히 늘었고 작성한 문서를 보강했다. ";
@@ -896,6 +913,60 @@ function toolTests() {
     await chooser.setFiles(F("sig.png"));
     await p.waitForSelector("#dl", { state: "visible", timeout: 30000 }).catch(() => {});
     return (await p.isVisible("#dl")) ? null : "no signature image after picking the photo";
+  });
+
+  // stamp image: what's left of a PNG once it's made (opaque pixels that are red / dark, corner alpha)
+  async function pngStats(p, bytes) {
+    return p.evaluate(async (b64) => {
+      const bmp = await createImageBitmap(await (await fetch("data:image/png;base64," + b64)).blob());
+      const c = new OffscreenCanvas(bmp.width, bmp.height), x = c.getContext("2d");
+      x.drawImage(bmp, 0, 0);
+      const d = x.getImageData(0, 0, bmp.width, bmp.height).data;
+      let opaque = 0, red = 0, dark = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] < 128) continue;
+        opaque++;
+        if (d[i] > d[i + 1] + 60 && d[i] > d[i + 2] + 60) red++;
+        else if (d[i] < 100 && d[i + 1] < 100 && d[i + 2] < 100) dark++;
+      }
+      return { w: bmp.width, h: bmp.height, opaque, red, dark, corners: [d[3], d[(bmp.width - 1) * 4 + 3], d[d.length - 1]] };
+    }, Buffer.from(bytes).toString("base64"));
+  }
+  both("stamp-image.html", "a red stamp on a printed form becomes a transparent PNG of the seal only", async (p) => {
+    await p.setInputFiles("#stampfile", F("stamp.jpg"));
+    await runTool(p);
+    const r = await download(p), st = await pngStats(p, r.bytes);
+    if (!/\.png$/.test(r.name)) return "saved as " + r.name;
+    if (Math.max(st.w, st.h) !== 600) return `${st.w}×${st.h}, expected 600 px on the long side`;
+    if (st.w / st.h < 0.85 || st.w / st.h > 1.15) return `${st.w}×${st.h}: not cut to the round seal (printed text kept?)`;
+    if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
+    if (st.red / st.opaque < 0.97 || st.dark > st.opaque * 0.005) return `ink is ${st.red} red, ${st.dark} dark of ${st.opaque}: printed text left in`;
+    return null;
+  });
+  both("stamp-image.html", "a square name seal with 인", async (p) => {
+    await p.click('.tab[data-mode="make"]');
+    await p.fill("#name", "홍길동"); await p.check("#yin");
+    await p.click('.style[data-shape="square"]');
+    await p.waitForSelector('.style.on[data-shape="square"]');
+    await runTool(p);
+    const st = await pngStats(p, (await download(p)).bytes);
+    if (st.w !== 600 || st.h !== 600) return `${st.w}×${st.h}, expected 600×600`;
+    if (st.red < 30000) return `only ${st.red} red pixels: the seal is missing or empty`;
+    return null;
+  });
+  both("stamp-image.html", "the button with no photo yet opens the picker", async (p) => {
+    const [chooser] = await Promise.all([p.waitForEvent("filechooser", { timeout: 5000 }).catch(() => null), p.click("#go")]);
+    if (!chooser) return "no file picker";
+    await chooser.setFiles(F("stamp.jpg"));
+    await p.waitForSelector("#dl", { state: "visible", timeout: 30000 }).catch(() => {});
+    return (await p.isVisible("#dl")) ? null : "no stamp image after picking the photo";
+  });
+  both("stamp-image.html", "Stamp a PDF with it opens Sign PDF with the stamp", async (p) => {
+    await p.click('.tab[data-mode="make"]'); await p.fill("#name", "홍길동");
+    await runTool(p);
+    await Promise.all([p.waitForNavigation({ waitUntil: "networkidle" }), p.click("#topdf")]);
+    await p.waitForSelector("#handoff", { state: "visible", timeout: 15000 }).catch(() => {});
+    return (await p.isVisible("#handoff")) ? null : "Sign PDF opened without the stamp";
   });
 
   // pasted form rules (sentences people really paste into Google): the box sets size and KB range

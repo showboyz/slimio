@@ -30,7 +30,7 @@ PAGES = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.
          "add-page-numbers.html", "watermark.html", "pdf-to-jpg.html", "jpg-to-pdf.html",
          "sign-pdf.html", "unlock-pdf.html", "receipt-to-pdf.html", "compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
          "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
-         "us-visa-photo.html", "signature-image.html", "heic-to-jpg.html"] + SIZE_PAGES
+         "us-visa-photo.html", "signature-image.html", "stamp-image.html", "heic-to-jpg.html"] + SIZE_PAGES
 
 
 # English-only pages (no Korean version): listed in the sitemap, no hreflang.
@@ -196,6 +196,7 @@ KO["index.html"] = dict(
         ("<h3>ID Photo</h3><p>Crop to passport or ID size, under the KB limit</p>", "<h3>증명사진</h3><p>여권·반명함 규격으로 자르고 용량까지</p>"),
         ("<h3>US Visa Photo</h3><p>600×600 for the DS-160, under 240KB</p>", "<h3>미국 비자 사진</h3><p>DS-160용 600×600 · 240KB 이하</p>"),
         ("<h3>Signature Image</h3><p>Clean JPG or PNG signature, 10–20KB</p>", "<h3>서명 이미지</h3><p>깨끗한 서명 JPG · 투명 PNG, 10~20KB</p>"),
+        ("<h3>Stamp Image</h3><p>Stamp photo to a transparent PNG, or a name seal</p>", "<h3>도장 이미지</h3><p>도장 사진 배경 지우기 · 이름 도장 PNG</p>"),
         ("Need an exact size?", "정해진 용량에 맞춰야 하나요?"),
         (">Compress PDF to 50KB</a>", ">PDF 50KB로 줄이기</a>"),
         (">for email</a>", ">메일 첨부용</a>"),
@@ -1179,6 +1180,70 @@ KO["signature-image.html"] = dict(
     ],
 )
 
+KO["stamp-image.html"] = dict(
+    title="도장 이미지 만들기 - 도장 배경 지우기, 투명 PNG·이름 도장 무료 | SlimIO",
+    desc="종이에 찍은 도장이나 회사 직인을 폰으로 찍어 올리면 흰 배경을 지우고 인주만 남긴 투명 PNG로 만들어요. 한글·워드·PDF에 바로 넣을 수 있고, 도장이 없으면 원형·사각 이름 도장도 만들어요. 무료, 브라우저에서 처리돼요.",
+    keywords="도장 이미지 만들기, 도장 배경 지우기, 도장 배경 제거, 도장 png 만들기, 도장 배경 투명하게, 전자도장 만들기 무료, 이름 도장 만들기, 직인 이미지 만들기",
+    short="도장 이미지 만들기 | SlimIO",
+    app_name="SlimIO 도장 이미지 만들기",
+    app_desc="도장 사진의 종이 배경을 지우고 인주만 남겨 투명 PNG로 만들거나, 이름으로 원형·사각 도장을 만드는 무료 도구. 브라우저에서 처리돼요.",
+    features=["도장 사진 흰 배경 지우기", "빨간 인주만 남기기 (글씨·그림자 제거)", "원형·사각 이름 도장", "투명 PNG", "브라우저에서 처리 (업로드 없음)"],
+    h1="도장 이미지,<br /><b>배경 없이 깔끔하게.</b>",
+    lead="종이에 찍은 도장이나 직인을 폰으로 찍어 올리세요. 종이는 지우고 인주만 남겨서 어느 문서에나 얹을 수 있는 투명 PNG로 만들어요. 도장이 없으면 이름 도장도 만들 수 있어요.",
+    ui=[
+        ("Want to stamp a PDF directly? ", "PDF에 바로 도장을 찍으려면 "),
+        (">Sign PDF →</a>", ">PDF 도장 넣기 →</a>"),
+        ('data-mode="photo">📷 Stamp photo<', 'data-mode="photo">📷 도장 사진<'),
+        ('data-mode="make">🔴 Make a name seal<', 'data-mode="make">🔴 이름 도장 만들기<'),
+        ("Choose a photo of your stamp<small>Stamped on plain white paper, taken in good light</small>", "도장 찍은 사진 고르기<small>흰 종이에 찍어서 밝은 곳에서 찍어 주세요</small>"),
+        ('placeholder="Your name"', 'placeholder="이름 (예: 홍길동)"'),
+        ("Add “인” after a Korean name (홍길동인)", "이름 뒤에 ‘인’ 붙이기 (홍길동인)"),
+        ('<label for="colour">Ink colour</label>', '<label for="colour">인주 색</label>'),
+        (">Clean red — keep only the red ink<", ">선명한 빨강 — 빨간 인주만 남기기<"),
+        (">Keep the photo's colour<", ">사진 색 그대로<"),
+        (">Black<", ">검은색<"),
+        ("Clean red also removes printed text, pen lines and shadows around a red stamp.", "선명한 빨강을 고르면 빨간 도장 주변의 인쇄 글씨, 펜 선, 그림자도 같이 지워져요."),
+        ('<label for="size">Size</label>', '<label for="size">크기</label>'),
+        (">300 px — small file<", ">300px — 작은 파일<"),
+        (">600 px — sharp when printed<", ">600px — 인쇄해도 선명<"),
+        (">1000 px — large<", ">1000px — 크게<"),
+        (">Make stamp image</button>", ">도장 이미지 만들기</button>"),
+        ('alt="Your stamp image"', 'alt="만든 도장 이미지"'),
+        ("↓ Download stamp (PNG)", "↓ 도장 다운로드 (PNG)"),
+        (">🔴 Stamp a PDF with it →<", ">🔴 이 도장을 PDF에 찍기 →<"),
+    ],
+    content="""
+      <h2>도장 이미지 만드는 방법</h2>
+      <ul>
+          <li><b>1. 흰 종이에 찍기.</b> 줄이나 글씨가 없는 흰 종이에 도장을 꾹 눌러 찍으세요.</li>
+          <li><b>2. 사진 찍기.</b> 바로 위에서, 낮이나 밝은 조명 아래에서 폰 그림자가 지지 않게 찍으세요. 도장이 사진의 대부분을 차지하면 좋아요.</li>
+          <li><b>3. 올리고 만들기.</b> ‘도장 사진’에서 사진을 고르고 도장 이미지 만들기를 누르세요. 종이는 투명해지고 인주 부분에 맞춰 잘려요.</li>
+          <li><b>4. PNG 다운로드.</b> 한글·워드·파워포인트에 그림으로 넣거나, 결과 아래 ‘이 도장을 PDF에 찍기’로 PDF에 바로 찍으세요.</li>
+      </ul>
+      <h3>선명한 빨강, 사진 색 그대로, 검은색</h3>
+      <p>도장은 대부분 빨간 인주로 찍어요. <b>선명한 빨강</b>은 빨간 인주만 남기고 색을 고르게 맞춰서 화면에서도 인쇄해도 같은 색으로 보여요. 도장 주변의 인쇄 글씨, 펜 선, 그림자는 함께 지워져요. 파란색이나 검은색 고무인은 빈 종이에 찍어서 <b>사진 색 그대로</b>나 검은색을 고르세요.</p>
+      <h3>도장이 없다면: 이름 도장 만들기</h3>
+      <p>‘이름 도장 만들기’에 이름을 쓰고 원형이나 사각을 고르세요. 한글 이름은 실제 도장처럼 위에서 아래로, 오른쪽 줄부터 읽히게 놓이고, 네 글자는 두 줄로 들어가요. 두세 글자 이름은 ‘인’을 붙여 ‘홍길동인’처럼 만들 수도 있어요.</p>
+      <p>다만 이 도장은 이름을 보여 주는 그림이지, 신고된 인감이 아니에요. 날인 표시만 있으면 되는 동의서·신청서·견적서 정도에 쓰고, 인감증명서를 같이 내라는 서류에는 쓰지 마세요.</p>
+      <h3>문서에 넣는 법</h3>
+      <ul>
+          <li><b>한글·워드:</b> PNG를 그림으로 넣고 배치를 ‘글 앞으로’로 바꾼 뒤 (인) 자리로 끌어 옮기세요. 배경이 투명해서 아래 글씨가 비쳐 보여 실제로 찍은 것처럼 보여요.</li>
+          <li><b>PDF:</b> 결과 아래 ‘이 도장을 PDF에 찍기’를 누르면 <a href="/ko/sign-pdf.html">PDF 도장 넣기</a>가 이 도장을 넣을 준비가 된 상태로 열려요.</li>
+          <li><b>크기:</b> 화면 속 도장이 실물 크기에 가까울수록 자연스러워요. 이름 도장은 지름 약 1.5cm, 회사 직인은 약 2~2.5cm쯤으로 맞추세요. 인감으로 신고하는 도장은 가로·세로 7mm 이상 30mm 이내예요(인감증명법 시행령 제6조).</li>
+      </ul>
+      <h3>도장 이미지, 어디까지 써도 될까</h3>
+      <p>전자서명법 제3조는 전자서명이 전자적 형태라는 이유만으로 효력이 부인되지 않는다고 정해요. 하지만 이미지는 누구나 복사할 수 있어서, 결국 기준은 서류를 받는 쪽이 정한 방식이에요. 받는 곳이 “PDF에 도장 찍어 보내 주세요”라고 한 견적서·동의서는 대개 괜찮고, 인감증명서를 같이 내라거나 종이 원본에 직접 날인하라는 서류에는 쓰면 안 돼요. 모르겠으면 보내기 전에 먼저 물어보세요.</p>
+      <p>남의 도장이나 회사 직인은 허락받은 경우에만 쓰세요. 다른 사람의 인장을 위조하거나 부정하게 쓰면 형법 제239조에 따라 처벌받을 수 있어요. 자세한 내용은 <a href="/ko/guides/pdf-stamp-seal.html">PDF에 도장·직인 넣는 법</a>에 법령 원문과 함께 정리했어요.</p>""",
+    faq_title="도장 이미지 만들기",
+    faq=[
+        ("도장 사진의 흰 배경은 어떻게 지우나요?", "흰 종이에 찍은 도장을 바로 위에서 밝게 찍고, ‘도장 사진’에서 고른 뒤 도장 이미지 만들기를 누르세요. 종이는 투명해지고 인주 부분에 맞춰 잘린 PNG가 만들어져요."),
+        ("서류 위에 찍힌 도장도 되나요?", "빨간 도장이면 돼요. 인주 색을 ‘선명한 빨강’으로 두면 빨간 인주만 남기고 검은 인쇄 글씨, 펜 선, 그림자는 지워요. 파란색·검은색 도장은 빈 종이에 찍어서 ‘사진 색 그대로’를 고르세요."),
+        ("도장이 없는데 만들 수 있나요?", "‘이름 도장 만들기’에 이름을 쓰고 원형이나 사각을 고르면 이름 도장 PNG가 만들어져요. 이름을 보여 주는 그림일 뿐 신고된 인감은 아니니, 날인 표시만 필요한 서류에 쓰세요."),
+        ("한글이나 워드 문서에 도장을 넣으려면요?", "만든 PNG를 그림으로 넣고 배치를 ‘글 앞으로’로 바꾼 뒤 (인) 자리로 옮기세요. 배경이 투명해서 아래 글씨가 비쳐 보여요. PDF라면 결과 아래 ‘이 도장을 PDF에 찍기’를 누르세요."),
+        ("도장 사진이 서버로 올라가나요?", "아니요. 배경 지우기와 이름 도장 만들기가 모두 브라우저 안에서 이루어져서 사진이 내 기기 밖으로 나가지 않아요."),
+    ],
+)
+
 KO["compress-image-to-50kb.html"] = dict(
     title="사진 50KB 줄이기 - 증명사진·이미지 용량 50KB 이하로 무료 | SlimIO",
     desc="증명사진·지원서 사진을 50KB 이하로 줄이세요. 시험 접수·채용·원서용으로 규격 맞추기까지. 회원가입 없이 무료, 브라우저에서 처리돼요.",
@@ -1423,7 +1488,7 @@ KO["sign-pdf.html"] = dict(
       <h3>PDF에 도장 넣기 (이름 도장)</h3>
       <p>도장이 없어도 괜찮아요. 이름 입력 탭에서 이름을 적고 빨간 원형 스타일을 고르면 도장이 만들어져요. 두 글자는 세로로, 세 글자 이름은 세로 한 줄로, 네 글자는 오른쪽 위부터 읽는 방식으로 배치해요.</p>
       <h3>PDF에 직인·실제 도장 넣기</h3>
-      <p>흰 종이에 도장이나 회사 직인을 찍은 뒤 사진을 찍어 이미지 올리기로 넣으세요. 흰 배경을 자동으로 지워서 빨간 인영만 PDF에 들어가요. 문서 글자 위에 겹쳐 찍어도 아래 글자가 비쳐 보여요. 직인 스캔 파일(PNG·JPG)이 있다면 그대로 올려도 돼요. 손으로 쓴 서명은 <a href="/ko/signature-image.html">서명 이미지 만들기</a>에서 먼저 깨끗하게 정리할 수 있어요. 도장 사진 잘 찍는 법, 적당한 크기, 도장 이미지의 효력은 <a href="/ko/guides/pdf-stamp-seal.html">PDF에 도장·직인 넣는 법</a>에 정리했어요.</p>
+      <p>흰 종이에 도장이나 회사 직인을 찍은 뒤 사진을 찍어 이미지 올리기로 넣으세요. 흰 배경을 자동으로 지워서 빨간 인영만 PDF에 들어가요. 문서 글자 위에 겹쳐 찍어도 아래 글자가 비쳐 보여요. 직인 스캔 파일(PNG·JPG)이 있다면 그대로 올려도 돼요. 한글·워드 문서에도 쓸 도장 파일이 필요하면 <a href="/ko/stamp-image.html">도장 이미지 만들기</a>에서 배경 없는 PNG로 먼저 만들 수 있어요. 손으로 쓴 서명은 <a href="/ko/signature-image.html">서명 이미지 만들기</a>에서 먼저 깨끗하게 정리할 수 있어요. 도장 사진 잘 찍는 법, 적당한 크기, 도장 이미지의 효력은 <a href="/ko/guides/pdf-stamp-seal.html">PDF에 도장·직인 넣는 법</a>에 정리했어요.</p>
       <h3>여러 페이지에 서명하기</h3>
       <p>이전 · 다음 페이지로 넘기면서 필요한 곳마다 서명을 추가하세요. 모두 한 파일에 저장돼요. 사본 표시가 필요하면 <a href="/ko/watermark.html">워터마크</a>를, 메일로 보낼 파일이라면 <a href="/ko/compress-pdf-for-email.html">메일 첨부용으로 줄이기</a>를 함께 쓰세요.</p>""",
     faq_title="PDF 서명 넣기",
@@ -1827,7 +1892,7 @@ PHOTO_PICK = """
             <span class="pp-go" aria-hidden="true">→</span>
         </a>
         <p class="photo-more">사진 용량만: <a href="/compress-image-to-50kb.html" data-umami-event="home-photo" data-umami-event-to="50kb">50KB</a> · <a href="/compress-image-to-100kb.html" data-umami-event="home-photo" data-umami-event-to="100kb">100KB</a> · <a href="/compress-image-to-200kb.html" data-umami-event="home-photo" data-umami-event-to="200kb">200KB</a> · <a href="/us-visa-photo.html" data-umami-event="home-photo" data-umami-event-to="us-visa">미국 비자 사진</a> · <a href="/signature-image.html" data-umami-event="home-photo" data-umami-event-to="signature">서명 이미지</a></p>"""
-PHOTO_FIRST = ["/compress-id-photo.html", "/compress-image.html", "/us-visa-photo.html", "/signature-image.html", "/heic-to-jpg.html"]
+PHOTO_FIRST = ["/compress-id-photo.html", "/compress-image.html", "/us-visa-photo.html", "/signature-image.html", "/stamp-image.html", "/heic-to-jpg.html"]
 
 
 def photo_first(s):

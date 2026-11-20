@@ -14,7 +14,7 @@ PDF_TOOLS = ["index.html", "merge.html", "split.html", "delete-pages.html", "rot
              "add-page-numbers.html", "watermark.html", "sign-pdf.html", "unlock-pdf.html", "pdf-to-jpg.html", "jpg-to-pdf.html", "receipt-to-pdf.html"]
 PHOTO_TOOLS = ["compress-image.html", "compress-image-to-20kb.html", "compress-image-to-50kb.html",
                "compress-image-to-100kb.html", "compress-image-to-200kb.html", "compress-id-photo.html",
-               "us-visa-photo.html", "signature-image.html", "bank-exam-photo-signature.html", "heic-to-jpg.html"]
+               "us-visa-photo.html", "signature-image.html", "stamp-image.html", "bank-exam-photo-signature.html", "heic-to-jpg.html"]
 # size pages that are English only (compress-pdf-to-4mb: IRCC) sit after the shared ones
 SIZE_ALL = SIZE_PAGES[:-1] + [p for p in EN_ONLY if p.startswith("compress-pdf-to-")] + SIZE_PAGES[-1:]
 assert set(PDF_TOOLS + PHOTO_TOOLS + SIZE_ALL) == set(PAGES + EN_ONLY), "a page is missing from llms.txt groups"

@@ -1,11 +1,11 @@
 {
  "/": [
-  "1adf7c069ca5ff4f",
-  "2026-11-10"
+  "285c5ee605ff1533",
+  "2026-11-20"
  ],
  "/about.html": [
-  "10ee86ea34b26c75",
-  "2026-11-17"
+  "5238eaa7e766faed",
+  "2026-11-20"
  ],
  "/add-page-numbers.html": [
   "c1c1245a5efd3895",
@@ -152,12 +152,12 @@
   "2026-11-08"
  ],
  "/ko/": [
-  "a4f80a3c7e5a781d",
-  "2026-11-18"
+  "4dd2e7f9395e185b",
+  "2026-11-20"
  ],
  "/ko/about.html": [
-  "4668046ad19e63ac",
-  "2026-11-18"
+  "0e7a3eacfdf717ad",
+  "2026-11-20"
  ],
  "/ko/add-page-numbers.html": [
   "c447ed924a3809eb",
@@ -404,8 +404,8 @@
   "2026-10-27"
  ],
  "/ko/sign-pdf.html": [
-  "1596c17f0efc8a18",
-  "2026-11-06"
+  "f8be7a169ca73d2b",
+  "2026-11-20"
  ],
  "/ko/signature-image.html": [
   "e00809e48a330e9b",
@@ -414,6 +414,10 @@
  "/ko/split.html": [
   "c18727e51c06eb1e",
   "2026-10-27"
+ ],
+ "/ko/stamp-image.html": [
+  "a26b7093e88ea20e",
+  "2026-11-20"
  ],
  "/ko/terms.html": [
   "1f4e1a12c7f333f8",
@@ -466,6 +470,10 @@
  "/split.html": [
   "2338f0f70e0582f4",
   "2026-10-30"
+ ],
+ "/stamp-image.html": [
+  "33bfdcdefda1ef32",
+  "2026-11-20"
  ],
  "/terms.html": [
   "0a3a5a2b616ed1f0",
