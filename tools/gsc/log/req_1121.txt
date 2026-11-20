@@ -1,0 +1,18 @@
+window 8495
+03:14:31 https://pdfslimio.com/ko/stamp-image.html None (not on Google)
+03:14:57 https://pdfslimio.com/stamp-image.html requested (not on Google)
+03:15:21 https://pdfslimio.com/ko/sign-pdf.html requested (not on Google)
+03:16:13 https://pdfslimio.com/ko/ requested (on Google)
+03:16:15 RESULTS {
+ "https://pdfslimio.com/ko/stamp-image.html": "None (not on Google)",
+ "https://pdfslimio.com/stamp-image.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/sign-pdf.html": "requested (not on Google)",
+ "https://pdfslimio.com/ko/": "requested (on Google)"
+}
+window 8495 closed
+window 8524
+03:18:18 https://pdfslimio.com/ko/stamp-image.html requested (not on Google)
+03:18:20 RESULTS {
+ "https://pdfslimio.com/ko/stamp-image.html": "requested (not on Google)"
+}
+window 8524 closed
