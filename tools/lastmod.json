@@ -152,8 +152,8 @@
   "2026-11-08"
  ],
  "/ko/": [
-  "4dd2e7f9395e185b",
-  "2026-11-20"
+  "b834dac144a41779",
+  "2026-11-22"
  ],
  "/ko/about.html": [
   "0e7a3eacfdf717ad",
@@ -248,8 +248,8 @@
   "2026-11-17"
  ],
  "/ko/guides/driver-license-photo.html": [
-  "80acf3463b126071",
-  "2026-11-17"
+  "e756604c9e9f6b44",
+  "2026-11-22"
  ],
  "/ko/guides/exam-application-photo-size.html": [
   "09c6b15a41310a4b",
@@ -382,6 +382,10 @@
  "/ko/merge.html": [
   "67e55cd527f0ef5e",
   "2026-11-07"
+ ],
+ "/ko/neis-byte-counter.html": [
+  "3b822d3b4019aac2",
+  "2026-11-22"
  ],
  "/ko/organize.html": [
   "e514592738a8e097",

@@ -969,6 +969,39 @@ function toolTests() {
     return (await p.isVisible("#handoff")) ? null : "Sign PDF opened without the stamp";
   });
 
+  // NEIS byte counter (Korean only): the 2026 기재요령 rule is 한글 3, 영문·숫자 1, Enter 1 byte;
+  // symbols go by UTF-8 (space 1, · 2, “ 3)
+  const NEIS = "/ko/neis-byte-counter.html";
+  const neisText = (p) => p.$eval("#bytes", (e) => e.textContent);
+  T.push({ name: `${NEIS} counts 한글 3, 영문·숫자 1, Enter 1`, url: NEIS, fn: async (p) => {
+    if (await p.$eval("#max", (e) => e.textContent) !== "1,500") return "the first area is not 1,500 bytes (과목별 세특 500자)";
+    await p.fill("#text", "가a1 \n·“");
+    const b = await neisText(p);
+    if (b !== "12") return `"가a1 ⏎·“" counted as ${b} bytes, expected 12 (3+1+1+1+1+2+3)`;
+    if (await p.$eval("#nospace", (e) => e.textContent) !== "5") return "공백 제외 count is not 5";
+    return (await p.isVisible("#overflow")) ? "overflow box shown under the limit" : null;
+  } });
+  T.push({ name: `${NEIS} 행특 300자: one character over shows the cut`, url: NEIS, fn: async (p) => {
+    await p.selectOption("#area", { label: "행동특성 및 종합의견 — 300자 (900Byte)" });
+    await p.fill("#text", "가".repeat(299) + "나다");
+    if (await neisText(p) !== "903") return "301 한글 counted as " + (await neisText(p));
+    if (!(await p.isVisible("#overflow"))) return "no overflow box at 903 / 900";
+    if (await p.$eval("#overtext mark", (e) => e.textContent) !== "다") return "the highlighted part is not the last character";
+    const left = await p.textContent("#left");
+    return /3Byte 넘었어요.*1자/.test(left) ? null : "over message: " + left;
+  } });
+  T.push({ name: `${NEIS} 중학교 자유학기 and a typed byte limit`, url: NEIS, fn: async (p) => {
+    await p.selectOption("#level", "middle");
+    const opts = await p.$$eval("#area option", (a) => a.map((o) => o.textContent));
+    if (!opts.some((o) => o.startsWith("자유학기 진로탐색활동 — 1,000자"))) return "no 자유학기 진로탐색활동 for 중학교";
+    await p.selectOption("#area", "custom");
+    await p.fill("#custom", "10");
+    await p.fill("#text", "abcdefghijk");
+    if (await p.$eval("#max", (e) => e.textContent) !== "10") return "typed limit not used";
+    const left = await p.textContent("#left");
+    return /1Byte 넘었어요/.test(left) ? null : "over message: " + left;
+  } });
+
   // pasted form rules (sentences people really paste into Google): the box sets size and KB range
   // before any photo is added, and the file that comes out meets them
   const PASTED = [

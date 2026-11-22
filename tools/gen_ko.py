@@ -39,6 +39,10 @@ EN_ONLY = ["bank-exam-photo-signature.html", "compress-pdf-to-4mb.html"]
 # Hand-written in both languages (public/X.html and public/ko/X.html); gen_ko only links them.
 INFO_PAGES = ["about.html", "terms.html", "privacy.html", "contact.html"]
 
+# Korean-only pages (no English version): hand-written in public/ko/, listed in the sitemap, no hreflang.
+# neis-byte-counter: NEIS (Korean school records) byte limits exist only in Korea.
+KO_ONLY = ["neis-byte-counter.html"]
+
 
 def en_path(p): return "/" if p == "index.html" else "/" + p
 def ko_path(p): return "/ko/" if p == "index.html" else "/ko/" + p
@@ -1978,6 +1982,10 @@ def build(page):
         s = sub1(r"(<style>)", lambda m: m.group(1) + INDEX_EXTRA_CSS, s, "index css")
         s = sub1(r'(\n\s*<div class="tool">)', lambda m: PHOTO_PICK + "\n" + m.group(1), s, "index photo card")
         s = photo_first(s)
+        # Korean-only tool, so it has no English card to translate: added after the last card
+        s = sub1(r'(<a class="toolcard" href="/unlock-pdf\.html">.*?</a>)',   # links become /ko/ later (rewrite_links)
+                 lambda m: m.group(1) + '\n                  <a class="toolcard" href="/ko/neis-byte-counter.html"><div class="ico">📝</div><h3>나이스 바이트 계산기</h3><p>생기부 글자수, 2026 기재요령 기준</p></a>',
+                 s, "index NEIS card")
     elif '<section class="faq">' in s:
         s = sub1(r'<div class="content">.*?</div>\s*<section class="faq">.*?</section>', lambda m: block, s, f"{page} content")
     else:
@@ -2005,7 +2013,7 @@ def guide_urls():
 
 
 def write_sitemap():
-    urls = [en_path(p) for p in PAGES + INFO_PAGES + EN_ONLY] + [ko_path(p) for p in PAGES + INFO_PAGES] + guide_urls()
+    urls = [en_path(p) for p in PAGES + INFO_PAGES + EN_ONLY] + [ko_path(p) for p in PAGES + INFO_PAGES + KO_ONLY] + guide_urls()
     mod = lastmod.dates(urls, TODAY)
     body = "".join(f"""       <url>
            <loc>{SITE}{u}</loc>
