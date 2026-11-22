@@ -159,9 +159,19 @@ const SlimIO = (() => {
       const p = location.pathname.replace(/^\/|\.html$/g, "").replace(/\/$/, "");
       return !p ? "compress" : p === "ko" ? "ko/compress" : p;
    }
-   // Any Umami event, tagged with the current tool (props may override it).
+   // Any Umami event, tagged with the current tool (props may override it) and, on a page in an
+   // A/B test, with the visitor's variant (<html data-ab>, set in the page head; tools/gen_ko.py).
+   const ab = document.documentElement.getAttribute("data-ab");
    function event(name, props) {
-      try { window.umami && window.umami.track(name, Object.assign({ tool: toolName() }, props)); } catch (e) {}
+      try { window.umami && window.umami.track(name, Object.assign({ tool: toolName() }, ab ? { ab } : null, props)); } catch (e) {}
+   }
+   // One "ab-view" per page view: the denominator for each variant (Umami's own page views carry no variant).
+   if (ab) {
+      let tries = 0;
+      (function viewed() {
+         if (window.umami) event("ab-view");
+         else if (tries++ < 20) setTimeout(viewed, 500);
+      })();
    }
    // Umami "error" event, so we learn what goes wrong for real visitors. Never the file:
    // quoted parts of a message (file names) are dropped. At most 5 different errors per page view.

@@ -880,6 +880,36 @@ function toolTests() {
     const n = await p.$$eval("#result li a[download]", (a) => a.length);
     return n === 2 ? null : `${n} downloads, expected 2`;
   });
+  // Light/dark A/B test on the Korean ID photo page (HANDOFF 2-96; tools/gen_ko.py AB_THEME_HEAD,
+  // public/theme-light.css). ?theme=light previews the light half without saving it.
+  T.push({ name: "/ko/compress-id-photo.html light theme: light colours, events carry the variant", url: "/ko/compress-id-photo.html?theme=light", fn: async (p) => {
+    const s = await p.evaluate(() => ({ light: document.documentElement.classList.contains("theme-light"), ab: document.documentElement.getAttribute("data-ab"),
+      bg: getComputedStyle(document.body).backgroundColor, card: getComputedStyle(document.querySelector(".tool")).backgroundColor, saved: localStorage.getItem("slimio.ab-theme") }));
+    if (!s.light || s.ab !== "theme-light") return `not in the light theme (data-ab "${s.ab}")`;
+    if (s.bg !== "rgb(245, 247, 250)" || s.card !== "rgb(255, 255, 255)") return `page ${s.bg}, tool box ${s.card}: theme-light.css didn't apply`;
+    if (s.saved) return "?theme=light was saved; it should only preview";
+    await p.setInputFiles("#images", F("photo.jpg"));
+    await photoResult(p);
+    const ev = await p.evaluate(() => window.__ev);
+    const view = ev.find(([n]) => n === "ab-view"), used = ev.find(([n]) => n === "tool-used");
+    if (!view || view[1].ab !== "theme-light") return `no "ab-view" event with the variant: ${JSON.stringify(ev).slice(0, 200)}`;
+    if (!used || used[1].ab !== "theme-light") return `"tool-used" doesn't carry the variant: ${JSON.stringify(used)}`;
+    const dl = await p.$eval("#result li.one a.dl", (a) => [getComputedStyle(a).color, getComputedStyle(a).backgroundColor]);
+    return dl[0] === "rgb(255, 255, 255)" && dl[1] === "rgb(10, 135, 90)" ? null : `download button is ${dl.join(" on ")}, expected white on dark green`;
+  } });
+  T.push({ name: "/ko/compress-id-photo.html A/B: a visitor keeps one theme; ?theme=dark previews dark", url: "/ko/compress-id-photo.html", fn: async (p) => {
+    const get = () => p.evaluate(() => [document.documentElement.getAttribute("data-ab"), localStorage.getItem("slimio.ab-theme"),
+      document.documentElement.classList.contains("theme-light"), getComputedStyle(document.body).backgroundColor]);
+    const a = await get();
+    if (!/^theme-(light|dark)$/.test(a[0]) || a[0] !== "theme-" + a[1]) return `variant ${a[0]}, saved ${a[1]}`;
+    if (a[2] !== (a[1] === "light") || a[3] !== (a[1] === "light" ? "rgb(245, 247, 250)" : "rgb(11, 13, 18)")) return `${a[1]} half shows background ${a[3]}`;
+    await p.reload({ waitUntil: "networkidle" });
+    const b = await get();
+    if (b[0] !== a[0]) return `the theme changed on reload: ${a[0]} → ${b[0]}`;
+    await p.goto(BASE + "/ko/compress-id-photo.html?theme=dark", { waitUntil: "networkidle" });
+    const c = await get();
+    return c[0] === "theme-dark" && !c[2] && c[3] === "rgb(11, 13, 18)" ? null : `?theme=dark shows ${c[0]}, background ${c[3]}`;
+  } });
   // Korean photo guides with the ID photo tool in them (tools/gen_guide_tools.py): the box starts
   // at the guide's first size and makes a photo of that size within its KB limit
   for (const f of fs.readdirSync(path.join(ROOT, "content/guides/ko"))) {
