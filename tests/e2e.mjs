@@ -202,6 +202,23 @@ async function makeFixtures(browser) {
     const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
     return Array.from(new Uint8Array(await b.arrayBuffer()));
   })));
+  // a whole A4 page scanned at 300 dpi (2480×3508) with a 15 mm stamp (about 177 px across) over "(인)"
+  fs.writeFileSync(path.join(TMP, "stamp-a4.jpg"), Buffer.from(await p.evaluate(async () => {
+    const c = new OffscreenCanvas(2480, 3508), x = c.getContext("2d");
+    x.fillStyle = "#f8f6f0"; x.fillRect(0, 0, 2480, 3508);
+    x.fillStyle = "#222"; x.font = "60px sans-serif";
+    for (let i = 0; i < 20; i++) x.fillText("위 임 장 sample line " + i, 260, 400 + i * 120);
+    x.font = "64px sans-serif"; x.fillText("위임인 성명  홍 길 동   (인)", 1000, 3000);
+    x.strokeStyle = x.fillStyle = "rgba(214, 35, 47, 0.85)"; x.lineWidth = 12;
+    x.beginPath(); x.arc(1880, 2980, 88, 0, 7); x.stroke();
+    x.font = "bold 56px sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
+    [["홍", 1910, 2950], ["길", 1910, 3012], ["동", 1850, 2950], ["인", 1850, 3012]].forEach(([t, cx, cy]) => x.fillText(t, cx, cy));
+    const d = x.getImageData(0, 0, 2480, 3508), a = d.data;
+    for (let i = 0; i < a.length; i += 4) { const n = (Math.random() - 0.5) * 12; a[i] += n; a[i + 1] += n; a[i + 2] += n; }
+    x.putImageData(d, 0, 0);
+    const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
+    return Array.from(new Uint8Array(await b.arrayBuffer()));
+  })));
   // a blue office rubber stamp on blank paper: "Clean red" (the default) finds no red ink here
   fs.writeFileSync(path.join(TMP, "stamp-blue.jpg"), Buffer.from(await p.evaluate(async () => {
     const c = new OffscreenCanvas(1600, 1200), x = c.getContext("2d");
@@ -984,6 +1001,17 @@ function toolTests() {
     if (!/\.png$/.test(r.name)) return "saved as " + r.name;
     if (Math.max(st.w, st.h) !== 600) return `${st.w}×${st.h}, expected 600 px on the long side`;
     if (st.w / st.h < 0.85 || st.w / st.h > 1.15) return `${st.w}×${st.h}: not cut to the round seal (printed text kept?)`;
+    if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
+    if (st.red / st.opaque < 0.97 || st.dark > st.opaque * 0.005) return `ink is ${st.red} red, ${st.dark} dark of ${st.opaque}: printed text left in`;
+    return null;
+  });
+  // the page is worked on at 1600 px, so a stamp on a whole A4 scan used to come out about 170 px whatever was asked
+  both("stamp-image.html", "a stamp on a whole A4 scan is cut from the full-size scan, not the shrunk page", async (p) => {
+    await p.setInputFiles("#stampfile", F("stamp-a4.jpg"));
+    await runTool(p);
+    const r = await download(p), st = await pngStats(p, r.bytes);
+    if (Math.max(st.w, st.h) < 340) return `${st.w}×${st.h}: the stamp is about 177 px in the scan, so 600 px should give at least 340`;
+    if (st.w / st.h < 0.85 || st.w / st.h > 1.15) return `${st.w}×${st.h}: not cut to the round stamp`;
     if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
     if (st.red / st.opaque < 0.97 || st.dark > st.opaque * 0.005) return `ink is ${st.red} red, ${st.dark} dark of ${st.opaque}: printed text left in`;
     return null;

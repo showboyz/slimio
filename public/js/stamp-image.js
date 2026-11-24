@@ -20,7 +20,7 @@ async function decode(f) {
 
 // Paper → transparent, judged against the paper around each pixel (phone photos are never evenly lit).
 // colour "red" also drops everything that isn't red ink: printed text, a pen line, shadows.
-function stampFromPhoto(img, colour) {
+function stampFromPhoto(img, colour, again = true) {
      const s = Math.min(1, MAX_SIDE / Math.max(img.width, img.height));
      const c = document.createElement("canvas");
      c.width = Math.max(1, Math.round(img.width * s));
@@ -84,6 +84,22 @@ function stampFromPhoto(img, colour) {
      while (y1 >= 0 && rows[y1] < few) y1--;
      // (with red, the caller tries again keeping the photo's colour before showing this)
      if (x1 < x0 || y1 < y0 || (x1 - x0) < 8 || (y1 - y0) < 8) throw new Error(SlimIO.t("No stamp found in this photo. Take it on plain white paper, in good light."));
+     // A big photo or a whole A4 scan was shrunk to MAX_SIDE above, so the stamp came out small (a 15 mm
+     // stamp on a 300 or 600 dpi A4 scan: about 170 px, whatever size was asked for). Now that we know
+     // where it is, cut that part of the original, with paper around it, and do it again at full detail.
+     if (again && s < 0.98) {
+             const m = Math.round(Math.max(x1 - x0, y1 - y0) * 0.15) + 4;
+             const sx = Math.max(0, (x0 - m) / s), sy = Math.max(0, (y0 - m) / s);
+             const w = Math.min(img.width, (x1 + 1 + m) / s) - sx, h = Math.min(img.height, (y1 + 1 + m) / s) - sy;
+             if (w * h < img.width * img.height * 0.6) {   // not most of the photo (then nothing to gain)
+                     const k = Math.min(1, MAX_SIDE / Math.max(w, h));   // keeps the canvas small on phones
+                     const part = document.createElement("canvas");
+                     part.width = Math.max(1, Math.round(w * k));
+                     part.height = Math.max(1, Math.round(h * k));
+                     part.getContext("2d").drawImage(img, sx, sy, w, h, 0, 0, part.width, part.height);
+                     try { return stampFromPhoto(part, colour, false); } catch (e) { /* keep the small result below */ }
+             }
+     }
      ctx.putImageData(data, 0, 0);
      return pad(c, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
 }
