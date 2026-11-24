@@ -15,7 +15,7 @@ Good to know when recommending a page:
   changing the picture.
 - Pages can be preset by URL. Photo pages: `?resize=` (id-3x4, passport, us-visa, bank-photo, kr-qnet,
   kr-gosi, kr-history, kr-korcham, kr-kpc, kr-toeic, kr-teps, kr-jobkorea, kr-saramin, upsc-photo, cn-visa, kr-kuksiwon,
-  uk-eta, pk-passport, oci-photo, kr-license, kr-passport, kr-resident, in-evisa, kr-arc, vn-evisa, cn-hsk, cn-hsk-center, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
+  uk-eta, pk-passport, oci-photo, kr-license, kr-passport, kr-resident, in-evisa, kr-arc, vn-evisa, cn-hsk, cn-hsk-center, kr-jlpt-yeongnam, or a longest side like 800) and `?target=` (e.g. 50KB, 200KB, 20-50KB).
   Signature page: `?preset=` (bank-sign, bank-thumb, bank-decl, rrb-sign, ssc-sign, upsc-sign, neet-sign, ugcnet-sign, oci-sign).
 - Photo and signature pages also read pasted form instructions ("140 x 60 pixels, 10 KB to 20 KB, JPG")
   and set the size for you.
@@ -148,6 +148,10 @@ Good to know when recommending a page:
 - [아기 여권사진 규격 3.5×4.5cm: 36개월 이하 입 조금 벌림 OK (귀·옷·삔·신청 방법)](https://pdfslimio.com/ko/guides/baby-passport-photo.html): 아기 여권사진도 어른과 같은 3.5×4.5cm, 정수리~턱 3.2~3.6cm 규격이고 36개월 이하만 입을 조금 벌려도 돼요. 귀·옷 색·삔·어플에 대한 외교부 안내, 첫 여권 방문 신청과 수수료, 정부24 재발급 사진 파일(413×531·500KB)까지 정리했어요.
 - [반명함 사진 크기 3×4cm, 파일은 354×472픽셀: 뜻·여권 사진과 차이·출력 (공식 서류 기준)](https://pdfslimio.com/ko/guides/half-size-photo.html): 반명함판은 대학 모집요강과 기관 공고에 보통 가로 3cm×세로 4cm로 적혀 있고, 300dpi 파일로는 354×472픽셀이에요. 법으로 정한 크기는 아니라서 3.5×4.5cm를 반명함이라 쓴 공고도 있어요. 공식 문서 예시, 여권 사진과의 차이, 출력 방법을 정리했어요.
 - [여권사진 규격 3.5×4.5cm, 머리 3.2~3.6cm: 귀·눈썹·옷·안경·귀걸이 되나요? (2026)](https://pdfslimio.com/ko/guides/passport-photo-size.html): 여권사진은 3.5×4.5cm, 정수리(머리카락 제외)부터 턱까지 3.2~3.6cm, 6개월 안에 찍은 흰 배경 사진이에요. 귀를 가려도 되는지, 눈썹은 얼마나 보여야 하는지, 옷 색·화장·안경·귀걸이·어플 보정까지 외교부 규격과 Q&A로 확인했어요.
+- [JLPT 사진 규격 2026: 서울·영남 사이즈와 사진 변경 기간](https://pdfslimio.com/ko/guides/jlpt-photo.html): JLPT 접수 사진은 응시 지역마다 기준이 달라요. 서울·제주(jlpt.or.kr)는 JPG, 3.5×4.5cm 비율, 1MB 이하이고 영남(bsjlpt.or.kr)은 360×480픽셀, 30~200KB예요. 사진 변경 기간, 합격인정서 인쇄, 안 되는 사진까지 공식 안내로 정리했어요.
+- [병무청 사진 규격 2026: 진단서·전역증·지원서 용도별 정리](https://pdfslimio.com/ko/guides/mma-photo.html): 병무청 사진 규격은 하나가 아니에요. 병무용진단서는 3.5×4.5cm(여권용) 2장, 전역증 재발급은 지금 2.5×3cm 1장이고 3.5×4.5cm로 바꾸는 개정안이 입법예고 중이에요. 병역판정검사 사진과 모집병 지원서, 군무원 원서 사진까지 공식 안내 기준으로 정리했어요.
+- [경찰·소방 사진 규격 2026: 순경 3.5×4.5, 소방 137×177](https://pdfslimio.com/ko/guides/police-fire-exam-photo.html): 순경 공채 원서 사진은 2026년부터 6개월 이내 여권용 3.5×4.5cm로 바뀌었고, 소방공무원은 국가공무원 채용시스템에 3.5×4.5cm(137×177픽셀) JPG로 올려요. 접수 사이트, 안 받는 사진, 사진을 바꿀 수 있는 마지막 날을 공고문으로 정리했어요.
+- [사회복지사 자격증 사진 규격 2026: 크기·업로드·재발급](https://pdfslimio.com/ko/guides/social-worker-license-photo.html): 사회복지사 자격증 사진은 1급·2급 모두 3.5×4.5cm 여권규격, 6개월 이내 천연색 상반신 정면이에요. 온라인 자격신청서에 파일로 올리면 그대로 자격증에 인쇄되고 우편 동봉은 필요 없어요. 안 되는 사진, 재발급 수수료, 처리 기간을 공식 안내로 정리했어요.
 
 ## Optional
 

@@ -16,28 +16,28 @@
   "2026-10-28"
  ],
  "/compress-id-photo.html": [
-  "e7e3a51aa27e160c",
-  "2026-11-17"
+  "ff1b8d093cd6e6bd",
+  "2026-11-24"
  ],
  "/compress-image-to-100kb.html": [
-  "ff06e45c510b73bd",
-  "2026-11-17"
+  "2c6c141b07355a7e",
+  "2026-11-24"
  ],
  "/compress-image-to-200kb.html": [
-  "d8ddc141e1aabd42",
-  "2026-11-17"
+  "d0223cbbd6046305",
+  "2026-11-24"
  ],
  "/compress-image-to-20kb.html": [
-  "7668a88c524ed65d",
-  "2026-11-17"
+  "8c871544d687a6ef",
+  "2026-11-24"
  ],
  "/compress-image-to-50kb.html": [
-  "4bf1782899e7719d",
-  "2026-11-17"
+  "36319af4ce3651f7",
+  "2026-11-24"
  ],
  "/compress-image.html": [
-  "86c76989038ca05d",
-  "2026-11-17"
+  "87fa7f95aa1fd7cb",
+  "2026-11-24"
  ],
  "/compress-pdf-for-email.html": [
   "d2e443cae7968d96",
@@ -152,11 +152,11 @@
   "2026-11-08"
  ],
  "/ko/": [
-  "b834dac144a41779",
-  "2026-11-22"
+  "a1eb7389d4f5f837",
+  "2026-11-24"
  ],
  "/ko/about.html": [
-  "13a5c01de26a84d6",
+  "7ee0247386adf520",
   "2026-11-24"
  ],
  "/ko/add-page-numbers.html": [
@@ -164,28 +164,28 @@
   "2026-10-27"
  ],
  "/ko/compress-id-photo.html": [
-  "7a9c8e96b3f6f2a2",
-  "2026-11-18"
+  "432487375b334447",
+  "2026-11-24"
  ],
  "/ko/compress-image-to-100kb.html": [
-  "8e1fe8076369c148",
-  "2026-11-17"
+  "2e064ece2cfca70b",
+  "2026-11-24"
  ],
  "/ko/compress-image-to-200kb.html": [
-  "a74f8300168c8e25",
-  "2026-11-17"
+  "b7a0dfc5ea156e71",
+  "2026-11-24"
  ],
  "/ko/compress-image-to-20kb.html": [
-  "7b6e9421f5cb1f65",
-  "2026-11-17"
+  "e2547d0d79702c9e",
+  "2026-11-24"
  ],
  "/ko/compress-image-to-50kb.html": [
-  "a6fdc299cb825389",
-  "2026-11-17"
+  "5626ced05aed4f54",
+  "2026-11-24"
  ],
  "/ko/compress-image.html": [
-  "6398da3c5fa0afd8",
-  "2026-11-17"
+  "baac4613ab2a3f3e",
+  "2026-11-24"
  ],
  "/ko/compress-pdf-for-email.html": [
   "621f2a6c6f2e8b22",
@@ -228,76 +228,84 @@
   "2026-10-27"
  ],
  "/ko/guides/": [
-  "1e693bc2b4e82406",
-  "2026-11-18"
+  "054eac28bd4ca5e8",
+  "2026-11-24"
  ],
  "/ko/guides/baby-passport-photo.html": [
-  "421b4357b1e92730",
-  "2026-11-18"
+  "805b2523d0b18a8c",
+  "2026-11-24"
  ],
  "/ko/guides/china-visa-photo.html": [
-  "730d21b52ffc3f7b",
-  "2026-11-17"
+  "2e88651ee16d48b9",
+  "2026-11-24"
  ],
  "/ko/guides/civil-service-exam-photo.html": [
-  "81369f2099f14a9b",
-  "2026-11-17"
+  "d8e4153707554d57",
+  "2026-11-24"
  ],
  "/ko/guides/computer-certificate-photo-size.html": [
-  "e23a8a94402d208d",
-  "2026-11-17"
+  "96dbff9ee7bc8013",
+  "2026-11-24"
  ],
  "/ko/guides/driver-license-photo.html": [
-  "e756604c9e9f6b44",
-  "2026-11-22"
+  "41b0dd5bc20f3be6",
+  "2026-11-24"
  ],
  "/ko/guides/exam-application-photo-size.html": [
-  "09c6b15a41310a4b",
-  "2026-11-17"
+  "82b85b40bac49aa0",
+  "2026-11-24"
  ],
  "/ko/guides/foreign-resident-card-photo.html": [
-  "f41c7cb77ee36130",
-  "2026-11-17"
+  "5599e6c89d561dee",
+  "2026-11-24"
  ],
  "/ko/guides/gov24-pdf-save.html": [
   "bf77dfdef50faa39",
   "2026-10-29"
  ],
  "/ko/guides/half-size-photo.html": [
-  "5359a1fcf40cd0a0",
-  "2026-11-18"
+  "017cef215d1cf157",
+  "2026-11-24"
  ],
  "/ko/guides/hsk-photo.html": [
-  "f411b942db09fb03",
-  "2026-11-17"
+  "07f57bab338639bf",
+  "2026-11-24"
  ],
  "/ko/guides/india-visa-photo.html": [
-  "2bd6bd26a40d4137",
-  "2026-11-17"
+  "65127265dea13314",
+  "2026-11-24"
  ],
  "/ko/guides/iphone-mac-pdf-size.html": [
   "156fd2c03efba564",
   "2026-10-29"
  ],
+ "/ko/guides/jlpt-photo.html": [
+  "f146b737981df3dd",
+  "2026-11-24"
+ ],
  "/ko/guides/korean-history-exam-photo.html": [
-  "85b8a7a39c44b4fa",
-  "2026-11-17"
+  "de7eb337db1ec95e",
+  "2026-11-24"
  ],
  "/ko/guides/kuksiwon-photo.html": [
-  "a0afb14e88240d1e",
-  "2026-11-17"
+  "715fa90b9e84f229",
+  "2026-11-24"
  ],
  "/ko/guides/language-test-photo.html": [
-  "9b9f787d52b9eda6",
-  "2026-11-17"
+  "0591c5575019e923",
+  "2026-11-24"
  ],
  "/ko/guides/mail-attachment-size-limit.html": [
   "412176ebc4362b94",
   "2026-11-06"
  ],
+ "/ko/guides/mma-photo.html": [
+  "a734467c8db3a58f",
+  "2026-11-24"
+ ],
  "/ko/guides/mobile-id-photo.html": [
-  "a1a0b482b546b99b",
-  "2026-11-17"
+  "7990fba3ac9db869",
+  "2026-11-24"
  ],
  "/ko/guides/multiple-photos-to-pdf.html": [
   "9cdc74f3606369bb",
@@ -308,12 +316,12 @@
   "2026-11-07"
  ],
  "/ko/guides/passport-photo-online.html": [
-  "7ba4d197a00c60e4",
-  "2026-11-17"
+  "e5402de5c72ccdab",
+  "2026-11-24"
  ],
  "/ko/guides/passport-photo-size.html": [
-  "44532c04340e398d",
-  "2026-11-18"
+  "0d829e2987afa26d",
+  "2026-11-24"
  ],
  "/ko/guides/pdf-compression-explained.html": [
   "7215d825bc404457",
@@ -335,17 +343,25 @@
   "c88aa39099a72771",
   "2026-10-29"
  ],
+ "/ko/guides/police-fire-exam-photo.html": [
+  "79d343b866bca057",
+  "2026-11-24"
+ ],
  "/ko/guides/qnet-photo.html": [
-  "eacfa971bce0e27d",
-  "2026-11-17"
+  "f1ee7011ab3061b7",
+  "2026-11-24"
  ],
  "/ko/guides/resident-card-photo.html": [
-  "07feb18dd62aeda8",
-  "2026-11-17"
+  "e7b38a2cd2ecf073",
+  "2026-11-24"
  ],
  "/ko/guides/resume-photo-size.html": [
-  "43a45cf42baad9c4",
-  "2026-11-17"
+  "2e80fbb24662060e",
+  "2026-11-24"
+ ],
+ "/ko/guides/social-worker-license-photo.html": [
+  "81e8461a392ef10b",
+  "2026-11-24"
  ],
  "/ko/guides/university-application-photo.html": [
   "0a19880b5ee2c683",
@@ -356,8 +372,8 @@
   "2026-10-29"
  ],
  "/ko/guides/vietnam-evisa-photo.html": [
-  "9e69df711c16e126",
-  "2026-11-17"
+  "d6b0d05d769421f5",
+  "2026-11-24"
  ],
  "/ko/guides/yearend-tax-pdf-password.html": [
   "c688ece88cfebf9b",
@@ -432,8 +448,8 @@
   "2026-11-06"
  ],
  "/ko/us-visa-photo.html": [
-  "46b667f9c9cf1963",
-  "2026-11-17"
+  "a3748447218db2b0",
+  "2026-11-24"
  ],
  "/ko/watermark.html": [
   "e69960058d57d4dd",
@@ -488,8 +504,8 @@
   "2026-10-31"
  ],
  "/us-visa-photo.html": [
-  "85c42b7a12560e74",
-  "2026-11-17"
+  "58cf31bbed001c4f",
+  "2026-11-24"
  ],
  "/watermark.html": [
   "f046a5ff231f594d",

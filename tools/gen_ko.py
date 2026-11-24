@@ -796,6 +796,7 @@ KO["compress-image.html"] = dict(
         (">Korea alien registration card (ARC) 413×531 px (≤95KB)<", ">외국인등록증 3.5×4.5cm 413×531px (95KB 이하)<"),
         (">HSK photo (HSK Korea office) 115×150 px (50–500KB)<", ">HSK 한국사무국 115×150px (50~500KB)<"),
         (">HSK photo (HSK test centre, Korea) 177×236 px (50KB–1MB)<", ">HSK 시험센터 177×236px (50KB~1MB)<"),
+        (">JLPT photo (Yeongnam, bsjlpt.or.kr) 360×480 px (30–200KB)<", ">JLPT 영남(부산실시위원회) 360×480px (30~200KB)<"),
         (">Vietnam e-Visa photo 4×6 cm, 472×709 px (≤2MB)<", ">베트남 e-비자 4×6cm 472×709px (2MB 미만)<"),
         (">JobKorea résumé photo 103×132 px<", ">잡코리아 이력서 103×132px<"),
         (">Saramin résumé photo 100×140 px<", ">사람인 이력서 100×140px<"),
@@ -993,6 +994,7 @@ KO["compress-id-photo.html"] = dict(
          f'<button type="button" class="preset" data-resize="kr-teps"{ID_EV("kr-teps")}><b>텝스</b><small>126×165</small></button>'
          f'<button type="button" class="preset" data-resize="cn-hsk"{ID_EV("cn-hsk")}><b>HSK 사무국</b><small>115×150</small></button>'
          f'<button type="button" class="preset" data-resize="cn-hsk-center"{ID_EV("cn-hsk-center")}><b>HSK 센터</b><small>177×236</small></button>'
+         f'<button type="button" class="preset" data-resize="kr-jlpt-yeongnam"{ID_EV("kr-jlpt-yeongnam")}><b>JLPT 영남</b><small>360×480</small></button>'
          f'<button type="button" class="preset" data-resize="kr-kuksiwon"{ID_EV("kr-kuksiwon")}><b>국시원</b><small>413×531</small></button>'
          f'<button type="button" class="preset" data-resize="kr-jobkorea"{ID_EV("kr-jobkorea")}><b>잡코리아</b><small>103×132</small></button>'
          f'<button type="button" class="preset" data-resize="kr-saramin"{ID_EV("kr-saramin")}><b>사람인</b><small>100×140</small></button>'
@@ -1052,6 +1054,8 @@ KO["compress-id-photo.html"] = dict(
           <li><b>토익·토익스피킹</b> → JPG 6MB 이하. 등록 창이 3:4로 잘라 300×400px로 저장하고 얼굴 크기를 검사해요. <a href="/ko/compress-id-photo.html?resize=kr-toeic">토익 규격으로 열기</a> · <a href="/ko/guides/language-test-photo.html">토익·텝스 사진 규격</a></li>
           <li><b>텝스</b> → 3×4cm(126×165px), JPG 50KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-teps">텝스 규격으로 열기</a></li>
           <li><b>HSK</b> → 접수처마다 달라요. HSK한국사무국은 115×150px, HSK시험센터는 177×236px(3×4cm), 둘 다 JPG 50KB 이상이에요. <a href="/ko/compress-id-photo.html?resize=cn-hsk">사무국 규격으로 열기</a> · <a href="/ko/compress-id-photo.html?resize=cn-hsk-center">시험센터 규격으로 열기</a> · <a href="/ko/guides/hsk-photo.html">HSK 사진 규격</a></li>
+          <li><b>JLPT (일본어능력시험)</b> → 시험 볼 지역마다 달라요. 서울·제주(서울실시위원회)는 JPG, 3.5×4.5cm 비율, 1MB 이하예요. 영남(부산실시위원회)은 360×480px, 30~200KB예요. <a href="/ko/compress-id-photo.html?resize=kr-passport">서울·제주 규격으로 열기</a> · <a href="/ko/compress-id-photo.html?resize=kr-jlpt-yeongnam">영남 규격으로 열기</a> · <a href="/ko/guides/jlpt-photo.html">JLPT 사진 규격</a></li>
+          <li><b>경찰·소방 공채</b> → 순경은 6개월 이내 여권용 3.5×4.5cm(경찰청 인터넷 원서접수), 소방은 137×177px JPG(국가공무원 채용시스템)예요. <a href="/ko/compress-id-photo.html?resize=passport">순경 규격으로 열기</a> · <a href="/ko/compress-id-photo.html?resize=kr-gosi">소방 규격으로 열기</a> · <a href="/ko/guides/police-fire-exam-photo.html">경찰·소방 사진 규격</a></li>
           <li><b>국시원 (간호사·요양보호사·간호조무사 등 보건의료인 국가시험)</b> → JPG, 276×354px 이상, 200dpi 이상. 면허증에도 쓰이는 사진이라 413×531px(3.5×4.5cm, 300dpi), 높은 화질로 저장해요. 셀프·휴대폰 촬영 사진은 안 받아요. <a href="/ko/compress-id-photo.html?resize=kr-kuksiwon">국시원 규격으로 열기</a> · <a href="/ko/guides/kuksiwon-photo.html">국시원 사진 규격</a></li>
           <li><b>운전면허 갱신·재발급 (안전운전 통합민원)</b> → 3.5×4.5cm, 413×531px 권장(가로 395~431·세로 507~550px만 올라가요), JPG 500KB 이하. <a href="/ko/compress-id-photo.html?resize=kr-license">운전면허 규격으로 열기</a> · <a href="/ko/guides/driver-license-photo.html">운전면허 사진 규격</a></li>
           <li><b>여권 (구청·시청 방문 신청, 첫 여권)</b> → 3.5×4.5cm 인화 사진 1장, 머리 길이 3.2~3.6cm, 6개월 이내, 흰 배경. 귀는 머리카락에 가려도 돼요. 아기도 기준이 같고 36개월 이하만 입을 조금 벌려도 돼요. <a href="/ko/guides/passport-photo-size.html">여권사진 규격</a> · <a href="/ko/guides/baby-passport-photo.html">아기 여권사진 규격</a></li>
@@ -1941,7 +1945,7 @@ INDEX_EXTRA_CSS = """
     .faq p { color: var(--muted); font-size: 14px; margin: 10px 0 0; }
 """
 
-ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "OCI", "HSK", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
+ALLOWED_EN = {"PDF", "PDFs", "GIF", "ETA", "OCI", "HSK", "JLPT", "ITQ", "GTQ", "KPC", "kbyte", "DS", "IBPS", "SBI", "jpg", "UPSC", "SSC", "RRB", "NEET", "NTA", "UGC", "NET", "JPEG", "mm", "cm", "px", "JPG", "PNG", "WebP", "ZIP", "KB", "MB", "GB", "SlimIO", "Ghostscript", "dpi", "pt",
               "Page", "of", "English", "OO", "Pro", "SNS", "EXIF", "HEIC", "HEIF", "GPS", "cm", "px", "iOS", "AirDrop", "USB"}
 
 

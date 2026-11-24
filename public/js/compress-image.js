@@ -13,7 +13,8 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
      "kr-toeic": [300, 400], "kr-teps": [126, 165], "cn-visa": [354, 472], "kr-kuksiwon": [413, 531],
      "uk-eta": [600, 750], "pk-passport": [413, 531], "oci-photo": [600, 600],
      "kr-license": [413, 531], "kr-passport": [413, 531], "kr-resident": [413, 531], "in-evisa": [600, 600],
-     "kr-arc": [413, 531], "vn-evisa": [472, 709], "cn-hsk": [115, 150], "cn-hsk-center": [177, 236] };
+     "kr-arc": [413, 531], "vn-evisa": [472, 709], "cn-hsk": [115, 150], "cn-hsk-center": [177, 236],
+     "kr-jlpt-yeongnam": [360, 480] };
 // Korean exam sites: picking the size also picks a KB limit that passes their upload check
 // (Q-Net: JPG ≤200KB; civil service: notices say under 100KB or 350KB; history exam: none stated;
 // KCCI 컴활·워드: the upload page refuses over 50×1024 bytes; KPC ITQ: ≤500KB, 115–235 × 150–315 px;
@@ -40,12 +41,15 @@ const PRESETS = { "id-3x4": [354, 472], passport: [413, 531], "us-visa": [600, 6
 // ("Image size exceeds 2mb") and under 10×1024 ("The image quality is too low"), so 4×6 at 300 dpi, 10–1000KB;
 // HSK: the HSK Korea office (hsk.or.kr FAQ) takes 115×150 px JPG of 50–500KB, the HSK test centre
 // (hsk-korea.co.kr) 3×4 cm = 177×236 px JPG of 50KB–1MB (1024KB), so 50–1000KB.
+// JLPT in Korea: the Busan committee (bsjlpt.or.kr 사진규정, Yeongnam test sites) takes jpg/gif/png/bmp of
+// 30–200KB at 360×480 px; the Seoul/Jeju site (jlpt.or.kr) only says JPG, passport ratio, ≤1MB = kr-passport.
 const PRESET_TARGET = { "kr-qnet": "200KB", "kr-gosi": "100KB", "kr-history": "100KB", "upsc-photo": "20-200KB",
      "kr-korcham": "50KB", "kr-kpc": "200KB",
      "kr-toeic": "500KB", "kr-teps": "50KB", "cn-visa": "40-120KB", "kr-kuksiwon": "500KB",
      "uk-eta": "50-500KB", "pk-passport": "20KB", "oci-photo": "200KB",
      "kr-license": "500KB", "kr-passport": "500KB", "kr-resident": "500KB", "in-evisa": "500KB",
-     "vn-evisa": "10-1000KB", "cn-hsk": "50-500KB", "kr-arc": "0-95KB", "cn-hsk-center": "50-1000KB" };
+     "vn-evisa": "10-1000KB", "cn-hsk": "50-500KB", "kr-arc": "0-95KB", "cn-hsk-center": "50-1000KB",
+     "kr-jlpt-yeongnam": "30-200KB" };
 // Korean IDs that use the passport photo rules (head 3.2–3.6cm of 4.5cm)
 const PASSPORT_LIKE = ["passport", "kr-license", "kr-passport", "kr-resident"];
 // Face guide drawn on the crop frame, as fractions of the frame: head oval (centre y, radii)
