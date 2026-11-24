@@ -8,7 +8,7 @@ file stays in step with the pages. Re-run after adding or renaming a page:
 """
 import html, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gen_ko import PAGES, EN_ONLY, SIZE_PAGES, ROOT, SITE, en_path, ko_path
+from gen_ko import PAGES, EN_ONLY, KO_ONLY, SIZE_PAGES, ROOT, SITE, en_path, ko_path
 
 PDF_TOOLS = ["index.html", "merge.html", "split.html", "delete-pages.html", "rotate.html", "organize.html",
              "add-page-numbers.html", "watermark.html", "sign-pdf.html", "unlock-pdf.html", "pdf-to-jpg.html", "jpg-to-pdf.html", "receipt-to-pdf.html"]
@@ -76,7 +76,7 @@ def build():
     out += section("PDF tools", PDF_TOOLS) + "\n"
     out += section("Compress a PDF to a set size", SIZE_ALL) + "\n"
     out += section("Photos, ID photos and signatures", PHOTO_TOOLS) + "\n"
-    ko = [p for p in PDF_TOOLS + SIZE_PAGES + PHOTO_TOOLS if p in PAGES]
+    ko = [p for p in PDF_TOOLS + SIZE_PAGES + PHOTO_TOOLS if p in PAGES] + KO_ONLY   # KO_ONLY: no English page (NEIS)
     out += section("한국어 (Korean)", ko, ko=True) + "\n"
     out += guides_section() + "\n"
     out += """## Optional
