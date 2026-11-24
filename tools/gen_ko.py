@@ -1958,11 +1958,38 @@ def leftover_english(s):
     return found
 
 
+# Light/dark A/B test (HANDOFF 2-96): half of the visitors get the light theme (theme-light.css,
+# built by tools/gen_theme_light.py), kept per browser in localStorage. lib.js tags every Umami
+# event with data-ab and sends "ab-view" once per page view, so the two halves can be compared.
+# ?theme=light|dark shows one theme without saving it (for checking the page).
+AB_THEME_PAGES = ["compress-id-photo.html"]
+AB_THEME_HEAD = """
+<link rel="stylesheet" href="/theme-light.css?v=0" />
+<script>
+(function () {
+   var h = document.documentElement, v, q = location.search.match(/[?&]theme=(light|dark)\\b/);
+   try {
+      v = q ? q[1] : localStorage.getItem("slimio.ab-theme");
+      if (!q && v !== "light" && v !== "dark") localStorage.setItem("slimio.ab-theme", v = Math.random() < 0.5 ? "light" : "dark");
+   } catch (e) {}
+   if (v !== "light" && v !== "dark") v = Math.random() < 0.5 ? "light" : "dark";
+   h.setAttribute("data-ab", "theme-" + v);
+   if (v === "light") {
+      h.classList.add("theme-light");
+      var t = document.querySelector('meta[name="theme-color"]');
+      if (t) t.setAttribute("content", "#f5f7fa");
+   }
+})();
+</script>"""
+
+
 def build(page):
     d = KO[page]
     s = open(os.path.join(ROOT, page)).read()
     s = set_meta(s, d, page)
     s = set_ld(s, d, page)
+    if page in AB_THEME_PAGES:
+        s = sub1(r'(<link rel="stylesheet" href="/style\.css\?v=[a-z0-9]+" />)', lambda m: m.group(1) + AB_THEME_HEAD, s, f"{page} theme A/B")
     s = sub1(r'(<div class="hero">\s*<h1>).*?(</h1>\s*<p>).*?(</p>)', lambda m: m.group(1) + d["h1"] + m.group(2) + d["lead"] + m.group(3), s, f"{page} hero")
     image_page = page.startswith("compress-image") or page in ("compress-id-photo.html", "us-visa-photo.html")   # built from compress-image.html
     ui = (d.get("ui") or (KO["compress-image.html"]["ui"] if image_page else [])) + d.get("ui_extra", []) + (SIZE_UI if page in SIZE_PAGES else [])

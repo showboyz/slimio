@@ -117,6 +117,23 @@
 }
 </script>
 <link rel="stylesheet" href="/style.css?v=6a5a4002" />
+<link rel="stylesheet" href="/theme-light.css?v=60cdc0f3" />
+<script>
+(function () {
+   var h = document.documentElement, v, q = location.search.match(/[?&]theme=(light|dark)\b/);
+   try {
+      v = q ? q[1] : localStorage.getItem("slimio.ab-theme");
+      if (!q && v !== "light" && v !== "dark") localStorage.setItem("slimio.ab-theme", v = Math.random() < 0.5 ? "light" : "dark");
+   } catch (e) {}
+   if (v !== "light" && v !== "dark") v = Math.random() < 0.5 ? "light" : "dark";
+   h.setAttribute("data-ab", "theme-" + v);
+   if (v === "light") {
+      h.classList.add("theme-light");
+      var t = document.querySelector('meta[name="theme-color"]');
+      if (t) t.setAttribute("content", "#f5f7fa");
+   }
+})();
+</script>
 <style>
 .imglist { list-style: none; margin: 4px 0 0; }
 .imglist li {
@@ -471,7 +488,7 @@
 
 <script defer src="/vendor/jszip-3.10.1/jszip.min.js?v=3.10.1"></script>
 <script defer src="/i18n/ko.js?v=875440fb"></script>
-<script defer src="/lib.js?v=0ba3a268"></script>
+<script defer src="/lib.js?v=0b2778d3"></script>
 <script defer src="/js/specs.js?v=4e758873"></script>
 <script type="module" src="/js/compress-image.js?v=0006e470"></script>
 </body>
