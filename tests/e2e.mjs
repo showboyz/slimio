@@ -202,6 +202,21 @@ async function makeFixtures(browser) {
     const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
     return Array.from(new Uint8Array(await b.arrayBuffer()));
   })));
+  // a blue office rubber stamp on blank paper: "Clean red" (the default) finds no red ink here
+  fs.writeFileSync(path.join(TMP, "stamp-blue.jpg"), Buffer.from(await p.evaluate(async () => {
+    const c = new OffscreenCanvas(1600, 1200), x = c.getContext("2d");
+    const g = x.createRadialGradient(600, 400, 80, 800, 600, 1100); g.addColorStop(0, "#f6f4ef"); g.addColorStop(1, "#d2ccc0");
+    x.fillStyle = g; x.fillRect(0, 0, 1600, 1200);
+    x.strokeStyle = x.fillStyle = "rgba(40, 60, 170, 0.85)"; x.lineWidth = 14;
+    x.strokeRect(500, 420, 600, 360);
+    x.font = "bold 90px sans-serif"; x.textAlign = "center"; x.textBaseline = "middle";
+    x.fillText("주식회사", 800, 540); x.fillText("슬림아이오", 800, 660);
+    const d = x.getImageData(0, 0, 1600, 1200), a = d.data;
+    for (let i = 0; i < a.length; i += 4) { const n = (Math.random() - 0.5) * 16; a[i] += n; a[i + 1] += n; a[i + 2] += n; }
+    x.putImageData(d, 0, 0);
+    const b = await c.convertToBlob({ type: "image/jpeg", quality: 0.88 });
+    return Array.from(new Uint8Array(await b.arrayBuffer()));
+  })));
   spawnSync("sips", ["-s", "format", "heic", path.join(TMP, "sig.png"), "--out", path.join(TMP, "sig.heic")], { stdio: "ignore" });
   // a 3-page text PDF with English and Korean, printed by Chrome like "Save as PDF"
   const para = "New sign-ups grew steadily this quarter. 이번 분기에는 신규 가입자가 꾸준히 늘었고 작성한 문서를 보강했다. ";
@@ -972,6 +987,18 @@ function toolTests() {
     if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
     if (st.red / st.opaque < 0.97 || st.dark > st.opaque * 0.005) return `ink is ${st.red} red, ${st.dark} dark of ${st.opaque}: printed text left in`;
     return null;
+  });
+  // people with blue or black stamps got "no red stamp found" and had to switch the colour themselves (Umami, 11/24)
+  both("stamp-image.html", "a blue stamp with Clean red still comes out, in its own colour, and says why", async (p) => {
+    await p.setInputFiles("#stampfile", F("stamp-blue.jpg"));
+    await runTool(p);
+    if (await p.evaluate(() => { const e = document.querySelector("#error"); return e && e.offsetParent && e.textContent.trim(); })) return "error shown instead of a stamp";
+    const r = await download(p), st = await pngStats(p, r.bytes);
+    if (st.w / st.h < 1.4 || st.w / st.h > 1.95) return `${st.w}×${st.h}: not cut to the 600×360 stamp`;
+    if (st.red > st.opaque * 0.01) return `${st.red} of ${st.opaque} pixels painted red`;
+    if ((await p.inputValue("#colour")) !== "keep") return "the colour list doesn't show what was used";
+    const meta = await p.textContent("#outmeta");
+    return /red ink|빨간 인주/.test(meta) ? null : "no note about the switch: " + meta;
   });
   both("stamp-image.html", "a square name seal with 인", async (p) => {
     await p.click('.tab[data-mode="make"]');

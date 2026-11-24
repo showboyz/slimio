@@ -2,7 +2,7 @@
 // Load this before lib.js on /ko/ pages.
 window.SLIMIO_KO = {
    // stamp image
-   "No red stamp found in this photo. If your stamp isn't red, choose “Keep the photo's colour”.": "사진에서 빨간 도장을 찾지 못했어요. 빨간 도장이 아니면 인주 색을 ‘사진 색 그대로’로 바꿔 보세요.",
+   "No red ink found, so the stamp keeps the colour it has in the photo.": "빨간 인주가 보이지 않아서 사진 속 도장 색 그대로 만들었어요.",
    "No stamp found in this photo. Take it on plain white paper, in good light.": "사진에서 도장을 찾지 못했어요. 흰 종이에 찍어서 밝은 곳에서 다시 찍어 주세요.",
    "Hong Gildong": "홍길동",
    "Round seal": "원형 도장",

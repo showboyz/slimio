@@ -82,11 +82,8 @@ function stampFromPhoto(img, colour) {
      while (x1 >= 0 && cols[x1] < few) x1--;
      while (y0 < H && rows[y0] < few) y0++;
      while (y1 >= 0 && rows[y1] < few) y1--;
-     if (x1 < x0 || y1 < y0 || (x1 - x0) < 8 || (y1 - y0) < 8) {
-             throw new Error(colour === "red"
-                     ? SlimIO.t("No red stamp found in this photo. If your stamp isn't red, choose “Keep the photo's colour”.")
-                     : SlimIO.t("No stamp found in this photo. Take it on plain white paper, in good light."));
-     }
+     // (with red, the caller tries again keeping the photo's colour before showing this)
+     if (x1 < x0 || y1 < y0 || (x1 - x0) < 8 || (y1 - y0) < 8) throw new Error(SlimIO.t("No stamp found in this photo. Take it on plain white paper, in good light."));
      ctx.putImageData(data, 0, 0);
      return pad(c, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
 }
@@ -259,11 +256,22 @@ goBtn.addEventListener("click", async () => {
      $("result").style.display = "none";   // never leave an old result next to a new error
      goBtn.disabled = true;
      try {
-             let stamp;
+             let stamp, note = "";
              if (mode === "photo") {
                      if (decoding) await decoding.catch(() => {});
                      if (!uploaded) return;
-                     stamp = stampFromPhoto(uploaded, $("colour").value);
+                     const colour = $("colour").value;
+                     try { stamp = stampFromPhoto(uploaded, colour); }
+                     catch (e) {
+                             // Red is the default, but company and office stamps are often blue, purple or black:
+                             // people got "no red stamp", switched the colour by hand and ran it again (Umami, 11/24).
+                             // Do that for them, and say so under the result.
+                             if (colour !== "red") throw e;
+                             stamp = stampFromPhoto(uploaded, "keep");
+                             $("colour").value = "keep";
+                             note = SlimIO.t("No red ink found, so the stamp keeps the colour it has in the photo.");
+                             SlimIO.event("stamp-colour-fallback", { to: "keep" });
+                     }
              } else {
                      const text = sealText();
                      if (!text) throw new Error(SlimIO.t("Type your name first."));
@@ -275,7 +283,7 @@ goBtn.addEventListener("click", async () => {
              const out = sized(stamp);
              const blob = await new Promise((resolve, reject) => out.toBlob((b) => (b ? resolve(b) : reject(new Error("toBlob failed"))), "image/png"));
              lastStamp = out;
-             showResult(new Uint8Array(await blob.arrayBuffer()), out);
+             showResult(new Uint8Array(await blob.arrayBuffer()), out, note);
      } catch (e) {
              SlimIO.showError(e.message);
      } finally {
@@ -283,7 +291,7 @@ goBtn.addEventListener("click", async () => {
      }
 });
 
-function showResult(bytes, c) {
+function showResult(bytes, c, note) {
      if (outUrl) URL.revokeObjectURL(outUrl);
      outUrl = URL.createObjectURL(new Blob([bytes], { type: "image/png" }));
      $("outimg").src = outUrl;
@@ -292,6 +300,7 @@ function showResult(bytes, c) {
      const b = document.createElement("b");
      b.textContent = `${c.width}×${c.height}px · ${SlimIO.formatSize(bytes.length)} · PNG`;
      meta.append(b, document.createElement("br"), SlimIO.t("Transparent background: put it on any document."));
+     if (note) meta.append(document.createElement("br"), note);
      $("result").style.display = "block";
      $("dl").onclick = () => SlimIO.download(bytes, `stamp_${c.width}x${c.height}.png`, "image/png");
      SlimIO.reveal($("result"));
