@@ -1098,6 +1098,15 @@ function toolTests() {
     }, Buffer.from(bytes).toString("base64"));
     return Math.abs(box.dx) > 18 || Math.abs(box.dy) > 18 ? `the ending is off the middle by ${Math.round(box.dx)}, ${Math.round(box.dy)} px` : null;
   });
+  // [ㄱ-힝] runs from U+3131 to U+D79D, so it takes in Hanja (U+4E00–9FFF) too: keep it that way
+  both("stamp-image.html", "a Hanja company name goes in columns with the ending, like a Korean one", async (p) => {
+    await p.click('.tab[data-mode="company"]');
+    await p.fill("#company", "例示商事");
+    await p.waitForFunction(() => /例示商事대표이사인/.test(document.querySelector("#cinfo").textContent)).catch(() => {});
+    if (!(await p.isVisible("#suffix"))) return "the ending list is hidden for a Hanja name";
+    const info = await p.textContent("#cinfo");
+    return /例示商事대표이사인/.test(info) ? null : "expected 例示商事대표이사인 on the seal, got: " + info;
+  });
   both("stamp-image.html", "the company seal asks for a name instead of making the example", async (p) => {
     await p.click('.tab[data-mode="company"]');
     await p.click("#go");
