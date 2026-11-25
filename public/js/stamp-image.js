@@ -268,6 +268,10 @@ const SEAL_FONT = (px) => `800 ${px}px "Nanum Myeongjo", serif`;
 // than 1.6 times taller than wide or the other way round.
 function glyph(ctx, ch, cx, cy, bw, bh, ref) {
      ctx.font = SEAL_FONT(100);
+     // measure in the alignment it is drawn in: the round seal leaves centre/middle set from its ring, and the
+     // ink box measured that way put the middle letters half a letter right and down (v112, found by ratfish)
+     ctx.textAlign = "left";
+     ctx.textBaseline = "alphabetic";
      const m = ctx.measureText(ch);
      let sx = bw / ref.w, sy = bh / ref.h;
      if (sx > sy * 1.6) sx = sy * 1.6;
@@ -275,8 +279,6 @@ function glyph(ctx, ch, cx, cy, bw, bh, ref) {
      ctx.save();
      ctx.translate(cx, cy);
      ctx.scale(sx, sy);
-     ctx.textAlign = "left";
-     ctx.textBaseline = "alphabetic";
      ctx.fillText(ch, -(m.actualBoundingBoxRight - m.actualBoundingBoxLeft) / 2, (m.actualBoundingBoxAscent - m.actualBoundingBoxDescent) / 2);
      ctx.restore();
 }

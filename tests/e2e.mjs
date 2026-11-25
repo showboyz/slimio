@@ -1079,10 +1079,24 @@ function toolTests() {
     await p.click('#cshapes .style[data-shape="round"]');
     await p.waitForSelector('#cshapes .style.on[data-shape="round"]');
     await runTool(p);
-    const st = await pngStats(p, (await download(p)).bytes);
+    const bytes = (await download(p)).bytes, st = await pngStats(p, bytes);
     if (st.w !== 600 || st.h !== 600) return `${st.w}×${st.h}, expected 600×600`;
     if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
-    return st.red < 50000 ? `only ${st.red} red pixels: the seal is missing or empty` : null;
+    if (st.red < 50000) return `only ${st.red} red pixels: the seal is missing or empty`;
+    // the ending sits in the middle of the inner circle (v112 drew it half a letter right and down, over the line)
+    const box = await p.evaluate(async (b64) => {
+      const bmp = await createImageBitmap(await (await fetch("data:image/png;base64," + b64)).blob());
+      const c = new OffscreenCanvas(bmp.width, bmp.height), x = c.getContext("2d");
+      x.drawImage(bmp, 0, 0);
+      const d = x.getImageData(0, 0, bmp.width, bmp.height).data, W = bmp.width, r = W * 0.24;
+      let x0 = W, x1 = 0, y0 = W, y1 = 0;
+      for (let y = 0; y < W; y++) for (let i = 0; i < W; i++) {
+        if (d[(y * W + i) * 4 + 3] < 128 || Math.hypot(i - W / 2, y - W / 2) > r) continue;
+        x0 = Math.min(x0, i); x1 = Math.max(x1, i); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+      }
+      return { dx: (x0 + x1) / 2 - W / 2, dy: (y0 + y1) / 2 - W / 2 };
+    }, Buffer.from(bytes).toString("base64"));
+    return Math.abs(box.dx) > 18 || Math.abs(box.dy) > 18 ? `the ending is off the middle by ${Math.round(box.dx)}, ${Math.round(box.dy)} px` : null;
   });
   both("stamp-image.html", "the company seal asks for a name instead of making the example", async (p) => {
     await p.click('.tab[data-mode="company"]');
