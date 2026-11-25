@@ -7,8 +7,14 @@ win = sys.argv[1]
 results = {}
 for u in sys.argv[2:]:
     if not R.wait_away(3 * 3600): R.log('owner never away; stop'); break
-    t = R.tree(win)
-    box = R.idx(t, r'콤보 상자.*(Inspect any URL|pdfslimio\.com)')
+    # 11/25 03:10 the page was not ready 5 s after opening (tab "Overview", no box) and the run
+    # stopped at once; give Search Console up to a minute to draw the "Inspect any URL" box.
+    box = None
+    for _ in range(12):
+        t = R.tree(win)
+        box = R.idx(t, r'콤보 상자.*(Inspect any URL|pdfslimio\.com)')
+        if box: break
+        time.sleep(5)
     if not box: R.log('no inspect box', u); results[u] = 'no box'; break
     R.orca('set-value', '--app', 'com.google.Chrome', '--window-id', win, '--element-index', box, '--value', u, '--no-screenshot')
     t = R.tree(win); box = R.idx(t, r'콤보 상자.*(Inspect any URL|pdfslimio\.com)'); R.click(win, box)

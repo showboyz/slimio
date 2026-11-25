@@ -1,0 +1,6 @@
+window 36134
+03:10:45 no inspect box https://pdfslimio.com/ko/neis-byte-counter.html
+03:10:45 RESULTS {
+ "https://pdfslimio.com/ko/neis-byte-counter.html": "no box"
+}
+window 36134 left open: 1 tab(s), not only Search Console
