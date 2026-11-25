@@ -39,6 +39,10 @@ if len(glob.glob(f'{nb}/c*.html')) != len(imgs): sys.exit(f'{n}: chunks do not m
 if not tf.guard(): log(n, 'STOP owner busy for 3 h'); sys.exit(2)
 go(EDITOR); tf.done(); time.sleep(5)
 t = wait_for(r'예약 발행 \d+ 건', 30) or ''
+if not t:   # 2026-11-25 15:10: Return in the address bar did not navigate (the window stayed on the blog); once more
+    if not tf.guard(): log(n, 'STOP owner busy for 3 h'); sys.exit(2)
+    go(EDITOR); tf.done(); time.sleep(5)
+    t = wait_for(r'예약 발행 \d+ 건', 30) or ''
 if '작성 중인 글이 있습니다' in t: tf.press(r'^버튼 취소$'); time.sleep(1.5)
 if tf.press(r'^버튼 도움말 닫기$'): time.sleep(0.8)
 close_bubble()

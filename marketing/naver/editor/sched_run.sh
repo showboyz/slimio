@@ -3,6 +3,7 @@
 # window, schedule each draft with newpost.py (chunks in $TMPDIR/slimio_nbNN), read the 예약 count once more, restore
 # the clipboard. The window is left open on an empty editor; close it with its 닫기 버튼 (then '버튼 나가기').
 E=$(cd "$(dirname "$0")" && pwd)
+export PATH="$E/bin:$PATH"   # Orca 1.4.274 prints English role names; bin/orca turns them back into Korean (axko.py)
 B=${TMPDIR:-/tmp}/slimio_sched_clipboard
 wins() { orca computer list-windows --app com.google.Chrome --json | python3 -c "import sys,json; d=json.load(sys.stdin); r=d.get('result',d); print(' '.join(str(w['id']) for w in r.get('windows',[])))"; }
 until bash $E/guard.sh >/dev/null; do sleep 30; done

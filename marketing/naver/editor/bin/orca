@@ -1,0 +1,13 @@
+#!/bin/bash
+# bin/orca : the real orca with its accessibility role names turned back into Korean (axko.py). Orca 1.4.274
+# (2026-11-25) prints "text field"/"button"/"tab" where the scripts here match "텍스트 필드"/"버튼"/"탭".
+# sched_run.sh and tools/gsc/req_at.sh put this folder first in PATH, so every script they start uses it.
+here=$(cd "$(dirname "$0")" && pwd)
+real=""
+IFS=: ; for d in $PATH; do
+  [ "$d" = "$here" ] && continue
+  [ -x "$d/orca" ] && [ "$(cd "$d" 2>/dev/null && pwd)" != "$here" ] && { real="$d/orca"; break; }
+done; unset IFS
+[ -n "$real" ] || { echo "bin/orca: no real orca in PATH" >&2; exit 127; }
+"$real" "$@" | python3 "$here/../axko.py"
+exit ${PIPESTATUS[0]}

@@ -3,6 +3,8 @@
 # (todays777), request indexing with req_u1.py (stops on Google's quota or "try again later"), then close the window.
 # Never use req.py for this: importing it starts requests in a window of its own.
 cd "$(dirname "$0")"; E=../../marketing/naver/editor
+# Orca 1.4.274 prints English role names; bin/orca turns them back into the Korean ones matched below and in req_u1.py
+export PATH="$(cd $E && pwd)/bin:$PATH"
 day=$1; at=$2; shift 2
 now=$(date +%s); then=$(date -j -f "%Y-%m-%d %H:%M" "$day $at" +%s) || exit 1
 [ "$then" -gt "$now" ] && sleep $((then - now))
