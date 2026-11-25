@@ -27,9 +27,24 @@ _line = re.compile(r'(?m)^([ \t]*\d+ )(' + _alt + r')(?= |,|$)')
 _focus = re.compile(r'(element is \d+ )(' + _alt + r')(?= |,|$)')
 
 
+_web = re.compile(r'^([ \t]*)\d+ HTML 콘텐츠')
+
+
 def ko(s):
-    s = _line.sub(lambda m: m.group(1) + ROLES[m.group(2)], s)
-    return _focus.sub(lambda m: m.group(1) + ROLES[m.group(2)], s)
+    # Tabs inside a web page (ARIA tabs such as Umami's Path/Referrers) were "tab" in English before too, and only
+    # Chrome's own tab strip said "탭": req_at.sh and k.sh count "탭 (" lines as Chrome tabs, so keep page tabs as "tab".
+    out, web = [], None   # web = indentation of the HTML 콘텐츠 line we are inside, if any
+    for ln in s.split('\n'):
+        ind = len(ln) - len(ln.lstrip(' \t'))
+        if web is not None and ln.strip() and ind <= web: web = None
+        def sub(m):
+            if web is not None and m.group(2) == 'tab': return m.group(0)
+            return m.group(1) + ROLES[m.group(2)]
+        ln = _line.sub(sub, ln)
+        w = _web.match(ln)
+        if w and web is None: web = len(w.group(1))
+        out.append(ln)
+    return _focus.sub(lambda m: m.group(1) + ROLES[m.group(2)], '\n'.join(out))
 
 
 def walk(v):
