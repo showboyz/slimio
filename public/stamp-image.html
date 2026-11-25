@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Stamp Image Maker — Remove the Background From a Stamp Photo, Transparent PNG | SlimIO</title>
-<meta name="description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal. Free, in your browser." />
+<meta name="description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal or company seal. Free, in your browser." />
 <meta name="keywords" content="stamp image maker, stamp png, remove background from stamp, transparent stamp, company seal png, digital stamp, name seal maker, korean name stamp" />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0b0d12" />
@@ -17,14 +17,14 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="SlimIO" />
 <meta property="og:title" content="Stamp Image Maker — Remove the Background From a Stamp Photo, Transparent PNG | SlimIO" />
-<meta property="og:description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal. Free, in your browser." />
+<meta property="og:description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal or company seal. Free, in your browser." />
 <meta property="og:url" content="https://pdfslimio.com/stamp-image.html" />
 <meta property="og:image" content="https://pdfslimio.com/og-cover.png" />
 <meta property="og:locale" content="en_US" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Stamp Image Maker | SlimIO" />
-<meta name="twitter:description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal. Free, in your browser." />
+<meta name="twitter:description" content="Photograph your stamp or company seal on paper and get a clean transparent PNG cut to the ink, ready for Word, HWP or a PDF. No stamp? Make a round or square name seal or company seal. Free, in your browser." />
 <meta name="twitter:image" content="https://pdfslimio.com/og-cover.png" />
 
 <script type="application/ld+json">
@@ -82,6 +82,14 @@
             },
             {
                   "@type": "Question",
+                  "name": "Can I make a company seal (직인)?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Open Make a company seal, type the company name, choose the ending (대표이사인 and so on) and a square or round seal. It's a picture of the company name, not the seal registered for the company, so don't use it where a registered company seal is asked for."
+                  }
+            },
+            {
+                  "@type": "Question",
                   "name": "How do I put the stamp image into Word, HWP or a PDF?",
                   "acceptedAnswer": {
                         "@type": "Answer",
@@ -116,7 +124,7 @@
 .pick:hover { border-color: var(--accent); }
 .pick small { display: block; margin-top: 6px; color: var(--muted); font-weight: 400; font-size: 12px; }
 .picked { font-size: 13px; color: var(--muted); margin-top: 6px; text-align: center; word-break: break-all; }
-#name {
+#name, #company {
      width: 100%; padding: 10px 12px; border-radius: 8px;
      background: #0e1117; border: 1px solid var(--line); color: var(--text); font-size: 16px;
 }
@@ -132,6 +140,8 @@
 .sigout img { max-width: 100%; max-height: 220px; display: block; }
 .meta { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
 .meta b { color: var(--text); }
+#suffixrow { margin: 10px 0 0; }
+#cinfo { text-align: left; }
 .alt-tool { font-size: 13px; color: var(--muted); text-align: center; margin: -6px 0 16px; }
 .to-pdf { text-align: center; margin-top: 10px; font-size: 13px; }
 </style>
@@ -156,7 +166,7 @@
 <div class="wrap" id="tool">
       <div class="hero">
            <h1>Your stamp,<br /><b>as a clean PNG.</b></h1>
-           <p>Photograph your stamp or company seal on paper — the paper disappears and only the ink is kept, as a transparent PNG for any document. No stamp? Make a name seal.</p>
+           <p>Photograph your stamp or company seal on paper — the paper disappears and only the ink is kept, as a transparent PNG for any document. No stamp? Make a name seal or a company seal.</p>
            <div class="trust-row">
                <span>⚡ Instant</span>
                <span>🔒 Private</span>
@@ -170,6 +180,7 @@
            <div class="tabs" id="tabs">
                <button type="button" class="tab on" data-mode="photo">📷 Stamp photo</button>
                <button type="button" class="tab" data-mode="make">🔴 Make a name seal</button>
+               <button type="button" class="tab" data-mode="company">🏢 Make a company seal</button>
            </div>
            <div class="panel" id="panel-photo">
                <input type="file" id="stampfile" accept="image/*" hidden />
@@ -180,6 +191,21 @@
                <input type="text" id="name" maxlength="24" placeholder="Your name" autocomplete="name" />
                <label class="check"><input type="checkbox" id="yin" /> Add “인” after a Korean name (홍길동인)</label>
                <div class="styles" id="shapes"></div>
+           </div>
+           <div class="panel hidden" id="panel-company">
+               <input type="text" id="company" maxlength="40" placeholder="Company name" autocomplete="organization" />
+               <div class="field" id="suffixrow">
+                   <label for="suffix">Ending for a Korean company seal</label>
+                   <select id="suffix">
+                       <option value="대표이사인" selected>대표이사인 (the CEO's seal)</option>
+                       <option value="대표이사지인">대표이사지인 (the CEO's seal, 之印)</option>
+                       <option value="지인">지인 (the company's seal)</option>
+                       <option value="인">인 (seal)</option>
+                       <option value="">No ending</option>
+                   </select>
+               </div>
+               <div class="picked" id="cinfo"></div>
+               <div class="styles" id="cshapes"></div>
            </div>
 
            <div class="controls" id="controls">
@@ -241,6 +267,9 @@
       <p>Most stamps use red seal ink. <b>Clean red</b> keeps only the red ink and gives it one even colour, so the stamp looks the same on screen and on paper — and printed text, pen lines and shadows around it are dropped. A blue or black rubber stamp needs <b>Keep the photo's colour</b> (or Black), photographed on blank paper. If Clean red finds no red ink at all, the tool switches to Keep the photo's colour by itself and says so under the result.</p>
       <h3>No stamp? Make a name seal</h3>
       <p>Type your name under Make a name seal and pick a round or square seal. A Korean name is set top to bottom and right to left, the way name seals are carved; four letters go in two columns. It's a picture of your name, not a registered seal — use it where a simple stamp mark is enough, such as a consent form or a quote, and never in place of a registered seal.</p>
+      <h3>A company seal (회사 직인)</h3>
+      <p>Type the company name under Make a company seal. A Korean name gets an ending — 대표이사인, 대표이사지인, 지인 or 인 — and “(주)” is written out as 주식회사, as it is carved. The square seal fills the frame with the letters in columns, right to left; the round seal runs the company name around the ring with the ending in the middle. An English name goes on the seal in capitals.</p>
+      <p>It's a picture of the company name, not the seal the company registered. Use it where the receiver accepts a seal image, such as a quote or an invoice, only for a company you are allowed to sign for, and never where a registered company seal or its certificate is asked for.</p>
       <h3>Putting the stamp on a document</h3>
       <ul>
           <li><b>Word / HWP:</b> insert the PNG as a picture, set it in front of the text, and drag it over the signature line. The transparent background lets the text show through, like a real stamp.</li>
@@ -263,6 +292,10 @@
       <details>
           <summary>I don't have a stamp. Can I make one?</summary>
           <p>Open Make a name seal, type your name and pick a round or square seal. It&#x27;s a picture of your name in a seal, not a registered seal, so use it only where a simple stamp mark is enough.</p>
+      </details>
+      <details>
+          <summary>Can I make a company seal (직인)?</summary>
+          <p>Open Make a company seal, type the company name, choose the ending (대표이사인 and so on) and a square or round seal. It&#x27;s a picture of the company name, not the seal registered for the company, so don&#x27;t use it where a registered company seal is asked for.</p>
       </details>
       <details>
           <summary>How do I put the stamp image into Word, HWP or a PDF?</summary>
@@ -328,6 +361,6 @@
 </div>
 
 <script defer src="/lib.js?v=0b2778d3"></script>
-<script type="module" src="/js/stamp-image.js?v=ca62f576"></script>
+<script type="module" src="/js/stamp-image.js?v=463d3ebf"></script>
 </body>
 </html>

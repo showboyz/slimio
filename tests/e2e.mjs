@@ -1053,6 +1053,45 @@ function toolTests() {
     await p.waitForSelector("#handoff", { state: "visible", timeout: 15000 }).catch(() => {});
     return (await p.isVisible("#handoff")) ? null : "Sign PDF opened without the stamp";
   });
+  // company seal (회사 직인): "직인 만들기" searches, and the name seal only takes four letters (11/25)
+  both("stamp-image.html", "a square company seal spells (주) out and adds 대표이사인", async (p) => {
+    await p.click('.tab[data-mode="company"]');
+    await p.fill("#company", "(주) 예시상사");
+    await p.waitForFunction(() => /주식회사예시상사대표이사인/.test(document.querySelector("#cinfo").textContent));
+    if (!/13/.test(await p.textContent("#cinfo"))) return "letter count missing: " + (await p.textContent("#cinfo"));
+    await p.waitForSelector('.style.on[data-shape="square"]');
+    await runTool(p);
+    const st = await pngStats(p, (await download(p)).bytes);
+    if (st.w !== 600 || st.h !== 600) return `${st.w}×${st.h}, expected 600×600`;
+    if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
+    if (st.red < 60000 || st.red / st.opaque < 0.97) return `${st.red} red of ${st.opaque}: the seal is missing or not red`;
+    const meta = await p.textContent("#outmeta");
+    return /registered company seal|법인인감/.test(meta) ? null : "no note that it isn't a registered seal: " + meta;
+  });
+  both("stamp-image.html", "stamp-image.html#company opens the company tab; a round seal with 지인", async (p) => {
+    const url = p.url().split("#")[0];
+    await p.goto("about:blank");
+    await p.goto(url + "#company", { waitUntil: "networkidle" });
+    if (!(await p.isVisible("#company"))) return "the company tab didn't open from #company";
+    await p.fill("#company", "예시상사");
+    await select(p, "#suffix", "지인");
+    await p.waitForSelector('#cshapes .style[data-shape="round"]');
+    await p.click('#cshapes .style[data-shape="round"]');
+    await p.waitForSelector('#cshapes .style.on[data-shape="round"]');
+    await runTool(p);
+    const st = await pngStats(p, (await download(p)).bytes);
+    if (st.w !== 600 || st.h !== 600) return `${st.w}×${st.h}, expected 600×600`;
+    if (st.corners.some((a) => a !== 0)) return "corners are not transparent: " + st.corners.join(",");
+    return st.red < 50000 ? `only ${st.red} red pixels: the seal is missing or empty` : null;
+  });
+  both("stamp-image.html", "the company seal asks for a name instead of making the example", async (p) => {
+    await p.click('.tab[data-mode="company"]');
+    await p.click("#go");
+    await p.waitForSelector("#error", { state: "visible", timeout: 10000 }).catch(() => {});
+    const err = (await p.textContent("#error")) || "";
+    if (await p.isVisible("#dl")) return "made a seal with no company name";
+    return /company name|회사 이름/.test(err) ? null : "expected an error asking for the company name, got: " + err;
+  });
 
   // NEIS byte counter (Korean only): the 2026 기재요령 rule is 한글 3, 영문·숫자 1, Enter 1 byte;
   // symbols go by UTF-8 (space 1, · 2, “ 3)

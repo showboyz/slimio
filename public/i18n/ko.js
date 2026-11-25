@@ -7,6 +7,11 @@ window.SLIMIO_KO = {
    "Hong Gildong": "홍길동",
    "Round seal": "원형 도장",
    "Square seal": "사각 도장",
+   "Example Trading Co.": "주식회사 예시상사",
+   "On the seal ({n}): {s}": "직인에 들어가는 글자 {n}자: {s}",
+   " — up to {max} letters fit": " — {max}자까지 들어가요",
+   "Type the company name first.": "먼저 회사 이름을 입력해 주세요.",
+   "A picture of the company name, not a registered company seal (법인인감).": "회사 이름을 보여 주는 그림이에요. 신고한 법인인감 대신 쓰지 마세요.",
    "Transparent background: put it on any document.": "배경이 투명해서 어느 문서에나 얹을 수 있어요.",
    // receipts to PDF
    "Date": "날짜",
