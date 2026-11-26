@@ -583,6 +583,8 @@ node server/server.cjs        # http://127.0.0.1:3001 (정적+GS)
    - **회사 직인 (f870ee0):** 도장 도구 세 번째 탭 '🏢 회사 직인 만들기'(`#company`로 바로 열림). 사각 = 테두리 안 글자를 오른쪽 줄부터 위→아래, 줄 수 round(√n), 오른쪽 줄부터 한 자 더(13자 → 4·3·3·3), 적은 줄은 세로로 늘림(가로세로 1.6배까지, 기준 글자 '회'). 원형 = 둘레에 회사 이름(왼쪽 아래부터 시계 방향, 맨 아래 ★), 가운데 원에 끝 글자. (주)/㈜ → 주식회사, (유)·(합)·(사)·(재)도. 끝 글자 대표이사인(기본)·대표이사지인·지인·인·없음, 합쳐 20자(영문 36자, 대문자). `#cinfo`에 들어가는 글자·글자 수. 결과 밑 "신고한 법인인감 대신 쓰지 마세요". Umami 새 이벤트 `stamp-made`(kind photo/name/company, shape). 테스트 3개 추가.
    - 배포 준비(3963882): ko/about 줄(#company 링크), llms.txt, **stamp-image.js ?v= 다시 bump**(테스트 뒤 여백 고친 게 첫 bump 뒤였음 — JS 고치면 커밋 직전 bump_versions 다시). npm test·--mobile 302/302, 배포 뒤 --live·--live --mobile 통과, IndexNow 200(128 URL).
    - **#101 PPT 도장(ratfish, 748fc6e)** 11/29 13:00 예약(예약 23건). #102 직인 만들기는 배포된 사이트로 ratfish가 씀(지시문 ondine scratchpad r1125/blog/brief102.md, 제안 11/30 13:00, 예약은 사장님 "예약해" 뒤).
+   - **원형 직인 가운데 글자 고침 — Fly v113 (11/26 08:5x, 사장님 이 창에서 "배포해", trout 1171ea1):** v112 원형은 가운데 글자가 반 글자쯤 오른쪽 아래로 밀려 안쪽 원 선에 걸렸음(ratfish가 #102 쓰다 발견). 원인: glyph()가 둘레 글자에서 남은 center/middle 정렬로 measureText를 재고 left/alphabetic으로 그림 → 재기 전에 정렬을 맞춤(215dcfc, 테스트: 가운데 글자 중심이 18px 안, 고치기 전 72px). 한자 회사 이름은 [ㄱ-힝](U+3131–D79D)에 이미 들어가 코드 안 바꾸고 테스트만(9ac55b2). npm test·--mobile, 배포 뒤 --live·--live --mobile 모두 통과(128쪽·링크 297), IndexNow 200(128), 라이브 stamp-image.js?v=08abb1aa. 사장님 "배포 끝나면 예약해" → ratfish가 원형 그림·수치를 blog-102에 넣고 → ondine 확인 → #102 11/30(일) 13:00 예약.
+   - GSC 11/26 03:10(req_1126.txt): neis-byte-counter·가이드 jlpt·police-fire·social-worker·mma 5개 요청 성공(모두 아직 구글에 없음).
    - 다음: 1~2주 뒤 Umami `stamp-made` kind=company 수, `/ko/stamp-image.html` 방문자 다시(같은 필터), '직인 만들기' 순위(rank.py). 다음 후보: 휴대폰 도장 누끼 글, 한글·워드 전자서명 글, PDF에서 도장 따기(도구가 PDF 받기).
 
 ## SEO/수익화 (결정)
