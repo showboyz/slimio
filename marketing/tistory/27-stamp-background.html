@@ -1,0 +1,178 @@
+<!--
+티스토리 글 #27 — 도장 배경 투명하게 만드는 방법 (흰 네모가 남는 이유: JPG에는 투명 칸이 없음·PNG 알파, 오피스·한글·포토샵 기능의 공식 한계, 사진 3장 실험, 모드 비교, 프로그램별 넣는 곳 표 하나)
+제목: 🔴 도장 배경 투명하게 만드는 방법, 흰 네모가 남는 이유와 사진·스캔 도장 실험 (엑셀·한글·워드·PPT 공통)
+태그: 도장 배경 투명하게 만드는 방법, 도장 배경 제거 사이트, 도장 배경 지우기, 스캔도장 배경없애기, 도장 스캔 투명, 도장 투명하게, 엑셀 도장 투명하게, 한글 도장 투명하게, 파워포인트 도장 투명, 포토샵 도장 투명하게
+카테고리: 문서·사진 꿀팁
+근거: (모두 2026-11-26 확인, 원문 텍스트: ondine scratchpad r1126/ts/27/src/) ① ITU-T T.871(05/2011, JFIF, In force) https://www.itu.int/rec/T-REC-T.871-201105-I/en — PDF 본문 "The encoded image in the JPEG File Interchange Format shall have 1 or 3 colour channels and 8 bits per colour channel", "The colour space to be used is YCBCR", 1개면 Y, 3개면 Y·CB·CR 순서 → 투명도 칸 없음 ② W3C PNG Specification (Third Edition, W3C Recommendation 24 June 2025) https://www.w3.org/TR/png-3/ — "The alpha sample determines a pixel's degree of opacity, where zero means fully transparent and the maximum value means fully opaque. In a three-channel reference image all pixels are fully opaque.", 설계 목표 "with the option of transparency" ③ Microsoft 「사진 또는 기타 그래픽을 별도의 파일로 저장」 https://support.microsoft.com/ko-kr/office/graphics-visuals/save-a-picture-or-other-graphic-as-a-separate-file — 파일 형식 표 PNG "이미지 일부를 투명하게 만들고 밝기를 제어할 수 있으므로", JPEG "스캔한 사진 같은 많은 색을 사용하는 그림에 가장 적합", '그림으로 저장' ④ Microsoft 「Word에서 그림을 투명하게 만들기」 https://support.microsoft.com/ko-kr/word/make-a-picture-transparent-in-word (적용 대상 Microsoft 365용 Word·Word 2024·2021·2019·2016, Mac 포함) — "그림 서식 탭에서 색 또는 색 변경을 선택한 다음 투명 색 설정을 선택합니다", "그림에서 둘 이상의 색을 투명하게 만들 수 없습니다. 단일 색으로 보이는 영역은 실제로는 다양한 미묘한 색 변형으로 구성되어 있을 수 있습니다.", "투명한 색 설정은 클립 아트와 같은 간단한 단색 그림에 가장 적합합니다.", "한 색을 투명하게 만드는 것은 도형 내부가 아닌 그림으로 삽입된 개체에서만 가능", "웹용 Word에서는 그림을 투명하게 만들 수 없습니다" — 엑셀·PPT용 한 색 투명 설명은 한국어 도움말에서 찾지 못함(「그림을 투명하게 만들기」·「그림의 색 변경」에 없음) → 글에 '워드 도움말 기준'으로 씀 ⑤ Microsoft 「Office에서 그림의 배경 제거」 https://support.microsoft.com/ko-kr/office/graphics-visuals/remove-the-background-of-a-picture-in-office (적용 대상 Microsoft 365용 Excel·Word·PowerPoint, 2024·2021, Mac) — "그림 서식> 배경제거", "기본 배경 영역에는 자홍색이 칠해져", '유지할 영역 표시'·'제거할 영역 표시'·'변경 내용 유지', SVG·AI·WMF·DRW 같은 벡터 그래픽은 "배경 제거가 불가능", "마우스 오른쪽 단추로 클릭하고 그림으로 저장" ⑥ Microsoft 「그림을 투명하게 만들기」 https://support.microsoft.com/ko-kr/office/graphics-visuals/make-a-picture-transparent (Microsoft 365용 Excel·PowerPoint 등) — 그림 형식 탭 '투명도', 7가지 미리 설정(0%~95%), "0%(완전 불투명, 기본 설정)에서 100%(완전 투명)까지", 웹용은 설정 불가 → 그림 전체 투명도(배경 지우기 아님) ⑦ 한컴오피스 2024 한/글 도움말 「사진 편집기: 투명 효과」 https://help.hancom.com/hoffice130/ko-KR/Hwp/menu/insert/photo_editor_transparency.htm — "[그림] 탭에서 [사진 편집] 아이콘", "[투명 효과] 메뉴", "투명하게 처리할 색이나 영역을 원하는 만큼 선택해서 연속적으로 투명 효과를 적용", '테두리를 부드럽게' 7단계, '유사 색상 범위' "0~255 … 값이 작을수록 … 엄격한 기준", 제한 사항 "1비트 바이너리 또는 8비트 색상으로 구성된 스캔 이미지 및 CMYK(32비트)는 지원하지 않습니다." / 「사진 편집」(…/menu/insert/photo_editor.htm) — "사진 편집 기능을 사용하여 사진을 편집하면 사진의 확장자가 PNG(*.png) 형식으로 변경됩니다." / 「개체 속성: 그림」(…/insert/objectattribute/objectattribute(figure).htm) — "투명도 설정 … 투명도 값은 0 ~ 100%" / 「개체 속성: 기본」(…/insert/objectattribute/objectattribute(general).htm) — "[서식-개체 속성]", 글 앞으로 "개체는 본문이 덮이도록 본문 위에 배치" / 「그림」(…/insert/figure/figure.htm) — "[입력-그림-그림]", <Ctrl+N,I>, 넣을 수 있는 형식에 JPG·PNG ⑧ Adobe Photoshop 도움말 「이미지의 배경 제거」 https://helpx.adobe.com/kr/photoshop/desktop/repair-retouch/remove-objects-fill-space/remove-background-in-your-images.html (마지막 업데이트 2025-12-02) — "검색 패널에서 찾아보기 > 빠른 작업을 선택한 다음 배경 제거", "투명 배경 또는 마스크된 레이어", 팁 "최상의 결과를 얻으려면 대비가 높은 이미지를 사용하세요. 배경 제거가 완벽하지 않은 경우 레이어 마스크에서 브러시 도구를 사용하여 마스크를 수동으로 다듬으세요." / 「PNG 및 GIF 형식으로 이미지 저장」 https://helpx.adobe.com/kr/photoshop/desktop/save-and-export/save-files/save-in-png-and-gif-formats.html (2026-10-29 게시) — "PNG는 투명도를 지원하며", "파일 > 다른 이름으로 저장을 선택하고 형식 메뉴에서 PNG" ⑨ 넣는 메뉴(표): 「그림 삽입」 https://support.microsoft.com/ko-kr/word/training/insert-pictures ("이 장치"), 「텍스트 줄 바꿈 및 Word 그림 이동」 https://support.microsoft.com/ko-kr/word/wrap-text-and-move-pictures-in-word ("레이아웃 옵션", "텍스트 앞"), 「Excel의 셀에 가져오기 기능이 있는 그림 삽입」 https://support.microsoft.com/ko-kr/excel/insert-picture-in-cell-in-excel (Microsoft 365용 Excel·Excel 2024 — '셀에 배치', 셀의 그림을 오른쪽 클릭해 셀 위로 다시 띄움) · 「웹용 Excel에서 그림 삽입」 https://support.microsoft.com/ko-kr/excel/insert-a-picture-in-excel-for-the-web ("셀에 배치 또는 셀 위에 배치"), 「PowerPoint에서 그림 삽입」 https://support.microsoft.com/ko-kr/powerpoint/training/insert-a-picture-in-powerpoint ("삽입 탭의 이미지 그룹에서 그림을 선택한 다음, 이 장치"), 「슬라이드에서 개체 중첩」 https://support.microsoft.com/ko-kr/powerpoint/training/layer-objects-on-slides ("맨 앞으로 가져오기") — 한국어 도움말은 기계 번역이라 실제 화면 글자와 다를 수 있다고 글에 적음 ⑩ 형법(법률 제22007호, 시행 2026.10.2.) 제239조 ① "행사할 목적으로 타인의 인장, 서명, 기명 또는 기호를 위조 또는 부정사용한 자는 3년 이하의 징역에 처한다." — law.go.kr 헤드리스로 확인. 도구 화면 문구는 배포된 https://pdfslimio.com/ko/stamp-image.html?notrack (stamp-image.js?v=08abb1aa)에서 그대로 옮김: 탭 '📷 도장 사진', '도장 찍은 사진 고르기', 인주 색 '선명한 빨강 — 빨간 인주만 남기기'·'사진 색 그대로'·'검은색', 크기 '300px — 작은 파일'·'600px — 인쇄해도 선명'·'1000px — 크게', '도장 이미지 만들기', '↓ 도장 다운로드 (PNG)', '🔴 이 도장을 PDF에 찍기 →', 안내 "선명한 빨강을 고르면 빨간 도장 주변의 인쇄 글씨, 펜 선, 그림자도 같이 지워져요.", FAQ "사진이 내 기기 밖으로 나가지 않아요". 코드(public/js/stamp-image.js): 사진 도장은 원래 크기의 2배까지만 키움(sized), 빨강이 없으면 '사진 색 그대로'로 바꾸고 알림, 서버로는 횟수 확인(/api/consume)만 보냄(사진 안 보냄)
+확인 못 한 것: 한글 2024 외 버전 도움말(이번엔 2024만 읽음), 데스크톱 엑셀 리본의 '셀 위에 배치' 표기(데스크톱 도움말엔 '셀에 배치'와 셀 위 그림 전환만, '셀 위에 배치' 이름은 웹용 도움말), 엑셀·파워포인트용 '투명한 색 설정' 한국어 도움말(워드 문서에만 있음 — 글에 '워드 도움말 기준'), 웹용 엑셀·PPT의 배경 제거 가능 여부, 실제 오피스 화면의 메뉴 글자(도움말 표기만 씀), 한글 2018 이전 버전 메뉴
+수요: 다음(Daum) 자동완성 2026-11-26 (suggest.search.daum.net) — '도장 배경' → 도장 배경 투명하게 만드는 방법·도장 배경 제거 사이트·도장 배경 지우기·스캔도장 배경없애기 / '도장 투명' → 엑셀 도장 투명하게·한글 도장 투명하게·포토샵 도장 투명하게·파워포인트 도장 투명·도장 투명하게·한글 파일 도장 투명·엑셀 도장 투명 / '도장 스캔' → 도장 스캔 투명·도장 스캔하는 방법·엑셀 도장스캔삽입·엑셀 견적서 도장 스캔 투명·한글 도장 스캔 투명 / '포토샵 도장' → 포토샵 도장따기·포토샵 도장 투명하게 / '도장 누끼' → 도장 누끼따기. '도장 png'·'인감 배경'·'직인 배경'은 자동완성 없음
+겹침 점검: 네이버 #95 엑셀·#96 한글·#99 워드·#101 PPT(프로그램별 기능을 자세히 — 이 글은 표 한 줄씩만, 넣는 메뉴는 표 하나), #100 도장 스캔(dpi·A4 범위 — 이 글은 다루지 않음), #12·티스토리 #05(PDF 도장·효력 — 한 줄 주의만), #97·#102(이름 도장·직인 만들기 — 안 다룸). 이 글만의 것: JPG/PNG 규격 원문으로 본 흰 네모의 원인, 다섯 가지 기능의 한계를 공식 문서 한 표로, 실험 사진 '흰 종이' 148가지 색 측정, 그림자가 도장 반을 덮은 사진·연하게 찍힌 스캔본 실험, 세 사진 × 두 모드 비교
+실험: 2026-11-26 18:37 KST, 실제 https://pdfslimio.com/ko/stamp-image.html?notrack, '📷 도장 사진' 탭, playwright-core + Chrome headless, 화면 400×860, 한 창에서 12번(오늘 남은 횟수 20/20 → 8/20), 페이지 오류 0 (scratchpad r1126/ts/27/exp/mk.mjs·run.mjs·results.json). 가짜 사진 3장(모두 '홍길동인' 사각 도장, 실제 서류 아님, canvas로 직접 그림): ① 흰 종이·밝게·가까이 3024×4032 JPG 2,668,718바이트(2.5MB) ② 누런 '확인서 (가상 예시)' 위 (인)에 찍고 손 그림자가 도장 오른쪽 반을 덮음 4032×3024 JPG 1,898,292바이트(1.8MB) ③ 연하게 찍힌 도장(왼쪽 반 더 연함)을 300dpi 스캔한 것처럼 945×709, JPEG 화질 0.5, 15,284바이트(14.9KB). 결과(화면 표기): 선명한 빨강 ① 300 → 300×300 20.8KB / 600 → 600×600 74.1KB / 1000 → 1000×1000 167.4KB, ② 300 → 299×300 33.1KB / 600 → 598×600 111.0KB / 1000 → 700×702 135.7KB, ③ 300 → 299×300 78.1KB / 600 → 414×416 133.9KB / 1000 → 414×416 133.9KB(같은 파일, 2배 제한). 사진 색 그대로 600: ① 600×600 330.2KB ② 600×573 293.9KB(그림자 경계가 잉크로 잡혀 확인서 전체가 남음: 회색 화소 80,839 vs 빨강 1,377) ③ 600×459 112.1KB(인쇄 글씨까지). 모든 결과 네 모서리 알파 0. 선명한 빨강 결과는 불투명 화소가 전부 빨강(검정·회색 0). ② 빨강 결과는 인쇄 '(인)'과 겹친 왼쪽 테두리가 군데군데 빔(눈으로 확인). ③ 빨강은 반투명 화소가 많음(600px: 반투명 55,675 vs 완전 불투명 4,996; 300px 반투명 29,405 vs ① 300px 2,869). 종이 색 세기(colours.mjs): ① 종이 부분 2600×900=2,340,000픽셀 → 148가지 색, 가장 많은 rgb(240,241,236)이 4.33%, 가장 어두운 rgb(220,219,215)~가장 밝은 rgb(255,255,253) / ② 종이 770,000픽셀 147가지·최다 6.32% / ③ 60,800픽셀 61가지·최다 50.45%
+이미지: stamp-bg-ts-hero.jpg(새, 1200×630 92.4KB — 먹색 남색 #13263a 바탕, '스캔 · 사진 도장' / '도장 배경 투명하게' / '흰 네모 없는 PNG 한 장 · 엑셀·한글·워드·PPT', 오른쪽 실험 사진 ① 조각 → 실제 결과 PNG(체크무늬)), stamp-bg-ts-why-ko.jpg(새, 1200×732 91.2KB — '흰 네모가 남는 이유' JPG 색 3칸(Y·Cb·Cr) → 종이도 저장 / PNG + 투명도 칸 → 0이면 빈칸 / '흰 종이 = 148가지 색' 실제 화소 색 5개), stamp-bg-ts-test-ko.jpg(새, 1200×1059 180.2KB — 사진 ①②③ 조각 → 600px 결과 PNG, 74.1KB·111.0KB·133.9KB), stamp-bg-ts-mode-ko.jpg(새, 1200×813 180.0KB — 사진 ② '사진 색 그대로' 293.9KB vs '선명한 빨강' 111.0KB). 중요 글자 44px 이상(설명 줄 26~32px, 출처 줄 21px), 얼굴·로고·실제 앱 화면 없음. 그림 HTML: scratchpad r1126/ts/27/cards
+예약: 2026-12-01 08:00 (제안)
+대표이미지: stamp-bg-ts-hero.jpg
+-->
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/stamp-bg-ts-hero.jpg" alt="도장 배경 투명하게 만드는 방법 - JPG 도장 사진을 흰 네모 없는 투명 PNG로" width="760"></p>
+
+<p>견적서에 도장 사진을 넣었더니 둘레에 <b>흰 네모</b>가 따라붙었나요? 😅</p>
+
+<p>엑셀, 한글, PPT마다 지우는 법을 따로 찾다 보면 금방 지쳐요. 그런데 원인은 프로그램이 아니라 파일 쪽에 있어요.</p>
+
+<p>원리를 한 번 알면 어느 프로그램이든 같은 방법으로 풀려요. 파일 규격 문서와 Microsoft·한컴·Adobe 도움말을 11월 26일에 다시 읽었어요.</p>
+
+<p>가짜 도장 사진 세 장으로 직접 따 본 결과도 숫자 그대로 담았어요. 📝</p>
+
+<div style="background:#fff7ed;border-left:4px solid #c2410c;padding:14px 16px;border-radius:8px;margin:18px 0;">
+<b>⏱ 3줄 요약</b><br>
+1️⃣ 흰 네모는 사진에 찍힌 <b>종이</b>예요. JPG엔 그걸 비울 칸이 없고, PNG엔 있어요<br>
+2️⃣ 오피스·한글 기능은 한 색만 지우거나 손으로 다듬어야 해서 <b>그림자·연한 인주</b>에 약해요<br>
+3️⃣ 인주만 남긴 PNG를 <b>한 번</b> 만들어 두면 엑셀·한글·워드·PPT에 그대로 넣어요
+</div>
+
+<h2>🧾 흰 네모의 정체, JPG에는 '빈칸'이 없어요</h2>
+
+<p>휴대폰 사진도, 스캔본도 대부분 JPG예요. JPG 파일 규격(ITU-T T.871)은 한 화소에 색 정보를 <b>1칸이나 3칸</b>만 두게 정해 놨어요.</p>
+
+<p>그 안에 "여기는 비어 있음"을 적을 칸이 없어요. 그래서 인주 바깥 종이도 흰 화소로 꼬박꼬박 저장돼요.</p>
+
+<p>흰 네모의 정체가 바로 이 종이예요. 문서에 얹으면 종이 화소가 아래 글씨를 그대로 덮어요.</p>
+
+<p>PNG는 생김새가 달라요. W3C PNG 규격에는 색 옆에 <b>투명도(알파) 칸</b>을 둘 수 있어요. 0이면 완전 투명, 최댓값이면 불투명이에요.</p>
+
+<p>그 사이 값도 돼요. 덕분에 인주 가장자리를 반쯤 비치게 남겨 부드럽게 만들 수 있어요.</p>
+
+<p>Microsoft 도움말의 파일 형식 표에서도 PNG 설명에 "이미지 일부를 투명하게"라는 말이 들어 있어요. 한글은 사진 편집을 거치면 파일이 PNG로 바뀐다고 안내해요.</p>
+
+<p>다만 PNG로 저장만 바꾼다고 종이가 사라지진 않아요. 종이 화소의 투명도를 <b>0으로 바꾸는</b> 단계가 따로 있어야 해요.</p>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/stamp-bg-ts-why-ko.jpg" alt="흰 네모가 남는 이유 - JPG는 색 3칸뿐이라 종이도 저장, PNG는 투명도 칸이 있어 0이면 빈칸, 흰 종이는 148가지 색" width="760"></p>
+
+<p>그림 아래 띠는 제 실험 사진 ①의 종이 부분만 센 값이에요. 눈엔 한 가지 흰색인데 <b>148가지 색</b>이 섞여 있었어요.</p>
+
+<p>가장 많이 나온 한 색도 4.3%뿐이었어요. Word 도움말이 "단일 색으로 보이는 영역"도 사실은 여러 색이라고 경고한 게 이런 뜻이에요.</p>
+
+<h2>🧰 엑셀·한글·포토샵 안의 기능, 도움말이 말하는 한계</h2>
+
+<p>프로그램 안에도 배경을 지우는 메뉴가 있어요. 다만 각 도움말을 읽어 보면 잘 되는 그림이 따로 있어요. 한 표로 모았어요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">기능</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">어디에</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">공식 도움말에 적힌 한계</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>투명한 색 설정</b></td><td style="padding:10px;border:1px solid #e5e7eb;">워드 (그림 서식 → 색)</td><td style="padding:10px;border:1px solid #e5e7eb;">둘 이상의 색은 못 지움. 단순한 단색 그림에 가장 적합. 웹용 Word는 불가</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>배경 제거</b></td><td style="padding:10px;border:1px solid #e5e7eb;">엑셀·워드·PPT (Microsoft 365·2024·2021)</td><td style="padding:10px;border:1px solid #e5e7eb;">자동으로 칠한 자홍색 영역을 '유지할 영역 표시'·'제거할 영역 표시'로 직접 다듬어요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>투명도</b></td><td style="padding:10px;border:1px solid #e5e7eb;">엑셀·PPT, 한글 2024 '투명도 설정'</td><td style="padding:10px;border:1px solid #e5e7eb;">그림 <b>전체</b>가 0~100% 옅어져요. 배경만 지우는 기능이 아니에요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>투명 효과</b></td><td style="padding:10px;border:1px solid #e5e7eb;">한글 (그림 탭 → 사진 편집)</td><td style="padding:10px;border:1px solid #e5e7eb;">여러 번 눌러 지울 수 있어요. 1비트·8비트 스캔 이미지와 CMYK는 지원 안 해요</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>배경 제거 (빠른 작업)</b></td><td style="padding:10px;border:1px solid #e5e7eb;">포토샵</td><td style="padding:10px;border:1px solid #e5e7eb;">대비가 높은 이미지를 권해요. 덜 지워지면 레이어 마스크를 브러시로 다듬어요</td></tr>
+</table>
+
+<p>'투명한 색 설정'의 한계는 Word 도움말에서 옮겼어요(단계 설명엔 '투명 색 설정'으로 적힘). 엑셀·PPT용 같은 설명은 한국어 도움말에서 <b>찾지 못했어요.</b> 한글은 한컴오피스 2024 도움말 기준이에요.</p>
+
+<p>표를 도장 사진에 대 보면, 이런 사진에서 특히 손이 많이 가요. 👇</p>
+
+<ul>
+  <li>🌗 <b>그림자·누런 종이</b>: 종이 한 장 안에서도 색이 여러 가지예요. 한 색만 지우면 나머지가 얼룩으로 남기 쉬워요</li>
+  <li>🩸 <b>번진 가장자리</b>: 인주와 종이 사이 화소는 둘이 섞인 중간색이에요. 그 띠가 회색·분홍 테두리로 남을 수 있어요</li>
+  <li>🌸 <b>연한 인주</b>: 종이 색과 가까워서 지우는 범위를 넓힐수록 도장 글씨도 같이 사라질 수 있어요</li>
+  <li>📠 <b>흑백·8비트 스캔본</b>: 한글 투명 효과는 1비트·8비트 색상 스캔 이미지를 지원하지 않아요. 도장은 컬러로 스캔하세요</li>
+</ul>
+
+<p>포토샵이 있다면 검색 패널의 빠른 작업 중 '배경 제거'를 쓰면 돼요. 끝나면 <b>파일 → 다른 이름으로 저장</b>에서 형식을 PNG로 골라야 투명이 남아요(Adobe 도움말).</p>
+
+<h2>🔬 도구로 한 번에 따 보기, 사진 세 장 실험</h2>
+
+<p>프로그램마다 다듬는 대신, 인주만 남긴 PNG를 먼저 만들어 봤어요. 제가 만든 무료 도구 <a href="https://pdfslimio.com/ko/stamp-image.html">SlimIO 도장 이미지 만들기</a>의 '📷 도장 사진' 탭이에요.</p>
+
+<p>배경 지우기는 브라우저 안에서 끝나서 <b>사진이 기기 밖으로 나가지 않아요.</b> '도장 배경 제거 사이트'를 고를 때 가장 먼저 볼 점이죠. 🔒</p>
+
+<ol>
+  <li>'📷 도장 사진' 탭에서 <b>도장 찍은 사진 고르기</b></li>
+  <li>인주 색은 '선명한 빨강 — 빨간 인주만 남기기', 크기는 300·600·1000px 중 하나</li>
+  <li><b>도장 이미지 만들기</b> → '↓ 도장 다운로드 (PNG)'</li>
+</ol>
+
+<p>실험용 가짜 사진은 조건을 바꿔 세 장 만들었어요. 모두 '홍길동인' 사각 도장이고 실제 서류가 아니에요.</p>
+
+<ul>
+  <li>① <b>흰 종이·밝게</b>: 가까이서 찍은 휴대폰 사진 (3024×4032, 2.5MB)</li>
+  <li>② <b>그림자 반쪽</b>: 누런 확인서의 (인) 위에 찍고, 손 그림자가 도장 오른쪽 반을 덮음 (4032×3024, 1.8MB)</li>
+  <li>③ <b>연한 스캔본</b>: 살짝만 눌러 찍은 도장을 300dpi로 스캔해 낮은 화질 JPG로 저장 (945×709, 14.9KB)</li>
+</ul>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/stamp-bg-ts-test-ko.jpg" alt="도장 사진 세 장을 600px 투명 PNG로 만든 실제 결과 - 74.1KB, 111.0KB, 133.9KB" width="760"></p>
+
+<p>크기별로 받은 PNG예요. 도구 화면에 뜬 숫자 그대로 적었어요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">사진</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">300px</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">600px</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">1000px</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">① 흰 종이·밝게</td><td style="padding:10px;border:1px solid #e5e7eb;">300×300<br>20.8KB</td><td style="padding:10px;border:1px solid #e5e7eb;">600×600<br><b>74.1KB</b></td><td style="padding:10px;border:1px solid #e5e7eb;">1000×1000<br>167.4KB</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">② 그림자 반쪽</td><td style="padding:10px;border:1px solid #e5e7eb;">299×300<br>33.1KB</td><td style="padding:10px;border:1px solid #e5e7eb;">598×600<br><b>111.0KB</b></td><td style="padding:10px;border:1px solid #e5e7eb;">700×702<br>135.7KB</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">③ 연한 스캔본</td><td style="padding:10px;border:1px solid #e5e7eb;">299×300<br>78.1KB</td><td style="padding:10px;border:1px solid #e5e7eb;">414×416<br><b>133.9KB</b></td><td style="padding:10px;border:1px solid #e5e7eb;">414×416<br>133.9KB</td></tr>
+</table>
+
+<ul>
+  <li>✅ <b>①</b>: 네 모서리까지 투명하고, 남은 화소가 모두 빨강이었어요. 가장 깔끔했어요</li>
+  <li>✅ <b>②</b>: 그림자에 덮인 오른쪽 반도 빠짐없이 남았어요. 다만 인쇄된 '(인)'과 겹친 왼쪽 테두리는 군데군데 비었어요</li>
+  <li>⚠️ <b>③</b>: 연한 왼쪽 반은 결과에서도 연한 분홍으로 반쯤 비쳐요. 다시 꾹 눌러 찍을 수 있다면 그게 제일 나아요</li>
+</ul>
+
+<p>②·③에서 1000px을 골라도 덜 커진 건 사진 속 도장이 작아서예요. 도구가 사진 속 도장을 <b>2배까지만</b> 키우게 되어 있어요.</p>
+
+<p>③은 300px인데도 ①의 네 배 가까운 78.1KB였어요. 반쯤 비치는 화소가 ①보다 열 배 많았어요(29,405개 대 2,869개).</p>
+
+<div style="margin:36px auto;max-width:620px;padding:26px 20px 22px;border-radius:18px;background:#0b0d12;text-align:center;">
+<p style="margin:0 0 8px;font-size:13px;font-weight:bold;color:#46e0a0;">무료 · 설치 없이 · 회원가입 없이</p>
+<p style="margin:0 0 18px;font-size:20px;font-weight:bold;line-height:1.45;color:#ffffff;">🔴 도장 이미지, 배경 없이 깔끔하게</p>
+<a href="https://pdfslimio.com/ko/stamp-image.html" target="_blank" rel="noopener" style="display:inline-block;padding:15px 34px;border-radius:12px;background:#46e0a0;color:#062a1c;font-size:17px;font-weight:bold;text-decoration:none;">도장 이미지 만들기 →</a>
+<p style="margin:14px 0 0;font-size:13px;color:#8a97a8;">SlimIO · pdfslimio.com</p>
+</div>
+<h2>🎨 '선명한 빨강'과 '사진 색 그대로', 결과가 이렇게 달라요</h2>
+
+<p>인주 색 칸에는 선명한 빨강, 사진 색 그대로, 검은색이 있어요. 같은 사진을 '사진 색 그대로'로만 바꿔 다시 따 봤어요. 모두 600px이에요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">사진</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">선명한 빨강</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">사진 색 그대로</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">①</td><td style="padding:10px;border:1px solid #e5e7eb;">74.1KB</td><td style="padding:10px;border:1px solid #e5e7eb;"><b>330.2KB</b>, 인주 얼룩 그대로</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">②</td><td style="padding:10px;border:1px solid #e5e7eb;">111.0KB</td><td style="padding:10px;border:1px solid #e5e7eb;">293.9KB, 그림자 경계·글씨까지</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;">③</td><td style="padding:10px;border:1px solid #e5e7eb;">133.9KB</td><td style="padding:10px;border:1px solid #e5e7eb;">112.1KB, 인쇄 글씨까지</td></tr>
+</table>
+
+<p style="text-align:center;"><img src="https://pdfslimio.com/img/blog/stamp-bg-ts-mode-ko.jpg" alt="같은 도장 사진을 사진 색 그대로와 선명한 빨강으로 만든 실제 결과 비교 - 293.9KB와 111.0KB" width="760"></p>
+
+<p>②를 '사진 색 그대로'로 따니 그림자 경계까지 인주로 잡혔어요. 그래서 확인서 전체가 PNG 한 장이 됐어요. 😮</p>
+
+<p>도구 화면에도 선명한 빨강을 고르면 인쇄 글씨, 펜 선, 그림자를 <b>같이 지운다</b>고 적혀 있어요. 빨간 도장이라면 이쪽이 맞아요.</p>
+
+<p>'사진 색 그대로'는 파란·검은 도장일 때 써요. 이땐 빈 종이에 찍어서 올리세요. 둘레에 지울 게 없어서 결과가 깔끔해요.</p>
+
+<p>빨간 인주를 하나도 못 찾으면 도구가 '사진 색 그대로'로 바꿔 만들어요. 결과 밑에 그렇게 했다는 말도 붙여 줘요.</p>
+
+<h2>📎 한 번 딴 PNG, 프로그램별로 넣는 곳</h2>
+
+<p>PNG는 이미 배경이 비어 있어서, 프로그램 안에서 지우는 단계가 필요 없어요. 넣는 메뉴만 다르니 표 하나로 줄였어요.</p>
+
+<table style="width:100%;border-collapse:collapse;font-size:15px;">
+  <tr style="background:#f3f4f6;"><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">프로그램</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">넣기</th><th style="padding:10px;border:1px solid #e5e7eb;text-align:left;">글자 위에 얹기</th></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>엑셀</b></td><td style="padding:10px;border:1px solid #e5e7eb;">삽입 → 그림 → 셀 위에 배치</td><td style="padding:10px;border:1px solid #e5e7eb;">칸 안에 들어갔다면 오른쪽 클릭으로 셀 위로 띄우기</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>한글</b></td><td style="padding:10px;border:1px solid #e5e7eb;">입력 → 그림 → 그림 (Ctrl+N, I)</td><td style="padding:10px;border:1px solid #e5e7eb;">개체 속성 → 기본 → '글 앞으로'</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>워드</b></td><td style="padding:10px;border:1px solid #e5e7eb;">삽입 → 그림 → 이 장치</td><td style="padding:10px;border:1px solid #e5e7eb;">레이아웃 옵션 → '텍스트 앞'</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>PPT</b></td><td style="padding:10px;border:1px solid #e5e7eb;">삽입 → 그림 → 이 장치</td><td style="padding:10px;border:1px solid #e5e7eb;">가려지면 '맨 앞으로 가져오기'</td></tr>
+  <tr><td style="padding:10px;border:1px solid #e5e7eb;"><b>PDF</b></td><td style="padding:10px;border:1px solid #e5e7eb;" colspan="2">결과 아래 '🔴 이 도장을 PDF에 찍기 →'</td></tr>
+</table>
+
+<p>메뉴 이름은 Microsoft·한컴 한국어 도움말 표기예요. 엑셀의 '셀에 배치'·'셀 위에 배치' 구분은 Microsoft 365·2024와 웹용 도움말에 나와요.</p>
+
+<p>Microsoft 도움말은 기계 번역이라 실제 화면 글자와 조금 다를 수 있어요. 비슷한 이름을 찾으면 돼요.</p>
+
+<h2>🙋 자주 묻는 것</h2>
+
+<p><b>Q. 도장을 다시 찍을 수 있다면 어떻게 찍을까요?</b><br>👉 실험에선 흰 종이에 가까이 찍은 ①이 가장 깔끔하고 가벼웠어요. 도장이 화면을 크게 채워야 1000px도 제대로 나와요. ②·③은 700px·414px에서 멈췄어요.</p>
+
+<p><b>Q. 스캐너로 뜰 땐 뭘 고르나요?</b><br>👉 <b>컬러</b>로 뜨세요. 흑백(회색조) 스캔에선 빨간 인주와 검은 인쇄를 색으로 가를 수 없어요.</p>
+
+<p><b>Q. 이렇게 딴 도장, 아무 서류에나 써도 되나요?</b><br>👉 인감증명서를 같이 내거나 종이 원본 날인을 요구하는 서류에는 쓰지 마세요. 남의 도장을 몰래 만들거나 함부로 쓰면 형법 제239조에 따라 <b>3년 이하 징역</b>에 처해질 수 있어요.</p>
+
+<hr>
+
+<p>흰 네모 지우는 법을 프로그램마다 외울 필요는 없어요. 인주만 남긴 PNG 한 장이면 엑셀이든 한글이든 바로 끝나요. 🙌</p>
+
+<p style="color:#888;font-size:13px;">출처: ITU-T T.871(JFIF), W3C PNG Specification (Third Edition), Microsoft 지원 「사진 또는 기타 그래픽을 별도의 파일로 저장」·「Word에서 그림을 투명하게 만들기」·「Office에서 그림의 배경 제거」·「그림을 투명하게 만들기」·「그림 삽입」·「텍스트 줄 바꿈 및 Word 그림 이동」·「Excel의 셀에 가져오기 기능이 있는 그림 삽입」·「PowerPoint에서 그림 삽입」·「슬라이드에서 개체 중첩」, 한컴오피스 2024 한/글 도움말 「사진 편집기: 투명 효과」·「사진 편집」·「개체 속성」·「그림」, Adobe Photoshop 도움말 「이미지의 배경 제거」·「PNG 및 GIF 형식으로 이미지 저장」, 국가법령정보센터 형법 제239조 (모두 2026년 11월 26일 확인). 실험은 실험용으로 만든 가상 사진으로 했어요.</p>
