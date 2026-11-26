@@ -418,6 +418,10 @@ document.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () 
      if (want) showTab(document.querySelector(`.tab[data-mode="${want}"]`));
 }
 
+// Made stamps are drawn at the chosen size itself: drawn at 600 and scaled, a 1000 px file was only a
+// blown-up 600 (alpha differed by 0-1 of 255 in a 2026-11-26 test), 3.5x the bytes and no sharper.
+const drawSize = () => Number($("size").value) || 600;
+
 // Long side at the chosen size; a small photo is not blown up beyond twice its size.
 function sized(src) {
      const want = Number($("size").value) || Math.max(src.width, src.height);
@@ -469,12 +473,12 @@ goBtn.addEventListener("click", async () => {
                      const text = sealText();
                      if (!text) throw new Error(SlimIO.t("Type your name first."));
                      await ensureGlyphs(text);
-                     stamp = sealCanvas(text, shape);
+                     stamp = sealCanvas(text, shape, drawSize());
              } else {
                      const seal = companySeal();
                      if (!seal.typed) throw new Error(SlimIO.t("Type the company name first."));
                      await ensureGlyphs(seal.all);
-                     stamp = companyCanvas(seal, cshape);
+                     stamp = companyCanvas(seal, cshape, drawSize());
                      note = SlimIO.t("A picture of the company name, not a registered company seal (법인인감).");
              }
              const check = await SlimIO.consume();

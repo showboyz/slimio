@@ -984,14 +984,15 @@ function toolTests() {
       const c = new OffscreenCanvas(bmp.width, bmp.height), x = c.getContext("2d");
       x.drawImage(bmp, 0, 0);
       const d = x.getImageData(0, 0, bmp.width, bmp.height).data;
-      let opaque = 0, red = 0, dark = 0;
+      let opaque = 0, red = 0, dark = 0, soft = 0;
       for (let i = 0; i < d.length; i += 4) {
+        if (d[i + 3] > 0 && d[i + 3] < 255) soft++;   // anti-aliased edge pixels
         if (d[i + 3] < 128) continue;
         opaque++;
         if (d[i] > d[i + 1] + 60 && d[i] > d[i + 2] + 60) red++;
         else if (d[i] < 100 && d[i + 1] < 100 && d[i + 2] < 100) dark++;
       }
-      return { w: bmp.width, h: bmp.height, opaque, red, dark, corners: [d[3], d[(bmp.width - 1) * 4 + 3], d[d.length - 1]] };
+      return { w: bmp.width, h: bmp.height, opaque, red, dark, soft, corners: [d[3], d[(bmp.width - 1) * 4 + 3], d[d.length - 1]] };
     }, Buffer.from(bytes).toString("base64"));
   }
   both("stamp-image.html", "a red stamp on a printed form becomes a transparent PNG of the seal only", async (p) => {
@@ -1038,6 +1039,22 @@ function toolTests() {
     if (st.w !== 600 || st.h !== 600) return `${st.w}×${st.h}, expected 600×600`;
     if (st.red < 30000) return `only ${st.red} red pixels: the seal is missing or empty`;
     return null;
+  });
+  // the made stamps were drawn at 600 and scaled, so 1000 px was a blown-up 600 (no sharper, 3.5x the bytes; found
+  // writing Tistory #28, 11/26). Drawn at the size itself, the soft edge stays about 1 px wide, so the edge pixels grow
+  // about as the outline does: ×2.0 from 600 to 1000 (11/26), against ×5.9 for the blown-up 600 then live (v113).
+  both("stamp-image.html", "a 1000 px name seal is drawn at 1000, not a blown-up 600", async (p) => {
+    await p.click('.tab[data-mode="make"]'); await p.fill("#name", "홍길동");
+    const soft = {};
+    for (const size of ["600", "1000"]) {
+      await p.selectOption("#size", size);
+      await runTool(p);
+      const st = await pngStats(p, (await download(p)).bytes);
+      if (st.w !== +size) return `${st.w}×${st.h} for ${size}`;
+      soft[size] = st.soft;
+    }
+    const k = soft["1000"] / soft["600"];
+    return k < 3.5 ? null : `edge pixels ×${k.toFixed(2)} from 600 to 1000 (${soft["600"]} → ${soft["1000"]}): scaled, not drawn at 1000`;
   });
   both("stamp-image.html", "the button with no photo yet opens the picker", async (p) => {
     const [chooser] = await Promise.all([p.waitForEvent("filechooser", { timeout: 5000 }).catch(() => null), p.click("#go")]);
