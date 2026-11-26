@@ -26,6 +26,7 @@ TOOLS = {   # page → (headline, button); wording follows each page's own h1/ti
     'ko/add-page-numbers.html': ('🔢 PDF에 페이지 번호 한 번에 넣기', '페이지 번호 넣으러 가기 →'),
     'ko/organize.html': ('🗂️ PDF 페이지 순서, 보면서 바꾸기', 'PDF 순서 바꾸러 가기 →'),
     'ko/split.html': ('✂️ PDF에서 필요한 페이지만 나누기', 'PDF 나누러 가기 →'),
+    'ko/stamp-image.html': ('🔴 도장 이미지, 배경 없이 깔끔하게', '도장 이미지 만들기 →'),
 }
 
 def box(url, eyebrow, headline, button):
