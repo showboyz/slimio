@@ -3,6 +3,7 @@
 # (on the blog, so tblfix sees a tab of mine), save each Umami page's tree with umget.py to <outdir>/<name>.txt and print
 # its tables (parse.py), go back to the blog and close the window with win_close.sh. The clipboard is backed up first.
 # Umami filters go in the url: &referrer=eq.pdfaid.com, &path=eq.%2Fko%2Fstamp-image.html, &country=eq.SG.
+# Other sites: set PAT to a regex that shows the page has loaded, e.g. PAT='(Total impressions|Not indexed)' for GSC.
 E=/Users/home/orca/projects/slimio/marketing/naver/editor
 D=$(cd "$(dirname "$0")" && pwd)
 export PATH="$E/bin:$PATH"   # Orca 1.4.274 prints English role names; bin/orca turns them back into Korean (axko.py)
@@ -20,7 +21,7 @@ W=""; for w in $(wins); do case "$before" in *" $w "*) ;; *) W=$w;; esac; done
 echo "window $W"
 bash $E/guard.sh done
 while [ $# -ge 2 ]; do
-  python3 $D/umget.py $W "$out/$1.txt" "$2" || { echo "STOP at $1"; break; }
+  python3 $D/umget.py $W "$out/$1.txt" "$2" ${PAT:+"$PAT"} || { echo "STOP at $1"; break; }
   python3 $D/parse.py "$out/$1.txt"
   shift 2
 done

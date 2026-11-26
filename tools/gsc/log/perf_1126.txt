@@ -1,0 +1,15 @@
+GSC sc-domain:pdfslimio.com, pulled 11/26 12:47–12:55 with tools/umami/um_away.sh (PAT='Total impressions'), /u/0/. Data to 11/23.
+90 days (data from 9/21): clicks 98, impressions 4.32K, avg position 50.2; 76 pages with impressions
+  /ko/ pages (page=*/ko/): clicks 10, impressions 583, avg position 9.4 (37 pages)
+  rest (EN): clicks 88, impressions ~3.74K
+  top pages: signature-image 82/578 (avg pos 3.8 for the page), compress-pdf-to-500kb 3/484, ko korean-history-exam-photo 2/119, ko exam-application-photo-size 2/69
+  countries: India 84/2,862, South Korea 10/518, UK 1/54, Indonesia 1/49 (92 countries)
+  queries: compress pdf to 500kb 1/149, pdf compressor to 1mb 1/36, slimio 1/26
+28 days: clicks 6, impressions 1.49K, avg position 47.7 (56 pages, 38 countries)
+  /ko/: clicks 5, impressions 346, avg position 9.7 (29 pages)
+  countries: South Korea 5/318, India 1/972, US 0/78, Bangladesh 0/15
+  pages: ko korean-history-exam-photo 2/119, ko driver-license-photo 1/87, signature-image 1/12, ko mobile-id-photo 1/11
+  => signature-image went from ~81 clicks / ~573 impressions (9/21–10/26) to 1/12 in the last 28 days. Page live is fine (200, index,follow, canonical self).
+     India impressions per day held (≈30 → 35) but moved to pages that rank badly; KO impressions rank ~9–10.
+Page indexing (last update 11/16): Indexed 88, Not indexed 35 = Discovered-not-indexed 20, Crawled-not-indexed 10, canonical alternate 3, redirect 2.
+Only 2–4 table rows per tab are in the AX tree (the rest are off-screen).
