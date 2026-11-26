@@ -10,6 +10,13 @@ GSC sc-domain:pdfslimio.com, pulled 11/26 12:47–12:55 with tools/umami/um_away
   countries: South Korea 5/318, India 1/972, US 0/78, Bangladesh 0/15
   pages: ko korean-history-exam-photo 2/119, ko driver-license-photo 1/87, signature-image 1/12, ko mobile-id-photo 1/11
   => signature-image went from ~81 clicks / ~573 impressions (9/21–10/26) to 1/12 in the last 28 days. Page live is fine (200, index,follow, canonical self).
+     Cause already found 10/29 (HANDOFF 2-35): 95% of its impressions were AI Mode / AI Overview citations, which stopped 10/23.
      India impressions per day held (≈30 → 35) but moved to pages that rank badly; KO impressions rank ~9–10.
 Page indexing (last update 11/16): Indexed 88, Not indexed 35 = Discovered-not-indexed 20, Crawled-not-indexed 10, canonical alternate 3, redirect 2.
 Only 2–4 table rows per tab are in the AX tree (the rest are off-screen).
+
+11/26 15:27 signature-image.html only (page=*com%2Fsignature-image; exact-URL page= is ignored by GSC and gives the whole site):
+  weeks clicks/impr/pos: 9/28 22/129/2.9, 10/5 25/157/2.4, 10/12 23/199/3.7, 10/19 11/79/7.5, 10/26 0/2/27, 11/2 0/0, 11/9 1/12/2.8, 11/16 0/0
+  days: 10/19 3/23, 10/20 4/20, 10/21 2/19, 10/22 2/10, 10/23 0/0, 10/24 0/1, 10/25 0/6, 10/26 0/2, 10/27–11/1 all 0
+  9/21–10/25: 81 clicks, 564 impr, 79 queries ("make it 50 kb", "compress to 100kb" = AI-mode style); 10/26–11/23: 1 click, 14 impr, 3 queries
+  => not back a month later (the 1–2 week re-check planned in 2-35). Treat the AI-mode traffic as gone.
