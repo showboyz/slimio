@@ -21,6 +21,7 @@ ROLES = {
     'increment arrow button': '화살표 증가 버튼', 'decrement arrow button': '화살표 감소 버튼',
     'increment page button': '페이지 증가 버튼', 'decrement page button': '페이지 감소 버튼',
     'disclosure triangle': '펼침 삼각형', 'heading': '제목',
+    'stepper': '증감자', 'incrementor': '증감자', 'spin button': '증감자',   # Tistory's 예약 시간·분 (tnew.py, tedit.py)
 }
 _alt = '|'.join(re.escape(k) for k in sorted(ROLES, key=len, reverse=True))
 _line = re.compile(r'(?m)^([ \t]*\d+ )(' + _alt + r')(?= |,|$)')

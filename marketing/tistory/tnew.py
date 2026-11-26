@@ -23,7 +23,9 @@ if body.count(cta.EYEBROW) != 1 or cta.EYEBROW_END in body:   # marketing/WRITIN
 y, mo, d = (int(x) for x in date.split('-'))
 
 def need(ok, why):
-    if not ok: print('FAIL', why, flush=True); sys.exit(1)
+    if not ok:   # the tree at the failure goes to $TMPDIR/tnew_fail.txt, to see what the page showed instead
+        f = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'tnew_fail.txt'); open(f, 'w').write(tf.tree())
+        print('FAIL', why, '(tree:', f + ')', flush=True); sys.exit(1)
 def log(*a): print(time.strftime('%H:%M:%S'), *a, flush=True)
 def paste_into(pat, text):
     subprocess.run('pbcopy', input=text, text=True)
@@ -38,9 +40,15 @@ if not FROM_BODY:
       tf.press(r'^버튼 취소$'); time.sleep(1.5)
   need(tf.idx(tf.tree(), r'^콤보 상자 \(settable\) 카테고리 선택'), 'editor not open')
   tf.press(r'^콤보 상자 \(settable\) 카테고리 선택'); time.sleep(1)
-  need(tf.press(r'^텍스트, Value: 문서·사진 꿀팁$'), 'category'); time.sleep(0.8)
-  need(tf.press(r'^팝업 버튼 기본모드$'), 'mode menu'); time.sleep(1)
-  need(tf.press(r'^메뉴 항목 HTML$'), 'HTML item'); time.sleep(1.2)
+  need(tf.press(r'^텍스트(, Value:)? 문서·사진 꿀팁$'), 'category'); time.sleep(0.8)   # Orca 1.4.274: '텍스트 문서·사진 꿀팁'
+  HTMLITEM = r'^(메뉴 항목|텍스트|버튼|항목)( \(selected\))? HTML$'
+  for n in range(3):   # since the 11/25 Orca update a background press of 기본모드 doesn't open its menu (4 tries, 11/26);
+      i = tf.idx(tf.tree(), r'^팝업 버튼 기본모드$'); need(i, 'mode menu')   # a foreground click (k.sh) is tried next
+      if n == 0: tf.press(r'^팝업 버튼 기본모드$')
+      else: tf.k('click', '--element-index', i, '--restore-window')   # plain k.sh click: background_unavailable
+      time.sleep(1.5)
+      if tf.idx(tf.tree(), HTMLITEM): break
+  need(tf.press(HTMLITEM), 'HTML item'); time.sleep(1.2)
   tf.press(r'^버튼 확인$'); time.sleep(1.5)
   paste_into(r'^텍스트 엔트리 영역 \(settable\) Placeholder: 제목을 입력하세요', title)
   for tg in tags:
@@ -70,7 +78,8 @@ for _ in range(3):
 need(f'{y}년 {mo}월' in tf.tree(), 'month')
 need(tf.press(rf'^버튼 {d}$'), 'day'); time.sleep(0.8)
 def val(name):
-    l = [x for x in tf.tree().splitlines() if f'증감자 {name}' in x][0]
+    l = [x for x in tf.tree().splitlines() if f'증감자 {name}' in x]
+    need(l, 'time field ' + name); l = l[0]
     return int(re.search(r'Value: (\d+)', l).group(1)), l.split()[0]
 def step(name, target):
     for _ in range(70):
@@ -81,9 +90,12 @@ def step(name, target):
     return False
 need(step('시간', hh) and step('분', 0), 'time')
 need(tf.idx(tf.tree(), rf'^버튼 {date}$'), 'date not set')
-r = tf.sh('bash', f'{HERE}/pick.sh', W, IMG + hero); time.sleep(1)
-if 'picked' not in r.stdout:   # the dialog is a sheet: its 열기 button is in this window's tree
-    need(tf.press(r'^버튼 열기$'), 'open button ' + r.stdout); time.sleep(4)
+if tf.idx(tf.tree(), r'^버튼 파일 선택'):
+    r = tf.sh('bash', f'{HERE}/pick.sh', W, IMG + hero); time.sleep(1)
+    if 'picked' not in r.stdout:   # the dialog is a sheet: its 열기 button is in this window's tree
+        need(tf.press(r'^버튼 열기$'), 'open button ' + r.stdout); time.sleep(4)
+else:   # from-panel after a run that stopped once the picture was in: the field then shows 삭제 instead of 파일 선택
+    need(tf.idx(tf.tree(), r'^버튼 삭제$'), 'no cover picture field'); log('cover picture already in')
 tf.done()
 need(tf.idx(tf.tree(), r'^버튼 공개 발행$'), 'publish button')
 need(tf.idx(tf.tree(), rf'^버튼 {date}$'), 'date lost')
@@ -92,5 +104,5 @@ t = tf.tree()
 rows = t.splitlines()
 k = [n for n, l in enumerate(rows) if '[예약]' in l and title[:25] in l]
 need(k, 'no [예약] row')
-when = next((l for l in rows[k[0]:k[0] + 12] if re.search(r'Value: 2026-\d\d-\d\d \d\d:\d\d', l)), '')
+when = next((l for l in rows[k[0]:k[0] + 12] if re.search(r'2026-\d\d-\d\d \d\d:\d\d', l)), '')
 log('RESERVED', title[:30], re.search(r'2026-\S+ \S+', when).group(0) if when else '?')
