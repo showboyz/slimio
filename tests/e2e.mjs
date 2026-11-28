@@ -490,6 +490,44 @@ function toolTests() {
     if (!(dpi > 150)) return `server went down to ${dpi} dpi though the limit had room (result ${KB(r.bytes.length)})`;
     return pdfCheck(r.bytes, { pages: 3 });
   });
+  // One time budget per compress request (Cloudflare answers 524 after 100 s): a pass past it is
+  // cut and the smallest finished pass is sent (partial), or a JSON 500 sends the page to browser
+  // mode — never a hang. Until 11/28 every pass had its own 60 s ("gs exit null" / 524 in Umami).
+  // A second server gets a budget of about 60% of what the full run takes here.
+  T.push({ name: "/api/compress answers within its time budget", url: "/", fn: async () => {
+    const body = fs.readFileSync(F("photos3.pdf"));
+    const post = async (base, b = body, target = 300e3) => {
+      const t = Date.now();
+      const r = await fetch(base + "/api/compress", { method: "POST", body: b,
+        headers: { "X-Level": target >= 1e6 ? "ebook" : "screen", "X-Target": String(target), "X-Device": "budget-test" } });
+      return { status: r.status, j: await r.json().catch(() => ({})), ms: Date.now() - t };
+    };
+    const full = await post(BASE);   // 300KB: 150 → 120 → 100 dpi, then screen
+    if (full.status !== 200) return `full run: HTTP ${full.status} ${full.j.error || ""}`;
+    const budget = Math.max(2100, Math.round(full.ms * 0.6)), port = PORT + 1, base = `http://127.0.0.1:${port}`;
+    let log = "";
+    const srv = spawn("node", [path.join(ROOT, "server/server.cjs")], { stdio: ["ignore", "pipe", "ignore"],
+      env: { ...process.env, PORT: String(port), HOST: "127.0.0.1", DAILY_LIMIT: "100000", IP_DAILY_LIMIT: "100000", GS_BUDGET_MS: String(budget) } });
+    srv.stdout.on("data", (d) => (log += d));
+    try {
+      for (let i = 0; i < 50; i++) { try { if ((await fetch(base + "/")).ok) break; } catch {} await new Promise((r) => setTimeout(r, 200)); }
+      const cut = await post(base);
+      if (cut.ms > budget + 3000) return `answered after ${cut.ms} ms with a ${budget} ms budget (full run ${full.ms} ms)`;
+      if (cut.status === 200) {
+        if (!cut.j.partial) return `not cut: the full run took ${full.ms} ms, this one ${cut.ms} ms with a ${budget} ms budget`;
+        if (!/gs-partial/.test(log)) return "partial answer without a gs-partial log line";
+        const bytes = Buffer.from(cut.j.pdf, "base64");
+        if (!(bytes.length < body.length)) return `partial result ${KB(bytes.length)} is not smaller than the upload`;
+        const bad = await pdfCheck(bytes, { pages: 3 }); if (bad) return "partial result: " + bad;
+      } else {
+        if (cut.status !== 500 || cut.j.error !== "time budget used up") return `cut run: HTTP ${cut.status} ${cut.j.error || ""}`;
+        if (!/gs-fail/.test(log)) return "time-out without a gs-fail log line";
+      }
+      // the Ghostscript slot was given back: a small PDF still goes through on the same server
+      const after = await post(base, fs.readFileSync(F("text.pdf")), 5e6);
+      if (after.status !== 200) return `after the cut a small PDF got HTTP ${after.status} ${after.j.error || ""}`;
+    } finally { srv.kill(); }
+  } });
   both("compress-pdf-for-email.html", "fits the target", async (p) => {
     await p.setInputFiles("#pdf", F("photo.pdf")); await runTool(p);
     const r = await download(p);

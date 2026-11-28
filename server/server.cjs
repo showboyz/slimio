@@ -17,7 +17,12 @@ const LEVELS = new Set(["screen", "ebook", "printer", "prepress"]);
 // One Ghostscript job at a time: on a 256MB machine a traffic spike with several
 // big PDFs in parallel would run out of memory. Extra requests wait in line; once
 // the line is full we answer 503 and the page falls back to in-browser compression.
-const MAX_GS = 1, MAX_WAITING = 10, GS_TIMEOUT_MS = 60000;
+const MAX_GS = 1, MAX_WAITING = 10;
+// A compress request must answer before Cloudflare gives up on it (HTTP 524 after 100 s, counted from
+// the start of the request, upload and waiting in line included). Every Ghostscript pass gets only
+// what is left of this budget; until 2026-11-28 each pass had its own 60 s, so a big PDF going
+// through several passes for a 1MB target got cut by Cloudflare (524) or killed at 60 s ("gs exit null").
+const REQ_BUDGET_MS = parseInt(process.env.GS_BUDGET_MS || "85000", 10);
 let gsRunning = 0;
 const gsWaiting = [];
 function acquireGs() {
@@ -111,8 +116,10 @@ function snapshot() {
             maxDevicesOnOneIp: maxDev, maxUsesFromOneIp: maxIpUses, limit: DAILY_LIMIT, ipLimit: IP_DAILY_LIMIT };
 }
 
-function gs(args, input, output) {
+function gs(args, input, output, deadline) {
    return new Promise((resolve, reject) => {
+       const left = deadline - Date.now();
+       if (left < 2000) return reject(Object.assign(new Error("time budget used up"), { code: "budget" }));
        const gsArgs = [
           "-dNOPAUSE", "-dBATCH", "-sDEVICE=pdfwrite",
           "-dPDFSETTINGS=/" + args.level,
@@ -132,15 +139,18 @@ function gs(args, input, output) {
        gsArgs.push(input);   // last: gs applies -d options only to files that come after them
        try {
           const proc = spawn("gs", gsArgs, { stdio: ["ignore", "pipe", "pipe"] });
-          const timer = setTimeout(() => proc.kill("SIGKILL"), GS_TIMEOUT_MS);
+          let timedOut = false;
+          const timer = setTimeout(() => { timedOut = true; proc.kill("SIGKILL"); }, left);
           proc.on("close", () => clearTimeout(timer));
           let err = "", said = "";
           proc.stderr.on("data", (d) => (err += d));
           proc.stdout.on("data", (d) => { if (said.length < 4096) said += d; });
           // A PDF that needs a password to open still exits 0, with a blank one-page file.
-          proc.on("close", (code) => /requires a password/i.test(said + err)
+          proc.on("close", (code, signal) => /requires a password/i.test(said + err)
              ? reject(Object.assign(new Error("password"), { code: "password" }))
-             : code === 0 ? resolve() : reject(new Error(err || "gs exit " + code)));
+             : code === 0 ? resolve()
+             : timedOut ? reject(Object.assign(new Error("time budget used up"), { code: "budget" }))
+             : reject(new Error(err || "gs exit " + code + (signal ? " " + signal : ""))));   // signal without our timer: likely out of memory
           proc.on("error", reject);
        } catch (e) { reject(e); }
    });
@@ -183,11 +193,12 @@ async function handle(req, res) {
        const jpg = req.headers["x-jpg"] ? parseInt(req.headers["x-jpg"], 10) : undefined;
        const target = parseInt(req.headers["x-target"] || "0", 10) || 0;   // bytes the page needs to get under
 
+       const t0 = Date.now(), deadline = t0 + REQ_BUDGET_MS;
        const slot = acquireGs();   // before reading the body, so waiting requests hold no memory
        if (!slot) return sendJson(res, 503, { error: "server busy — try Browser mode", remaining: remaining(u), limit: DAILY_LIMIT });
        await slot;
        const tmpIn = path.join(os.tmpdir(), `trout_${Date.now()}_${Math.random().toString(36).slice(2)}.pdf`);
-       const tmpOut = tmpIn + "_out.pdf";
+       const tmpOut = tmpIn + "_out.pdf", tmpBest = tmpIn + "_best.pdf";
        try {
           // Straight to disk: holding a 40MB upload in memory (twice, with the concat) next to
           // Ghostscript got node OOM-killed on the 256MB machine, restarting it mid-request.
@@ -203,6 +214,29 @@ async function handle(req, res) {
              await new Promise((r) => ws.end(r));
           }
           if (size < 200) return sendJson(res, 400, { error: "empty file" });
+          // Every finished pass that came out smaller than the upload is kept (the smallest one), so a
+          // pass cut off by the time budget still leaves an answer; the target page checks whether it fits.
+          let best = 0, passes = 0;
+          const pass = async (a) => {
+             await gs(a, tmpIn, tmpOut, deadline);
+             passes++;
+             const n = fs.statSync(tmpOut).size;
+             if (n < size && (!best || n < best)) { fs.copyFileSync(tmpOut, tmpBest); best = n; }
+             return n;
+          };
+          const answer = (outBuf, extra) => {
+             consume(u);   // only a finished compression counts
+             sendJson(res, 200, {
+                ok: true,
+                inBytes: size,
+                outBytes: outBuf.length,
+                savedPct: ((1 - outBuf.length / size) * 100).toFixed(1),
+                ...extra,
+                remaining: remaining(u),
+                limit: DAILY_LIMIT,
+                pdf: outBuf.toString("base64"),
+             });
+          };
 
           try {
              // With a size target of 1MB or more, ebook's fixed 150dpi throws away detail the
@@ -219,8 +253,7 @@ async function handle(req, res) {
                 let n150;
                 for (const res of [150, 120, 100]) {
                    if (res === 120 && n150 * 0.7 > target) continue;
-                   await gs({ level: "ebook", res }, tmpIn, tmpOut);
-                   const n = fs.statSync(tmpOut).size;
+                   const n = await pass({ level: "ebook", res });
                    if (n <= target) return res;
                    if (res === 150 && (n150 = n) > 2.5 * target) break;   // 100dpi keeps at least ~40% of 150's size
                 }
@@ -229,17 +262,16 @@ async function handle(req, res) {
              if (target >= 1e6 && level === "ebook" && jpg === undefined) {
                 let res = 300;
                 for (let i = 0; i < 2 && res > 150; i++) {
-                   await gs({ level, res }, tmpIn, tmpOut);
-                   const n = fs.statSync(tmpOut).size;
+                   const n = await pass({ level, res });
                    if (n <= target) { dpi = res; done = true; break; }
                    res = Math.floor((res * Math.sqrt(target / n) * 0.95) / 10) * 10;
                 }
                 // ebook leaves 150–225dpi pictures as they are: a 3.6MB 200dpi scan stayed 3.8MB, so
                 // 1MB turned its pages into images (751KB, 108dpi) though 120dpi made 788KB.
                 if (!done) {
-                   await gs({ level }, tmpIn, tmpOut);
+                   const n = await pass({ level });
                    done = true;
-                   if (fs.statSync(tmpOut).size > target) dpi = await steps();
+                   if (n > target) dpi = await steps();
                 }
              } else if (target > 0 && level === "screen" && jpg === undefined) {
                 // Below 1MB the page asks for screen, whose 72dpi smudged that 6MB scan's small print
@@ -248,30 +280,24 @@ async function handle(req, res) {
                 dpi = await steps();
                 done = dpi !== null;
              }
-             if (!done) await gs({ level, jpg }, tmpIn, tmpOut);
-             const outBuf = fs.readFileSync(tmpOut);
-             consume(u);   // only a finished compression counts
-             sendJson(
-                res, 200,
-                {
-                   ok: true,
-                   inBytes: size,
-                   outBytes: outBuf.length,
-                   savedPct: ((1 - outBuf.length / size) * 100).toFixed(1),
-                   ...(dpi ? { dpi } : {}),
-                   remaining: remaining(u),
-                   limit: DAILY_LIMIT,
-                   pdf: outBuf.toString("base64"),
-                }
-             );
+             if (!done) await pass({ level, jpg });
+             answer(fs.readFileSync(tmpOut), dpi ? { dpi } : {});
            } catch (e) {
              // 422, not 5xx: the page would fall back to browser mode, which can't open it either
              if (e.code === "password") return sendJson(res, 422, { error: "password", code: "password", remaining: remaining(u), limit: DAILY_LIMIT });
+             // No IP or file name in these lines: size, target, passes and time are enough to see why.
+             const info = { inBytes: size, target, level, passes, ms: Date.now() - t0 };
+             if (e.code === "budget" && best) {
+                console.log("gs-partial", JSON.stringify({ ...info, outBytes: best }));
+                return answer(fs.readFileSync(tmpBest), { partial: true });
+             }
+             console.log("gs-fail", JSON.stringify({ ...info, error: String(e.message).slice(-160) }));
              sendJson(res, 500, { error: e.message, inBytes: size, outBytes: 0, remaining: remaining(u), limit: DAILY_LIMIT });
            }
        } finally {
           fs.unlink(tmpIn, () => {});
           fs.unlink(tmpOut, () => {});
+          fs.unlink(tmpBest, () => {});
           releaseGs();
        }
        return;
